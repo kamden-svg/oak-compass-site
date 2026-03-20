@@ -7,6 +7,10 @@ function isAuthorized(req) {
   return password && password === process.env.LEADS_ADMIN_PASSWORD;
 }
 
+function parseLead(item) {
+  return typeof item === "string" ? JSON.parse(item) : item;
+}
+
 export default async function handler(req, res) {
   try {
     if (req.method === "POST") {
@@ -16,6 +20,7 @@ export default async function handler(req, res) {
         ...lead,
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
         submittedAt: new Date().toLocaleString(),
+        portalNotes: "",
       };
 
       await kv.lpush(LEADS_KEY, JSON.stringify(newLead));
@@ -29,16 +34,63 @@ export default async function handler(req, res) {
       }
 
       const rawLeads = await kv.lrange(LEADS_KEY, 0, -1);
-      const leads = rawLeads.map((item) =>
-        typeof item === "string" ? JSON.parse(item) : item
-      );
+      const leads = rawLeads.map(parseLead);
 
       return res.status(200).json({ leads });
+    }
+
+    if (req.method === "PATCH") {
+      if (!isAuthorized(req)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const { id, portalNotes } = req.body || {};
+
+      if (!id) {
+        return res.status(400).json({ error: "Lead id is required" });
+      }
+
+      const rawLeads = await kv.lrange(LEADS_KEY, 0, -1);
+      const leads = rawLeads.map(parseLead);
+
+      const updatedLeads = leads.map((lead) =>
+        lead.id === id ? { ...lead, portalNotes: portalNotes || "" } : lead
+      );
+
+      await kv.del(LEADS_KEY);
+
+      if (updatedLeads.length > 0) {
+        await kv.rpush(
+          LEADS_KEY,
+          ...updatedLeads.map((lead) => JSON.stringify(lead))
+        );
+      }
+
+      return res.status(200).json({ success: true });
     }
 
     if (req.method === "DELETE") {
       if (!isAuthorized(req)) {
         return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const { id } = req.query || {};
+
+      if (id) {
+        const rawLeads = await kv.lrange(LEADS_KEY, 0, -1);
+        const leads = rawLeads.map(parseLead);
+        const remainingLeads = leads.filter((lead) => lead.id !== id);
+
+        await kv.del(LEADS_KEY);
+
+        if (remainingLeads.length > 0) {
+          await kv.rpush(
+            LEADS_KEY,
+            ...remainingLeads.map((lead) => JSON.stringify(lead))
+          );
+        }
+
+        return res.status(200).json({ success: true });
       }
 
       await kv.del(LEADS_KEY);

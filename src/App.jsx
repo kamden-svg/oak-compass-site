@@ -31,6 +31,7 @@ const INSURANCE_OPTIONS = {
     "Renters Insurance",
     "Landlord Insurance",
     "Life Insurance",
+    "Bundle",
     "Business Insurance",
     "Pet Insurance",
     "Other",
@@ -52,7 +53,7 @@ const COPY = {
     badge: "Oak & Compass Insurance",
     headline: "Get a fast insurance quote without the hassle",
     subheadline:
-      "Tell us a few basics and we will help you compare options for all of your insurance needs.",
+      "Tell us a few basics and we will help you compare options for auto, home, renters, landlord, life, pet, or business insurance.",
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
@@ -247,6 +248,9 @@ function LeadsDashboard({
   onBack,
   onClear,
   onExport,
+  onDeleteLead,
+  onSaveLeadNote,
+  savingLeadId,
   searchTerm,
   setSearchTerm,
   inquiryFilter,
@@ -383,7 +387,7 @@ function LeadsDashboard({
         <div className="mt-8 grid gap-4">
           {filteredLeads.map((lead) => (
             <div key={lead.id} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <h2 className="text-xl font-semibold text-slate-900">
                     {lead.firstName} {lead.lastName}
@@ -392,9 +396,18 @@ function LeadsDashboard({
                     {text.submittedAt}: {lead.submittedAt}
                   </p>
                 </div>
-                <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
-                  {lead.insuranceType || "-"}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
+                    {lead.insuranceType || "-"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => onDeleteLead(lead.id)}
+                    className="rounded-2xl border border-red-200 px-3 py-1.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
 
               <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -424,9 +437,27 @@ function LeadsDashboard({
                 </div>
               </div>
 
-              <div className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.notesLabel}</p>
-                <p className="mt-1 whitespace-pre-wrap text-slate-900">{lead.notes || "-"}</p>
+              <div className="mt-5 grid gap-4 lg:grid-cols-2">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.notesLabel}</p>
+                  <p className="mt-1 whitespace-pre-wrap text-slate-900">{lead.notes || "-"}</p>
+                </div>
+                <div>
+                  <label htmlFor={`portal-note-${lead.id}`} className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    Portal Notes
+                  </label>
+                  <textarea
+                    id={`portal-note-${lead.id}`}
+                    rows={4}
+                    defaultValue={lead.portalNotes || ""}
+                    className="mt-1 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    onBlur={(event) => onSaveLeadNote(lead.id, event.target.value)}
+                    placeholder="Add private follow-up notes here"
+                  />
+                  {savingLeadId === lead.id ? (
+                    <p className="mt-2 text-xs text-slate-500">Saving...</p>
+                  ) : null}
+                </div>
               </div>
             </div>
           ))}
@@ -450,6 +481,7 @@ export default function OakCompassLandingPage() {
   const [isLoadingLeads, setIsLoadingLeads] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
+  const [savingLeadId, setSavingLeadId] = useState("");
 
   useEffect(() => {
     document.title = "Oak & Compass Insurance";
@@ -640,6 +672,51 @@ export default function OakCompassLandingPage() {
     }
   };
 
+  const handleDeleteLead = async (leadId) => {
+    try {
+      const response = await fetch(`/api/leads?id=${encodeURIComponent(leadId)}`, {
+        method: "DELETE",
+        headers: {
+          "x-admin-password": passwordInput,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(text.leadsLoadError);
+      }
+
+      setLeads((current) => current.filter((lead) => lead.id !== leadId));
+    } catch (error) {
+      setLoadError(error.message || text.leadsLoadError);
+    }
+  };
+
+  const handleSaveLeadNote = async (leadId, portalNotes) => {
+    setSavingLeadId(leadId);
+    try {
+      const response = await fetch("/api/leads", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": passwordInput,
+        },
+        body: JSON.stringify({ id: leadId, portalNotes }),
+      });
+
+      if (!response.ok) {
+        throw new Error(text.leadsLoadError);
+      }
+
+      setLeads((current) =>
+        current.map((lead) => (lead.id === leadId ? { ...lead, portalNotes } : lead))
+      );
+    } catch (error) {
+      setLoadError(error.message || text.leadsLoadError);
+    } finally {
+      setSavingLeadId("");
+    }
+  };
+
   if (showLeadsPage) {
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
@@ -650,6 +727,9 @@ export default function OakCompassLandingPage() {
           onBack={handleBackToSite}
           onClear={handleClearLeads}
           onExport={() => downloadCsv(filteredLeads)}
+          onDeleteLead={handleDeleteLead}
+          onSaveLeadNote={handleSaveLeadNote}
+          savingLeadId={savingLeadId}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           inquiryFilter={inquiryFilter}
@@ -679,7 +759,7 @@ export default function OakCompassLandingPage() {
                 <img
                   src="/logo.png"
                   alt="Oak & Compass Insurance logo"
-                  className="h-8 w-8 rounded-full object-contain"
+                  className="h-12 w-12 rounded-full object-contain"
                 />
                 <span>{text.badge}</span>
               </div>
@@ -970,6 +1050,8 @@ export function __oakCompassLandingPageChecks() {
     hasLeadSearch: true,
     hasLeadExport: true,
     hasLeadFilter: true,
+    hasSingleLeadDelete: true,
+    hasPortalNotes: true,
     postsToApi: true,
     canopyAlias: "waddoups-insurance-agency-llc-kamden-young",
   };
