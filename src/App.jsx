@@ -377,13 +377,6 @@ function SiteHeader({ language, activePage, onNavigate }) {
         >
           {nav.team}
         </button>
-        <button
-          type="button"
-          onClick={() => onNavigate(PAGE_HOME)}
-          className="rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
-        >
-          {nav.quote}
-        </button>
       </nav>
     </header>
   );
