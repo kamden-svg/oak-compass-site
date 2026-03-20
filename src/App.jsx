@@ -53,7 +53,7 @@ const COPY = {
     badge: "Oak & Compass Insurance",
     headline: "Get a fast insurance quote without the hassle",
     subheadline:
-      "Tell us a few basics and we will help you compare options for auto, home, renters, landlord, life, pet, or business insurance.",
+      "Tell us a few basics and we will help you compare options for all of your insurance needs.",
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
