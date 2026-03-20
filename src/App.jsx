@@ -409,6 +409,41 @@ function SiteHeader({ language, activePage, onNavigate }) {
   );
 }
 
+function OakTreeBackground() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-y-0 right-[-8%] hidden w-[min(44rem,58vw)] items-center justify-center text-emerald-900/10 md:flex"
+    >
+      <svg
+        viewBox="0 0 420 540"
+        className="h-auto w-full"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M205 505C205 446 208 397 216 350" />
+          <path d="M219 342C191 319 168 288 158 251" />
+          <path d="M218 329C248 306 271 276 284 239" />
+          <path d="M215 382C190 364 168 340 152 312" />
+          <path d="M216 371C245 355 271 333 290 303" />
+          <path d="M201 503C197 471 189 443 177 413" />
+          <path d="M224 503C229 472 239 443 253 413" />
+          <path d="M134 246C115 229 105 204 108 178C111 153 127 132 150 124C154 100 170 79 194 71C217 63 242 71 258 89C271 72 292 63 316 66C347 70 372 95 376 126C400 134 418 157 421 183C425 217 404 249 373 260" />
+          <path d="M144 243C130 270 129 301 143 327C156 350 180 367 207 370" />
+          <path d="M286 241C305 261 316 288 315 317C314 345 299 367 274 382" />
+          <path d="M176 121C190 137 198 156 200 177" />
+          <path d="M255 102C241 118 233 136 230 156" />
+          <path d="M115 181C136 185 154 194 170 208" />
+          <path d="M324 157C304 167 288 181 275 198" />
+          <path d="M147 92C164 86 181 86 197 91" />
+          <path d="M285 89C302 91 318 99 331 111" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 function TeamPage({ language, onNavigate }) {
   const teamText = TEAM_PAGE_COPY[language];
 
@@ -416,6 +451,7 @@ function TeamPage({ language, onNavigate }) {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <OakTreeBackground />
 
         <SiteHeader language={language} activePage={PAGE_TEAM} onNavigate={onNavigate} />
 
@@ -548,6 +584,7 @@ function InsuranceConnectPage({ language, onNavigate }) {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <OakTreeBackground />
 
         <SiteHeader language={language} activePage={PAGE_CANOPY} onNavigate={onNavigate} />
 
@@ -1186,6 +1223,7 @@ export default function OakCompassLandingPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        <OakTreeBackground />
 
         <SiteHeader language={language} activePage={PAGE_HOME} onNavigate={navigateToPage} />
 
