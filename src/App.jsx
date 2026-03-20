@@ -192,6 +192,7 @@ const COPY = {
 
 const PAGE_HOME = "home";
 const PAGE_TEAM = "team";
+const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
 
 const NAV_COPY = {
@@ -332,6 +333,7 @@ function getPageFromHash(hash) {
   const value = hash.replace(/^#/, "").trim().toLowerCase();
 
   if (value === PAGE_TEAM) return PAGE_TEAM;
+  if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   return PAGE_HOME;
 }
@@ -534,6 +536,54 @@ function TeamPage({ language, onNavigate }) {
           ))}
         </div>
       </section>
+      <Analytics />
+    </div>
+  );
+}
+
+function InsuranceConnectPage({ language, onNavigate }) {
+  const text = COPY[language];
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+
+        <SiteHeader language={language} activePage={PAGE_CANOPY} onNavigate={onNavigate} />
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
+          <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)] md:p-10">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="max-w-2xl">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                  Oak & Compass Insurance
+                </p>
+                <h1 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
+                  {text.canopyTitle}
+                </h1>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{text.canopyBody}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => onNavigate(PAGE_HOME)}
+                className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+              >
+                {text.backToSite}
+              </button>
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <div
+                data-canopy-connect-public-alias="waddoups-insurance-agency-llc-kamden-young"
+                style={{ width: "400px", height: "600px" }}
+                className="canopy-connect-mount max-w-full"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Analytics />
     </div>
   );
@@ -820,7 +870,6 @@ export default function OakCompassLandingPage() {
   const [leads, setLeads] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showCanopy, setShowCanopy] = useState(false);
   const [activePage, setActivePage] = useState(() => getPageFromHash(window.location.hash));
   const [isLeadsAuthenticated, setIsLeadsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
@@ -838,7 +887,11 @@ export default function OakCompassLandingPage() {
 
   useEffect(() => {
     document.title =
-      activePage === PAGE_TEAM ? "Meet the Team | Oak & Compass Insurance" : "Oak & Compass Insurance";
+      activePage === PAGE_TEAM
+        ? "Meet the Team | Oak & Compass Insurance"
+        : activePage === PAGE_CANOPY
+          ? "Connect Your Insurance | Oak & Compass Insurance"
+          : "Oak & Compass Insurance";
 
     const favicon = document.querySelector("link[rel='icon']") || document.createElement("link");
     favicon.setAttribute("rel", "icon");
@@ -856,7 +909,7 @@ export default function OakCompassLandingPage() {
   }, []);
 
   useEffect(() => {
-    if (!showCanopy) return undefined;
+    if (activePage !== PAGE_CANOPY) return undefined;
 
     const existingScript = document.querySelector(
       'script[src="https://cdn.usecanopy.com/v2/embed.js"]'
@@ -874,7 +927,7 @@ export default function OakCompassLandingPage() {
         script.parentNode.removeChild(script);
       }
     };
-  }, [showCanopy]);
+  }, [activePage]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -898,7 +951,7 @@ export default function OakCompassLandingPage() {
       setInquiryFilter("all");
     }
 
-    if (page === PAGE_HOME) {
+    if (page === PAGE_HOME || page === PAGE_TEAM || page === PAGE_CANOPY) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -967,7 +1020,6 @@ export default function OakCompassLandingPage() {
       }
 
       setIsSubmitted(true);
-      setShowCanopy(false);
       setForm(INITIAL_FORM);
     } catch (error) {
       window.alert(error.message || "Something went wrong. Please try again.");
@@ -1129,6 +1181,10 @@ export default function OakCompassLandingPage() {
 
   if (activePage === PAGE_TEAM) {
     return <TeamPage language={language} onNavigate={navigateToPage} />;
+  }
+
+  if (activePage === PAGE_CANOPY) {
+    return <InsuranceConnectPage language={language} onNavigate={navigateToPage} />;
   }
 
   return (
@@ -1361,7 +1417,7 @@ export default function OakCompassLandingPage() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => setShowCanopy(true)}
+                    onClick={() => navigateToPage(PAGE_CANOPY)}
                     className="mt-3 inline-flex rounded-2xl bg-emerald-700 px-4 py-2 font-semibold text-white transition hover:opacity-90"
                   >
                     {text.canopyButton}
@@ -1415,22 +1471,6 @@ export default function OakCompassLandingPage() {
           </div>
         </div>
       </section>
-
-      {showCanopy ? (
-        <section className="mx-auto max-w-6xl px-6 pb-16">
-          <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-            <h3 className="text-xl font-semibold">{text.canopyTitle}</h3>
-            <p className="mt-2 text-sm text-slate-600">{text.canopyBody}</p>
-            <div className="mt-6 flex justify-center">
-              <div
-                data-canopy-connect-public-alias="waddoups-insurance-agency-llc-kamden-young"
-                style={{ width: "400px", height: "600px" }}
-                className="canopy-connect-mount"
-              ></div>
-            </div>
-          </div>
-        </section>
-      ) : null}
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
         <div className="flex justify-center">
