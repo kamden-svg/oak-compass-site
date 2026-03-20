@@ -409,35 +409,50 @@ function SiteHeader({ language, activePage, onNavigate }) {
   );
 }
 
-function OakTreeBackground() {
+function ForestLandscapeBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-y-0 right-[-8%] hidden w-[min(44rem,58vw)] items-center justify-center text-emerald-900/10 md:flex"
+      className="pointer-events-none absolute inset-0 overflow-hidden text-emerald-950/[0.09]"
     >
       <svg
-        viewBox="0 0 420 540"
-        className="h-auto w-full"
+        viewBox="0 0 1440 900"
+        className="h-full w-full"
+        preserveAspectRatio="xMidYMid slice"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <g stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M205 505C205 446 208 397 216 350" />
-          <path d="M219 342C191 319 168 288 158 251" />
-          <path d="M218 329C248 306 271 276 284 239" />
-          <path d="M215 382C190 364 168 340 152 312" />
-          <path d="M216 371C245 355 271 333 290 303" />
-          <path d="M201 503C197 471 189 443 177 413" />
-          <path d="M224 503C229 472 239 443 253 413" />
-          <path d="M134 246C115 229 105 204 108 178C111 153 127 132 150 124C154 100 170 79 194 71C217 63 242 71 258 89C271 72 292 63 316 66C347 70 372 95 376 126C400 134 418 157 421 183C425 217 404 249 373 260" />
-          <path d="M144 243C130 270 129 301 143 327C156 350 180 367 207 370" />
-          <path d="M286 241C305 261 316 288 315 317C314 345 299 367 274 382" />
-          <path d="M176 121C190 137 198 156 200 177" />
-          <path d="M255 102C241 118 233 136 230 156" />
-          <path d="M115 181C136 185 154 194 170 208" />
-          <path d="M324 157C304 167 288 181 275 198" />
-          <path d="M147 92C164 86 181 86 197 91" />
-          <path d="M285 89C302 91 318 99 331 111" />
+        <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+          <path strokeWidth="3" d="M0 638C92 607 183 600 273 614C361 627 431 663 516 666C615 669 700 627 793 620C907 612 1000 653 1097 664C1204 676 1314 644 1440 601" />
+          <path strokeWidth="2.5" d="M0 692C95 668 196 659 298 670C381 679 466 713 556 716C663 720 747 684 847 677C963 670 1058 708 1160 718C1255 728 1349 711 1440 684" />
+          <path strokeWidth="2" d="M0 754C140 733 249 730 354 742C452 753 525 784 619 790C732 797 815 769 912 761C1012 753 1099 775 1188 790C1286 807 1364 803 1440 786" />
+
+          <path strokeWidth="3.5" d="M170 744C170 657 172 587 177 526" />
+          <path strokeWidth="3.5" d="M175 542C151 521 131 491 122 452" />
+          <path strokeWidth="3.5" d="M177 531C204 511 228 482 242 444" />
+          <path strokeWidth="3.5" d="M105 449C90 435 83 415 85 393C88 370 103 351 124 343C128 321 143 302 163 295C186 287 210 293 225 311C239 294 260 286 282 289C312 293 336 315 341 344C363 350 381 369 385 394C390 426 371 455 342 468" />
+
+          <path strokeWidth="3" d="M395 748C396 668 400 602 408 542" />
+          <path strokeWidth="3" d="M409 555C385 530 367 501 359 467" />
+          <path strokeWidth="3" d="M411 546C440 524 463 496 477 462" />
+          <path strokeWidth="3" d="M345 466C331 454 324 437 325 416C328 392 342 373 362 365C366 342 380 324 400 317C422 310 445 317 459 333C472 317 492 309 513 312C541 317 563 337 567 364C589 369 606 387 610 410C615 440 598 467 572 479" />
+
+          <path strokeWidth="2.8" d="M697 751C696 688 699 634 707 587" />
+          <path strokeWidth="2.8" d="M708 599C688 580 672 556 665 526" />
+          <path strokeWidth="2.8" d="M710 593C734 574 755 550 768 520" />
+          <path strokeWidth="2.8" d="M649 525C635 512 628 495 631 474C634 452 648 434 667 426C671 404 684 387 703 380C724 372 746 378 760 393C773 377 791 370 812 372C838 376 860 395 865 420C886 425 901 442 905 464C909 492 893 517 869 530" />
+
+          <path strokeWidth="2.5" d="M970 755C970 703 973 662 978 623" />
+          <path strokeWidth="2.5" d="M979 633C963 617 949 596 943 571" />
+          <path strokeWidth="2.5" d="M980 628C999 613 1016 592 1027 566" />
+          <path strokeWidth="2.5" d="M925 570C912 559 906 544 908 525C911 505 923 489 940 481C943 462 954 447 971 441C989 435 1009 440 1021 454C1032 440 1048 434 1066 436C1090 440 1108 456 1112 478C1131 483 1144 497 1148 516C1152 541 1138 561 1118 573" />
+
+          <path strokeWidth="2.2" d="M1214 756C1214 714 1217 680 1221 648" />
+          <path strokeWidth="2.2" d="M1221 657C1208 644 1198 628 1193 608" />
+          <path strokeWidth="2.2" d="M1222 653C1237 641 1251 624 1260 603" />
+          <path strokeWidth="2.2" d="M1176 607C1165 598 1160 585 1162 568C1164 551 1174 537 1188 530C1191 514 1201 501 1215 495C1231 489 1248 494 1258 506C1267 494 1281 489 1296 491C1317 494 1333 509 1337 527C1353 531 1366 543 1369 560C1373 581 1362 598 1344 609" />
+
+          <path strokeWidth="2" d="M0 812C111 795 223 792 337 801C447 810 553 829 660 831C770 833 873 817 983 817C1110 816 1245 837 1440 828" />
         </g>
       </svg>
     </div>
@@ -451,7 +466,7 @@ function TeamPage({ language, onNavigate }) {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
-        <OakTreeBackground />
+        <ForestLandscapeBackground />
 
         <SiteHeader language={language} activePage={PAGE_TEAM} onNavigate={onNavigate} />
 
@@ -584,7 +599,7 @@ function InsuranceConnectPage({ language, onNavigate }) {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
-        <OakTreeBackground />
+        <ForestLandscapeBackground />
 
         <SiteHeader language={language} activePage={PAGE_CANOPY} onNavigate={onNavigate} />
 
@@ -1223,7 +1238,7 @@ export default function OakCompassLandingPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
-        <OakTreeBackground />
+        <ForestLandscapeBackground />
 
         <SiteHeader language={language} activePage={PAGE_HOME} onNavigate={navigateToPage} />
 
