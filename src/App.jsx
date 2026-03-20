@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const INITIAL_FORM = {
   needsSpanish: "no",
@@ -494,6 +495,7 @@ export default function OakCompassLandingPage() {
   if (showLeadsPage) {
     return (
       <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+        <Analytics />
         <LeadsDashboard
           text={text}
           leads={localizedLeads}
@@ -513,6 +515,7 @@ export default function OakCompassLandingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+      <Analytics />
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
 
