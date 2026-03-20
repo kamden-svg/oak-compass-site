@@ -53,6 +53,21 @@ const INSURANCE_OPTIONS = {
   ],
 };
 
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61577039841358";
+
+const INSURANCE_FACTS = {
+  en: [
+    "Bundling home and auto policies can sometimes lower total premium costs.",
+    "A deductible is the amount you pay out of pocket before covered insurance benefits begin.",
+    "Reviewing coverage after a move, marriage, or new vehicle helps keep protection up to date.",
+  ],
+  es: [
+    "Combinar polizas de auto y hogar a veces puede reducir el costo total de la prima.",
+    "El deducible es la cantidad que pagas antes de que comiencen los beneficios cubiertos.",
+    "Revisar la cobertura despues de una mudanza o un auto nuevo ayuda a mantenerla al dia.",
+  ],
+};
+
 const COPY = {
   en: {
     badge: "Oak & Compass Insurance",
@@ -400,71 +415,131 @@ function getPageFromHash(hash) {
 
 function SiteHeader({ language, activePage, onNavigate }) {
   const nav = NAV_COPY[language];
+  const facts = INSURANCE_FACTS[language] || INSURANCE_FACTS.en;
+  const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
+  const [factIndex, setFactIndex] = useState(0);
+
+  const openBrandModal = () => {
+    setFactIndex(Math.floor(Math.random() * facts.length));
+    setIsBrandModalOpen(true);
+  };
 
   return (
-    <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6">
-      <button
-        type="button"
-        onClick={() => onNavigate(PAGE_HOME)}
-        className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/90 p-3 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
-      >
-        <img
-          src="/logo.png"
-          alt="Oak & Compass Insurance logo"
-          className="h-14 w-14 rounded-full object-contain"
-        />
-      </button>
+    <>
+      <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6">
+        <button
+          type="button"
+          onClick={openBrandModal}
+          className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/92 p-2 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
+          aria-label="Open Oak & Compass brand details"
+        >
+          <img
+            src="/logo.png"
+            alt="Oak & Compass Insurance logo"
+            className="h-24 w-24 rounded-full object-contain md:h-28 md:w-28"
+          />
+        </button>
 
-      <nav className="hidden items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
-        <button
-          type="button"
-          onClick={() => onNavigate(PAGE_HOME)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            activePage === PAGE_HOME
-              ? "bg-slate-900 text-white"
-              : "text-slate-700 hover:bg-slate-100"
-          }`}
-        >
-          {nav.home}
-        </button>
-        <button
-          type="button"
-          onClick={() => onNavigate(PAGE_TEAM)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            activePage === PAGE_TEAM
-              ? "bg-slate-900 text-white"
-              : "text-slate-700 hover:bg-slate-100"
-          }`}
-        >
-          {nav.team}
-        </button>
-      </nav>
+        <nav className="hidden items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_HOME)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_HOME
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.home}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_TEAM)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_TEAM
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.team}
+          </button>
+        </nav>
 
-      <nav className="fixed inset-x-4 bottom-4 z-20 flex items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
-        <button
-          type="button"
-          onClick={() => onNavigate(PAGE_HOME)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            activePage === PAGE_HOME
-              ? "bg-slate-900 text-white"
-              : "text-slate-700 hover:bg-slate-100"
-          }`}
-        >
-          {nav.home}
-        </button>
-        <button
-          type="button"
-          onClick={() => onNavigate(PAGE_TEAM)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-            activePage === PAGE_TEAM
-              ? "bg-slate-900 text-white"
-              : "text-slate-700 hover:bg-slate-100"
-          }`}
-        >
-          {nav.team}
-        </button>
-      </nav>
-    </header>
+        <nav className="fixed inset-x-4 bottom-4 z-20 flex items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_HOME)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_HOME
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.home}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_TEAM)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_TEAM
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.team}
+          </button>
+        </nav>
+      </header>
+
+      {isBrandModalOpen ? (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/55 px-4 py-6">
+          <div className="relative w-full max-w-lg rounded-[2rem] bg-white p-6 shadow-2xl ring-1 ring-slate-200 md:p-8">
+            <button
+              type="button"
+              onClick={() => setIsBrandModalOpen(false)}
+              className="absolute right-4 top-4 rounded-full border border-slate-200 px-3 py-1 text-sm font-semibold text-slate-600 transition hover:bg-slate-50"
+            >
+              Close
+            </button>
+
+            <div className="flex flex-col items-center text-center">
+              <img
+                src="/logo.png"
+                alt="Oak & Compass Insurance logo"
+                className="h-28 w-28 rounded-full object-contain"
+              />
+              <h2 className="mt-4 text-2xl font-semibold text-slate-900">Oak & Compass Insurance</h2>
+              <p className="mt-2 max-w-md text-sm leading-7 text-slate-600">
+                Follow along on Facebook and explore a quick insurance fact while you are here.
+              </p>
+            </div>
+
+            <div className="mt-6 rounded-[1.5rem] bg-emerald-50 p-5 ring-1 ring-emerald-100">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                Insurance Fact
+              </p>
+              <p className="mt-3 text-sm leading-7 text-slate-700">{facts[factIndex]}</p>
+              <button
+                type="button"
+                onClick={() => setFactIndex((current) => (current + 1) % facts.length)}
+                className="mt-4 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100"
+              >
+                Show Another Fact
+              </button>
+            </div>
+
+            <a
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              Visit Facebook
+            </a>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }
 
