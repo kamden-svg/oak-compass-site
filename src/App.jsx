@@ -250,9 +250,9 @@ const COPY = {
 
 const PAGE_HOME = "home";
 const PAGE_TEAM = "team";
+const PAGE_JOBS = "jobs";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
-const FORM_CARD_ID = "lead-form-card";
 
 const NAV_COPY = {
   en: {
@@ -392,6 +392,7 @@ function getPageFromHash(hash) {
   const value = hash.replace(/^#/, "").trim().toLowerCase();
 
   if (value === PAGE_TEAM) return PAGE_TEAM;
+  if (value === PAGE_JOBS) return PAGE_JOBS;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   return PAGE_HOME;
@@ -645,6 +646,264 @@ function TeamPage({ language, onNavigate }) {
           ))}
         </div>
       </section>
+      <Analytics />
+    </div>
+  );
+}
+
+function JobApplicationPage({
+  language,
+  text,
+  form,
+  onChange,
+  onSubmit,
+  isSubmitting,
+  isSubmitted,
+  submittedIsJobApplication,
+  onNavigate,
+}) {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <ForestLandscapeBackground />
+
+        <SiteHeader language={language} activePage={PAGE_JOBS} onNavigate={onNavigate} />
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
+          <div className="grid gap-10 lg:grid-cols-[0.95fr,1.05fr] lg:items-start">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                {text.careersEyebrow}
+              </p>
+              <h1 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+                {text.careersTitle}
+              </h1>
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+                {text.careersBody}
+              </p>
+
+              <div className="mt-6 flex flex-wrap gap-3 text-sm text-slate-600">
+                {text.careersPoints.map((point) => (
+                  <span
+                    key={point}
+                    className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200"
+                  >
+                    {point}
+                  </span>
+                ))}
+              </div>
+
+              <div className="mt-8 rounded-[2rem] bg-white/90 p-6 shadow-sm ring-1 ring-slate-200">
+                <h2 className="text-xl font-semibold text-slate-900">{text.jobTitle}</h2>
+                <p className="mt-3 text-sm leading-7 text-slate-600">{text.jobIntro}</p>
+              </div>
+            </div>
+
+            <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
+              <h2 className="text-2xl font-semibold">{text.jobTitle}</h2>
+              <p className="mt-2 text-sm text-slate-500">{text.jobIntro}</p>
+
+              <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="firstName" className="mb-2 block text-sm font-medium">
+                      {text.firstName}
+                    </label>
+                    <input
+                      id="firstName"
+                      name="firstName"
+                      type="text"
+                      value={form.firstName}
+                      onChange={onChange}
+                      placeholder={text.firstName}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="lastName" className="mb-2 block text-sm font-medium">
+                      {text.lastName}
+                    </label>
+                    <input
+                      id="lastName"
+                      name="lastName"
+                      type="text"
+                      value={form.lastName}
+                      onChange={onChange}
+                      placeholder={text.lastName}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="phone" className="mb-2 block text-sm font-medium">
+                      {text.phone}
+                    </label>
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={form.phone}
+                      onChange={onChange}
+                      placeholder={text.phone}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="mb-2 block text-sm font-medium">
+                      {text.email}
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={onChange}
+                      placeholder={text.email}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="needsSpanish" className="mb-2 block text-sm font-medium">
+                    {text.spanishPreference}
+                  </label>
+                  <select
+                    id="needsSpanish"
+                    name="needsSpanish"
+                    value={form.needsSpanish}
+                    onChange={onChange}
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                  >
+                    <option value="no">{text.no}</option>
+                    <option value="yes">{text.yes}</option>
+                  </select>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="desiredRole" className="mb-2 block text-sm font-medium">
+                      {text.desiredRole}
+                    </label>
+                    <input
+                      id="desiredRole"
+                      name="desiredRole"
+                      type="text"
+                      value={form.desiredRole}
+                      onChange={onChange}
+                      placeholder={text.desiredRole}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="yearsExperience" className="mb-2 block text-sm font-medium">
+                      {text.yearsExperience}
+                    </label>
+                    <input
+                      id="yearsExperience"
+                      name="yearsExperience"
+                      type="text"
+                      value={form.yearsExperience}
+                      onChange={onChange}
+                      placeholder={text.yearsExperience}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="zipCode" className="mb-2 block text-sm font-medium">
+                      {text.zipCode}
+                    </label>
+                    <input
+                      id="zipCode"
+                      name="zipCode"
+                      type="text"
+                      value={form.zipCode}
+                      onChange={onChange}
+                      placeholder={text.zipCode}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="availability" className="mb-2 block text-sm font-medium">
+                      {text.availability}
+                    </label>
+                    <input
+                      id="availability"
+                      name="availability"
+                      type="text"
+                      value={form.availability}
+                      onChange={onChange}
+                      placeholder={text.availability}
+                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="resumeLink" className="mb-2 block text-sm font-medium">
+                    {text.resumeLink}
+                  </label>
+                  <input
+                    id="resumeLink"
+                    name="resumeLink"
+                    type="url"
+                    value={form.resumeLink}
+                    onChange={onChange}
+                    placeholder={text.resumeLinkPlaceholder}
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="notes" className="mb-2 block text-sm font-medium">
+                    {text.notesJob}
+                  </label>
+                  <textarea
+                    id="notes"
+                    name="notes"
+                    rows={5}
+                    value={form.notes}
+                    onChange={onChange}
+                    placeholder={text.optional}
+                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting
+                    ? language === "es"
+                      ? "Enviando..."
+                      : "Submitting..."
+                    : text.submitJob}
+                </button>
+
+                <p className="text-center text-xs text-slate-500">{text.consent}</p>
+              </form>
+
+              {isSubmitted && submittedIsJobApplication ? (
+                <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+                  <p className="font-semibold">{text.submittedJob}</p>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Analytics />
     </div>
   );
@@ -1017,7 +1276,7 @@ export default function OakCompassLandingPage() {
   const [savingLeadId, setSavingLeadId] = useState("");
   const language = form.needsSpanish === "yes" ? "es" : "en";
   const text = COPY[language];
-  const inquiryOptions = INQUIRY_OPTIONS[language];
+  const inquiryOptions = INQUIRY_OPTIONS[language].filter((option) => option.value !== "job");
   const insuranceOptions = INSURANCE_OPTIONS[language];
   const nav = NAV_COPY[language];
 
@@ -1025,6 +1284,8 @@ export default function OakCompassLandingPage() {
     document.title =
       activePage === PAGE_TEAM
         ? "Meet the Team | Oak & Compass Insurance"
+        : activePage === PAGE_JOBS
+          ? "Apply Now | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
@@ -1086,28 +1347,27 @@ export default function OakCompassLandingPage() {
       setInquiryFilter("all");
     }
 
-    if (page === PAGE_HOME || page === PAGE_TEAM || page === PAGE_CANOPY) {
+    if (page === PAGE_HOME && form.inquiryType === "job") {
+      setForm((current) => ({ ...current, inquiryType: "quote" }));
+    }
+
+    if (page === PAGE_JOBS && form.inquiryType !== "job") {
+      setForm((current) => ({ ...current, inquiryType: "job" }));
+    }
+
+    if (page === PAGE_HOME || page === PAGE_TEAM || page === PAGE_JOBS || page === PAGE_CANOPY) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const isReferral = form.inquiryType === "referral";
-  const isJobApplication = form.inquiryType === "job";
   const submittedIsReferral = submittedInquiryType === "referral";
   const submittedIsJobApplication = submittedInquiryType === "job";
 
   const openJobApplication = () => {
-    if (activePage !== PAGE_HOME) {
-      navigateToPage(PAGE_HOME);
-    }
-
-    setForm((current) => ({ ...current, inquiryType: "job" }));
+    navigateToPage(PAGE_JOBS);
     setIsSubmitted(false);
     setSubmittedInquiryType("");
-
-    window.setTimeout(() => {
-      document.getElementById(FORM_CARD_ID)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 60);
   };
 
   const localizedLeads = useMemo(() => {
@@ -1340,6 +1600,22 @@ export default function OakCompassLandingPage() {
     return <TeamPage language={language} onNavigate={navigateToPage} />;
   }
 
+  if (activePage === PAGE_JOBS) {
+    return (
+      <JobApplicationPage
+        language={language}
+        text={text}
+        form={form}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        isSubmitted={isSubmitted}
+        submittedIsJobApplication={submittedIsJobApplication}
+        onNavigate={navigateToPage}
+      />
+    );
+  }
+
   if (activePage === PAGE_CANOPY) {
     return <InsuranceConnectPage language={language} onNavigate={navigateToPage} />;
   }
@@ -1397,11 +1673,11 @@ export default function OakCompassLandingPage() {
               </div>
             </div>
 
-            <div id={FORM_CARD_ID} className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
+            <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
               <h2 className="text-2xl font-semibold">
-                {isJobApplication ? text.jobTitle : isReferral ? text.referTitle : text.quoteTitle}
+                {isReferral ? text.referTitle : text.quoteTitle}
               </h2>
-              <p className="mt-2 text-sm text-slate-500">{isJobApplication ? text.jobIntro : text.intro}</p>
+              <p className="mt-2 text-sm text-slate-500">{text.intro}</p>
 
               <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                 
@@ -1505,7 +1781,6 @@ export default function OakCompassLandingPage() {
                   </select>
                 </div>
 
-                {!isJobApplication ? (
                 <div>
                   <label htmlFor="insuranceType" className="mb-2 block text-sm font-medium">
                     {isReferral ? text.insuranceTypeReferral : text.insuranceTypeQuote}
@@ -1525,41 +1800,6 @@ export default function OakCompassLandingPage() {
                     ))}
                   </select>
                 </div>
-                ) : null}
-
-                {isJobApplication ? (
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="desiredRole" className="mb-2 block text-sm font-medium">
-                        {text.desiredRole}
-                      </label>
-                      <input
-                        id="desiredRole"
-                        name="desiredRole"
-                        type="text"
-                        value={form.desiredRole}
-                        onChange={handleChange}
-                        placeholder={text.desiredRole}
-                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="yearsExperience" className="mb-2 block text-sm font-medium">
-                        {text.yearsExperience}
-                      </label>
-                      <input
-                        id="yearsExperience"
-                        name="yearsExperience"
-                        type="text"
-                        value={form.yearsExperience}
-                        onChange={handleChange}
-                        placeholder={text.yearsExperience}
-                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                      />
-                    </div>
-                  </div>
-                ) : null}
 
                 <div>
                   <label htmlFor="zipCode" className="mb-2 block text-sm font-medium">
@@ -1576,43 +1816,9 @@ export default function OakCompassLandingPage() {
                   />
                 </div>
 
-                {isJobApplication ? (
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <label htmlFor="availability" className="mb-2 block text-sm font-medium">
-                        {text.availability}
-                      </label>
-                      <input
-                        id="availability"
-                        name="availability"
-                        type="text"
-                        value={form.availability}
-                        onChange={handleChange}
-                        placeholder={text.availability}
-                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="resumeLink" className="mb-2 block text-sm font-medium">
-                        {text.resumeLink}
-                      </label>
-                      <input
-                        id="resumeLink"
-                        name="resumeLink"
-                        type="url"
-                        value={form.resumeLink}
-                        onChange={handleChange}
-                        placeholder={text.resumeLinkPlaceholder}
-                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                      />
-                    </div>
-                  </div>
-                ) : null}
-
                 <div>
                   <label htmlFor="notes" className="mb-2 block text-sm font-medium">
-                    {isJobApplication ? text.notesJob : isReferral ? text.notesReferral : text.notesQuote}
+                    {isReferral ? text.notesReferral : text.notesQuote}
                   </label>
                   <textarea
                     id="notes"
@@ -1634,9 +1840,7 @@ export default function OakCompassLandingPage() {
                     ? language === "es"
                       ? "Enviando..."
                       : "Submitting..."
-                    : isJobApplication
-                      ? text.submitJob
-                      : isReferral
+                    : isReferral
                       ? text.submitReferral
                       : text.submitQuote}
                 </button>
@@ -1647,26 +1851,20 @@ export default function OakCompassLandingPage() {
               {isSubmitted ? (
                 <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
                   <p className="font-semibold">
-                    {submittedIsJobApplication
-                      ? text.submittedJob
-                      : submittedIsReferral
+                    {submittedIsReferral
                         ? text.submittedReferral
                         : text.submittedQuote}
                   </p>
-                  {!submittedIsJobApplication ? (
-                    <>
-                      <p className="mt-1 text-emerald-700">
-                        {submittedIsReferral ? text.canopyReferral : text.canopyQuote}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => navigateToPage(PAGE_CANOPY)}
-                        className="mt-3 inline-flex rounded-2xl bg-emerald-700 px-4 py-2 font-semibold text-white transition hover:opacity-90"
-                      >
-                        {text.canopyButton}
-                      </button>
-                    </>
-                  ) : null}
+                  <p className="mt-1 text-emerald-700">
+                    {submittedIsReferral ? text.canopyReferral : text.canopyQuote}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => navigateToPage(PAGE_CANOPY)}
+                    className="mt-3 inline-flex rounded-2xl bg-emerald-700 px-4 py-2 font-semibold text-white transition hover:opacity-90"
+                  >
+                    {text.canopyButton}
+                  </button>
                 </div>
               ) : null}
             </div>
