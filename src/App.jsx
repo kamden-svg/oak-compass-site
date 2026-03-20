@@ -31,7 +31,6 @@ const INSURANCE_OPTIONS = {
     "Renters Insurance",
     "Landlord Insurance",
     "Life Insurance",
-    "Bundle",
     "Business Insurance",
     "Pet Insurance",
     "Other",
@@ -53,7 +52,7 @@ const COPY = {
     badge: "Oak & Compass Insurance",
     headline: "Get a fast insurance quote without the hassle",
     subheadline:
-      "Tell us a few basics and we will help you compare options for all of your insurance needs.",
+      "Tell us a few basics and we will help you compare options for auto, home, renters, landlord, life, pet, or business insurance.",
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
@@ -792,6 +791,8 @@ export default function OakCompassLandingPage() {
               <p className="mt-2 text-sm text-slate-500">{text.intro}</p>
 
               <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+                
+
                 <div>
                   <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
                     {text.inquiryLabel}
