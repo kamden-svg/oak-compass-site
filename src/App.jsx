@@ -1655,22 +1655,6 @@ export default function OakCompassLandingPage() {
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  onClick={openJobApplication}
-                  className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
-                >
-                  {text.applyNow}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => navigateToPage(PAGE_TEAM)}
-                  className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
-                >
-                  {nav.teamCta}
-                </button>
-              </div>
             </div>
 
             <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
