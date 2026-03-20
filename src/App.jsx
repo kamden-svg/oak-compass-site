@@ -218,110 +218,110 @@ const NAV_COPY = {
 const TEAM_PAGE_COPY = {
   en: {
     badge: "The people behind Oak & Compass",
-    headline: "Insurance guidance from a team that leads with clarity and care",
+    headline: "The kind of team you can actually feel comfortable talking to",
     subheadline:
-      "When clients reach out, they are not getting pushed through a generic sales script. They are getting a thoughtful team that listens first and helps them make confident coverage decisions.",
-    introLabel: "What makes the team different",
-    introTitle: "Built for conversations that feel calm, human, and useful",
+      "Shopping for insurance can feel overwhelming fast. Oak & Compass is built to make that experience feel simpler, more personal, and a lot less intimidating.",
+    introLabel: "Why people connect with the team",
+    introTitle: "Helpful, down-to-earth guidance from real people",
     introBody:
-      "Oak & Compass is designed around practical guidance. The team focuses on reducing confusion, answering questions clearly, and helping families and businesses feel taken care of from the first call forward.",
+      "The goal is not to rush people through a form or push a one-size-fits-all policy. It is to listen, explain things clearly, and help each person feel like they have someone in their corner.",
     values: [
       {
-        title: "Clear advice",
-        body: "We break down options in plain language so coverage decisions feel manageable.",
+        title: "Easy to talk to",
+        body: "Questions are welcome, and answers are given in plain language without making people feel behind.",
       },
       {
-        title: "Local support",
-        body: "Clients work with people who understand the community and stay available when life changes.",
+        title: "Local and personal",
+        body: "The experience is meant to feel like talking with someone who knows the area and genuinely wants to help.",
       },
       {
-        title: "Real follow-through",
-        body: "From first quote to policy updates, the team stays present and responsive.",
+        title: "Still there after the quote",
+        body: "Support does not disappear once a form is submitted. The relationship keeps going when life changes.",
       },
     ],
-    membersTitle: "How the team shows up",
+    membersTitle: "What working with the team feels like",
     membersBody:
-      "Every client conversation is a little different, but these are the roles and strengths that shape the experience.",
+      "Every conversation is different, but these are the kinds of people and strengths clients can expect to run into along the way.",
     members: [
       {
-        name: "Coverage Guide",
-        role: "Helps match people with the right protection",
-        bio: "Turns complex policy choices into clear next steps, especially when clients are comparing multiple options.",
-        highlights: ["Auto and home bundles", "Coverage tradeoffs", "Fast quote follow-up"],
+        name: "The calm explainer",
+        role: "Breaks things down without the insurance-speak",
+        bio: "When coverage choices start sounding confusing, this is the kind of support that slows it down and makes it easier to understand what actually matters.",
+        highlights: ["Clear answers", "No pressure", "Simple explanations"],
       },
       {
-        name: "Client Advocate",
-        role: "Keeps service personal after the quote",
-        bio: "Makes sure questions get answered quickly and that clients feel supported when they need updates or reassurance.",
-        highlights: ["Policy changes", "Renewal check-ins", "Friendly communication"],
+        name: "The follow-through person",
+        role: "Keeps things moving and keeps people in the loop",
+        bio: "Instead of wondering what happens next, clients get thoughtful follow-up, quick replies, and a smoother path from first contact to final decision.",
+        highlights: ["Quick replies", "Friendly check-ins", "Reliable follow-up"],
       },
       {
-        name: "Bilingual Support",
-        role: "Creates a more comfortable process for Spanish-speaking households",
-        bio: "Helps families communicate clearly, understand their options, and move forward with confidence.",
-        highlights: ["Spanish-speaking support", "Family-focused guidance", "Clear explanations"],
+        name: "The family-first helper",
+        role: "Makes the process feel more comfortable and more human",
+        bio: "Whether someone is asking for themselves, a spouse, or a parent, the focus stays on making sure people feel heard and supported.",
+        highlights: ["Family-focused", "Spanish-speaking support", "Comfortable guidance"],
       },
     ],
-    expectationsTitle: "What to expect when you work with Oak & Compass",
+    expectationsTitle: "What people can expect",
     expectations: [
-      "A quick first conversation focused on what matters most to you.",
-      "Coverage options explained without pressure or insurance jargon.",
-      "A team that stays helpful after the form is submitted, not just before.",
+      "A first conversation that feels straightforward instead of stressful.",
+      "Coverage options explained clearly, with room to ask honest questions.",
+      "A team that stays helpful before, during, and after the quote process.",
     ],
     primaryCta: "Start a Quote",
     secondaryCta: "Back to Home",
   },
   es: {
     badge: "El equipo de Oak & Compass",
-    headline: "Asesoria de seguros con claridad, cercania y apoyo real",
+    headline: "Un equipo con el que de verdad se siente comodo hablar",
     subheadline:
-      "Cuando alguien nos contacta, no recibe un guion generico. Recibe un equipo atento que escucha primero y ayuda a tomar decisiones con confianza.",
-    introLabel: "Lo que hace diferente al equipo",
-    introTitle: "Conversaciones claras, humanas y utiles",
+      "Buscar seguro puede sentirse abrumador muy rapido. Oak & Compass busca que ese proceso se sienta mas claro, personal y mucho menos pesado.",
+    introLabel: "Por que la gente conecta con el equipo",
+    introTitle: "Orientacion cercana, clara y humana",
     introBody:
-      "Oak & Compass esta pensado para orientar con calma. El equipo busca reducir confusion, responder preguntas con claridad y acompanar a cada cliente desde el primer contacto.",
+      "La idea no es apresurar a nadie ni empujar una poliza generica. La idea es escuchar, explicar con calma y hacer que cada persona sienta que tiene apoyo real.",
     values: [
       {
-        title: "Consejo claro",
-        body: "Explicamos opciones con lenguaje sencillo para que elegir cobertura sea mas facil.",
+        title: "Facil de hablar",
+        body: "Las preguntas son bienvenidas y las respuestas se dan con palabras claras y sencillas.",
       },
       {
-        title: "Apoyo local",
-        body: "Las personas hablan con un equipo cercano que entiende la comunidad y sigue presente.",
+        title: "Cercano y local",
+        body: "La experiencia busca sentirse como hablar con alguien que conoce la comunidad y quiere ayudar de verdad.",
       },
       {
-        title: "Seguimiento real",
-        body: "Desde la primera cotizacion hasta cambios en la poliza, el equipo responde y acompana.",
+        title: "Apoyo continuo",
+        body: "La ayuda no termina cuando se envia el formulario. El acompanamiento sigue cuando la vida cambia.",
       },
     ],
-    membersTitle: "Como se presenta el equipo",
+    membersTitle: "Como se siente trabajar con el equipo",
     membersBody:
-      "Cada conversacion es distinta, pero estas son las fortalezas que dan forma a la experiencia del cliente.",
+      "Cada conversacion es distinta, pero estas son las cualidades humanas que marcan la experiencia para los clientes.",
     members: [
       {
-        name: "Guia de cobertura",
-        role: "Ayuda a encontrar la proteccion adecuada",
-        bio: "Convierte decisiones complejas en pasos claros, sobre todo cuando hay varias opciones para comparar.",
-        highlights: ["Paquetes de auto y hogar", "Comparacion de coberturas", "Respuesta rapida"],
+        name: "La persona que explica con calma",
+        role: "Aclara opciones sin complicar las cosas",
+        bio: "Cuando la cobertura empieza a sentirse confusa, este tipo de apoyo ayuda a bajar el ritmo y entender lo que de verdad importa.",
+        highlights: ["Respuestas claras", "Sin presion", "Explicaciones simples"],
       },
       {
-        name: "Defensa del cliente",
-        role: "Mantiene el servicio cercano despues de la cotizacion",
-        bio: "Ayuda a resolver dudas con rapidez y hace que cada persona se sienta acompanada cuando necesita apoyo.",
-        highlights: ["Cambios de poliza", "Revision de renovaciones", "Comunicacion amable"],
+        name: "La persona que si da seguimiento",
+        role: "Mantiene el proceso claro y en movimiento",
+        bio: "En lugar de dejar dudas sobre el siguiente paso, los clientes reciben seguimiento atento, respuestas rapidas y una experiencia mas ordenada.",
+        highlights: ["Respuestas rapidas", "Seguimiento amable", "Buena comunicacion"],
       },
       {
-        name: "Apoyo bilingue",
-        role: "Hace el proceso mas comodo para hogares de habla hispana",
-        bio: "Ayuda a las familias a entender sus opciones con claridad y avanzar con seguridad.",
-        highlights: ["Atencion en espanol", "Orientacion para familias", "Explicaciones claras"],
+        name: "La persona que piensa en la familia",
+        role: "Hace que el proceso se sienta mas comodo y humano",
+        bio: "Ya sea para uno mismo, la pareja o un familiar, el enfoque sigue siendo escuchar bien y hacer que la persona se sienta acompanada.",
+        highlights: ["Enfoque familiar", "Atencion en espanol", "Orientacion cercana"],
       },
     ],
-    expectationsTitle: "Que puedes esperar al trabajar con Oak & Compass",
+    expectationsTitle: "Lo que la gente puede esperar",
     expectations: [
-      "Una primera conversacion rapida enfocada en lo que mas te importa.",
-      "Opciones de cobertura explicadas sin presion ni lenguaje complicado.",
-      "Un equipo que sigue ayudando despues de enviar el formulario.",
+      "Una primera conversacion mas simple y menos estresante.",
+      "Opciones explicadas con claridad y espacio para hacer preguntas reales.",
+      "Un equipo que sigue ayudando antes, durante y despues de la cotizacion.",
     ],
     primaryCta: "Comenzar cotizacion",
     secondaryCta: "Volver al inicio",
@@ -1154,13 +1154,6 @@ export default function OakCompassLandingPage() {
                   className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
                 >
                   {nav.teamCta}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => navigateToPage(PAGE_HOME)}
-                  className="rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
-                >
-                  {nav.quote}
                 </button>
               </div>
             </div>
