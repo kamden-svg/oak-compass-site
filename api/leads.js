@@ -1,37 +1,53 @@
-import { Resend } from "resend";
+import { kv } from "@vercel/kv";
+
+const LEADS_KEY = "oak-compass-leads";
+
+function isAuthorized(req) {
+  const password = req.headers["x-admin-password"];
+  return password && password === process.env.LEADS_ADMIN_PASSWORD;
+}
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const lead = req.body || {};
+    if (req.method === "POST") {
+      const lead = req.body || {};
 
-    await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL,
-      to: process.env.LEAD_NOTIFICATION_EMAIL,
-      subject: `New Oak & Compass lead: ${lead.firstName || ""} ${lead.lastName || ""}`.trim(),
-      html: `
-        <h2>New Lead</h2>
-        <p><strong>Inquiry Type:</strong> ${lead.inquiryType || ""}</p>
-        <p><strong>First Name:</strong> ${lead.firstName || ""}</p>
-        <p><strong>Last Name:</strong> ${lead.lastName || ""}</p>
-        <p><strong>Phone:</strong> ${lead.phone || ""}</p>
-        <p><strong>Email:</strong> ${lead.email || ""}</p>
-        <p><strong>Spanish-speaking agent requested:</strong> ${lead.needsSpanish || ""}</p>
-        <p><strong>Insurance Type:</strong> ${lead.insuranceType || ""}</p>
-        <p><strong>ZIP Code:</strong> ${lead.zipCode || ""}</p>
-        <p><strong>Notes:</strong> ${lead.notes || ""}</p>
-      `,
-    });
+      const newLead = {
+        ...lead,
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        submittedAt: new Date().toLocaleString(),
+      };
 
-    return res.status(200).json({ success: true });
+      await kv.lpush(LEADS_KEY, JSON.stringify(newLead));
+
+      return res.status(200).json({ success: true });
+    }
+
+    if (req.method === "GET") {
+      if (!isAuthorized(req)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      const rawLeads = await kv.lrange(LEADS_KEY, 0, -1);
+      const leads = rawLeads.map((item) =>
+        typeof item === "string" ? JSON.parse(item) : item
+      );
+
+      return res.status(200).json({ leads });
+    }
+
+    if (req.method === "DELETE") {
+      if (!isAuthorized(req)) {
+        return res.status(401).json({ error: "Unauthorized" });
+      }
+
+      await kv.del(LEADS_KEY);
+      return res.status(200).json({ success: true });
+    }
+
+    return res.status(405).json({ error: "Method not allowed" });
   } catch (error) {
-    console.error("Lead submission failed:", error);
-    return res.status(500).json({
-      error: error?.message || "Failed to send lead email",
-    });
+    console.error("Leads API error:", error);
+    return res.status(500).json({ error: "Server error" });
   }
 }
