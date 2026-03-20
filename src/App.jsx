@@ -188,7 +188,14 @@ export default function OakCompassLandingPage() {
         body: JSON.stringify(form),
       });
 
-      const data = await response.json();
+      const rawText = await response.text();
+      let data = {};
+
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = { error: rawText || "Something went wrong. Please try again." };
+      }
 
       if (!response.ok) {
         throw new Error(data.error || "Something went wrong. Please try again.");
