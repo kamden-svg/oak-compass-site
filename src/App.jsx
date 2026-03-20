@@ -10,6 +10,10 @@ const INITIAL_FORM = {
   email: "",
   insuranceType: "",
   zipCode: "",
+  desiredRole: "",
+  yearsExperience: "",
+  availability: "",
+  resumeLink: "",
   notes: "",
 };
 
@@ -17,10 +21,12 @@ const INQUIRY_OPTIONS = {
   en: [
     { value: "quote", label: "Get a Quote" },
     { value: "referral", label: "Refer Someone" },
+    { value: "job", label: "Apply for a Job" },
   ],
   es: [
     { value: "quote", label: "Obtener cotización" },
     { value: "referral", label: "Referir a alguien" },
+    { value: "job", label: "Solicitar trabajo" },
   ],
 };
 
@@ -58,7 +64,10 @@ const COPY = {
     localGuidance: "Local guidance",
     referTitle: "Refer someone",
     quoteTitle: "Request a quote",
+    jobTitle: "Apply for a job opportunity",
     intro: "Fill this out and we will reach out with next steps.",
+    jobIntro:
+      "Tell us a little about your background and the kind of role you are interested in.",
     inquiryLabel: "What would you like to do?",
     firstName: "First name",
     lastName: "Last name",
@@ -69,16 +78,24 @@ const COPY = {
     yes: "Yes",
     insuranceTypeQuote: "What type of insurance are you looking for?",
     insuranceTypeReferral: "What type of insurance do they need?",
+    desiredRole: "Role you are interested in",
+    yearsExperience: "Years of experience",
+    availability: "When can you start?",
+    resumeLink: "Resume link",
+    resumeLinkPlaceholder: "LinkedIn, Google Drive, or resume URL",
     selectOne: "Select one",
     zipCode: "ZIP code",
     notesQuote: "Anything else we should know?",
     notesReferral: "Anything we should know about the referral?",
+    notesJob: "Tell us about yourself and your experience",
     optional: "Optional",
     submitQuote: "Get My Quote",
     submitReferral: "Submit Referral",
+    submitJob: "Submit Application",
     consent: "By submitting, you agree to be contacted about your request.",
     submittedQuote: "Thanks, your quote request has been submitted.",
     submittedReferral: "Thanks, your referral has been submitted.",
+    submittedJob: "Thanks, your job application has been submitted.",
     canopyQuote:
       "Want to speed things up? You can securely connect your current insurance information below.",
     canopyReferral:
@@ -90,6 +107,12 @@ const COPY = {
     helpfulBody: "We walk you through your options and help you find the right fit.",
     localTitle: "Local",
     localBody: "Real support from a team that cares about protecting what matters most.",
+    careersEyebrow: "Job Opportunity",
+    careersTitle: "Want to work with Oak & Compass?",
+    careersBody:
+      "We are opening the door for people who care about helping clients feel informed, comfortable, and supported.",
+    careersPoints: ["People-first team", "Local relationships", "Growth-minded support"],
+    applyNow: "Apply Now",
     canopyTitle: "Connect Your Insurance",
     canopyBody:
       "Securely connect your current policy information so we can review options faster.",
@@ -112,11 +135,20 @@ const COPY = {
     filterAll: "All inquiries",
     filterQuotes: "Quotes",
     filterReferrals: "Referrals",
+    filterJobs: "Job applications",
     submittedAt: "Submitted",
     inquiryType: "Inquiry Type",
     spanishNeeded: "Spanish",
     notesLabel: "Notes",
     insuranceType: "Insurance Type",
+    desiredRoleLabel: "Desired Role",
+    yearsExperienceLabel: "Experience",
+    availabilityLabel: "Availability",
+    resumeLinkLabel: "Resume Link",
+    portalNotesLabel: "Portal Notes",
+    portalNotesPlaceholder: "Add private follow-up notes here",
+    deleteLead: "Delete",
+    loading: "Loading...",
   },
   es: {
     badge: "Oak & Compass Insurance",
@@ -127,8 +159,11 @@ const COPY = {
     simpleProcess: "Proceso simple",
     localGuidance: "Atención local",
     referTitle: "Referir a alguien",
+    jobTitle: "Solicitar una oportunidad de trabajo",
     quoteTitle: "Solicitar una cotización",
     intro: "Completa este formulario y nos pondremos en contacto contigo con los siguientes pasos.",
+    jobIntro:
+      "Cuentanos un poco sobre tu experiencia y el tipo de puesto que te interesa.",
     inquiryLabel: "¿Qué te gustaría hacer?",
     firstName: "Nombre",
     lastName: "Apellido",
@@ -145,8 +180,16 @@ const COPY = {
     notesReferral: "¿Hay algo que debamos saber sobre la referencia?",
     optional: "Opcional",
     submitQuote: "Obtener mi cotización",
+    desiredRole: "Puesto que te interesa",
+    yearsExperience: "Anos de experiencia",
+    availability: "Cuando puedes comenzar",
+    resumeLink: "Enlace a tu resume",
+    resumeLinkPlaceholder: "LinkedIn, Google Drive o URL del resume",
+    notesJob: "Cuentanos sobre ti y tu experiencia",
     submitReferral: "Enviar referencia",
+    submitJob: "Enviar solicitud",
     consent: "Al enviar este formulario, aceptas que nos comuniquemos contigo sobre tu solicitud.",
+    submittedJob: "Gracias, tu solicitud de trabajo ha sido enviada.",
     submittedQuote: "Gracias, tu solicitud de cotización ha sido enviada.",
     submittedReferral: "Gracias, tu referencia ha sido enviada.",
     canopyQuote:
@@ -160,6 +203,12 @@ const COPY = {
     helpfulBody: "Te guiamos por tus opciones y te ayudamos a encontrar la mejor.",
     localTitle: "Local",
     localBody: "Apoyo real de un equipo que se preocupa por proteger lo que más importa.",
+    careersEyebrow: "Oportunidad laboral",
+    careersTitle: "Quieres trabajar con Oak & Compass?",
+    careersBody:
+      "Estamos abriendo la puerta a personas que quieren ayudar a los clientes con claridad, calma y atencion humana.",
+    careersPoints: ["Equipo humano", "Relaciones locales", "Espacio para crecer"],
+    applyNow: "Aplica ahora",
     canopyTitle: "Conecta tu seguro",
     canopyBody:
       "Conecta de forma segura la información de tu póliza actual para que podamos revisar opciones más rápido.",
@@ -182,11 +231,20 @@ const COPY = {
     filterAll: "Todas las solicitudes",
     filterQuotes: "Cotizaciones",
     filterReferrals: "Referencias",
+    filterJobs: "Solicitudes de trabajo",
     submittedAt: "Enviado",
     inquiryType: "Tipo de solicitud",
     spanishNeeded: "Español",
     notesLabel: "Notas",
     insuranceType: "Tipo de seguro",
+    desiredRoleLabel: "Puesto",
+    yearsExperienceLabel: "Experiencia",
+    availabilityLabel: "Disponibilidad",
+    resumeLinkLabel: "Enlace del resume",
+    portalNotesLabel: "Notas internas",
+    portalNotesPlaceholder: "Agrega notas privadas de seguimiento",
+    deleteLead: "Eliminar",
+    loading: "Cargando...",
   },
 };
 
@@ -194,6 +252,7 @@ const PAGE_HOME = "home";
 const PAGE_TEAM = "team";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
+const FORM_CARD_ID = "lead-form-card";
 
 const NAV_COPY = {
   en: {
@@ -346,14 +405,13 @@ function SiteHeader({ language, activePage, onNavigate }) {
       <button
         type="button"
         onClick={() => onNavigate(PAGE_HOME)}
-        className="inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-white/90 px-4 py-2 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
+        className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/90 p-3 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
       >
         <img
           src="/logo.png"
           alt="Oak & Compass Insurance logo"
-          className="h-10 w-10 rounded-full object-contain"
+          className="h-14 w-14 rounded-full object-contain"
         />
-        <span>Oak & Compass Insurance</span>
       </button>
 
       <nav className="hidden items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
@@ -657,6 +715,10 @@ function downloadCsv(leads) {
     "Email",
     "Spanish",
     "Insurance Type",
+    "Desired Role",
+    "Years of Experience",
+    "Availability",
+    "Resume Link",
     "ZIP Code",
     "Notes",
   ];
@@ -675,6 +737,10 @@ function downloadCsv(leads) {
     lead.email,
     lead.needsSpanishRaw || lead.needsSpanish,
     lead.insuranceType,
+    lead.desiredRole,
+    lead.yearsExperience,
+    lead.availability,
+    lead.resumeLink,
     lead.zipCode,
     lead.notes,
   ]);
@@ -817,13 +883,14 @@ function LeadsDashboard({
             <option value="all">{text.filterAll}</option>
             <option value="quote">{text.filterQuotes}</option>
             <option value="referral">{text.filterReferrals}</option>
+            <option value="job">{text.filterJobs}</option>
           </select>
         </div>
       </div>
 
       {isLoading ? (
         <div className="mt-8 rounded-3xl bg-white p-8 text-slate-600 shadow-sm ring-1 ring-slate-200">
-          Loading...
+          {text.loading}
         </div>
       ) : loadError ? (
         <div className="mt-8 rounded-3xl bg-white p-8 text-red-600 shadow-sm ring-1 ring-slate-200">
@@ -848,14 +915,14 @@ function LeadsDashboard({
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
-                    {lead.insuranceType || "-"}
+                    {lead.insuranceType || lead.desiredRole || "-"}
                   </span>
                   <button
                     type="button"
                     onClick={() => onDeleteLead(lead.id)}
                     className="rounded-2xl border border-red-200 px-3 py-1.5 text-sm font-semibold text-red-600 transition hover:bg-red-50"
                   >
-                    Delete
+                    {text.deleteLead}
                   </button>
                 </div>
               </div>
@@ -885,6 +952,22 @@ function LeadsDashboard({
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.insuranceType}</p>
                   <p className="mt-1 text-slate-900">{lead.insuranceType || "-"}</p>
                 </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.desiredRoleLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.desiredRole || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.yearsExperienceLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.yearsExperience || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.availabilityLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.availability || "-"}</p>
+                </div>
+                <div className="sm:col-span-2 lg:col-span-3">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.resumeLinkLabel}</p>
+                  <p className="mt-1 break-words text-slate-900">{lead.resumeLink || "-"}</p>
+                </div>
               </div>
 
               <div className="mt-5 grid gap-4 lg:grid-cols-2">
@@ -894,7 +977,7 @@ function LeadsDashboard({
                 </div>
                 <div>
                   <label htmlFor={`portal-note-${lead.id}`} className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-                    Portal Notes
+                    {text.portalNotesLabel}
                   </label>
                   <textarea
                     id={`portal-note-${lead.id}`}
@@ -902,7 +985,7 @@ function LeadsDashboard({
                     defaultValue={lead.portalNotes || ""}
                     className="mt-1 w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
                     onBlur={(event) => onSaveLeadNote(lead.id, event.target.value)}
-                    placeholder="Add private follow-up notes here"
+                    placeholder={text.portalNotesPlaceholder}
                   />
                   {savingLeadId === lead.id ? (
                     <p className="mt-2 text-xs text-slate-500">Saving...</p>
@@ -921,6 +1004,7 @@ export default function OakCompassLandingPage() {
   const [form, setForm] = useState(INITIAL_FORM);
   const [leads, setLeads] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submittedInquiryType, setSubmittedInquiryType] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [activePage, setActivePage] = useState(() => getPageFromHash(window.location.hash));
   const [isLeadsAuthenticated, setIsLeadsAuthenticated] = useState(false);
@@ -978,6 +1062,10 @@ export default function OakCompassLandingPage() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (isSubmitted) {
+      setIsSubmitted(false);
+      setSubmittedInquiryType("");
+    }
     setForm((current) => ({ ...current, [name]: value }));
   };
 
@@ -1004,6 +1092,23 @@ export default function OakCompassLandingPage() {
   };
 
   const isReferral = form.inquiryType === "referral";
+  const isJobApplication = form.inquiryType === "job";
+  const submittedIsReferral = submittedInquiryType === "referral";
+  const submittedIsJobApplication = submittedInquiryType === "job";
+
+  const openJobApplication = () => {
+    if (activePage !== PAGE_HOME) {
+      navigateToPage(PAGE_HOME);
+    }
+
+    setForm((current) => ({ ...current, inquiryType: "job" }));
+    setIsSubmitted(false);
+    setSubmittedInquiryType("");
+
+    window.setTimeout(() => {
+      document.getElementById(FORM_CARD_ID)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 60);
+  };
 
   const localizedLeads = useMemo(() => {
     return leads.map((lead) => ({
@@ -1032,6 +1137,10 @@ export default function OakCompassLandingPage() {
         lead.zipCode,
         lead.notes,
         lead.insuranceType,
+        lead.desiredRole,
+        lead.yearsExperience,
+        lead.availability,
+        lead.resumeLink,
       ]
         .join(" ")
         .toLowerCase();
@@ -1066,6 +1175,7 @@ export default function OakCompassLandingPage() {
         throw new Error(data.error || "Something went wrong. Please try again.");
       }
 
+      setSubmittedInquiryType(form.inquiryType);
       setIsSubmitted(true);
       setForm(INITIAL_FORM);
     } catch (error) {
@@ -1272,6 +1382,13 @@ export default function OakCompassLandingPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
                   type="button"
+                  onClick={openJobApplication}
+                  className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+                >
+                  {text.applyNow}
+                </button>
+                <button
+                  type="button"
                   onClick={() => navigateToPage(PAGE_TEAM)}
                   className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
                 >
@@ -1280,11 +1397,11 @@ export default function OakCompassLandingPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
+            <div id={FORM_CARD_ID} className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
               <h2 className="text-2xl font-semibold">
-                {isReferral ? text.referTitle : text.quoteTitle}
+                {isJobApplication ? text.jobTitle : isReferral ? text.referTitle : text.quoteTitle}
               </h2>
-              <p className="mt-2 text-sm text-slate-500">{text.intro}</p>
+              <p className="mt-2 text-sm text-slate-500">{isJobApplication ? text.jobIntro : text.intro}</p>
 
               <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
                 
@@ -1388,6 +1505,7 @@ export default function OakCompassLandingPage() {
                   </select>
                 </div>
 
+                {!isJobApplication ? (
                 <div>
                   <label htmlFor="insuranceType" className="mb-2 block text-sm font-medium">
                     {isReferral ? text.insuranceTypeReferral : text.insuranceTypeQuote}
@@ -1407,6 +1525,41 @@ export default function OakCompassLandingPage() {
                     ))}
                   </select>
                 </div>
+                ) : null}
+
+                {isJobApplication ? (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="desiredRole" className="mb-2 block text-sm font-medium">
+                        {text.desiredRole}
+                      </label>
+                      <input
+                        id="desiredRole"
+                        name="desiredRole"
+                        type="text"
+                        value={form.desiredRole}
+                        onChange={handleChange}
+                        placeholder={text.desiredRole}
+                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="yearsExperience" className="mb-2 block text-sm font-medium">
+                        {text.yearsExperience}
+                      </label>
+                      <input
+                        id="yearsExperience"
+                        name="yearsExperience"
+                        type="text"
+                        value={form.yearsExperience}
+                        onChange={handleChange}
+                        placeholder={text.yearsExperience}
+                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      />
+                    </div>
+                  </div>
+                ) : null}
 
                 <div>
                   <label htmlFor="zipCode" className="mb-2 block text-sm font-medium">
@@ -1423,9 +1576,43 @@ export default function OakCompassLandingPage() {
                   />
                 </div>
 
+                {isJobApplication ? (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="availability" className="mb-2 block text-sm font-medium">
+                        {text.availability}
+                      </label>
+                      <input
+                        id="availability"
+                        name="availability"
+                        type="text"
+                        value={form.availability}
+                        onChange={handleChange}
+                        placeholder={text.availability}
+                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="resumeLink" className="mb-2 block text-sm font-medium">
+                        {text.resumeLink}
+                      </label>
+                      <input
+                        id="resumeLink"
+                        name="resumeLink"
+                        type="url"
+                        value={form.resumeLink}
+                        onChange={handleChange}
+                        placeholder={text.resumeLinkPlaceholder}
+                        className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      />
+                    </div>
+                  </div>
+                ) : null}
+
                 <div>
                   <label htmlFor="notes" className="mb-2 block text-sm font-medium">
-                    {isReferral ? text.notesReferral : text.notesQuote}
+                    {isJobApplication ? text.notesJob : isReferral ? text.notesReferral : text.notesQuote}
                   </label>
                   <textarea
                     id="notes"
@@ -1447,7 +1634,9 @@ export default function OakCompassLandingPage() {
                     ? language === "es"
                       ? "Enviando..."
                       : "Submitting..."
-                    : isReferral
+                    : isJobApplication
+                      ? text.submitJob
+                      : isReferral
                       ? text.submitReferral
                       : text.submitQuote}
                 </button>
@@ -1458,18 +1647,26 @@ export default function OakCompassLandingPage() {
               {isSubmitted ? (
                 <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
                   <p className="font-semibold">
-                    {isReferral ? text.submittedReferral : text.submittedQuote}
+                    {submittedIsJobApplication
+                      ? text.submittedJob
+                      : submittedIsReferral
+                        ? text.submittedReferral
+                        : text.submittedQuote}
                   </p>
-                  <p className="mt-1 text-emerald-700">
-                    {isReferral ? text.canopyReferral : text.canopyQuote}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => navigateToPage(PAGE_CANOPY)}
-                    className="mt-3 inline-flex rounded-2xl bg-emerald-700 px-4 py-2 font-semibold text-white transition hover:opacity-90"
-                  >
-                    {text.canopyButton}
-                  </button>
+                  {!submittedIsJobApplication ? (
+                    <>
+                      <p className="mt-1 text-emerald-700">
+                        {submittedIsReferral ? text.canopyReferral : text.canopyQuote}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => navigateToPage(PAGE_CANOPY)}
+                        className="mt-3 inline-flex rounded-2xl bg-emerald-700 px-4 py-2 font-semibold text-white transition hover:opacity-90"
+                      >
+                        {text.canopyButton}
+                      </button>
+                    </>
+                  ) : null}
                 </div>
               ) : null}
             </div>
@@ -1492,6 +1689,37 @@ export default function OakCompassLandingPage() {
           <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
             <h3 className="text-lg font-semibold">{text.localTitle}</h3>
             <p className="mt-2 text-sm leading-6 text-slate-600">{text.localBody}</p>
+          </div>
+        </div>
+
+        <div className="mt-8 rounded-[2rem] border border-emerald-200 bg-gradient-to-br from-emerald-50 via-white to-amber-50 px-6 py-8 shadow-sm ring-1 ring-white/70 md:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                {text.careersEyebrow}
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+                {text.careersTitle}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                {text.careersBody}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-600">
+                {text.careersPoints.map((point) => (
+                  <span key={point} className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
+                    {point}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={openJobApplication}
+              className="rounded-full bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+            >
+              {text.applyNow}
+            </button>
           </div>
         </div>
 
@@ -1544,6 +1772,8 @@ export function __oakCompassLandingPageChecks() {
     inquiryOptionCountSpanish: INQUIRY_OPTIONS.es.length,
     hasReferralOptionEnglish: INQUIRY_OPTIONS.en.some((option) => option.value === "referral"),
     hasReferralOptionSpanish: INQUIRY_OPTIONS.es.some((option) => option.value === "referral"),
+    hasJobOptionEnglish: INQUIRY_OPTIONS.en.some((option) => option.value === "job"),
+    hasJobOptionSpanish: INQUIRY_OPTIONS.es.some((option) => option.value === "job"),
     optionCountEnglish: INSURANCE_OPTIONS.en.length,
     optionCountSpanish: INSURANCE_OPTIONS.es.length,
     hasPetInsuranceEnglish: INSURANCE_OPTIONS.en.includes("Pet Insurance"),
@@ -1556,6 +1786,7 @@ export function __oakCompassLandingPageChecks() {
     hasLeadSearch: true,
     hasLeadExport: true,
     hasLeadFilter: true,
+    hasJobApplicationFlow: true,
     hasSingleLeadDelete: true,
     hasPortalNotes: true,
     postsToApi: true,
