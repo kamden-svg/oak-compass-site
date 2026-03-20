@@ -107,6 +107,7 @@ const COPY = {
     submitQuote: "Get My Quote",
     submitReferral: "Submit Referral",
     submitJob: "Submit Application",
+    priceCheckCta: "Check my price",
     consent: "By submitting, you agree to be contacted about your request.",
     submittedQuote: "Thanks, your quote request has been submitted.",
     submittedReferral: "Thanks, your referral has been submitted.",
@@ -203,6 +204,7 @@ const COPY = {
     notesJob: "Cuentanos sobre ti y tu experiencia",
     submitReferral: "Enviar referencia",
     submitJob: "Enviar solicitud",
+    priceCheckCta: "Ver mi precio",
     consent: "Al enviar este formulario, aceptas que nos comuniquemos contigo sobre tu solicitud.",
     submittedJob: "Gracias, tu solicitud de trabajo ha sido enviada.",
     submittedQuote: "Gracias, tu solicitud de cotización ha sido enviada.",
@@ -589,6 +591,116 @@ function ForestLandscapeBackground() {
           <path strokeWidth="2" d="M0 812C111 795 223 792 337 801C447 810 553 829 660 831C770 833 873 817 983 817C1110 816 1245 837 1440 828" />
         </g>
       </svg>
+    </div>
+  );
+}
+
+function InsuranceTypeIcon({ type }) {
+  const key = String(type || "").toLowerCase();
+
+  if (key.includes("auto")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3 14L5.5 9.5C6 8.6 6.9 8 8 8h8c1.1 0 2 .6 2.5 1.5L21 14" />
+        <path d="M5 14h14a1 1 0 0 1 1 1v2h-2" />
+        <path d="M4 17H3v-2a1 1 0 0 1 1-1" />
+        <circle cx="7" cy="17" r="1.8" />
+        <circle cx="17" cy="17" r="1.8" />
+      </svg>
+    );
+  }
+
+  if (key.includes("home")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3 11.5L12 4l9 7.5" />
+        <path d="M6 10.5V20h12v-9.5" />
+        <path d="M10 20v-5h4v5" />
+      </svg>
+    );
+  }
+
+  if (key.includes("renter")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M6 20V9l6-4 6 4v11" />
+        <path d="M9 12h6" />
+        <path d="M12 16h.01" />
+      </svg>
+    );
+  }
+
+  if (key.includes("landlord")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 20V10l8-6 8 6v10" />
+        <path d="M8 20v-5h8v5" />
+        <path d="M15.5 8.5l3 3" />
+        <circle cx="18.7" cy="11.7" r="1.2" />
+      </svg>
+    );
+  }
+
+  if (key.includes("life")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M12 20s-7-4.7-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.3-7 10-7 10Z" />
+      </svg>
+    );
+  }
+
+  if (key.includes("business")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M4 20V9h16v11" />
+        <path d="M9 9V6h6v3" />
+        <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01" />
+      </svg>
+    );
+  }
+
+  if (key.includes("pet")) {
+    return (
+      <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <circle cx="8" cy="9" r="1.7" />
+        <circle cx="12" cy="7" r="1.7" />
+        <circle cx="16" cy="9" r="1.7" />
+        <path d="M8.5 18c0-2.4 1.5-4 3.5-4s3.5 1.6 3.5 4c0 1.3-1 2-2.1 2H10.6c-1.1 0-2.1-.7-2.1-2Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 24 24" className="h-10 w-10" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M12 3l7 3v5c0 4.5-2.8 7.8-7 10-4.2-2.2-7-5.5-7-10V6l7-3Z" />
+      <path d="M12 8v8M8 12h8" />
+    </svg>
+  );
+}
+
+function InsuranceTypeCards({ options, value, onSelect }) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {options.map((option, index) => {
+        const isSelected = value === option;
+        return (
+          <button
+            key={`${option}-${index}`}
+            type="button"
+            onClick={() => onSelect(option)}
+            className={`group flex min-h-40 flex-col items-center justify-center rounded-[1.75rem] border bg-white p-6 text-center shadow-sm transition ${
+              isSelected
+                ? "border-blue-700 ring-2 ring-blue-200"
+                : "border-slate-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-md"
+            }`}
+          >
+            <div className={`mb-5 text-blue-800 transition ${isSelected ? "scale-105" : "group-hover:scale-105"}`}>
+              <InsuranceTypeIcon type={option} />
+            </div>
+            <span className="text-2xl font-semibold tracking-tight text-blue-900">{option}</span>
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -1738,29 +1850,75 @@ export default function OakCompassLandingPage() {
               </h2>
               <p className="mt-2 text-sm text-slate-500">{text.intro}</p>
 
-              <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-                
-
+              <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
                     {text.inquiryLabel}
                   </label>
-                  <select
-                    id="inquiryType"
-                    name="inquiryType"
-                    value={form.inquiryType}
-                    onChange={handleChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                  >
-                    {inquiryOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {inquiryOptions.map((option) => {
+                      const isSelected = form.inquiryType === option.value;
+                      return (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => handleChange({ target: { name: "inquiryType", value: option.value } })}
+                          className={`rounded-2xl border px-4 py-3 text-sm font-semibold transition ${
+                            isSelected
+                              ? "border-slate-900 bg-slate-900 text-white"
+                              : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label className="mb-3 block text-sm font-medium">
+                    {isReferral ? text.insuranceTypeReferral : text.insuranceTypeQuote}
+                  </label>
+                  <InsuranceTypeCards
+                    options={insuranceOptions}
+                    value={form.insuranceType}
+                    onSelect={(option) => handleChange({ target: { name: "insuranceType", value: option } })}
+                  />
+                </div>
+
+                <div className="grid gap-4 lg:grid-cols-[0.85fr,1.15fr]">
+                  <div className="rounded-[1.5rem] border border-slate-200 bg-white p-5 shadow-[0_14px_30px_-20px_rgba(15,23,42,0.45)]">
+                    <label htmlFor="zipCode" className="mb-2 block text-lg font-medium text-slate-600">
+                      {text.zipCode}
+                    </label>
+                    <input
+                      id="zipCode"
+                      name="zipCode"
+                      type="text"
+                      value={form.zipCode}
+                      onChange={handleChange}
+                      placeholder={text.zipCode}
+                      className="w-full border-0 bg-transparent p-0 text-4xl font-semibold tracking-tight text-slate-900 outline-none placeholder:text-slate-300"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="min-h-[7.25rem] rounded-[1.5rem] bg-gradient-to-b from-red-500 to-red-700 px-6 py-4 text-3xl font-semibold text-white shadow-[0_16px_30px_-18px_rgba(127,29,29,0.8)] transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isSubmitting
+                      ? language === "es"
+                        ? "Enviando..."
+                        : "Submitting..."
+                      : isReferral
+                        ? text.submitReferral
+                        : text.priceCheckCta}
+                  </button>
+                </div>
+
+                <div className="grid gap-4 border-t border-slate-200 pt-6 sm:grid-cols-2">
                   <div>
                     <label htmlFor="firstName" className="mb-2 block text-sm font-medium">
                       {text.firstName}
@@ -1841,41 +1999,6 @@ export default function OakCompassLandingPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="insuranceType" className="mb-2 block text-sm font-medium">
-                    {isReferral ? text.insuranceTypeReferral : text.insuranceTypeQuote}
-                  </label>
-                  <select
-                    id="insuranceType"
-                    name="insuranceType"
-                    value={form.insuranceType}
-                    onChange={handleChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                  >
-                    <option value="">{text.selectOne}</option>
-                    {insuranceOptions.map((option, index) => (
-                      <option key={`${language}-${index}`} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div>
-                  <label htmlFor="zipCode" className="mb-2 block text-sm font-medium">
-                    {text.zipCode}
-                  </label>
-                  <input
-                    id="zipCode"
-                    name="zipCode"
-                    type="text"
-                    value={form.zipCode}
-                    onChange={handleChange}
-                    placeholder={text.zipCode}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
-                  />
-                </div>
-
-                <div>
                   <label htmlFor="notes" className="mb-2 block text-sm font-medium">
                     {isReferral ? text.notesReferral : text.notesQuote}
                   </label>
@@ -1889,20 +2012,6 @@ export default function OakCompassLandingPage() {
                     className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
                   />
                 </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {isSubmitting
-                    ? language === "es"
-                      ? "Enviando..."
-                      : "Submitting..."
-                    : isReferral
-                      ? text.submitReferral
-                      : text.submitQuote}
-                </button>
 
                 <p className="text-center text-xs text-slate-500">{text.consent}</p>
               </form>
