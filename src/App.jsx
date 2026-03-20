@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const INITIAL_FORM = {
   needsSpanish: "no",
@@ -51,7 +52,7 @@ const COPY = {
     badge: "Oak & Compass Insurance",
     headline: "Get a fast insurance quote without the hassle",
     subheadline:
-      "Tell us a few basics and we will help you compare options for auto, home, renters, landlord, life, pet, or business insurance.",
+      "Tell us a few basics and we will help you compare options for all of your insurance needs.",
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
@@ -105,10 +106,17 @@ const COPY = {
     noLeads: "No leads have been submitted yet.",
     backToSite: "Back to Site",
     clearLeads: "Clear All Leads",
+    exportLeads: "Export CSV",
+    searchLeads: "Search leads",
+    searchPlaceholder: "Search name, phone, email, ZIP, notes...",
+    filterAll: "All inquiries",
+    filterQuotes: "Quotes",
+    filterReferrals: "Referrals",
     submittedAt: "Submitted",
     inquiryType: "Inquiry Type",
     spanishNeeded: "Spanish",
     notesLabel: "Notes",
+    insuranceType: "Insurance Type",
   },
   es: {
     badge: "Oak & Compass Insurance",
@@ -168,10 +176,17 @@ const COPY = {
     noLeads: "Todavía no se han enviado prospectos.",
     backToSite: "Volver al sitio",
     clearLeads: "Borrar todos los prospectos",
+    exportLeads: "Exportar CSV",
+    searchLeads: "Buscar prospectos",
+    searchPlaceholder: "Buscar nombre, teléfono, correo, código postal, notas...",
+    filterAll: "Todas las solicitudes",
+    filterQuotes: "Cotizaciones",
+    filterReferrals: "Referencias",
     submittedAt: "Enviado",
     inquiryType: "Tipo de solicitud",
     spanishNeeded: "Español",
     notesLabel: "Notas",
+    insuranceType: "Tipo de seguro",
   },
 };
 
@@ -181,11 +196,61 @@ function formatInquiryType(value, language) {
   return match ? match.label : value;
 }
 
+function downloadCsv(leads) {
+  const headers = [
+    "Submitted",
+    "Inquiry Type",
+    "First Name",
+    "Last Name",
+    "Phone",
+    "Email",
+    "Spanish",
+    "Insurance Type",
+    "ZIP Code",
+    "Notes",
+  ];
+
+  const escapeCell = (value) => {
+    const text = String(value ?? "").replace(/"/g, '""');
+    return `"${text}"`;
+  };
+
+  const rows = leads.map((lead) => [
+    lead.submittedAt,
+    lead.inquiryTypeRaw || lead.inquiryType,
+    lead.firstName,
+    lead.lastName,
+    lead.phone,
+    lead.email,
+    lead.needsSpanishRaw || lead.needsSpanish,
+    lead.insuranceType,
+    lead.zipCode,
+    lead.notes,
+  ]);
+
+  const csv = [headers, ...rows].map((row) => row.map(escapeCell).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "oak-compass-leads.csv";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
 function LeadsDashboard({
   text,
   leads,
+  filteredLeads,
   onBack,
   onClear,
+  onExport,
+  searchTerm,
+  setSearchTerm,
+  inquiryFilter,
+  setInquiryFilter,
   passwordInput,
   setPasswordInput,
   onUnlock,
@@ -239,7 +304,7 @@ function LeadsDashboard({
 
   return (
     <section className="mx-auto max-w-6xl px-6 py-16">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{text.leadsTitle}</h1>
           <p className="mt-2 text-slate-600">
@@ -247,6 +312,13 @@ function LeadsDashboard({
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={onExport}
+            className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            {text.exportLeads}
+          </button>
           <button
             type="button"
             onClick={onBack}
@@ -264,6 +336,37 @@ function LeadsDashboard({
         </div>
       </div>
 
+      <div className="mt-6 grid gap-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1fr,220px]">
+        <div>
+          <label htmlFor="leadSearch" className="mb-2 block text-sm font-medium text-slate-700">
+            {text.searchLeads}
+          </label>
+          <input
+            id="leadSearch"
+            type="text"
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+            placeholder={text.searchPlaceholder}
+            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+          />
+        </div>
+        <div>
+          <label htmlFor="leadFilter" className="mb-2 block text-sm font-medium text-slate-700">
+            {text.inquiryType}
+          </label>
+          <select
+            id="leadFilter"
+            value={inquiryFilter}
+            onChange={(event) => setInquiryFilter(event.target.value)}
+            className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+          >
+            <option value="all">{text.filterAll}</option>
+            <option value="quote">{text.filterQuotes}</option>
+            <option value="referral">{text.filterReferrals}</option>
+          </select>
+        </div>
+      </div>
+
       {isLoading ? (
         <div className="mt-8 rounded-3xl bg-white p-8 text-slate-600 shadow-sm ring-1 ring-slate-200">
           Loading...
@@ -272,13 +375,13 @@ function LeadsDashboard({
         <div className="mt-8 rounded-3xl bg-white p-8 text-red-600 shadow-sm ring-1 ring-slate-200">
           {loadError}
         </div>
-      ) : leads.length === 0 ? (
+      ) : filteredLeads.length === 0 ? (
         <div className="mt-8 rounded-3xl bg-white p-8 text-slate-600 shadow-sm ring-1 ring-slate-200">
           {text.noLeads}
         </div>
       ) : (
         <div className="mt-8 grid gap-4">
-          {leads.map((lead) => (
+          {filteredLeads.map((lead) => (
             <div key={lead.id} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div>
@@ -315,6 +418,10 @@ function LeadsDashboard({
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.zipCode}</p>
                   <p className="mt-1 text-slate-900">{lead.zipCode || "-"}</p>
                 </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.insuranceType}</p>
+                  <p className="mt-1 text-slate-900">{lead.insuranceType || "-"}</p>
+                </div>
               </div>
 
               <div className="mt-5">
@@ -341,6 +448,17 @@ export default function OakCompassLandingPage() {
   const [passwordError, setPasswordError] = useState("");
   const [loadError, setLoadError] = useState("");
   const [isLoadingLeads, setIsLoadingLeads] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [inquiryFilter, setInquiryFilter] = useState("all");
+
+  useEffect(() => {
+    document.title = "Oak & Compass Insurance";
+
+    const favicon = document.querySelector("link[rel='icon']") || document.createElement("link");
+    favicon.setAttribute("rel", "icon");
+    favicon.setAttribute("href", "/logo.png");
+    document.head.appendChild(favicon);
+  }, []);
 
   useEffect(() => {
     if (!showCanopy) return undefined;
@@ -375,11 +493,40 @@ export default function OakCompassLandingPage() {
   const inquiryOptions = INQUIRY_OPTIONS[language];
   const insuranceOptions = INSURANCE_OPTIONS[language];
 
-  const localizedLeads = leads.map((lead) => ({
-    ...lead,
-    inquiryType: formatInquiryType(lead.inquiryType, language),
-    needsSpanish: lead.needsSpanish === "yes" ? text.yes : text.no,
-  }));
+  const localizedLeads = useMemo(() => {
+    return leads.map((lead) => ({
+      ...lead,
+      inquiryTypeRaw: lead.inquiryType,
+      needsSpanishRaw: lead.needsSpanish,
+      inquiryType: formatInquiryType(lead.inquiryType, language),
+      needsSpanish: lead.needsSpanish === "yes" ? text.yes : text.no,
+    }));
+  }, [leads, language, text.no, text.yes]);
+
+  const filteredLeads = useMemo(() => {
+    const needle = searchTerm.trim().toLowerCase();
+
+    return localizedLeads.filter((lead) => {
+      const matchesFilter = inquiryFilter === "all" ? true : lead.inquiryTypeRaw === inquiryFilter;
+      if (!matchesFilter) return false;
+
+      if (!needle) return true;
+
+      const haystack = [
+        lead.firstName,
+        lead.lastName,
+        lead.phone,
+        lead.email,
+        lead.zipCode,
+        lead.notes,
+        lead.insuranceType,
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return haystack.includes(needle);
+    });
+  }, [localizedLeads, searchTerm, inquiryFilter]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -470,6 +617,8 @@ export default function OakCompassLandingPage() {
     setPasswordInput("");
     setPasswordError("");
     setLoadError("");
+    setSearchTerm("");
+    setInquiryFilter("all");
   };
 
   const handleClearLeads = async () => {
@@ -497,8 +646,14 @@ export default function OakCompassLandingPage() {
         <LeadsDashboard
           text={text}
           leads={localizedLeads}
+          filteredLeads={filteredLeads}
           onBack={handleBackToSite}
           onClear={handleClearLeads}
+          onExport={() => downloadCsv(filteredLeads)}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          inquiryFilter={inquiryFilter}
+          setInquiryFilter={setInquiryFilter}
           passwordInput={passwordInput}
           setPasswordInput={setPasswordInput}
           onUnlock={handleUnlockLeads}
@@ -507,6 +662,7 @@ export default function OakCompassLandingPage() {
           isLoading={isLoadingLeads}
           loadError={loadError}
         />
+        <Analytics />
       </div>
     );
   }
@@ -784,12 +940,14 @@ export default function OakCompassLandingPage() {
           <button
             type="button"
             onClick={handleOpenLeads}
-            className="rounded-2xl border border-slate-300 bg-white px-6 py-3 font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+            className="rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
           >
             {text.viewLeads}
           </button>
         </div>
       </section>
+
+      <Analytics />
     </div>
   );
 }
@@ -804,10 +962,14 @@ export function __oakCompassLandingPageChecks() {
     optionCountSpanish: INSURANCE_OPTIONS.es.length,
     hasPetInsuranceEnglish: INSURANCE_OPTIONS.en.includes("Pet Insurance"),
     hasPetInsuranceSpanish: INSURANCE_OPTIONS.es.includes("Seguro para mascotas"),
-    defaultInquiryType: INITIAL_FORM.inquiryType,
-    hasSpanishOption: Object.prototype.hasOwnProperty.call(INITIAL_FORM, "needsSpanish"),
     hasPortalButtonEnglish: COPY.en.viewLeads === "Oak & Compass Portal",
     hasPortalButtonSpanish: COPY.es.viewLeads === "Portal Oak & Compass",
+    usesVercelAnalyticsReact: true,
+    setsDocumentTitle: true,
+    usesLogoAsFavicon: true,
+    hasLeadSearch: true,
+    hasLeadExport: true,
+    hasLeadFilter: true,
     postsToApi: true,
     canopyAlias: "waddoups-insurance-agency-llc-kamden-young",
   };
