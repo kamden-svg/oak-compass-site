@@ -1255,7 +1255,7 @@ function CollectiblesPage({
                   {submittedCollectibles
                     ? language === "es"
                       ? "Gracias por enviarnos los detalles. Mientras el equipo revisa tu informacion, la pagina cambia para celebrar tu coleccion."
-                      : "Thanks for sending the details over. While the team reviews everything, the page shifts into a more legendary finish for your collection."
+                      : "Thanks for sending the details over. While the team reviews everything, we’ll take a look at what you shared."
                     : pageText.body}
                 </p>
 
