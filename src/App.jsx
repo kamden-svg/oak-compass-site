@@ -487,123 +487,123 @@ const COLLECTIBLE_THEMES = [
 const COLLECTIBLES_PAGE_COPY = {
   en: {
     badge: "Collectibles Insurance",
-    title: "Coverage for the collection you actually care about showing off",
+    title: "Insurance for the collection you have spent real time building",
     body:
-      "Pick the kind of collection you are protecting and the page shifts around it. Whether it is trading cards, rare books, firearms, comics, coins, or personal memorabilia, we can start building a more tailored conversation.",
-    selectorLabel: "Choose your collection vibe",
+      "Choose what you collect and tell us a little about it. Whether it is cards, books, firearms, comics, coins, or personal memorabilia, we will use that to start a more thoughtful insurance conversation.",
+    selectorLabel: "What do you collect?",
     formTitle: "Tell us about your collection",
     formBody:
-      "Give us a quick snapshot of what you own and how it is stored. We will use it to start a collectibles insurance conversation.",
+      "Share a quick snapshot of what you own, about what it is worth, and how you keep it stored. That gives us a better starting point for helping you protect it.",
     collectibleTypeLabel: "Collection type",
-    collectionValueLabel: "Estimated collection value",
-    estimatedItemsLabel: "How many pieces are in the collection?",
-    storageMethodLabel: "How is it stored right now?",
-    conditionLabel: "Condition or grading status",
+    collectionValueLabel: "About what is the collection worth?",
+    estimatedItemsLabel: "About how many pieces do you have?",
+    storageMethodLabel: "How are you storing it right now?",
+    conditionLabel: "Condition or grading",
     notesCollectibles: "Anything special, rare, or sentimental we should know?",
-    submitCollectibles: "Start My Collection Quote",
-    submittedCollectibles: "Thanks, your collectibles request has been submitted.",
-    themesTitle: "What this coverage can help protect",
-    themesAssetTitle: "What is being protected",
-    themesHowTitle: "How coverage helps",
+    submitCollectibles: "Get My Collectibles Quote Started",
+    submittedCollectibles: "Thanks. Your collectibles request is in.",
+    themesTitle: "What we are helping you protect",
+    themesAssetTitle: "What you are protecting",
+    themesHowTitle: "Why these details matter",
     storageOptions: ["Display room", "Safe or vault", "Climate-controlled storage", "Mixed storage"],
     conditionOptions: ["Raw / ungraded", "Partially graded", "Mostly graded / documented", "High-value curated collection"],
     themeDetails: {
       "trading-cards": {
         asset:
-          "Your valuable cards themselves, including graded singles, sealed product, binders, sets, and the value tied to rarity, condition, and documented ownership.",
+          "The cards themselves, including graded singles, sealed product, binders, full sets, and the value that comes from rarity, condition, and good documentation.",
         how:
-          "The conversation centers on item values, grading, storage, and how your collection is cataloged so coverage can better reflect collectible value instead of treating everything like ordinary personal property.",
+          "For cards, the big things are value, grading, storage, and how well the collection is documented so it is not treated like ordinary stuff sitting around the house.",
       },
       books: {
         asset:
-          "Special editions, signed copies, rare printings, boxed sets, and curated shelves where condition, edition, and provenance can make a major difference in value.",
+          "Special editions, signed copies, rare printings, boxed sets, and shelves where edition, condition, and provenance all change what the collection is really worth.",
         how:
-          "Coverage discussions focus on replacement challenges, appraisal or documentation, and protecting books whose collectible value is far higher than the price of a normal copy off the shelf.",
+          "With books, the main question is not just replacing a copy. It is protecting items that may be hard to replace at all, especially when condition or edition makes them valuable.",
       },
       firearms: {
         asset:
-          "The collection itself, including individual firearms, custom pieces, historic models, safes, accessories, and documented value tied to rarity, condition, or collector interest.",
+          "The collection itself, including individual firearms, custom pieces, older models, safes, accessories, and any collector value tied to rarity, condition, or history.",
         how:
-          "The goal is to build a clearer record of what you own, where it is stored, and how it is secured so coverage can be reviewed with the right level of detail for a collector-owned setup.",
+          "What matters most here is knowing what you have, where it is stored, and how it is secured so the coverage conversation reflects the collection you actually own.",
       },
       comics: {
         asset:
-          "Key issues, graded slabs, signed books, full runs, preserved raw books, and the condition-sensitive value attached to scarce or high-demand issues.",
+          "Key issues, graded slabs, signed books, full runs, preserved raw books, and the value tied to condition on scarce or high-demand issues.",
         how:
-          "We look at grading status, documentation, storage, and collection value so the policy conversation is based on collectible exposure rather than just paper and ink.",
+          "For comics, grading, storage, and documentation matter a lot because one issue can be worth something completely different depending on condition.",
       },
       coins: {
         asset:
-          "Individual coins, graded pieces, bullion-related collectibles, sets, albums, and coins whose collector value depends on metal content, rarity, strike, mint history, and condition.",
+          "Individual coins, graded pieces, sets, albums, and collectible coins whose value may come from metal content, rarity, strike, mint history, and condition.",
         how:
-          "Coverage planning centers on inventory, appraisals, storage, and whether the collection includes especially valuable pieces that may need more intentional handling in the quote process.",
+          "Coins usually need a clear inventory, strong documentation, and a realistic sense of value so high-end pieces do not get lumped in with everything else.",
       },
       memorabilia: {
         asset:
-          "Signed items, jerseys, display pieces, ticket stubs, keepsakes, sports collectibles, and sentimental or one-of-a-kind pieces that can be hard to value or replace.",
+          "Signed items, jerseys, display pieces, ticket stubs, keepsakes, sports collectibles, and one-of-a-kind items that may be difficult to value or replace.",
         how:
-          "The important part is understanding what is unique, how authenticity or provenance is documented, and whether certain items would need more specific attention because replacement is not simple.",
+          "For memorabilia, authenticity, provenance, and replacement difficulty matter just as much as price, especially when the piece is personal or truly unique.",
       },
     },
   },
   es: {
     badge: "Seguro para coleccionables",
-    title: "Cobertura para la coleccion que de verdad te importa",
+    title: "Seguro para la coleccion que te ha tomado tiempo construir",
     body:
-      "Elige el tipo de coleccion que quieres proteger y la experiencia cambia con esa seleccion. Ya sean tarjetas, libros raros, armas, comics, monedas o recuerdos personales, podemos empezar una conversacion mas personalizada.",
-    selectorLabel: "Elige el estilo de tu coleccion",
+      "Elige lo que coleccionas y cuentanos un poco sobre ello. Ya sean tarjetas, libros, armas, comics, monedas o recuerdos personales, eso nos ayuda a empezar una conversacion mas util sobre como protegerlo.",
+    selectorLabel: "Que coleccionas?",
     formTitle: "Cuentanos sobre tu coleccion",
     formBody:
-      "Comparte un resumen rapido de lo que tienes y como lo guardas. Lo usaremos para iniciar una conversacion sobre seguro para coleccionables.",
+      "Comparte un resumen rapido de lo que tienes, cuanto vale aproximadamente y como lo guardas. Eso nos da un mejor punto de partida para ayudarte a protegerlo.",
     collectibleTypeLabel: "Tipo de coleccion",
-    collectionValueLabel: "Valor estimado de la coleccion",
-    estimatedItemsLabel: "Cuantas piezas tiene la coleccion?",
-    storageMethodLabel: "Como se guarda actualmente?",
-    conditionLabel: "Condicion o estado de graduacion",
+    collectionValueLabel: "Cuanto vale aproximadamente la coleccion?",
+    estimatedItemsLabel: "Aproximadamente cuantas piezas tienes?",
+    storageMethodLabel: "Como la guardas actualmente?",
+    conditionLabel: "Condicion o graduacion",
     notesCollectibles: "Hay algo especial, raro o sentimental que debamos saber?",
-    submitCollectibles: "Comenzar mi cotizacion",
-    submittedCollectibles: "Gracias, tu solicitud para coleccionables fue enviada.",
-    themesTitle: "Lo que esta cobertura puede ayudar a proteger",
-    themesAssetTitle: "Que se esta protegiendo",
-    themesHowTitle: "Como ayuda la cobertura",
+    submitCollectibles: "Comenzar mi cotizacion para coleccionables",
+    submittedCollectibles: "Gracias. Ya recibimos tu solicitud.",
+    themesTitle: "Lo que te estamos ayudando a proteger",
+    themesAssetTitle: "Lo que estas protegiendo",
+    themesHowTitle: "Por que importan estos detalles",
     storageOptions: ["Cuarto de exhibicion", "Caja fuerte o vault", "Almacenamiento con clima controlado", "Almacenamiento mixto"],
     conditionOptions: ["Sin graduar", "Parcialmente graduado", "Mayormente graduado / documentado", "Coleccion curada de alto valor"],
     themeDetails: {
       "trading-cards": {
         asset:
-          "Las tarjetas valiosas, incluyendo cartas graduadas, producto sellado, binders, sets y el valor ligado a la rareza, la condicion y la documentacion de propiedad.",
+          "Las tarjetas mismas, incluyendo cartas graduadas, producto sellado, binders, sets y el valor que viene de la rareza, la condicion y una buena documentacion.",
         how:
-          "La conversacion se enfoca en valores, graduacion, almacenamiento y catalogacion para que la cobertura refleje mejor el valor coleccionable y no solo propiedad personal comun.",
+          "En tarjetas, lo importante suele ser el valor, la graduacion, el almacenamiento y que la coleccion este bien documentada para que no se trate como simples objetos comunes.",
       },
       books: {
         asset:
-          "Ediciones especiales, copias firmadas, impresiones raras, colecciones completas y libreros curados donde la condicion, la edicion y la procedencia cambian mucho el valor.",
+          "Ediciones especiales, copias firmadas, impresiones raras, colecciones completas y libreros donde la edicion, la condicion y la procedencia cambian mucho el valor.",
         how:
-          "La cobertura se conversa alrededor de reemplazo, documentacion o avaluos, y la proteccion de libros cuyo valor coleccionable puede ser mucho mayor que el precio normal de una copia comun.",
+          "Con libros, la pregunta no es solo cuanto cuesta otra copia. Muchas veces se trata de proteger piezas que son dificiles de reemplazar, sobre todo cuando la edicion o la condicion importan.",
       },
       firearms: {
         asset:
-          "La coleccion misma, incluyendo armas individuales, piezas personalizadas, modelos historicos, cajas fuertes, accesorios y valor documentado ligado a rareza, condicion o interes del coleccionista.",
+          "La coleccion misma, incluyendo armas individuales, piezas personalizadas, modelos antiguos, cajas fuertes, accesorios y valor ligado a rareza, condicion o historia.",
         how:
-          "La idea es construir un registro mas claro de lo que tienes, donde se guarda y como se asegura para revisar la cobertura con el nivel de detalle adecuado para una coleccion.",
+          "Aqui importa tener claro que tienes, donde se guarda y como se asegura para que la conversacion de cobertura refleje la coleccion real.",
       },
       comics: {
         asset:
-          "Numeros clave, comics graduados, libros firmados, corridas completas, ejemplares sin graduar bien preservados y el valor sensible a la condicion de piezas escasas o buscadas.",
+          "Numeros clave, comics graduados, libros firmados, corridas completas, ejemplares bien preservados y el valor que cambia mucho segun la condicion.",
         how:
-          "Revisamos graduacion, documentacion, almacenamiento y valor de la coleccion para que la conversacion de cobertura se base en la exposicion real del coleccionable y no solo en papel.",
+          "En comics, la graduacion, el almacenamiento y la documentacion importan mucho porque una misma pieza puede valer algo muy distinto segun su estado.",
       },
       coins: {
         asset:
-          "Monedas individuales, piezas graduadas, coleccionables ligados a bullion, sets, albums y monedas cuyo valor depende del metal, la rareza, la acuñacion, la historia de la casa de moneda y la condicion.",
+          "Monedas individuales, piezas graduadas, sets, albums y monedas cuyo valor puede venir del metal, la rareza, la acuñacion, la historia de la casa de moneda y la condicion.",
         how:
-          "La planeacion de cobertura se enfoca en inventario, avaluos, almacenamiento y en si hay piezas especialmente valiosas que requieran mas atencion en el proceso de cotizacion.",
+          "Las monedas suelen requerir un inventario claro, buena documentacion y una idea realista del valor para que las piezas importantes no se mezclen con todo lo demas.",
       },
       memorabilia: {
         asset:
-          "Articulos firmados, jerseys, piezas de exhibicion, boletos, recuerdos, coleccionables deportivos y objetos sentimentales o unicos que pueden ser dificiles de valorar o reemplazar.",
+          "Articulos firmados, jerseys, piezas de exhibicion, boletos, recuerdos, coleccionables deportivos y objetos unicos que pueden ser dificiles de valorar o reemplazar.",
         how:
-          "Lo importante es entender que es unico, como se documenta la autenticidad o procedencia, y si ciertos articulos necesitan una atencion mas especifica porque reemplazarlos no es sencillo.",
+          "En memorabilia, la autenticidad, la procedencia y lo dificil que seria reemplazar una pieza importan tanto como el precio, sobre todo cuando tiene valor personal.",
       },
     },
   },
@@ -1240,45 +1240,45 @@ function CollectiblesPage({
             <div className="grid gap-10 lg:grid-cols-[1fr,0.95fr] lg:items-start">
               <div>
                 <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur">
-                  {submittedCollectibles ? (language === "es" ? "Modo dragon" : "Dragon mode") : pageText.badge}
+                  {submittedCollectibles ? (language === "es" ? "Tu solicitud esta en marcha" : "Your request is in") : pageText.badge}
                 </div>
 
                 <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl md:text-6xl">
                   {submittedCollectibles
                     ? language === "es"
-                      ? "Tu coleccion desperto al dragon"
-                      : "Your collection woke the dragon"
+                      ? "Ya recibimos tu coleccion"
+                      : "We got your collection request"
                     : pageText.title}
                 </h1>
 
                 <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
                   {submittedCollectibles
                     ? language === "es"
-                      ? "Tu solicitud fue enviada. Ahora la pagina cambia a un final mas dramatico mientras el equipo revisa tu informacion y se prepara para continuar la conversacion."
-                      : "Your request is in. Now the page flips into a dramatic dragon ending while the team reviews your information and gets ready to keep the conversation moving."
+                      ? "Gracias por enviarnos los detalles. Mientras el equipo revisa tu informacion, la pagina cambia para celebrar tu coleccion."
+                      : "Thanks for sending the details over. While the team reviews everything, the page shifts into a more legendary finish for your collection."
                     : pageText.body}
                 </p>
 
                 {submittedCollectibles ? (
                   <div className="mt-8 rounded-[2rem] border border-white/15 bg-black/20 p-6 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.8)] backdrop-blur">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/80">
-                      {language === "es" ? "Solicitud enviada" : "Submission complete"}
+                      {language === "es" ? "Todo listo" : "All set"}
                     </p>
                     <div className="mt-4 grid gap-3 sm:grid-cols-2">
                       <div className="rounded-2xl bg-white/10 p-4">
                         <p className="text-sm font-semibold text-white/80">
-                          {language === "es" ? "Coleccion elegida" : "Selected collection"}
+                          {language === "es" ? "Coleccion" : "Collection"}
                         </p>
                         <p className="mt-2 text-2xl font-bold">{activeTheme.key}</p>
                       </div>
                       <div className="rounded-2xl bg-white/10 p-4">
                         <p className="text-sm font-semibold text-white/80">
-                          {language === "es" ? "Siguiente paso" : "What happens next"}
+                          {language === "es" ? "Que sigue" : "What happens next"}
                         </p>
                         <p className="mt-2 text-base leading-7 text-white/90">
                           {language === "es"
-                            ? "Revisaremos el valor, almacenamiento y detalles especiales para ayudarte a explorar la mejor forma de proteger la coleccion."
-                            : "We’ll review the value, storage, and standout details so we can help you explore the right way to protect the collection."}
+                            ? "Vamos a revisar el valor, como la guardas y cualquier detalle importante para ayudarte a encontrar la mejor manera de protegerla."
+                            : "We will review the value, how it is stored, and anything that makes it stand out so we can help you look at the right protection for it."}
                         </p>
                       </div>
                     </div>
@@ -1320,8 +1320,8 @@ function CollectiblesPage({
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/65">
                     {submittedCollectibles
                       ? language === "es"
-                        ? "El dragon esta guardando"
-                        : "The dragon is guarding"
+                        ? "Lo que estamos ayudando a proteger"
+                        : "What we are helping protect"
                       : pageText.themesTitle}
                   </p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -1345,15 +1345,15 @@ function CollectiblesPage({
                 <h2 className="text-3xl font-black tracking-tight">
                   {submittedCollectibles
                     ? language === "es"
-                      ? "La solicitud llego"
-                      : "The request landed"
+                      ? "Ya lo tenemos"
+                      : "You are all set"
                     : pageText.formTitle}
                 </h2>
                 <p className="mt-3 text-sm leading-7 text-white/75">
                   {submittedCollectibles
                     ? language === "es"
-                      ? "Tu informacion ya fue enviada. En lugar del formulario, ahora mostramos un cierre especial para la experiencia de coleccionables."
-                      : "Your information has already been sent in. Instead of the form, the page now shifts into a special collectibles finale."
+                      ? "Tu informacion ya fue enviada. Ahora puedes relajarte mientras revisamos lo que compartiste."
+                      : "Your info has already been sent. Now you can relax while we take a look at what you shared."
                     : pageText.formBody}
                 </p>
 
@@ -1361,15 +1361,15 @@ function CollectiblesPage({
                   <div className="mt-6 rounded-[2rem] border border-amber-200/20 bg-black/25 p-6">
                     <div className="rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-amber-400/15 via-orange-500/10 to-red-500/15 p-6">
                       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-200/80">
-                        {language === "es" ? "Estado legendario" : "Legendary status"}
+                        {language === "es" ? "Solicitud recibida" : "Request received"}
                       </p>
                       <p className="mt-4 text-3xl font-black tracking-tight">
                         {pageText.submittedCollectibles}
                       </p>
                       <p className="mt-4 text-base leading-7 text-white/85">
                         {language === "es"
-                          ? "El dragon aparece para guardar la coleccion mientras tu solicitud avanza. El equipo hara seguimiento con los detalles que enviaste."
-                          : "The dragon shows up to guard the collection while your request moves forward. The team will follow up using the details you sent."}
+                          ? "El dragon puede quedarse con el show, pero lo importante es esto: ya tenemos tus detalles y daremos seguimiento con lo que nos enviaste."
+                          : "The dragon gets the spotlight, but the important part is this: we have your details and we will follow up using what you sent over."}
                       </p>
                     </div>
                   </div>
