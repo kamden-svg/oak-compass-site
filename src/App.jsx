@@ -478,12 +478,6 @@ const TEAM_GALLERY = [
     className: "lg:col-span-1 lg:row-span-1",
     imageClassName: "object-center",
   },
-  {
-    src: "/F8C773C4-7E55-4474-B200-06C7FDD76891.jpg",
-    alt: "Climbing silhouette between canyon walls",
-    className: "lg:col-span-2 lg:row-span-1",
-    imageClassName: "object-contain object-center bg-slate-950",
-  },
 ];
 
 const TEAM_MEMBERS = {
