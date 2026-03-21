@@ -560,6 +560,30 @@ const COLLECTIBLE_THEMES = [
     chip: "from-emerald-300/25 to-cyan-300/25",
     icon: "MB",
   },
+  {
+    id: "jewelry",
+    key: "Jewelry",
+    accent: "from-rose-300 via-pink-400 to-fuchsia-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(253,164,175,0.30),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(217,70,239,0.26),_transparent_30%),linear-gradient(145deg,_#2a1020_0%,_#4a1838_44%,_#7a1f63_100%)]",
+    chip: "from-rose-300/25 to-fuchsia-300/25",
+    icon: "JW",
+  },
+  {
+    id: "video-games",
+    key: "Video Games",
+    accent: "from-cyan-300 via-sky-400 to-indigo-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(103,232,249,0.30),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(99,102,241,0.26),_transparent_28%),linear-gradient(145deg,_#071a2d_0%,_#12325d_44%,_#312e81_100%)]",
+    chip: "from-cyan-300/25 to-indigo-300/25",
+    icon: "VG",
+  },
+  {
+    id: "records-music",
+    key: "Records & Music",
+    accent: "from-orange-300 via-amber-400 to-yellow-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(253,186,116,0.30),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(250,204,21,0.24),_transparent_30%),linear-gradient(145deg,_#24140b_0%,_#4a250d_44%,_#7c4a12_100%)]",
+    chip: "from-orange-300/25 to-yellow-300/25",
+    icon: "RM",
+  },
 ];
 
 const COLLECTIBLES_PAGE_COPY = {
@@ -567,7 +591,7 @@ const COLLECTIBLES_PAGE_COPY = {
     badge: "Collectibles Insurance",
     title: "Insurance for the collection you have spent real time building",
     body:
-      "Choose what you collect and tell us a little about it. Whether it is cards, books, firearms, comics, coins, or personal memorabilia, we will use that to start a more thoughtful insurance conversation.",
+      "Choose what you collect and tell us a little about it. Whether it is cards, books, firearms, comics, coins, jewelry, video games, records, or personal memorabilia, we will use that to start a more thoughtful insurance conversation.",
     selectorLabel: "What do you collect?",
     formTitle: "Tell us about your collection",
     formBody:
@@ -622,13 +646,31 @@ const COLLECTIBLES_PAGE_COPY = {
         how:
           "For memorabilia, authenticity, provenance, and replacement difficulty matter just as much as price, especially when the piece is personal or truly unique.",
       },
+      jewelry: {
+        asset:
+          "Rings, watches, necklaces, custom pieces, heirlooms, and fine jewelry where value can come from materials, craftsmanship, appraisals, and sentimental importance.",
+        how:
+          "Jewelry usually comes down to appraisals, documentation, and how specific pieces would be replaced if something happened, especially when the item is one of a kind.",
+      },
+      "video-games": {
+        asset:
+          "Retro games, sealed games, consoles, handhelds, collector editions, and complete-in-box pieces where condition and originality can change value quickly.",
+        how:
+          "For game collections, documentation, condition, storage, and whether pieces are sealed, complete, or especially rare all help shape a more realistic coverage conversation.",
+      },
+      "records-music": {
+        asset:
+          "Vinyl records, box sets, signed albums, rare pressings, audio collectibles, and music memorabilia where condition and pressing details can matter a lot.",
+        how:
+          "With records and music collectibles, the important part is understanding rarity, condition, documentation, and whether there are standout pieces that would be hard to replace.",
+      },
     },
   },
   es: {
     badge: "Seguro para coleccionables",
     title: "Seguro para la coleccion que te ha tomado tiempo construir",
     body:
-      "Elige lo que coleccionas y cuentanos un poco sobre ello. Ya sean tarjetas, libros, armas, comics, monedas o recuerdos personales, eso nos ayuda a empezar una conversacion mas util sobre como protegerlo.",
+      "Elige lo que coleccionas y cuentanos un poco sobre ello. Ya sean tarjetas, libros, armas, comics, monedas, joyeria, videojuegos, discos o recuerdos personales, eso nos ayuda a empezar una conversacion mas util sobre como protegerlo.",
     selectorLabel: "Que coleccionas?",
     formTitle: "Cuentanos sobre tu coleccion",
     formBody:
@@ -682,6 +724,24 @@ const COLLECTIBLES_PAGE_COPY = {
           "Articulos firmados, jerseys, piezas de exhibicion, boletos, recuerdos, coleccionables deportivos y objetos unicos que pueden ser dificiles de valorar o reemplazar.",
         how:
           "En memorabilia, la autenticidad, la procedencia y lo dificil que seria reemplazar una pieza importan tanto como el precio, sobre todo cuando tiene valor personal.",
+      },
+      jewelry: {
+        asset:
+          "Anillos, relojes, collares, piezas personalizadas, reliquias familiares y joyeria fina cuyo valor puede venir de los materiales, el trabajo, los avaluos y el valor sentimental.",
+        how:
+          "La joyeria casi siempre depende de avaluos, documentacion y de como se reemplazaria cada pieza si pasara algo, especialmente cuando el articulo es unico.",
+      },
+      "video-games": {
+        asset:
+          "Videojuegos retro, juegos sellados, consolas, handhelds, ediciones de coleccionista y piezas completas en caja donde la condicion y la originalidad cambian mucho el valor.",
+        how:
+          "En videojuegos, la documentacion, la condicion, el almacenamiento y si las piezas estan selladas, completas o son especialmente raras ayudan a tener una conversacion mas realista sobre cobertura.",
+      },
+      "records-music": {
+        asset:
+          "Discos de vinilo, box sets, albums firmados, ediciones raras, coleccionables de audio y memorabilia musical donde la condicion y el prensado importan mucho.",
+        how:
+          "Con discos y coleccionables musicales, lo importante es entender la rareza, la condicion, la documentacion y si hay piezas destacadas que serian dificiles de reemplazar.",
       },
     },
   },
@@ -1132,6 +1192,75 @@ function CollectiblesSceneBackground({ themeId }) {
     );
   }
 
+  if (themeId === "jewelry") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.2" d="M720 190L845 314L720 438L595 314L720 190Z" />
+            <path strokeWidth="3" d="M720 190V438" />
+            <path strokeWidth="3" d="M595 314H845" />
+            <path strokeWidth="2.8" d="M532 621C532 550 617 492 720 492C822 492 908 550 908 621" />
+            <path strokeWidth="2.2" d="M577 621C577 571 641 531 720 531C798 531 863 571 863 621" />
+            <path strokeWidth="2.4" d="M463 734C538 776 623 797 720 797C816 797 902 776 976 734" />
+            <path strokeWidth="2.4" d="M498 184C560 142 633 120 720 120C806 120 882 142 942 184" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "video-games") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.2" d="M507 551C507 489 556 439 617 439H823C884 439 933 489 933 551C933 609 886 656 829 656H611C554 656 507 609 507 551Z" />
+            <path strokeWidth="2.6" d="M608 548H667" />
+            <path strokeWidth="2.6" d="M637 519V577" />
+            <circle cx="782" cy="530" r="14" strokeWidth="2.4" />
+            <circle cx="836" cy="566" r="14" strokeWidth="2.4" />
+            <path strokeWidth="2.4" d="M547 634C601 685 659 711 720 711C780 711 842 685 896 634" />
+            <path strokeWidth="2.4" d="M488 224C557 168 634 141 720 141C805 141 886 168 952 224" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "records-music") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.2" d="M720 530C720 419 810 329 921 329C1032 329 1122 419 1122 530C1122 641 1032 731 921 731C810 731 720 641 720 530Z" />
+            <path strokeWidth="2.8" d="M786 530C786 456 847 395 921 395C995 395 1056 456 1056 530C1056 604 995 665 921 665C847 665 786 604 786 530Z" />
+            <path strokeWidth="2.6" d="M921 329V213" />
+            <path strokeWidth="2.6" d="M921 213H997" />
+            <path strokeWidth="2.6" d="M998 213V426" />
+            <path strokeWidth="2.4" d="M523 681C591 739 657 768 720 768" />
+            <path strokeWidth="2.4" d="M494 224C560 168 634 141 720 141" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
   return (
     <div
       aria-hidden="true"
@@ -1240,6 +1369,112 @@ function CollectiblesDragonSuccessBackground() {
           </path>
         </g>
       </svg>
+    </div>
+  );
+}
+
+function CollectibleThemeTileArt({ themeId }) {
+  if (themeId === "trading-cards") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:-translate-y-0.5 group-hover:rotate-[3deg] group-hover:scale-105">
+        <div className="absolute left-1 top-2 h-7 w-9 rounded-lg border border-white/75 bg-white/10 transition duration-300 group-hover:-translate-x-1 group-hover:-rotate-6" />
+        <div className="absolute right-1 top-1 h-8 w-10 rounded-lg border border-white bg-white/15 transition duration-300 group-hover:translate-x-1 group-hover:rotate-6" />
+        <div className="absolute left-5 top-4 h-2.5 w-2.5 rounded-full border border-white/85" />
+      </div>
+    );
+  }
+
+  if (themeId === "books") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105">
+        <div className="absolute left-2 top-2 h-8 w-4 rounded-l-md border border-white bg-white/10 transition duration-300 group-hover:-translate-x-1.5 group-hover:-rotate-6" />
+        <div className="absolute right-2 top-2 h-8 w-4 rounded-r-md border border-white bg-white/14 transition duration-300 group-hover:translate-x-1.5 group-hover:rotate-6" />
+        <div className="absolute left-1/2 top-2 h-8 w-px -translate-x-1/2 bg-white/70" />
+      </div>
+    );
+  }
+
+  if (themeId === "firearms") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:-translate-y-0.5 group-hover:scale-105">
+        <div className="absolute inset-x-1 bottom-2 h-4 rounded-md border border-white bg-white/10" />
+        <div className="absolute left-4 top-3 h-3 w-6 rounded-sm border border-white bg-white/12" />
+        <div className="absolute left-9 top-4 h-1 w-4 rounded-full bg-white/85 transition duration-300 group-hover:w-5" />
+        <div className="absolute left-3 bottom-0 h-5 w-5 rounded-full border border-white" />
+        <div className="absolute right-3 bottom-0 h-5 w-5 rounded-full border border-white" />
+      </div>
+    );
+  }
+
+  if (themeId === "comics") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105 group-hover:rotate-[2deg]">
+        <div className="absolute left-2 top-2 h-7 w-10 rounded-[1rem] border border-white bg-white/12 transition duration-300 group-hover:-translate-y-1" />
+        <div className="absolute left-5 top-8 h-3 w-3 rotate-45 border-b border-r border-white bg-white/12 transition duration-300 group-hover:translate-y-0.5" />
+        <div className="absolute left-5 top-4 h-1 w-4 rounded-full bg-white/85" />
+        <div className="absolute left-5 top-6 h-1 w-6 rounded-full bg-white/65" />
+      </div>
+    );
+  }
+
+  if (themeId === "coins") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105">
+        <div className="absolute left-2 top-4 h-5 w-5 rounded-full border border-white bg-white/10 transition duration-300 group-hover:-translate-y-1" />
+        <div className="absolute left-6 top-2 h-6 w-6 rounded-full border border-white bg-white/16 transition duration-300 group-hover:-translate-y-0.5" />
+        <div className="absolute right-2 top-5 h-4.5 w-4.5 rounded-full border border-white bg-white/10 transition duration-300 group-hover:-translate-y-1.5" />
+      </div>
+    );
+  }
+
+  if (themeId === "memorabilia") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105 group-hover:-translate-y-0.5">
+        <div className="absolute left-4 top-2 h-4 w-6 rounded-b-full border border-white bg-white/12" />
+        <div className="absolute left-[1.35rem] top-6 h-2.5 w-7 border-x border-white" />
+        <div className="absolute left-5 top-[2.1rem] h-2 w-5 rounded-sm border border-white bg-white/10" />
+        <div className="absolute left-4.5 bottom-1 h-1.5 w-6 rounded-full bg-white/75" />
+      </div>
+    );
+  }
+
+  if (themeId === "jewelry") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-110">
+        <div className="absolute left-1/2 top-1 h-7 w-7 -translate-x-1/2 rotate-45 rounded-sm border border-white bg-white/10 transition duration-300 group-hover:-translate-y-1" />
+        <div className="absolute left-1/2 top-8 h-2.5 w-8 -translate-x-1/2 rounded-full border border-white bg-white/8 transition duration-300 group-hover:scale-110" />
+      </div>
+    );
+  }
+
+  if (themeId === "video-games") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105">
+        <div className="absolute inset-x-2 top-3 h-6 rounded-[999px] border border-white bg-white/10 transition duration-300 group-hover:-translate-y-0.5" />
+        <div className="absolute left-5 top-[1.35rem] h-3 w-3 rounded-sm border border-white/80">
+          <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-white/80" />
+          <div className="absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-white/80" />
+        </div>
+        <div className="absolute right-5 top-[1.55rem] h-1.5 w-1.5 rounded-full bg-white/90" />
+        <div className="absolute right-3 top-[1.35rem] h-1.5 w-1.5 rounded-full bg-white/70" />
+      </div>
+    );
+  }
+
+  if (themeId === "records-music") {
+    return (
+      <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105 group-hover:rotate-[8deg]">
+        <div className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-white/10" />
+        <div className="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white bg-white/20" />
+        <div className="absolute right-1 top-2 h-6 w-px bg-white/80 transition duration-300 group-hover:h-7" />
+        <div className="absolute right-1 top-2 h-1.5 w-3 rounded-full border border-white/80 bg-white/10" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative h-11 w-14 text-white/95 transition duration-300 group-hover:scale-105">
+      <div className="absolute inset-x-2 top-2 h-7 rounded-2xl border border-white bg-white/10" />
     </div>
   );
 }
@@ -1521,34 +1756,32 @@ function CollectiblesPage({
                   </div>
                 ) : (
                   <div className="mt-8">
-                    <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
-                      {pageText.selectorLabel}
-                    </p>
-                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                      {COLLECTIBLE_THEMES.map((theme) => {
-                        const selected = form.collectibleType === theme.key;
-                        return (
-                          <button
-                            key={theme.id}
-                            type="button"
-                            onClick={() => onChange({ target: { name: "collectibleType", value: theme.key } })}
-                            className={`group rounded-[1.75rem] border p-5 text-left transition ${
-                              selected
-                                ? "border-white/40 bg-white/18 shadow-[0_20px_60px_-28px_rgba(255,255,255,0.4)]"
-                                : "border-white/10 bg-white/8 hover:-translate-y-1 hover:border-white/25 hover:bg-white/12"
-                            }`}
-                          >
-                            <div
-                              className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${theme.accent} text-lg font-black text-white shadow-lg`}
-                            >
-                              {theme.icon}
-                            </div>
-                            <h2 className="mt-4 text-2xl font-bold">{theme.key}</h2>
-                            <div className={`mt-4 h-2 rounded-full bg-gradient-to-r ${theme.accent} opacity-90`} />
-                          </button>
-                        );
-                      })}
-                    </div>
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                    {pageText.selectorLabel}
+                  </p>
+                  <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+                    {COLLECTIBLE_THEMES.map((theme) => {
+                      const selected = form.collectibleType === theme.key;
+                      return (
+                        <button
+                          key={theme.id}
+                          type="button"
+                          onClick={() => onChange({ target: { name: "collectibleType", value: theme.key } })}
+                          className={`group rounded-[1.35rem] border p-3.5 text-left transition ${
+                            selected
+                              ? "border-white/40 bg-white/18 shadow-[0_20px_60px_-28px_rgba(255,255,255,0.4)]"
+                              : "border-white/10 bg-white/8 hover:-translate-y-1 hover:border-white/25 hover:bg-white/12"
+                          }`}
+                        >
+                          <div className={`inline-flex h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-br ${theme.accent} shadow-lg`}>
+                            <CollectibleThemeTileArt themeId={theme.id} />
+                          </div>
+                          <h2 className="mt-3 text-sm font-semibold leading-5 sm:text-base">{theme.key}</h2>
+                          <div className={`mt-3 h-1.5 rounded-full bg-gradient-to-r ${theme.accent} opacity-90 transition duration-300 group-hover:opacity-100`} />
+                        </button>
+                      );
+                    })}
+                  </div>
                   </div>
                 )}
 
