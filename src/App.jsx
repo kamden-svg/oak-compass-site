@@ -503,8 +503,48 @@ const COLLECTIBLES_PAGE_COPY = {
     submitCollectibles: "Start My Collection Quote",
     submittedCollectibles: "Thanks, your collectibles request has been submitted.",
     themesTitle: "What this coverage can help protect",
+    themesAssetTitle: "What is being protected",
+    themesHowTitle: "How coverage helps",
     storageOptions: ["Display room", "Safe or vault", "Climate-controlled storage", "Mixed storage"],
     conditionOptions: ["Raw / ungraded", "Partially graded", "Mostly graded / documented", "High-value curated collection"],
+    themeDetails: {
+      "trading-cards": {
+        asset:
+          "Your valuable cards themselves, including graded singles, sealed product, binders, sets, and the value tied to rarity, condition, and documented ownership.",
+        how:
+          "The conversation centers on item values, grading, storage, and how your collection is cataloged so coverage can better reflect collectible value instead of treating everything like ordinary personal property.",
+      },
+      books: {
+        asset:
+          "Special editions, signed copies, rare printings, boxed sets, and curated shelves where condition, edition, and provenance can make a major difference in value.",
+        how:
+          "Coverage discussions focus on replacement challenges, appraisal or documentation, and protecting books whose collectible value is far higher than the price of a normal copy off the shelf.",
+      },
+      firearms: {
+        asset:
+          "The collection itself, including individual firearms, custom pieces, historic models, safes, accessories, and documented value tied to rarity, condition, or collector interest.",
+        how:
+          "The goal is to build a clearer record of what you own, where it is stored, and how it is secured so coverage can be reviewed with the right level of detail for a collector-owned setup.",
+      },
+      comics: {
+        asset:
+          "Key issues, graded slabs, signed books, full runs, preserved raw books, and the condition-sensitive value attached to scarce or high-demand issues.",
+        how:
+          "We look at grading status, documentation, storage, and collection value so the policy conversation is based on collectible exposure rather than just paper and ink.",
+      },
+      coins: {
+        asset:
+          "Individual coins, graded pieces, bullion-related collectibles, sets, albums, and coins whose collector value depends on metal content, rarity, strike, mint history, and condition.",
+        how:
+          "Coverage planning centers on inventory, appraisals, storage, and whether the collection includes especially valuable pieces that may need more intentional handling in the quote process.",
+      },
+      memorabilia: {
+        asset:
+          "Signed items, jerseys, display pieces, ticket stubs, keepsakes, sports collectibles, and sentimental or one-of-a-kind pieces that can be hard to value or replace.",
+        how:
+          "The important part is understanding what is unique, how authenticity or provenance is documented, and whether certain items would need more specific attention because replacement is not simple.",
+      },
+    },
   },
   es: {
     badge: "Seguro para coleccionables",
@@ -524,8 +564,48 @@ const COLLECTIBLES_PAGE_COPY = {
     submitCollectibles: "Comenzar mi cotizacion",
     submittedCollectibles: "Gracias, tu solicitud para coleccionables fue enviada.",
     themesTitle: "Lo que esta cobertura puede ayudar a proteger",
+    themesAssetTitle: "Que se esta protegiendo",
+    themesHowTitle: "Como ayuda la cobertura",
     storageOptions: ["Cuarto de exhibicion", "Caja fuerte o vault", "Almacenamiento con clima controlado", "Almacenamiento mixto"],
     conditionOptions: ["Sin graduar", "Parcialmente graduado", "Mayormente graduado / documentado", "Coleccion curada de alto valor"],
+    themeDetails: {
+      "trading-cards": {
+        asset:
+          "Las tarjetas valiosas, incluyendo cartas graduadas, producto sellado, binders, sets y el valor ligado a la rareza, la condicion y la documentacion de propiedad.",
+        how:
+          "La conversacion se enfoca en valores, graduacion, almacenamiento y catalogacion para que la cobertura refleje mejor el valor coleccionable y no solo propiedad personal comun.",
+      },
+      books: {
+        asset:
+          "Ediciones especiales, copias firmadas, impresiones raras, colecciones completas y libreros curados donde la condicion, la edicion y la procedencia cambian mucho el valor.",
+        how:
+          "La cobertura se conversa alrededor de reemplazo, documentacion o avaluos, y la proteccion de libros cuyo valor coleccionable puede ser mucho mayor que el precio normal de una copia comun.",
+      },
+      firearms: {
+        asset:
+          "La coleccion misma, incluyendo armas individuales, piezas personalizadas, modelos historicos, cajas fuertes, accesorios y valor documentado ligado a rareza, condicion o interes del coleccionista.",
+        how:
+          "La idea es construir un registro mas claro de lo que tienes, donde se guarda y como se asegura para revisar la cobertura con el nivel de detalle adecuado para una coleccion.",
+      },
+      comics: {
+        asset:
+          "Numeros clave, comics graduados, libros firmados, corridas completas, ejemplares sin graduar bien preservados y el valor sensible a la condicion de piezas escasas o buscadas.",
+        how:
+          "Revisamos graduacion, documentacion, almacenamiento y valor de la coleccion para que la conversacion de cobertura se base en la exposicion real del coleccionable y no solo en papel.",
+      },
+      coins: {
+        asset:
+          "Monedas individuales, piezas graduadas, coleccionables ligados a bullion, sets, albums y monedas cuyo valor depende del metal, la rareza, la acuñacion, la historia de la casa de moneda y la condicion.",
+        how:
+          "La planeacion de cobertura se enfoca en inventario, avaluos, almacenamiento y en si hay piezas especialmente valiosas que requieran mas atencion en el proceso de cotizacion.",
+      },
+      memorabilia: {
+        asset:
+          "Articulos firmados, jerseys, piezas de exhibicion, boletos, recuerdos, coleccionables deportivos y objetos sentimentales o unicos que pueden ser dificiles de valorar o reemplazar.",
+        how:
+          "Lo importante es entender que es unico, como se documenta la autenticidad o procedencia, y si ciertos articulos necesitan una atencion mas especifica porque reemplazarlos no es sencillo.",
+      },
+    },
   },
 };
 
@@ -904,6 +984,40 @@ function CollectiblesSceneBackground({ themeId }) {
   );
 }
 
+function CollectiblesDragonSuccessBackground() {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
+    >
+      <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+          <path strokeWidth="3" d="M0 806C154 781 306 778 461 788C617 799 767 824 923 828C1114 833 1287 811 1440 784" />
+          <path strokeWidth="3.2" d="M181 719C255 667 340 622 435 586C487 566 542 550 598 539" />
+          <path strokeWidth="3.8" d="M594 538C565 501 555 458 566 411C579 356 616 310 671 281C689 233 722 199 772 180C827 159 882 170 923 207C965 184 1013 182 1060 197C1126 218 1172 268 1184 334C1240 351 1282 390 1297 447C1316 522 1275 592 1204 629" />
+          <path strokeWidth="3" d="M616 530C667 521 720 519 773 523" />
+          <path strokeWidth="3.1" d="M900 249C956 230 1011 231 1063 252" />
+          <path strokeWidth="3" d="M737 227C758 181 793 150 842 135" />
+          <path strokeWidth="3" d="M865 137L926 75L972 156" />
+          <path strokeWidth="3" d="M700 301L638 240L609 337" />
+          <path strokeWidth="3" d="M1044 309L1126 242L1148 356" />
+          <path strokeWidth="3.4" d="M640 587C698 571 759 565 823 569C909 575 987 602 1056 651" />
+          <path strokeWidth="3.2" d="M538 627C576 654 610 686 640 722" />
+          <path strokeWidth="3.2" d="M1058 651C1124 677 1186 722 1242 786" />
+          <path strokeWidth="3.2" d="M699 378C728 350 761 337 800 338C846 340 882 359 906 395" />
+          <path strokeWidth="2.8" d="M792 392C811 389 828 394 840 407" />
+          <path strokeWidth="2.8" d="M755 434C789 450 822 453 855 442" />
+          <path strokeWidth="3.6" d="M349 719L446 647L557 681L490 764L349 719Z" />
+          <path strokeWidth="2.8" d="M381 684L423 717L482 700" />
+          <path strokeWidth="2.6" d="M264 757C336 742 405 742 470 758" />
+          <path strokeWidth="3.2" d="M1081 527C1137 509 1188 511 1235 532" />
+          <path strokeWidth="3.2" d="M1072 564C1131 548 1184 551 1232 575" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 
 function TeamPage({ language, onNavigate }) {
   const teamText = TEAM_PAGE_COPY[language];
@@ -1051,12 +1165,20 @@ function CollectiblesPage({
   const pageText = COLLECTIBLES_PAGE_COPY[language] || COLLECTIBLES_PAGE_COPY.en;
   const activeTheme =
     COLLECTIBLE_THEMES.find((theme) => theme.key === form.collectibleType) || COLLECTIBLE_THEMES[0];
+  const activeThemeDetails =
+    pageText.themeDetails?.[activeTheme.id] || COLLECTIBLES_PAGE_COPY.en.themeDetails[activeTheme.id];
+  const submittedCollectibles = isSubmitted && submittedInquiryType === "collectibles";
+  const dragonSurface = "bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.18),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(248,113,113,0.24),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(249,115,22,0.18),_transparent_26%),linear-gradient(145deg,_#14060a_0%,_#3f0a16_42%,_#7c2d12_100%)]";
 
   return (
-    <div className={`min-h-screen text-white ${activeTheme.surface}`} lang={language}>
+    <div className={`min-h-screen text-white ${submittedCollectibles ? dragonSurface : activeTheme.surface}`} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.08),_transparent_28%)]" />
-        <CollectiblesSceneBackground themeId={activeTheme.id} />
+        {submittedCollectibles ? (
+          <CollectiblesDragonSuccessBackground />
+        ) : (
+          <CollectiblesSceneBackground themeId={activeTheme.id} />
+        )}
 
         <div className="relative">
           <SiteHeader language={language} activePage={PAGE_COLLECTIBLES} onNavigate={onNavigate} />
@@ -1065,61 +1187,101 @@ function CollectiblesPage({
             <div className="grid gap-10 lg:grid-cols-[1fr,0.95fr] lg:items-start">
               <div>
                 <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur">
-                  {pageText.badge}
+                  {submittedCollectibles ? (language === "es" ? "Modo dragon" : "Dragon mode") : pageText.badge}
                 </div>
 
                 <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl md:text-6xl">
-                  {pageText.title}
+                  {submittedCollectibles
+                    ? language === "es"
+                      ? "Tu coleccion desperto al dragon"
+                      : "Your collection woke the dragon"
+                    : pageText.title}
                 </h1>
 
                 <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
-                  {pageText.body}
+                  {submittedCollectibles
+                    ? language === "es"
+                      ? "Tu solicitud fue enviada. Ahora la pagina cambia a un final mas dramatico mientras el equipo revisa tu informacion y se prepara para continuar la conversacion."
+                      : "Your request is in. Now the page flips into a dramatic dragon ending while the team reviews your information and gets ready to keep the conversation moving."
+                    : pageText.body}
                 </p>
 
-                <div className="mt-8">
-                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
-                    {pageText.selectorLabel}
-                  </p>
-                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                    {COLLECTIBLE_THEMES.map((theme) => {
-                      const selected = form.collectibleType === theme.key;
-                      return (
-                        <button
-                          key={theme.id}
-                          type="button"
-                          onClick={() => onChange({ target: { name: "collectibleType", value: theme.key } })}
-                          className={`group rounded-[1.75rem] border p-5 text-left transition ${
-                            selected
-                              ? "border-white/40 bg-white/18 shadow-[0_20px_60px_-28px_rgba(255,255,255,0.4)]"
-                              : "border-white/10 bg-white/8 hover:-translate-y-1 hover:border-white/25 hover:bg-white/12"
-                          }`}
-                        >
-                          <div
-                            className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${theme.accent} text-lg font-black text-white shadow-lg`}
-                          >
-                            {theme.icon}
-                          </div>
-                          <h2 className="mt-4 text-2xl font-bold">{theme.key}</h2>
-                          <div className={`mt-4 h-2 rounded-full bg-gradient-to-r ${theme.accent} opacity-90`} />
-                        </button>
-                      );
-                    })}
+                {submittedCollectibles ? (
+                  <div className="mt-8 rounded-[2rem] border border-white/15 bg-black/20 p-6 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.8)] backdrop-blur">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-200/80">
+                      {language === "es" ? "Solicitud enviada" : "Submission complete"}
+                    </p>
+                    <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                      <div className="rounded-2xl bg-white/10 p-4">
+                        <p className="text-sm font-semibold text-white/80">
+                          {language === "es" ? "Coleccion elegida" : "Selected collection"}
+                        </p>
+                        <p className="mt-2 text-2xl font-bold">{activeTheme.key}</p>
+                      </div>
+                      <div className="rounded-2xl bg-white/10 p-4">
+                        <p className="text-sm font-semibold text-white/80">
+                          {language === "es" ? "Siguiente paso" : "What happens next"}
+                        </p>
+                        <p className="mt-2 text-base leading-7 text-white/90">
+                          {language === "es"
+                            ? "Revisaremos el valor, almacenamiento y detalles especiales para ayudarte a explorar la mejor forma de proteger la coleccion."
+                            : "We’ll review the value, storage, and standout details so we can help you explore the right way to protect the collection."}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="mt-8">
+                    <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                      {pageText.selectorLabel}
+                    </p>
+                    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                      {COLLECTIBLE_THEMES.map((theme) => {
+                        const selected = form.collectibleType === theme.key;
+                        return (
+                          <button
+                            key={theme.id}
+                            type="button"
+                            onClick={() => onChange({ target: { name: "collectibleType", value: theme.key } })}
+                            className={`group rounded-[1.75rem] border p-5 text-left transition ${
+                              selected
+                                ? "border-white/40 bg-white/18 shadow-[0_20px_60px_-28px_rgba(255,255,255,0.4)]"
+                                : "border-white/10 bg-white/8 hover:-translate-y-1 hover:border-white/25 hover:bg-white/12"
+                            }`}
+                          >
+                            <div
+                              className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${theme.accent} text-lg font-black text-white shadow-lg`}
+                            >
+                              {theme.icon}
+                            </div>
+                            <h2 className="mt-4 text-2xl font-bold">{theme.key}</h2>
+                            <div className={`mt-4 h-2 rounded-full bg-gradient-to-r ${theme.accent} opacity-90`} />
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 <div className={`mt-8 rounded-[2rem] border border-white/12 bg-gradient-to-br ${activeTheme.chip} p-6 backdrop-blur`}>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/65">
-                    {pageText.themesTitle}
+                    {submittedCollectibles
+                      ? language === "es"
+                        ? "El dragon esta guardando"
+                        : "The dragon is guarding"
+                      : pageText.themesTitle}
                   </p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <div className="rounded-2xl bg-black/20 p-4">
-                      <p className="text-sm font-semibold text-white/80">Theme</p>
-                      <p className="mt-2 text-2xl font-bold">{activeTheme.key}</p>
+                      <p className="text-sm font-semibold text-white/80">{pageText.themesAssetTitle}</p>
+                      <p className="mt-2 text-base leading-7 text-white/90">
+                        {activeThemeDetails.asset}
+                      </p>
                     </div>
                     <div className="rounded-2xl bg-black/20 p-4">
-                      <p className="text-sm font-semibold text-white/80">Focus</p>
+                      <p className="text-sm font-semibold text-white/80">{pageText.themesHowTitle}</p>
                       <p className="mt-2 text-base leading-7 text-white/90">
-                        Better documentation, storage details, and an easier conversation around the value of your collection.
+                        {activeThemeDetails.how}
                       </p>
                     </div>
                   </div>
@@ -1127,10 +1289,39 @@ function CollectiblesPage({
               </div>
 
               <div className="rounded-[2rem] border border-white/12 bg-white/10 p-6 shadow-[0_30px_90px_-45px_rgba(0,0,0,0.65)] backdrop-blur-xl md:p-8">
-                <h2 className="text-3xl font-black tracking-tight">{pageText.formTitle}</h2>
-                <p className="mt-3 text-sm leading-7 text-white/75">{pageText.formBody}</p>
+                <h2 className="text-3xl font-black tracking-tight">
+                  {submittedCollectibles
+                    ? language === "es"
+                      ? "La solicitud llego"
+                      : "The request landed"
+                    : pageText.formTitle}
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-white/75">
+                  {submittedCollectibles
+                    ? language === "es"
+                      ? "Tu informacion ya fue enviada. En lugar del formulario, ahora mostramos un cierre especial para la experiencia de coleccionables."
+                      : "Your information has already been sent in. Instead of the form, the page now shifts into a special collectibles finale."
+                    : pageText.formBody}
+                </p>
 
-                <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+                {submittedCollectibles ? (
+                  <div className="mt-6 rounded-[2rem] border border-amber-200/20 bg-black/25 p-6">
+                    <div className="rounded-[1.75rem] border border-white/10 bg-gradient-to-br from-amber-400/15 via-orange-500/10 to-red-500/15 p-6">
+                      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-amber-200/80">
+                        {language === "es" ? "Estado legendario" : "Legendary status"}
+                      </p>
+                      <p className="mt-4 text-3xl font-black tracking-tight">
+                        {pageText.submittedCollectibles}
+                      </p>
+                      <p className="mt-4 text-base leading-7 text-white/85">
+                        {language === "es"
+                          ? "El dragon aparece para guardar la coleccion mientras tu solicitud avanza. El equipo hara seguimiento con los detalles que enviaste."
+                          : "The dragon shows up to guard the collection while your request moves forward. The team will follow up using the details you sent."}
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <form className="mt-6 space-y-4" onSubmit={onSubmit}>
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-white/85">
@@ -1327,13 +1518,8 @@ function CollectiblesPage({
                         : "Submitting..."
                       : pageText.submitCollectibles}
                   </button>
-                </form>
-
-                {isSubmitted && submittedInquiryType === "collectibles" ? (
-                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/12 p-4 text-sm text-white">
-                    <p className="font-semibold">{pageText.submittedCollectibles}</p>
-                  </div>
-                ) : null}
+                  </form>
+                )}
               </div>
             </div>
           </div>
