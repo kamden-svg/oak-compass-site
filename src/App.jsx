@@ -338,11 +338,25 @@ const NAV_COPY = {
 
 const TEAM_PAGE_COPY = {
   en: {
-    badge: "The people behind Oak & Compass",
-    headline: "The kind of team you can actually feel comfortable talking to",
+    badge: "Meet the owner",
+    headline: "Built for people who love real life and want insurance to feel personal",
     subheadline:
-      "Shopping for insurance can feel overwhelming fast. Oak & Compass is built to make that experience feel simpler, more personal, and a lot less intimidating.",
-    introLabel: "Why people connect with the team",
+      "Oak & Compass is owner-led, grounded, outdoorsy, and built around helping people protect the life they are actually living. With 6 years of experience, the approach is simple: be real, be responsive, and make coverage feel clear.",
+    ownerLabel: "Owner-led guidance",
+    ownerTitle: "A business shaped by the same things worth protecting",
+    ownerBody:
+      "This page is about showing the person behind Oak & Compass. The same person helping clients with coverage is someone who loves the outdoors, values family, and believes the best protection is the kind that lets people keep living fully.",
+    snapshotTitle: "A quick snapshot",
+    snapshot: [
+      { label: "Experience", value: "6 years helping people protect what matters" },
+      { label: "Trail partner", value: "Deigo, a black lab mix with endless energy" },
+      { label: "Style", value: "Clear advice, no pressure, real follow-through" },
+    ],
+    galleryLabel: "A look into the life behind the brand",
+    galleryTitle: "A little more real, a little more personal",
+    galleryBody:
+      "These moments help tell the story behind Oak & Compass: discipline, family, mountains, movement, and a life that is genuinely lived outside.",
+    valuesLabel: "What that means for clients",
     introTitle: "Helpful, down-to-earth guidance from real people",
     introBody:
       "The goal is not to rush people through a form or push a one-size-fits-all policy. It is to listen, explain things clearly, and help each person feel like they have someone in their corner.",
@@ -360,28 +374,38 @@ const TEAM_PAGE_COPY = {
         body: "Support does not disappear once a form is submitted. The relationship keeps going when life changes.",
       },
     ],
-    membersTitle: "What working with the team feels like",
+    membersTitle: "Life outside the office",
     membersBody:
-      "Every conversation is different, but these are the kinds of people and strengths clients can expect to run into along the way.",
+      "Oak & Compass works best when it feels like a real person is behind it, so this part of the page leans into the life, energy, and personality that shape the brand.",
     members: [
       {
-        name: "The calm explainer",
-        role: "Breaks things down without the insurance-speak",
-        bio: "When coverage choices start sounding confusing, this is the kind of support that slows it down and makes it easier to understand what actually matters.",
-        highlights: ["Clear answers", "No pressure", "Simple explanations"],
+        name: "Mountain days and open air",
+        role: "Climbing, hiking, camping, and staying outside whenever possible",
+        bio: "The outdoors are a big part of the rhythm behind Oak & Compass. That sense of perspective, steadiness, and adventure carries into the way clients are cared for.",
+        highlights: ["Climbing", "Hiking", "Camping"],
       },
       {
-        name: "The follow-through person",
-        role: "Keeps things moving and keeps people in the loop",
-        bio: "Instead of wondering what happens next, clients get thoughtful follow-up, quick replies, and a smoother path from first contact to final decision.",
-        highlights: ["Quick replies", "Friendly check-ins", "Reliable follow-up"],
+        name: "The things that make home feel like home",
+        role: "Family, loyalty, and the people and animals who make life rich",
+        bio: "Oak & Compass is not built around transactions. It is built around protecting the people, routines, memories, and relationships that make a life feel full.",
+        highlights: ["Family-first", "Local roots", "Life worth protecting"],
       },
       {
-        name: "The family-first helper",
-        role: "Makes the process feel more comfortable and more human",
-        bio: "Whether someone is asking for themselves, a spouse, or a parent, the focus stays on making sure people feel heard and supported.",
-        highlights: ["Family-focused", "Spanish-speaking support", "Comfortable guidance"],
+        name: "A little bit nerdy in the best way",
+        role: "Fantasy books, Magic: The Gathering, running, and always another interest to chase",
+        bio: "The brand is allowed to have personality. Oak & Compass is serious about coverage, but it is also grounded in curiosity, fun, and a life that is genuinely lived outside of work.",
+        highlights: ["Fantasy reading", "Magic: The Gathering", "Running"],
       },
+    ],
+    hobbiesTitle: "A few things that make the brand feel real",
+    hobbies: [
+      "Climbing",
+      "Hiking",
+      "Camping",
+      "Magic: The Gathering",
+      "Running",
+      "Reading fantasy",
+      "Time outside with Deigo",
     ],
     expectationsTitle: "What people can expect",
     expectations: [
@@ -393,11 +417,25 @@ const TEAM_PAGE_COPY = {
     secondaryCta: "Back to Home",
   },
   es: {
-    badge: "El equipo de Oak & Compass",
-    headline: "Un equipo con el que de verdad se siente comodo hablar",
+    badge: "Conoce al dueno",
+    headline: "Creado para personas reales que quieren que el seguro se sienta personal",
     subheadline:
-      "Buscar seguro puede sentirse abrumador muy rapido. Oak & Compass busca que ese proceso se sienta mas claro, personal y mucho menos pesado.",
-    introLabel: "Por que la gente conecta con el equipo",
+      "Oak & Compass tiene liderazgo directo del dueno, una energia cercana al aire libre y una forma muy humana de ayudar. Con 6 anos de experiencia, la meta es simple: ser claro, responder bien y hacer que la cobertura se sienta entendible.",
+    ownerLabel: "Guiado por el dueno",
+    ownerTitle: "Un negocio formado por las mismas cosas que vale la pena proteger",
+    ownerBody:
+      "Esta pagina muestra a la persona detras de Oak & Compass. La misma persona que ayuda con cobertura tambien ama la naturaleza, valora a su familia y cree que la mejor proteccion permite vivir con libertad.",
+    snapshotTitle: "Un vistazo rapido",
+    snapshot: [
+      { label: "Experiencia", value: "6 anos ayudando a proteger lo importante" },
+      { label: "Companero de sendero", value: "Deigo, un black lab mix con mucha energia" },
+      { label: "Estilo", value: "Consejo claro, sin presion y con seguimiento real" },
+    ],
+    galleryLabel: "Un vistazo a la vida detras de la marca",
+    galleryTitle: "Algo mas real, mas cercano y mas personal",
+    galleryBody:
+      "Estos momentos ayudan a contar la historia detras de Oak & Compass: disciplina, familia, montanas, movimiento y una vida que de verdad se vive fuera del trabajo.",
+    valuesLabel: "Lo que eso significa para clientes",
     introTitle: "Orientacion cercana, clara y humana",
     introBody:
       "La idea no es apresurar a nadie ni empujar una poliza generica. La idea es escuchar, explicar con calma y hacer que cada persona sienta que tiene apoyo real.",
@@ -415,28 +453,38 @@ const TEAM_PAGE_COPY = {
         body: "La ayuda no termina cuando se envia el formulario. El acompanamiento sigue cuando la vida cambia.",
       },
     ],
-    membersTitle: "Como se siente trabajar con el equipo",
+    membersTitle: "La vida fuera de la oficina",
     membersBody:
-      "Cada conversacion es distinta, pero estas son las cualidades humanas que marcan la experiencia para los clientes.",
+      "Oak & Compass funciona mejor cuando se siente humano, asi que esta parte de la pagina muestra la vida, la energia y la personalidad que forman la marca.",
     members: [
       {
-        name: "La persona que explica con calma",
-        role: "Aclara opciones sin complicar las cosas",
-        bio: "Cuando la cobertura empieza a sentirse confusa, este tipo de apoyo ayuda a bajar el ritmo y entender lo que de verdad importa.",
-        highlights: ["Respuestas claras", "Sin presion", "Explicaciones simples"],
+        name: "Montanas, senderos y aire libre",
+        role: "Escalada, caminatas, campamentos y tiempo afuera siempre que se puede",
+        bio: "La naturaleza forma parte del ritmo detras de Oak & Compass. Esa mezcla de perspectiva, calma y aventura tambien aparece en la forma de atender a los clientes.",
+        highlights: ["Escalada", "Caminatas", "Campamento"],
       },
       {
-        name: "La persona que si da seguimiento",
-        role: "Mantiene el proceso claro y en movimiento",
-        bio: "En lugar de dejar dudas sobre el siguiente paso, los clientes reciben seguimiento atento, respuestas rapidas y una experiencia mas ordenada.",
-        highlights: ["Respuestas rapidas", "Seguimiento amable", "Buena comunicacion"],
+        name: "Las cosas que hacen que una casa se sienta hogar",
+        role: "Familia, lealtad y las personas y animales que hacen la vida rica",
+        bio: "Oak & Compass no esta construido alrededor de transacciones. Esta construido alrededor de proteger las personas, rutinas, recuerdos y relaciones que llenan de sentido la vida.",
+        highlights: ["Enfoque familiar", "Raices locales", "Vida que vale cuidar"],
       },
       {
-        name: "La persona que piensa en la familia",
-        role: "Hace que el proceso se sienta mas comodo y humano",
-        bio: "Ya sea para uno mismo, la pareja o un familiar, el enfoque sigue siendo escuchar bien y hacer que la persona se sienta acompanada.",
-        highlights: ["Enfoque familiar", "Atencion en espanol", "Orientacion cercana"],
+        name: "Un lado geek en el mejor sentido",
+        role: "Fantasia, Magic: The Gathering, correr y siempre otra cosa por aprender",
+        bio: "La marca puede tener personalidad. Oak & Compass toma la cobertura en serio, pero tambien nace de curiosidad, diversion y una vida real fuera del trabajo.",
+        highlights: ["Lectura de fantasia", "Magic: The Gathering", "Correr"],
       },
+    ],
+    hobbiesTitle: "Cosas que hacen que la marca se sienta real",
+    hobbies: [
+      "Escalada",
+      "Caminatas",
+      "Campamento",
+      "Magic: The Gathering",
+      "Correr",
+      "Lectura de fantasia",
+      "Tiempo afuera con Deigo",
     ],
     expectationsTitle: "Lo que la gente puede esperar",
     expectations: [
@@ -448,6 +496,29 @@ const TEAM_PAGE_COPY = {
     secondaryCta: "Volver al inicio",
   },
 };
+
+const TEAM_GALLERY = [
+  {
+    src: "/IMG_2087.JPEG",
+    alt: "Owner outdoors in a candid portrait",
+    className: "lg:col-span-2 lg:row-span-2",
+  },
+  {
+    src: "/20220429_083453.jpg",
+    alt: "Owner with family by the water",
+    className: "lg:col-span-1 lg:row-span-1",
+  },
+  {
+    src: "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg",
+    alt: "Deigo running on a snowy trail",
+    className: "lg:col-span-1 lg:row-span-1",
+  },
+  {
+    src: "/F8C773C4-7E55-4474-B200-06C7FDD76891.jpg",
+    alt: "Climbing silhouette between canyon walls",
+    className: "lg:col-span-2 lg:row-span-1",
+  },
+];
 
 const COLLECTIBLE_THEMES = [
   {
@@ -788,7 +859,11 @@ function SiteHeader({ language, activePage, onNavigate }) {
   );
 }
 
-function ForestLandscapeBackground({ variant = "default" }) {
+function ForestLandscapeBackground({
+  variant = "default",
+  className = "absolute inset-0",
+  preserve = "xMidYMid slice",
+}) {
   let overlay = null;
 
   if (variant === "auto") {
@@ -882,12 +957,12 @@ function ForestLandscapeBackground({ variant = "default" }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden text-emerald-950/[0.09]"
+      className={`pointer-events-none overflow-hidden text-emerald-950/[0.09] ${className}`}
     >
       <svg
         viewBox="0 0 1440 900"
         className="h-full w-full"
-        preserveAspectRatio="xMidYMid slice"
+        preserveAspectRatio={preserve}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -1222,6 +1297,25 @@ function TeamPage({ language, onNavigate }) {
             </div>
 
             <div className="grid gap-4">
+              <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                  {teamText.snapshotTitle}
+                </p>
+                <div className="mt-5 grid gap-3">
+                  {teamText.snapshot.map((item) => (
+                    <div
+                      key={item.label}
+                      className="rounded-3xl bg-slate-50 px-4 py-4 ring-1 ring-slate-200"
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                        {item.label}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-slate-700">{item.value}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               {teamText.values.map((value) => (
                 <div
                   key={value.title}
@@ -1240,16 +1334,35 @@ function TeamPage({ language, onNavigate }) {
         <div className="grid gap-8 lg:grid-cols-[0.9fr,1.1fr]">
           <div className="rounded-[2rem] bg-slate-900 p-8 text-white shadow-xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-300">
-              {teamText.introLabel}
+              {teamText.ownerLabel}
             </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight">{teamText.introTitle}</h2>
-            <p className="mt-4 text-sm leading-7 text-slate-300">{teamText.introBody}</p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight">{teamText.ownerTitle}</h2>
+            <p className="mt-4 text-sm leading-7 text-slate-300">{teamText.ownerBody}</p>
+            <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-5">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                {teamText.hobbiesTitle}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {teamText.hobbies.map((hobby) => (
+                  <span
+                    key={hobby}
+                    className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-medium text-slate-100"
+                  >
+                    {hobby}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              {teamText.valuesLabel}
+            </p>
             <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
-              {teamText.expectationsTitle}
+              {teamText.introTitle}
             </h2>
+            <p className="mt-3 text-sm leading-7 text-slate-600">{teamText.introBody}</p>
             <div className="mt-6 grid gap-4">
               {teamText.expectations.map((item, index) => (
                 <div
@@ -1263,6 +1376,41 @@ function TeamPage({ language, onNavigate }) {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-6">
+        <div className="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-8">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+              {teamText.galleryLabel}
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900">
+              {teamText.galleryTitle}
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-slate-600">{teamText.galleryBody}</p>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:auto-rows-[220px] lg:grid-cols-3">
+            {TEAM_GALLERY.map((photo, index) => (
+              <figure
+                key={photo.src}
+                className={`group relative overflow-hidden rounded-[1.75rem] bg-slate-200 shadow-sm ring-1 ring-slate-200 ${photo.className}`}
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-900/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur">
+                    0{index + 1}
+                  </div>
+                </div>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
@@ -2807,10 +2955,16 @@ export default function OakCompassLandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+    <div className="relative min-h-screen overflow-hidden bg-slate-50 text-slate-900" lang={language}>
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" aria-hidden="true" />
+      <ForestLandscapeBackground
+        variant={homeBackgroundVariant}
+        className="absolute inset-y-0 left-0 w-[82%] md:w-[70%] lg:w-[62%]"
+        preserve="xMinYMid slice"
+      />
+
+      <div className="relative">
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
-        <ForestLandscapeBackground variant={homeBackgroundVariant} />
 
         <SiteHeader language={language} activePage={PAGE_HOME} onNavigate={navigateToPage} />
 
@@ -3149,6 +3303,7 @@ export default function OakCompassLandingPage() {
           </button>
         </div>
       </section>
+      </div>
 
       <Analytics />
     </div>
