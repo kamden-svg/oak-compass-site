@@ -315,7 +315,7 @@ const NAV_COPY = {
     collectiblesCta: "Protect Your Collection",
     teamBannerTitle: "Put faces, values, and style of service behind the quote form",
     teamBannerBody:
-      "Explore the new team page to learn how Oak & Compass supports clients with calm, local, people-first guidance.",
+      "See how Oak & Compass supports clients with calm, local, people-first guidance.",
     collectiblesBannerTitle: "Insure the pieces that make your collection feel personal",
     collectiblesBannerBody:
       "Explore a themed collectibles page built for cards, books, firearms, comics, coins, and more.",
