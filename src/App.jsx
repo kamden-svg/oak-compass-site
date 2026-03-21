@@ -75,6 +75,22 @@ const INSURANCE_FACTS = {
   ],
 };
 
+function getHomeInsuranceBackgroundVariant(insuranceType) {
+  const value = (insuranceType || "").toLowerCase();
+
+  if (!value) return "default";
+  if (value.includes("auto")) return "auto";
+  if (value.includes("hogar") || value.includes("home")) return "home";
+  if (value.includes("renters") || value.includes("inquilinos")) return "renters";
+  if (value.includes("landlord") || value.includes("propietario")) return "landlord";
+  if (value.includes("life") || value.includes("vida")) return "life";
+  if (value.includes("business") || value.includes("comercial")) return "business";
+  if (value.includes("pet") || value.includes("mascotas")) return "pet";
+  if (value.includes("other") || value.includes("otro")) return "other";
+
+  return "default";
+}
+
 const COPY = {
   en: {
     badge: "Oak & Compass Insurance",
@@ -772,7 +788,97 @@ function SiteHeader({ language, activePage, onNavigate }) {
   );
 }
 
-function ForestLandscapeBackground() {
+function ForestLandscapeBackground({ variant = "default" }) {
+  let overlay = null;
+
+  if (variant === "auto") {
+    overlay = (
+      <>
+        <path strokeWidth="2.4" d="M906 505H1114L1162 553H1197L1222 604H862L906 505Z" />
+        <path strokeWidth="2" d="M933 505L974 451H1079L1132 505" />
+        <circle cx="935" cy="608" r="28" strokeWidth="2.8" />
+        <circle cx="1119" cy="608" r="28" strokeWidth="2.8" />
+        <path strokeWidth="1.8" d="M966 542H1088" />
+        <path strokeWidth="1.8" d="M862 604H1222" />
+      </>
+    );
+  } else if (variant === "home") {
+    overlay = (
+      <>
+        <path strokeWidth="2.6" d="M901 610V501L1010 418L1122 501V610" />
+        <path strokeWidth="2.2" d="M876 505L1010 394L1147 505" />
+        <path strokeWidth="2.2" d="M954 610V536H1008V610" />
+        <path strokeWidth="2" d="M935 524H972" />
+        <path strokeWidth="2" d="M1046 524H1086" />
+        <path strokeWidth="2" d="M1046 551H1086" />
+      </>
+    );
+  } else if (variant === "renters") {
+    overlay = (
+      <>
+        <path strokeWidth="2.6" d="M908 610V468H1118V610" />
+        <path strokeWidth="2.2" d="M892 468H1134" />
+        <path strokeWidth="2.2" d="M951 610V520H1076V610" />
+        <path strokeWidth="2" d="M974 444C986 425 1004 415 1028 415C1050 415 1068 424 1080 444" />
+        <path strokeWidth="2" d="M972 391H1082" />
+        <path strokeWidth="2" d="M1026 391V444" />
+      </>
+    );
+  } else if (variant === "landlord") {
+    overlay = (
+      <>
+        <path strokeWidth="2.6" d="M892 610V458H1133V610" />
+        <path strokeWidth="2.2" d="M872 458L1013 386L1152 458" />
+        <path strokeWidth="2.2" d="M960 610V522H1011V610" />
+        <path strokeWidth="2" d="M1044 514H1089" />
+        <path strokeWidth="2" d="M1044 542H1089" />
+        <path strokeWidth="2" d="M1168 507C1193 493 1218 492 1243 503C1258 510 1269 522 1278 539" />
+        <path strokeWidth="2" d="M1225 537V589" />
+        <path strokeWidth="2" d="M1198 563L1225 590L1270 543" />
+      </>
+    );
+  } else if (variant === "life") {
+    overlay = (
+      <>
+        <path strokeWidth="2.6" d="M1009 620C939 620 878 599 828 559C779 520 754 472 754 417C754 374 768 339 796 313C822 287 854 274 892 274C942 274 981 295 1009 336C1037 295 1076 274 1126 274C1163 274 1195 287 1222 313C1250 339 1264 374 1264 417C1264 472 1238 520 1189 559C1139 599 1079 620 1009 620Z" />
+        <path strokeWidth="2" d="M934 432H981L1008 390L1036 470L1061 432H1111" />
+      </>
+    );
+  } else if (variant === "business") {
+    overlay = (
+      <>
+        <path strokeWidth="2.6" d="M906 610V451H1119V610" />
+        <path strokeWidth="2.2" d="M962 610V519H1060V610" />
+        <path strokeWidth="2" d="M937 485H969M937 521H969M937 557H969" />
+        <path strokeWidth="2" d="M988 485H1020M988 521H1020M988 557H1020" />
+        <path strokeWidth="2" d="M1038 485H1070M1038 521H1070M1038 557H1070" />
+        <path strokeWidth="2" d="M1089 485H1119M1089 521H1119M1089 557H1119" />
+        <path strokeWidth="2.2" d="M956 427H1070" />
+      </>
+    );
+  } else if (variant === "pet") {
+    overlay = (
+      <>
+        <path strokeWidth="2.8" d="M955 610C913 610 879 581 879 540C879 512 895 489 919 477C924 448 942 425 969 418C998 411 1026 422 1043 446C1060 422 1088 411 1117 418C1145 425 1163 448 1168 477C1192 489 1208 512 1208 540C1208 581 1174 610 1132 610H955Z" />
+        <circle cx="970" cy="455" r="22" strokeWidth="2.2" />
+        <circle cx="1117" cy="455" r="22" strokeWidth="2.2" />
+        <path strokeWidth="2" d="M1001 557C1018 568 1036 573 1055 573C1074 573 1093 568 1110 557" />
+      </>
+    );
+  } else if (variant === "other") {
+    overlay = (
+      <>
+        <circle cx="1013" cy="512" r="92" strokeWidth="2.6" />
+        <circle cx="1013" cy="512" r="54" strokeWidth="2" />
+        <path strokeWidth="2.4" d="M1013 436V512L1060 547" />
+        <path strokeWidth="2.2" d="M1013 391V431" />
+        <path strokeWidth="2.2" d="M1133 512H1093" />
+        <path strokeWidth="2.2" d="M1013 633V593" />
+        <path strokeWidth="2.2" d="M893 512H933" />
+      </>
+    );
+  }
+
   return (
     <div
       aria-hidden="true"
@@ -816,6 +922,7 @@ function ForestLandscapeBackground() {
           <path strokeWidth="2.2" d="M1176 607C1165 598 1160 585 1162 568C1164 551 1174 537 1188 530C1191 514 1201 501 1215 495C1231 489 1248 494 1258 506C1267 494 1281 489 1296 491C1317 494 1333 509 1337 527C1353 531 1366 543 1369 560C1373 581 1362 598 1344 609" />
 
           <path strokeWidth="2" d="M0 812C111 795 223 792 337 801C447 810 553 829 660 831C770 833 873 817 983 817C1110 816 1245 837 1440 828" />
+          {overlay}
         </g>
       </svg>
     </div>
@@ -2415,6 +2522,7 @@ export default function OakCompassLandingPage() {
   const isReferral = form.inquiryType === "referral";
   const submittedIsReferral = submittedInquiryType === "referral";
   const submittedIsJobApplication = submittedInquiryType === "job";
+  const homeBackgroundVariant = getHomeInsuranceBackgroundVariant(form.insuranceType);
 
   const openJobApplication = () => {
     navigateToPage(PAGE_JOBS);
@@ -2702,7 +2810,7 @@ export default function OakCompassLandingPage() {
     <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
-        <ForestLandscapeBackground />
+        <ForestLandscapeBackground variant={homeBackgroundVariant} />
 
         <SiteHeader language={language} activePage={PAGE_HOME} onNavigate={navigateToPage} />
 
