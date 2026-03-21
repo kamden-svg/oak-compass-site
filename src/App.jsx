@@ -747,55 +747,22 @@ function CollectiblesSceneBackground({ themeId }) {
     return (
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.3]"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.28]"
       >
         <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path strokeWidth="2.2" d="M84 111L147 132L135 198L68 210L42 152L84 111Z" />
-            <path strokeWidth="1.8" d="M84 111L68 210M147 132L42 152M92 138L110 156M85 178L108 184" />
-            <path strokeWidth="2.2" d="M410 152L481 111L545 151L526 225L449 239L395 198L410 152Z" />
-            <path strokeWidth="1.8" d="M410 152L526 225M481 111L449 239M452 148L484 177M470 203L503 199" />
-            <path strokeWidth="2.2" d="M748 84L816 109L799 177L728 195L686 140L748 84Z" />
-            <path strokeWidth="1.8" d="M748 84L728 195M816 109L686 140M743 122L768 144M737 170L772 168" />
-            <path strokeWidth="2.2" d="M1098 133L1173 118L1214 173L1186 246L1106 249L1062 191L1098 133Z" />
-            <path strokeWidth="1.8" d="M1098 133L1186 246M1173 118L1106 249M1117 165L1144 187M1110 212L1157 211" />
-            <path strokeWidth="2.2" d="M202 395L279 352L342 391L329 467L246 486L188 446L202 395Z" />
-            <path strokeWidth="1.8" d="M202 395L329 467M279 352L246 486M249 397L283 425M257 447L299 445" />
-            <path strokeWidth="2.2" d="M601 339L676 357L681 433L614 470L549 431L540 366L601 339Z" />
-            <path strokeWidth="1.8" d="M601 339L614 470M676 357L549 431M586 379L620 391M587 421L632 418" />
-            <path strokeWidth="2.2" d="M917 375L1001 347L1059 405L1028 487L934 499L873 442L917 375Z" />
-            <path strokeWidth="1.8" d="M917 375L1028 487M1001 347L934 499M935 411L970 430M934 463L989 458" />
-            <path strokeWidth="2.2" d="M1228 361L1304 392L1287 464L1218 488L1160 438L1170 380L1228 361Z" />
-            <path strokeWidth="1.8" d="M1228 361L1218 488M1304 392L1160 438M1211 397L1245 419M1201 447L1248 447" />
-            <path strokeWidth="2.2" d="M89 660L169 632L221 690L191 765L102 778L46 723L89 660Z" />
-            <path strokeWidth="1.8" d="M89 660L191 765M169 632L102 778M107 694L141 715M106 741L161 736" />
-            <path strokeWidth="2.2" d="M463 623L537 649L533 727L466 760L394 722L394 651L463 623Z" />
-            <path strokeWidth="1.8" d="M463 623L466 760M537 649L394 651M447 665L478 688M446 713L491 709" />
-            <path strokeWidth="2.2" d="M839 612L922 586L982 644L950 722L862 736L798 680L839 612Z" />
-            <path strokeWidth="1.8" d="M839 612L950 722M922 586L862 736M859 647L893 669M856 700L912 694" />
-            <path strokeWidth="2.2" d="M1161 645L1241 615L1294 669L1268 749L1180 764L1119 711L1161 645Z" />
-            <path strokeWidth="1.8" d="M1161 645L1268 749M1241 615L1180 764M1182 680L1216 701M1178 727L1234 722" />
-            <path strokeWidth="2" d="M266 112L319 145L274 188L230 152L266 112Z" />
-            <path strokeWidth="2" d="M917 148L972 183L926 226L883 191L917 148Z" />
-            <path strokeWidth="2" d="M708 520L767 556L721 602L674 567L708 520Z" />
-            <path strokeWidth="1.8" d="M133 332C151 321 171 319 190 327" />
-            <path strokeWidth="1.8" d="M126 362C145 351 166 349 186 358" />
-            <path strokeWidth="1.8" d="M560 224C579 212 603 210 623 219" />
-            <path strokeWidth="1.8" d="M553 255C576 241 602 239 625 249" />
-            <path strokeWidth="1.8" d="M1301 288C1320 277 1340 274 1358 282" />
-            <path strokeWidth="1.8" d="M1294 320C1316 307 1341 304 1363 314" />
-            <path strokeWidth="1.8" d="M325 292C345 274 366 266 390 269" />
-            <path strokeWidth="1.8" d="M344 311C367 295 391 290 417 294" />
-            <path strokeWidth="1.8" d="M1048 570C1070 551 1096 544 1122 548" />
-            <path strokeWidth="1.8" d="M1064 591C1089 575 1118 571 1146 576" />
-            <path strokeWidth="1.8" d="M614 208C633 188 655 180 682 183" />
-            <path strokeWidth="1.8" d="M602 242C626 225 654 219 684 223" />
-            <path strokeWidth="1.8" d="M177 530C190 517 206 510 224 512" />
-            <path strokeWidth="1.8" d="M1185 137C1200 124 1216 118 1234 120" />
-            <path strokeWidth="1.8" d="M830 274L859 298" />
-            <path strokeWidth="1.8" d="M850 254L841 319" />
-            <path strokeWidth="1.8" d="M1152 533L1188 555" />
-            <path strokeWidth="1.8" d="M1171 515L1162 578" />
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="1.8" d="M511 149C571 122 641 108 720 108C798 108 870 122 931 149" />
+            <path strokeWidth="1.8" d="M463 742C533 776 619 793 720 793C820 793 908 776 978 742" />
+            <path strokeWidth="3.8" d="M577 282L688 190L834 214L801 372L891 493L744 489L648 608L590 463L453 406L577 282Z" />
+            <path strokeWidth="3.2" d="M636 251L667 328L747 342L688 400L708 480L637 441L570 487L586 408L527 351L605 337L636 251Z" />
+            <path strokeWidth="3.2" d="M826 266L919 311L906 412L809 449L730 385L741 293L826 266Z" />
+            <path strokeWidth="2.6" d="M858 240C930 255 988 294 1034 357" />
+            <path strokeWidth="2.6" d="M505 256C449 292 408 340 382 401" />
+            <path strokeWidth="2.2" d="M364 625C432 583 516 561 618 561" />
+            <path strokeWidth="2.2" d="M823 561C923 561 1008 583 1076 625" />
+            <path strokeWidth="2.4" d="M566 671L649 626L720 661L792 626L874 671" />
           </g>
         </svg>
       </div>
@@ -810,48 +777,21 @@ function CollectiblesSceneBackground({ themeId }) {
       >
         <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path strokeWidth="2.8" d="M0 798C146 775 291 772 439 779C598 786 750 813 909 816C1112 820 1286 789 1440 766" />
-            <path strokeWidth="4.2" d="M112 158H1326" />
-            <path strokeWidth="4.2" d="M112 438H1326" />
-            <path strokeWidth="4.2" d="M112 744H1326" />
-            <path strokeWidth="4.2" d="M132 116V784" />
-            <path strokeWidth="4.2" d="M1306 116V784" />
-            <path strokeWidth="4.4" d="M418 116C433 66 470 31 520 20H923C972 31 1009 66 1024 116" />
-            <path strokeWidth="3" d="M548 149C585 93 649 59 720 59C790 59 852 93 892 149" />
-            <path strokeWidth="2.4" d="M465 102C497 83 533 75 571 79" />
-            <path strokeWidth="2.4" d="M867 79C905 75 943 83 976 102" />
-            <path strokeWidth="3.5" d="M190 190V400H300V190" />
-            <path strokeWidth="3.5" d="M316 179V400H418V179" />
-            <path strokeWidth="3.5" d="M437 201V400H557V201" />
-            <path strokeWidth="3.5" d="M578 168V400H709V168" />
-            <path strokeWidth="3.5" d="M726 190V400H842V190" />
-            <path strokeWidth="3.5" d="M860 172V400H984V172" />
-            <path strokeWidth="3.5" d="M1005 187V400H1117V187" />
-            <path strokeWidth="3.5" d="M1136 179V400H1246V179" />
-            <path strokeWidth="2.2" d="M210 212V377M341 194V377M470 223V379M619 192V378M764 215V379M903 192V379M1035 210V378M1169 195V378" />
-            <path strokeWidth="2.1" d="M229 221C246 205 267 198 291 200" />
-            <path strokeWidth="2.1" d="M597 194C623 176 653 171 687 175" />
-            <path strokeWidth="2.1" d="M879 190C906 171 939 166 972 172" />
-            <path strokeWidth="2.1" d="M1150 194C1177 174 1210 168 1241 174" />
-            <path strokeWidth="3.5" d="M180 471V711H313V471" />
-            <path strokeWidth="3.5" d="M333 498V711H469V498" />
-            <path strokeWidth="3.5" d="M487 463V711H639V463" />
-            <path strokeWidth="3.5" d="M659 485V711H780V485" />
-            <path strokeWidth="3.5" d="M801 471V711H940V471" />
-            <path strokeWidth="3.5" d="M959 495V711H1094V495" />
-            <path strokeWidth="3.5" d="M1113 476V711H1260V476" />
-            <path strokeWidth="2.2" d="M205 498V683M365 526V684M526 492V684M686 514V684M832 499V684M992 521V684M1144 503V684" />
-            <path strokeWidth="2.8" d="M563 445L608 389H828L873 445" />
-            <path strokeWidth="2.8" d="M598 389V300H838V389" />
-            <path strokeWidth="2.1" d="M624 324H811" />
-            <path strokeWidth="2.1" d="M624 348H811" />
-            <path strokeWidth="2.1" d="M624 372H811" />
-            <path strokeWidth="3" d="M104 610C163 564 234 543 318 548" />
-            <path strokeWidth="3" d="M1122 550C1204 542 1278 565 1336 618" />
-            <path strokeWidth="3.2" d="M106 744C165 713 231 700 302 702" />
-            <path strokeWidth="3.2" d="M1146 702C1216 699 1280 713 1335 744" />
-            <path strokeWidth="2.4" d="M1211 268C1245 237 1283 222 1326 224" />
-            <path strokeWidth="2.4" d="M111 224C154 221 193 237 228 272" />
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="3.8" d="M470 655V280H575V655" />
+            <path strokeWidth="3.8" d="M601 655V231H721V655" />
+            <path strokeWidth="3.8" d="M748 655V255H853V655" />
+            <path strokeWidth="3.8" d="M878 655V203H974V655" />
+            <path strokeWidth="2.3" d="M499 310V627M627 261V627M775 286V627M905 236V627" />
+            <path strokeWidth="3.4" d="M396 704H1046" />
+            <path strokeWidth="3.2" d="M552 174C601 128 658 104 721 104C783 104 839 128 888 174" />
+            <path strokeWidth="2.8" d="M617 147C649 122 683 110 721 110C759 110 794 122 825 147" />
+            <path strokeWidth="2.8" d="M325 688C398 628 489 593 600 583" />
+            <path strokeWidth="2.8" d="M840 583C952 593 1043 628 1116 688" />
+            <path strokeWidth="2.4" d="M417 210C458 185 503 172 553 172" />
+            <path strokeWidth="2.4" d="M887 172C938 172 984 185 1024 210" />
+            <path strokeWidth="2.4" d="M560 744C610 770 663 783 721 783C778 783 833 770 882 744" />
           </g>
         </svg>
       </div>
@@ -862,36 +802,26 @@ function CollectiblesSceneBackground({ themeId }) {
     return (
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.24]"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
       >
         <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path strokeWidth="2.8" d="M0 808C166 784 330 780 493 790C669 800 833 828 1006 832C1164 836 1309 817 1440 792" />
-            <path strokeWidth="2.2" d="M0 852C183 838 367 837 553 845C741 854 925 866 1111 861C1235 858 1345 846 1440 832" />
-            <path strokeWidth="4.2" d="M118 255C219 202 335 179 467 186" />
-            <path strokeWidth="4.2" d="M1006 194C1116 164 1225 171 1333 220" />
-            <path strokeWidth="4.2" d="M885 130L941 344" />
-            <path strokeWidth="4.2" d="M1037 106L1047 369" />
-            <path strokeWidth="4.2" d="M1188 136L1146 354" />
-            <path strokeWidth="3.6" d="M108 646H370L457 576H642L720 626H885L936 690H176L108 646Z" />
-            <path strokeWidth="3" d="M440 576L521 488H674L748 576" />
-            <path strokeWidth="2.5" d="M646 533H925" />
-            <circle cx="226" cy="694" r="52" strokeWidth="4" />
-            <circle cx="389" cy="694" r="52" strokeWidth="4" />
-            <circle cx="598" cy="694" r="57" strokeWidth="4" />
-            <circle cx="769" cy="694" r="57" strokeWidth="4" />
-            <path strokeWidth="2.8" d="M116 647L184 672L257 647L334 672L408 647L483 672L561 647L636 672L711 647L787 672L860 647" />
-            <path strokeWidth="3.2" d="M806 617H1034L1114 551H1292L1368 608H1440" />
-            <path strokeWidth="2.8" d="M1102 551L1173 484H1319L1378 551" />
-            <path strokeWidth="2.5" d="M1268 513H1440" />
-            <circle cx="910" cy="668" r="44" strokeWidth="4" />
-            <circle cx="1048" cy="668" r="44" strokeWidth="4" />
-            <circle cx="1221" cy="668" r="48" strokeWidth="4" />
-            <circle cx="1363" cy="668" r="48" strokeWidth="4" />
-            <path strokeWidth="2.4" d="M819 618L874 643L935 618L995 643L1057 618L1116 643L1178 618L1238 643L1300 618" />
-            <path strokeWidth="2.2" d="M226 298C275 267 333 259 385 274" />
-            <path strokeWidth="2.2" d="M1106 270C1157 242 1216 239 1269 255" />
-            <path strokeWidth="2.2" d="M889 393C940 361 1001 354 1060 372" />
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.2" d="M430 623H680L778 525H973L1062 595H1125" />
+            <path strokeWidth="3.4" d="M651 525L730 440H887L952 525" />
+            <path strokeWidth="3" d="M816 470H1024" />
+            <circle cx="523" cy="661" r="58" strokeWidth="4.2" />
+            <circle cx="678" cy="661" r="58" strokeWidth="4.2" />
+            <circle cx="864" cy="640" r="64" strokeWidth="4.2" />
+            <circle cx="1040" cy="640" r="64" strokeWidth="4.2" />
+            <path strokeWidth="3.2" d="M527 293C588 231 656 199 731 199C807 199 877 231 944 293" />
+            <path strokeWidth="3.2" d="M737 199V145" />
+            <path strokeWidth="3.2" d="M882 230L921 116" />
+            <path strokeWidth="3.2" d="M582 230L531 118" />
+            <path strokeWidth="2.6" d="M342 694C434 626 543 592 668 592" />
+            <path strokeWidth="2.6" d="M842 592C963 592 1068 623 1158 686" />
+            <path strokeWidth="2.2" d="M446 760C538 786 629 799 721 799C812 799 905 786 996 760" />
           </g>
         </svg>
       </div>
@@ -902,25 +832,22 @@ function CollectiblesSceneBackground({ themeId }) {
     return (
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.24]"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
       >
         <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path strokeWidth="2.8" d="M0 812C130 776 257 764 388 773C525 782 639 820 778 826C937 832 1060 790 1194 779C1280 772 1362 779 1440 807" />
-            <path strokeWidth="4" d="M102 174L520 86L432 382L102 174Z" />
-            <path strokeWidth="3.6" d="M936 126L1328 235L1106 474L936 126Z" />
-            <path strokeWidth="3.8" d="M246 505L540 437L498 760L246 505Z" />
-            <path strokeWidth="3.8" d="M816 531L1188 470L1318 760L816 531Z" />
-            <path strokeWidth="2.8" d="M575 236L656 174L773 184L731 286L779 376L665 357L580 413L589 304L510 229L575 236Z" />
-            <path strokeWidth="2.8" d="M930 308L1013 259L1122 287L1084 377L1142 452L1034 446L952 505L944 406L870 335L930 308Z" />
-            <path strokeWidth="2.6" d="M262 284L317 245L388 262L360 324L395 384L328 378L277 423L272 357L226 303L262 284Z" />
-            <path strokeWidth="2.4" d="M645 601L727 558L821 586L784 664L825 742L738 728L671 778L665 694L604 628L645 601Z" />
-            <path strokeWidth="3.1" d="M109 126C177 92 255 88 326 115" />
-            <path strokeWidth="3.1" d="M1060 95C1142 76 1220 86 1287 125" />
-            <path strokeWidth="2.4" d="M324 606C389 560 468 545 553 562" />
-            <path strokeWidth="2.4" d="M965 587C1047 547 1132 545 1211 567" />
-            <path strokeWidth="2.8" d="M145 674C203 647 268 642 331 657" />
-            <path strokeWidth="2.8" d="M1106 691C1170 664 1237 660 1300 676" />
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.2" d="M389 681L475 554L655 521L592 682H389Z" />
+            <path strokeWidth="4.2" d="M1051 681L965 554L785 521L848 682H1051Z" />
+            <path strokeWidth="4.4" d="M566 623L638 452H801L874 623L721 710L566 623Z" />
+            <path strokeWidth="3" d="M636 452L598 352L660 271H783L845 352L806 452" />
+            <path strokeWidth="2.6" d="M508 293C560 235 623 205 696 201" />
+            <path strokeWidth="2.6" d="M744 201C817 205 881 235 933 293" />
+            <path strokeWidth="2.2" d="M371 752C468 784 585 800 721 800C856 800 974 784 1071 752" />
+            <path strokeWidth="2.4" d="M451 177C531 133 621 111 721 111C819 111 912 133 993 177" />
+            <path strokeWidth="2.2" d="M464 617C527 584 598 567 676 567" />
+            <path strokeWidth="2.2" d="M767 567C844 567 916 584 979 617" />
           </g>
         </svg>
       </div>
@@ -931,26 +858,21 @@ function CollectiblesSceneBackground({ themeId }) {
     return (
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.24]"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
       >
         <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            <path strokeWidth="2.8" d="M0 808C156 784 314 780 476 789C650 799 817 824 991 827C1174 831 1323 810 1440 786" />
-            <path strokeWidth="4" d="M311 303C311 251 370 208 442 208C514 208 573 251 573 303C573 355 514 398 442 398C370 398 311 355 311 303Z" />
-            <path strokeWidth="2.8" d="M347 303C347 268 390 239 442 239C494 239 537 268 537 303C537 338 494 367 442 367C390 367 347 338 347 303Z" />
-            <path strokeWidth="4.2" d="M175 686C175 590 290 512 433 512C576 512 691 590 691 686" />
-            <path strokeWidth="3.2" d="M228 686C228 618 320 563 433 563C546 563 638 618 638 686" />
-            <path strokeWidth="3.6" d="M711 596C711 524 796 466 900 466C1004 466 1089 524 1089 596C1089 668 1004 726 900 726C796 726 711 668 711 596Z" />
-            <path strokeWidth="2.8" d="M752 596C752 545 818 504 900 504C982 504 1048 545 1048 596C1048 647 982 688 900 688C818 688 752 647 752 596Z" />
-            <path strokeWidth="3.8" d="M1076 382C1076 321 1147 272 1235 272C1322 272 1394 321 1394 382C1394 443 1322 492 1235 492C1147 492 1076 443 1076 382Z" />
-            <path strokeWidth="2.8" d="M1114 382C1114 342 1169 309 1235 309C1300 309 1355 342 1355 382C1355 422 1300 455 1235 455C1169 455 1114 422 1114 382Z" />
-            <path strokeWidth="2.6" d="M442 247V357M391 303H494" />
-            <path strokeWidth="2.6" d="M900 517V676M823 596H977" />
-            <path strokeWidth="2.6" d="M1235 322V442M1170 382H1300" />
-            <path strokeWidth="3.2" d="M86 716H694" />
-            <path strokeWidth="2.8" d="M132 686L198 642L267 686L336 642L406 686L478 642L548 686L618 642L687 686" />
-            <path strokeWidth="2.2" d="M274 196C335 160 411 148 482 162" />
-            <path strokeWidth="2.2" d="M1047 229C1116 192 1200 184 1277 202" />
+            <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+            <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+            <path strokeWidth="4.4" d="M478 607C478 480 586 377 720 377C853 377 962 480 962 607" />
+            <path strokeWidth="3.2" d="M522 607C522 504 610 420 720 420C830 420 918 504 918 607" />
+            <path strokeWidth="4.2" d="M602 300C602 231 655 175 720 175C784 175 838 231 838 300C838 369 784 425 720 425C655 425 602 369 602 300Z" />
+            <path strokeWidth="3" d="M638 300C638 252 675 213 720 213C764 213 801 252 801 300C801 348 764 387 720 387C675 387 638 348 638 300Z" />
+            <path strokeWidth="2.8" d="M720 233V367" />
+            <path strokeWidth="2.8" d="M652 300H788" />
+            <path strokeWidth="2.6" d="M437 691C530 760 624 795 720 795C815 795 910 760 1003 691" />
+            <path strokeWidth="2.4" d="M459 177C532 132 620 109 720 109C819 109 909 132 982 177" />
+            <path strokeWidth="2.2" d="M523 640C582 671 647 687 720 687C792 687 858 671 917 640" />
           </g>
         </svg>
       </div>
@@ -960,30 +882,22 @@ function CollectiblesSceneBackground({ themeId }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.24]"
+      className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
     >
       <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-          <path strokeWidth="2.8" d="M0 809C165 787 330 785 497 793C669 801 834 825 1007 828C1174 832 1320 813 1440 790" />
-          <path strokeWidth="4" d="M110 686H1326" />
-          <path strokeWidth="3.8" d="M186 651L265 579H428L504 651" />
-          <path strokeWidth="3.8" d="M537 651L614 579H808L886 651" />
-          <path strokeWidth="3.8" d="M917 651L998 579H1187L1266 651" />
-          <path strokeWidth="3.1" d="M234 579V466H385V579" />
-          <path strokeWidth="3.1" d="M663 579V434H759V579" />
-          <path strokeWidth="3.1" d="M1046 579V458H1142V579" />
-          <path strokeWidth="2.8" d="M145 521L308 447L489 502" />
-          <path strokeWidth="2.8" d="M935 430L1088 375L1248 430" />
-          <path strokeWidth="2.8" d="M578 388L718 332L852 382" />
-          <path strokeWidth="3" d="M154 736L242 706L334 736L424 706L512 736" />
-          <path strokeWidth="3" d="M614 736L705 706L796 736L889 706L978 736" />
-          <path strokeWidth="3" d="M1030 736L1119 706L1210 736L1299 706L1385 736" />
-          <path strokeWidth="2.2" d="M250 348C317 308 391 297 471 313" />
-          <path strokeWidth="2.2" d="M952 296C1021 260 1094 252 1174 269" />
-          <path strokeWidth="2.2" d="M586 266C647 232 715 225 789 240" />
-          <path strokeWidth="2.6" d="M721 229V140" />
-          <path strokeWidth="2.6" d="M682 177H760" />
-          <path strokeWidth="2.4" d="M678 110L720 69L762 110" />
+          <path strokeWidth="2.8" d="M324 60H1116L1214 158V742L1116 840H324L226 742V158L324 60Z" />
+          <path strokeWidth="2.2" d="M369 103H1071L1169 201V699L1071 797H369L271 699V201L369 103Z" />
+          <path strokeWidth="4.2" d="M474 657V387H966V657" />
+          <path strokeWidth="3.4" d="M552 387V265H888V387" />
+          <path strokeWidth="3.2" d="M610 265L720 178L830 265" />
+          <path strokeWidth="2.8" d="M529 614H910" />
+          <path strokeWidth="2.8" d="M559 562H882" />
+          <path strokeWidth="2.8" d="M591 511H849" />
+          <path strokeWidth="2.8" d="M426 710C521 772 619 803 720 803C820 803 918 772 1014 710" />
+          <path strokeWidth="2.4" d="M460 182C532 135 620 111 720 111C819 111 908 135 980 182" />
+          <path strokeWidth="2.2" d="M356 608C409 565 471 537 542 525" />
+          <path strokeWidth="2.2" d="M899 525C969 537 1032 565 1084 608" />
         </g>
       </svg>
     </div>
