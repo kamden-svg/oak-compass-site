@@ -742,6 +742,190 @@ function ForestLandscapeBackground() {
   );
 }
 
+function CollectiblesSceneBackground({ themeId }) {
+  if (themeId === "trading-cards") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.18]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.5" d="M0 748C119 716 223 706 333 718C454 731 535 772 650 778C784 785 879 731 1004 724C1154 716 1263 755 1440 720" />
+            <path strokeWidth="2" d="M0 804C140 786 278 782 426 793C580 804 728 833 878 833C1012 833 1132 807 1249 807C1327 807 1390 813 1440 821" />
+            <path strokeWidth="3" d="M912 516C1008 426 1074 344 1102 262C1132 174 1083 126 1002 143C936 156 868 204 809 272C736 356 680 467 650 577" />
+            <path strokeWidth="2.2" d="M869 310C938 325 1011 340 1081 326C1128 317 1167 294 1199 259" />
+            <path strokeWidth="2.2" d="M796 382C861 405 918 443 959 493C987 528 1005 566 1012 606" />
+            <path strokeWidth="2.2" d="M897 227C914 193 947 162 988 148C1034 133 1077 141 1106 167" />
+            <path strokeWidth="3" d="M296 672L379 620L483 649L402 723L296 672Z" />
+            <path strokeWidth="2" d="M317 664L386 628L465 649L397 711L317 664Z" />
+            <path strokeWidth="2" d="M405 700L447 678" />
+            <path strokeWidth="3" d="M1036 675L1120 622L1224 651L1142 725L1036 675Z" />
+            <path strokeWidth="2" d="M1058 666L1126 630L1207 651L1138 714L1058 666Z" />
+            <path strokeWidth="2.2" d="M178 645C221 600 271 570 325 557C375 546 425 549 470 567" />
+            <path strokeWidth="2.2" d="M1101 590C1156 563 1218 554 1282 564C1327 571 1369 586 1405 611" />
+            <path strokeWidth="1.8" d="M216 155L240 193L284 198L253 228L261 271L216 247L171 271L179 228L148 198L192 193L216 155Z" />
+            <path strokeWidth="1.8" d="M1280 162L1298 191L1333 195L1308 218L1315 252L1280 234L1245 252L1252 218L1227 195L1262 191L1280 162Z" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "books") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.16]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.5" d="M0 778C181 766 365 764 551 774C713 783 876 804 1037 806C1183 809 1318 795 1440 781" />
+            <path strokeWidth="3" d="M143 233H1298" />
+            <path strokeWidth="3" d="M143 468H1298" />
+            <path strokeWidth="3" d="M143 704H1298" />
+            <path strokeWidth="3" d="M164 151V744" />
+            <path strokeWidth="3" d="M1277 151V744" />
+            <path strokeWidth="2.2" d="M218 256V445H286V256" />
+            <path strokeWidth="2.2" d="M304 245V445H366V245" />
+            <path strokeWidth="2.2" d="M384 266V445H473V266" />
+            <path strokeWidth="2.2" d="M492 249V445H558V249" />
+            <path strokeWidth="2.2" d="M583 238V445H681V238" />
+            <path strokeWidth="2.2" d="M698 260V445H780V260" />
+            <path strokeWidth="2.2" d="M801 244V445H888V244" />
+            <path strokeWidth="2.2" d="M905 254V445H968V254" />
+            <path strokeWidth="2.2" d="M986 242V445H1079V242" />
+            <path strokeWidth="2.2" d="M1098 258V445H1180V258" />
+            <path strokeWidth="2.2" d="M1198 246V445H1254V246" />
+            <path strokeWidth="1.7" d="M241 275V425M328 262V429M410 281V428M520 264V427M623 252V430M724 276V430M830 258V429M934 270V428M1011 255V426M1126 271V430M1218 260V426" />
+            <path strokeWidth="1.7" d="M236 511V681H314V511" />
+            <path strokeWidth="1.7" d="M339 502V681H432V502" />
+            <path strokeWidth="1.7" d="M450 520V681H519V520" />
+            <path strokeWidth="1.7" d="M541 506V681H648V506" />
+            <path strokeWidth="1.7" d="M667 516V681H745V516" />
+            <path strokeWidth="1.7" d="M770 505V681H861V505" />
+            <path strokeWidth="1.7" d="M882 513V681H959V513" />
+            <path strokeWidth="1.7" d="M982 498V681H1082V498" />
+            <path strokeWidth="1.7" d="M1104 519V681H1189V519" />
+            <path strokeWidth="1.7" d="M1210 503V681H1254V681" />
+            <path strokeWidth="2" d="M565 299C607 283 651 282 692 297" />
+            <path strokeWidth="2" d="M812 553C848 538 890 537 927 551" />
+            <path strokeWidth="2" d="M996 292C1036 277 1074 278 1108 292" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "firearms") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.16]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.4" d="M0 784C164 748 309 735 455 744C596 753 729 782 864 786C1031 790 1180 756 1322 738C1368 732 1407 729 1440 729" />
+            <path strokeWidth="2" d="M0 837C178 822 359 818 543 826C714 833 882 848 1051 844C1195 840 1326 824 1440 810" />
+            <path strokeWidth="3" d="M182 625H468L542 573H654L698 604H858L893 646H228L182 625Z" />
+            <path strokeWidth="2.2" d="M542 573L614 501H734L793 573" />
+            <path strokeWidth="2.2" d="M707 523H979" />
+            <circle cx="292" cy="654" r="38" strokeWidth="3" />
+            <circle cx="416" cy="654" r="38" strokeWidth="3" />
+            <circle cx="621" cy="654" r="41" strokeWidth="3" />
+            <circle cx="752" cy="654" r="41" strokeWidth="3" />
+            <path strokeWidth="2.5" d="M879 609H1108L1169 575H1260L1309 603H1380L1405 641H917L879 609Z" />
+            <path strokeWidth="2.1" d="M1168 575L1214 520H1308L1338 575" />
+            <path strokeWidth="2.1" d="M1275 540H1440" />
+            <circle cx="968" cy="649" r="34" strokeWidth="3" />
+            <circle cx="1078" cy="649" r="34" strokeWidth="3" />
+            <circle cx="1230" cy="649" r="37" strokeWidth="3" />
+            <circle cx="1340" cy="649" r="37" strokeWidth="3" />
+            <path strokeWidth="1.8" d="M286 306C325 284 372 282 414 300" />
+            <path strokeWidth="1.8" d="M1008 236C1048 216 1092 214 1129 229" />
+            <path strokeWidth="1.8" d="M910 345C949 323 994 321 1034 336" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "comics") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.18]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.4" d="M0 798C124 760 243 747 365 758C486 769 589 807 714 812C862 818 976 776 1101 766C1223 756 1333 779 1440 819" />
+            <path strokeWidth="2" d="M130 148L185 225L281 239L214 297L229 393L130 348L31 393L46 297L-21 239L75 225L130 148Z" />
+            <path strokeWidth="2" d="M1160 190L1196 238L1256 246L1215 287L1225 348L1160 316L1095 348L1105 287L1064 246L1124 238L1160 190Z" />
+            <path strokeWidth="2.6" d="M312 420L358 366L446 354L394 424L453 503L364 486L299 542L309 455L244 396L312 420Z" />
+            <path strokeWidth="2.1" d="M877 316L949 302L1007 246L1022 327L1097 362L1019 392L1000 473L944 416L865 424L913 360L877 316Z" />
+            <path strokeWidth="2.1" d="M577 210L611 266L674 282L620 312L616 374L570 332L508 345L534 289L500 237L562 245L577 210Z" />
+            <path strokeWidth="1.8" d="M650 619L699 583L760 602L723 653L756 704L696 687L646 723L651 661L603 621L650 619Z" />
+            <path strokeWidth="1.8" d="M1110 560L1141 605L1193 617L1148 646L1144 700L1106 664L1052 674L1076 625L1047 579L1100 585L1110 560Z" />
+            <path strokeWidth="1.5" d="M182 571L219 548L259 565L231 601L251 640L209 626L175 653L177 610L145 580L182 571Z" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  if (themeId === "coins") {
+    return (
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.17]"
+      >
+        <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            <path strokeWidth="2.4" d="M0 801C139 780 281 774 427 780C581 786 731 805 884 808C1070 812 1257 794 1440 770" />
+            <ellipse cx="281" cy="596" rx="104" ry="104" strokeWidth="3" />
+            <ellipse cx="281" cy="596" rx="82" ry="82" strokeWidth="2" />
+            <ellipse cx="566" cy="492" rx="81" ry="81" strokeWidth="3" />
+            <ellipse cx="566" cy="492" rx="61" ry="61" strokeWidth="2" />
+            <ellipse cx="844" cy="617" rx="117" ry="117" strokeWidth="3" />
+            <ellipse cx="844" cy="617" rx="92" ry="92" strokeWidth="2" />
+            <ellipse cx="1156" cy="510" rx="90" ry="90" strokeWidth="3" />
+            <ellipse cx="1156" cy="510" rx="69" ry="69" strokeWidth="2" />
+            <path strokeWidth="1.8" d="M281 532V660M217 596H345" />
+            <path strokeWidth="1.8" d="M566 447V536M521 492H611" />
+            <path strokeWidth="1.8" d="M844 548V687M776 617H912" />
+            <path strokeWidth="1.8" d="M1156 454V566M1101 510H1211" />
+            <path strokeWidth="1.6" d="M182 312C248 287 319 284 387 302" />
+            <path strokeWidth="1.6" d="M1016 270C1087 247 1158 248 1220 266" />
+          </g>
+        </svg>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.16]"
+    >
+      <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+          <path strokeWidth="2.4" d="M0 793C137 764 277 757 420 767C557 777 687 805 822 810C978 816 1115 790 1251 772C1321 763 1384 760 1440 762" />
+          <path strokeWidth="2" d="M88 653L175 618L249 649L169 691L88 653Z" />
+          <path strokeWidth="2" d="M238 604L320 571L386 600L312 639L238 604Z" />
+          <path strokeWidth="2" d="M403 646L499 606L574 640L486 684L403 646Z" />
+          <path strokeWidth="2.1" d="M780 570L845 516L914 560L855 610L780 570Z" />
+          <path strokeWidth="2.1" d="M874 619L956 573L1041 615L961 666L874 619Z" />
+          <path strokeWidth="2.1" d="M1018 553L1091 505L1172 541L1098 593L1018 553Z" />
+          <path strokeWidth="1.8" d="M668 287C730 261 800 256 866 270" />
+          <path strokeWidth="1.8" d="M955 222C1001 202 1050 198 1094 208" />
+          <path strokeWidth="1.8" d="M325 241C370 221 421 216 470 228" />
+          <path strokeWidth="1.6" d="M1240 353C1290 332 1340 331 1386 345" />
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 
 function TeamPage({ language, onNavigate }) {
   const teamText = TEAM_PAGE_COPY[language];
@@ -894,6 +1078,7 @@ function CollectiblesPage({
     <div className={`min-h-screen text-white ${activeTheme.surface}`} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.08),_transparent_28%)]" />
+        <CollectiblesSceneBackground themeId={activeTheme.id} />
 
         <div className="relative">
           <SiteHeader language={language} activePage={PAGE_COLLECTIBLES} onNavigate={onNavigate} />
