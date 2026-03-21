@@ -14,6 +14,11 @@ const INITIAL_FORM = {
   yearsExperience: "",
   availability: "",
   resumeLink: "",
+  collectibleType: "",
+  collectionValue: "",
+  estimatedItems: "",
+  storageMethod: "",
+  collectibleCondition: "",
   notes: "",
 };
 
@@ -22,11 +27,13 @@ const INQUIRY_OPTIONS = {
     { value: "quote", label: "Get a Quote" },
     { value: "referral", label: "Refer Someone" },
     { value: "job", label: "Apply for a Job" },
+    { value: "collectibles", label: "Insure Collectibles" },
   ],
   es: [
     { value: "quote", label: "Obtener cotización" },
     { value: "referral", label: "Referir a alguien" },
     { value: "job", label: "Solicitar trabajo" },
+    { value: "collectibles", label: "Asegurar coleccionables" },
   ],
 };
 
@@ -151,6 +158,7 @@ const COPY = {
     filterQuotes: "Quotes",
     filterReferrals: "Referrals",
     filterJobs: "Job applications",
+    filterCollectibles: "Collectibles",
     submittedAt: "Submitted",
     inquiryType: "Inquiry Type",
     spanishNeeded: "Spanish",
@@ -160,6 +168,11 @@ const COPY = {
     yearsExperienceLabel: "Experience",
     availabilityLabel: "Availability",
     resumeLinkLabel: "Resume Link",
+    collectibleTypePortalLabel: "Collectible Type",
+    collectionValueLabel: "Collection Value",
+    estimatedItemsLabel: "Estimated Items",
+    storageMethodLabel: "Storage Method",
+    conditionLabel: "Condition",
     portalNotesLabel: "Portal Notes",
     portalNotesPlaceholder: "Add private follow-up notes here",
     deleteLead: "Delete",
@@ -247,6 +260,7 @@ const COPY = {
     filterQuotes: "Cotizaciones",
     filterReferrals: "Referencias",
     filterJobs: "Solicitudes de trabajo",
+    filterCollectibles: "Coleccionables",
     submittedAt: "Enviado",
     inquiryType: "Tipo de solicitud",
     spanishNeeded: "Español",
@@ -256,6 +270,11 @@ const COPY = {
     yearsExperienceLabel: "Experiencia",
     availabilityLabel: "Disponibilidad",
     resumeLinkLabel: "Enlace del resume",
+    collectibleTypePortalLabel: "Tipo de coleccion",
+    collectionValueLabel: "Valor de la coleccion",
+    estimatedItemsLabel: "Piezas estimadas",
+    storageMethodLabel: "Metodo de almacenamiento",
+    conditionLabel: "Condicion",
     portalNotesLabel: "Notas internas",
     portalNotesPlaceholder: "Agrega notas privadas de seguimiento",
     deleteLead: "Eliminar",
@@ -266,6 +285,7 @@ const COPY = {
 const PAGE_HOME = "home";
 const PAGE_TEAM = "team";
 const PAGE_JOBS = "jobs";
+const PAGE_COLLECTIBLES = "collectibles";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
 
@@ -273,20 +293,30 @@ const NAV_COPY = {
   en: {
     home: "Home",
     team: "Meet the Team",
+    collectibles: "Collectibles",
     quote: "Get a Quote",
     teamCta: "Get to Know the Team",
+    collectiblesCta: "Protect Your Collection",
     teamBannerTitle: "Put faces, values, and style of service behind the quote form",
     teamBannerBody:
       "Explore the new team page to learn how Oak & Compass supports clients with calm, local, people-first guidance.",
+    collectiblesBannerTitle: "Insure the pieces that make your collection feel personal",
+    collectiblesBannerBody:
+      "Explore a themed collectibles page built for cards, books, firearms, comics, coins, and more.",
   },
   es: {
     home: "Inicio",
     team: "Conoce al equipo",
+    collectibles: "Coleccionables",
     quote: "Obtener cotizacion",
     teamCta: "Conoce al equipo",
+    collectiblesCta: "Protege tu coleccion",
     teamBannerTitle: "Conoce a las personas y valores detras de la experiencia de Oak & Compass",
     teamBannerBody:
       "Explora la nueva pagina del equipo para ver como Oak & Compass acompana a cada cliente con cercania y claridad.",
+    collectiblesBannerTitle: "Asegura las piezas que hacen especial tu coleccion",
+    collectiblesBannerBody:
+      "Explora una pagina interactiva para tarjetas, libros, armas, comics, monedas y mas.",
   },
 };
 
@@ -403,11 +433,108 @@ const TEAM_PAGE_COPY = {
   },
 };
 
+const COLLECTIBLE_THEMES = [
+  {
+    id: "trading-cards",
+    key: "Trading Cards",
+    accent: "from-fuchsia-500 via-violet-500 to-sky-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(244,114,182,0.35),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(56,189,248,0.35),_transparent_30%),linear-gradient(145deg,_#140a2d_0%,_#24104d_42%,_#0f2747_100%)]",
+    chip: "from-fuchsia-400/25 to-sky-400/25",
+    icon: "TC",
+  },
+  {
+    id: "books",
+    key: "Books",
+    accent: "from-amber-500 via-orange-500 to-rose-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.34),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(249,115,22,0.26),_transparent_32%),linear-gradient(145deg,_#2a170c_0%,_#4a2814_44%,_#7c3d12_100%)]",
+    chip: "from-amber-400/25 to-orange-400/25",
+    icon: "BK",
+  },
+  {
+    id: "firearms",
+    key: "Guns",
+    accent: "from-slate-400 via-zinc-500 to-stone-600",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(148,163,184,0.28),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(120,113,108,0.28),_transparent_28%),linear-gradient(145deg,_#111827_0%,_#1f2937_46%,_#3f3f46_100%)]",
+    chip: "from-slate-300/20 to-stone-300/20",
+    icon: "GN",
+  },
+  {
+    id: "comics",
+    key: "Comics",
+    accent: "from-yellow-400 via-rose-500 to-red-600",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(250,204,21,0.32),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(244,63,94,0.30),_transparent_28%),linear-gradient(145deg,_#28110c_0%,_#5b1220_42%,_#7f1d1d_100%)]",
+    chip: "from-yellow-300/25 to-rose-400/25",
+    icon: "CM",
+  },
+  {
+    id: "coins",
+    key: "Coins",
+    accent: "from-yellow-300 via-amber-400 to-yellow-600",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.35),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.28),_transparent_28%),linear-gradient(145deg,_#2d2404_0%,_#57420f_44%,_#8a5a14_100%)]",
+    chip: "from-yellow-300/25 to-amber-300/25",
+    icon: "CN",
+  },
+  {
+    id: "memorabilia",
+    key: "Memorabilia",
+    accent: "from-emerald-400 via-teal-500 to-cyan-500",
+    surface: "bg-[radial-gradient(circle_at_top_left,_rgba(52,211,153,0.32),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(34,211,238,0.28),_transparent_30%),linear-gradient(145deg,_#09231f_0%,_#0f3b36_44%,_#155e75_100%)]",
+    chip: "from-emerald-300/25 to-cyan-300/25",
+    icon: "MB",
+  },
+];
+
+const COLLECTIBLES_PAGE_COPY = {
+  en: {
+    badge: "Collectibles Insurance",
+    title: "Coverage for the collection you actually care about showing off",
+    body:
+      "Pick the kind of collection you are protecting and the page shifts around it. Whether it is trading cards, rare books, firearms, comics, coins, or personal memorabilia, we can start building a more tailored conversation.",
+    selectorLabel: "Choose your collection vibe",
+    formTitle: "Tell us about your collection",
+    formBody:
+      "Give us a quick snapshot of what you own and how it is stored. We will use it to start a collectibles insurance conversation.",
+    collectibleTypeLabel: "Collection type",
+    collectionValueLabel: "Estimated collection value",
+    estimatedItemsLabel: "How many pieces are in the collection?",
+    storageMethodLabel: "How is it stored right now?",
+    conditionLabel: "Condition or grading status",
+    notesCollectibles: "Anything special, rare, or sentimental we should know?",
+    submitCollectibles: "Start My Collection Quote",
+    submittedCollectibles: "Thanks, your collectibles request has been submitted.",
+    themesTitle: "What this coverage can help protect",
+    storageOptions: ["Display room", "Safe or vault", "Climate-controlled storage", "Mixed storage"],
+    conditionOptions: ["Raw / ungraded", "Partially graded", "Mostly graded / documented", "High-value curated collection"],
+  },
+  es: {
+    badge: "Seguro para coleccionables",
+    title: "Cobertura para la coleccion que de verdad te importa",
+    body:
+      "Elige el tipo de coleccion que quieres proteger y la experiencia cambia con esa seleccion. Ya sean tarjetas, libros raros, armas, comics, monedas o recuerdos personales, podemos empezar una conversacion mas personalizada.",
+    selectorLabel: "Elige el estilo de tu coleccion",
+    formTitle: "Cuentanos sobre tu coleccion",
+    formBody:
+      "Comparte un resumen rapido de lo que tienes y como lo guardas. Lo usaremos para iniciar una conversacion sobre seguro para coleccionables.",
+    collectibleTypeLabel: "Tipo de coleccion",
+    collectionValueLabel: "Valor estimado de la coleccion",
+    estimatedItemsLabel: "Cuantas piezas tiene la coleccion?",
+    storageMethodLabel: "Como se guarda actualmente?",
+    conditionLabel: "Condicion o estado de graduacion",
+    notesCollectibles: "Hay algo especial, raro o sentimental que debamos saber?",
+    submitCollectibles: "Comenzar mi cotizacion",
+    submittedCollectibles: "Gracias, tu solicitud para coleccionables fue enviada.",
+    themesTitle: "Lo que esta cobertura puede ayudar a proteger",
+    storageOptions: ["Cuarto de exhibicion", "Caja fuerte o vault", "Almacenamiento con clima controlado", "Almacenamiento mixto"],
+    conditionOptions: ["Sin graduar", "Parcialmente graduado", "Mayormente graduado / documentado", "Coleccion curada de alto valor"],
+  },
+};
+
 function getPageFromHash(hash) {
   const value = hash.replace(/^#/, "").trim().toLowerCase();
 
   if (value === PAGE_TEAM) return PAGE_TEAM;
   if (value === PAGE_JOBS) return PAGE_JOBS;
+  if (value === PAGE_COLLECTIBLES) return PAGE_COLLECTIBLES;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   return PAGE_HOME;
@@ -463,6 +590,17 @@ function SiteHeader({ language, activePage, onNavigate }) {
           >
             {nav.team}
           </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_COLLECTIBLES)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_COLLECTIBLES
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.collectibles}
+          </button>
         </nav>
 
         <nav className="fixed inset-x-4 bottom-4 z-20 flex items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
@@ -487,6 +625,17 @@ function SiteHeader({ language, activePage, onNavigate }) {
             }`}
           >
             {nav.team}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_COLLECTIBLES)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_COLLECTIBLES
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.collectibles}
           </button>
         </nav>
       </header>
@@ -722,6 +871,312 @@ function TeamPage({ language, onNavigate }) {
           ))}
         </div>
       </section>
+      <Analytics />
+    </div>
+  );
+}
+
+function CollectiblesPage({
+  language,
+  form,
+  onChange,
+  onSubmit,
+  isSubmitting,
+  isSubmitted,
+  submittedInquiryType,
+  onNavigate,
+}) {
+  const pageText = COLLECTIBLES_PAGE_COPY[language] || COLLECTIBLES_PAGE_COPY.en;
+  const activeTheme =
+    COLLECTIBLE_THEMES.find((theme) => theme.key === form.collectibleType) || COLLECTIBLE_THEMES[0];
+
+  return (
+    <div className={`min-h-screen text-white ${activeTheme.surface}`} lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.08),_transparent_28%)]" />
+
+        <div className="relative">
+          <SiteHeader language={language} activePage={PAGE_COLLECTIBLES} onNavigate={onNavigate} />
+
+          <div className="mx-auto max-w-6xl px-6 pb-8 pt-12 md:pt-20">
+            <div className="grid gap-10 lg:grid-cols-[1fr,0.95fr] lg:items-start">
+              <div>
+                <div className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-white/90 backdrop-blur">
+                  {pageText.badge}
+                </div>
+
+                <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight sm:text-5xl md:text-6xl">
+                  {pageText.title}
+                </h1>
+
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-white/75">
+                  {pageText.body}
+                </p>
+
+                <div className="mt-8">
+                  <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+                    {pageText.selectorLabel}
+                  </p>
+                  <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                    {COLLECTIBLE_THEMES.map((theme) => {
+                      const selected = form.collectibleType === theme.key;
+                      return (
+                        <button
+                          key={theme.id}
+                          type="button"
+                          onClick={() => onChange({ target: { name: "collectibleType", value: theme.key } })}
+                          className={`group rounded-[1.75rem] border p-5 text-left transition ${
+                            selected
+                              ? "border-white/40 bg-white/18 shadow-[0_20px_60px_-28px_rgba(255,255,255,0.4)]"
+                              : "border-white/10 bg-white/8 hover:-translate-y-1 hover:border-white/25 hover:bg-white/12"
+                          }`}
+                        >
+                          <div
+                            className={`inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${theme.accent} text-lg font-black text-white shadow-lg`}
+                          >
+                            {theme.icon}
+                          </div>
+                          <h2 className="mt-4 text-2xl font-bold">{theme.key}</h2>
+                          <div className={`mt-4 h-2 rounded-full bg-gradient-to-r ${theme.accent} opacity-90`} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className={`mt-8 rounded-[2rem] border border-white/12 bg-gradient-to-br ${activeTheme.chip} p-6 backdrop-blur`}>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/65">
+                    {pageText.themesTitle}
+                  </p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-2xl bg-black/20 p-4">
+                      <p className="text-sm font-semibold text-white/80">Theme</p>
+                      <p className="mt-2 text-2xl font-bold">{activeTheme.key}</p>
+                    </div>
+                    <div className="rounded-2xl bg-black/20 p-4">
+                      <p className="text-sm font-semibold text-white/80">Focus</p>
+                      <p className="mt-2 text-base leading-7 text-white/90">
+                        Better documentation, storage details, and an easier conversation around the value of your collection.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[2rem] border border-white/12 bg-white/10 p-6 shadow-[0_30px_90px_-45px_rgba(0,0,0,0.65)] backdrop-blur-xl md:p-8">
+                <h2 className="text-3xl font-black tracking-tight">{pageText.formTitle}</h2>
+                <p className="mt-3 text-sm leading-7 text-white/75">{pageText.formBody}</p>
+
+                <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="firstName" className="mb-2 block text-sm font-medium text-white/85">
+                        {COLLECTIBLES_PAGE_COPY[language] ? COPY[language].firstName : COPY.en.firstName}
+                      </label>
+                      <input
+                        id="firstName"
+                        name="firstName"
+                        type="text"
+                        value={form.firstName}
+                        onChange={onChange}
+                        placeholder={COPY[language]?.firstName || COPY.en.firstName}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="lastName" className="mb-2 block text-sm font-medium text-white/85">
+                        {COPY[language]?.lastName || COPY.en.lastName}
+                      </label>
+                      <input
+                        id="lastName"
+                        name="lastName"
+                        type="text"
+                        value={form.lastName}
+                        onChange={onChange}
+                        placeholder={COPY[language]?.lastName || COPY.en.lastName}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="phone" className="mb-2 block text-sm font-medium text-white/85">
+                        {COPY[language]?.phone || COPY.en.phone}
+                      </label>
+                      <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        onChange={onChange}
+                        placeholder={COPY[language]?.phone || COPY.en.phone}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="mb-2 block text-sm font-medium text-white/85">
+                        {COPY[language]?.email || COPY.en.email}
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={onChange}
+                        placeholder={COPY[language]?.email || COPY.en.email}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="collectibleType" className="mb-2 block text-sm font-medium text-white/85">
+                        {pageText.collectibleTypeLabel}
+                      </label>
+                      <select
+                        id="collectibleType"
+                        name="collectibleType"
+                        value={form.collectibleType}
+                        onChange={onChange}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-white/40"
+                      >
+                        <option value="">{pageText.collectibleTypeLabel}</option>
+                        {COLLECTIBLE_THEMES.map((theme) => (
+                          <option key={theme.id} value={theme.key} className="text-slate-900">
+                            {theme.key}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="collectionValue" className="mb-2 block text-sm font-medium text-white/85">
+                        {pageText.collectionValueLabel}
+                      </label>
+                      <input
+                        id="collectionValue"
+                        name="collectionValue"
+                        type="text"
+                        value={form.collectionValue}
+                        onChange={onChange}
+                        placeholder="$25,000"
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="estimatedItems" className="mb-2 block text-sm font-medium text-white/85">
+                        {pageText.estimatedItemsLabel}
+                      </label>
+                      <input
+                        id="estimatedItems"
+                        name="estimatedItems"
+                        type="text"
+                        value={form.estimatedItems}
+                        onChange={onChange}
+                        placeholder="240"
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="zipCode" className="mb-2 block text-sm font-medium text-white/85">
+                        {COPY[language]?.zipCode || COPY.en.zipCode}
+                      </label>
+                      <input
+                        id="zipCode"
+                        name="zipCode"
+                        type="text"
+                        value={form.zipCode}
+                        onChange={onChange}
+                        placeholder={COPY[language]?.zipCode || COPY.en.zipCode}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="storageMethod" className="mb-2 block text-sm font-medium text-white/85">
+                        {pageText.storageMethodLabel}
+                      </label>
+                      <select
+                        id="storageMethod"
+                        name="storageMethod"
+                        value={form.storageMethod}
+                        onChange={onChange}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-white/40"
+                      >
+                        <option value="">{pageText.storageMethodLabel}</option>
+                        {pageText.storageOptions.map((option) => (
+                          <option key={option} value={option} className="text-slate-900">
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="collectibleCondition" className="mb-2 block text-sm font-medium text-white/85">
+                        {pageText.conditionLabel}
+                      </label>
+                      <select
+                        id="collectibleCondition"
+                        name="collectibleCondition"
+                        value={form.collectibleCondition}
+                        onChange={onChange}
+                        className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition focus:border-white/40"
+                      >
+                        <option value="">{pageText.conditionLabel}</option>
+                        {pageText.conditionOptions.map((option) => (
+                          <option key={option} value={option} className="text-slate-900">
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="notes" className="mb-2 block text-sm font-medium text-white/85">
+                      {pageText.notesCollectibles}
+                    </label>
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      rows={5}
+                      value={form.notes}
+                      onChange={onChange}
+                      placeholder={pageText.notesCollectibles}
+                      className="w-full rounded-2xl border border-white/15 bg-black/20 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-white/40"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full rounded-2xl bg-gradient-to-r ${activeTheme.accent} px-5 py-4 text-base font-black text-white shadow-lg transition hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60`}
+                  >
+                    {isSubmitting
+                      ? language === "es"
+                        ? "Enviando..."
+                        : "Submitting..."
+                      : pageText.submitCollectibles}
+                  </button>
+                </form>
+
+                {isSubmitted && submittedInquiryType === "collectibles" ? (
+                  <div className="mt-4 rounded-2xl border border-white/20 bg-white/12 p-4 text-sm text-white">
+                    <p className="font-semibold">{pageText.submittedCollectibles}</p>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Analytics />
     </div>
   );
@@ -1054,6 +1509,11 @@ function downloadCsv(leads) {
     "Years of Experience",
     "Availability",
     "Resume Link",
+    "Collectible Type",
+    "Collection Value",
+    "Estimated Items",
+    "Storage Method",
+    "Condition",
     "ZIP Code",
     "Notes",
   ];
@@ -1076,6 +1536,11 @@ function downloadCsv(leads) {
     lead.yearsExperience,
     lead.availability,
     lead.resumeLink,
+    lead.collectibleType,
+    lead.collectionValue,
+    lead.estimatedItems,
+    lead.storageMethod,
+    lead.collectibleCondition,
     lead.zipCode,
     lead.notes,
   ]);
@@ -1219,6 +1684,7 @@ function LeadsDashboard({
             <option value="quote">{text.filterQuotes}</option>
             <option value="referral">{text.filterReferrals}</option>
             <option value="job">{text.filterJobs}</option>
+            <option value="collectibles">{text.filterCollectibles}</option>
           </select>
         </div>
       </div>
@@ -1250,7 +1716,7 @@ function LeadsDashboard({
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-sm font-medium text-emerald-700">
-                    {lead.insuranceType || lead.desiredRole || "-"}
+                    {lead.insuranceType || lead.desiredRole || lead.collectibleType || "-"}
                   </span>
                   <button
                     type="button"
@@ -1303,6 +1769,26 @@ function LeadsDashboard({
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.resumeLinkLabel}</p>
                   <p className="mt-1 break-words text-slate-900">{lead.resumeLink || "-"}</p>
                 </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.collectibleTypePortalLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.collectibleType || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.collectionValueLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.collectionValue || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.estimatedItemsLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.estimatedItems || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.storageMethodLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.storageMethod || "-"}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.conditionLabel}</p>
+                  <p className="mt-1 text-slate-900">{lead.collectibleCondition || "-"}</p>
+                </div>
               </div>
 
               <div className="mt-5 grid gap-4 lg:grid-cols-2">
@@ -1352,7 +1838,9 @@ export default function OakCompassLandingPage() {
   const [savingLeadId, setSavingLeadId] = useState("");
   const language = form.needsSpanish === "yes" ? "es" : "en";
   const text = COPY[language];
-  const inquiryOptions = INQUIRY_OPTIONS[language].filter((option) => option.value !== "job");
+  const inquiryOptions = INQUIRY_OPTIONS[language].filter(
+    (option) => option.value !== "job" && option.value !== "collectibles"
+  );
   const insuranceOptions = INSURANCE_OPTIONS[language];
   const nav = NAV_COPY[language];
 
@@ -1362,6 +1850,8 @@ export default function OakCompassLandingPage() {
         ? "Meet the Team | Oak & Compass Insurance"
         : activePage === PAGE_JOBS
           ? "Apply Now | Oak & Compass Insurance"
+        : activePage === PAGE_COLLECTIBLES
+          ? "Collectibles Insurance | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
@@ -1375,6 +1865,50 @@ export default function OakCompassLandingPage() {
     window.addEventListener("hashchange", syncPage);
     return () => window.removeEventListener("hashchange", syncPage);
   }, []);
+
+  useEffect(() => {
+    if (activePage === PAGE_HOME && form.inquiryType !== "quote") {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "quote",
+        desiredRole: "",
+        yearsExperience: "",
+        availability: "",
+        resumeLink: "",
+        collectibleType: "",
+        collectionValue: "",
+        estimatedItems: "",
+        storageMethod: "",
+        collectibleCondition: "",
+      }));
+    }
+
+    if (activePage === PAGE_JOBS && form.inquiryType !== "job") {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "job",
+        insuranceType: "",
+        collectibleType: "",
+        collectionValue: "",
+        estimatedItems: "",
+        storageMethod: "",
+        collectibleCondition: "",
+      }));
+    }
+
+    if (activePage === PAGE_COLLECTIBLES && form.inquiryType !== "collectibles") {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "collectibles",
+        insuranceType: "",
+        desiredRole: "",
+        yearsExperience: "",
+        availability: "",
+        resumeLink: "",
+        collectibleType: current.collectibleType || COLLECTIBLE_THEMES[0].key,
+      }));
+    }
+  }, [activePage, form.inquiryType]);
 
   useEffect(() => {
     if (activePage !== PAGE_CANOPY) return undefined;
@@ -1423,15 +1957,55 @@ export default function OakCompassLandingPage() {
       setInquiryFilter("all");
     }
 
-    if (page === PAGE_HOME && form.inquiryType === "job") {
-      setForm((current) => ({ ...current, inquiryType: "quote" }));
+    if (page === PAGE_HOME && (activePage !== PAGE_HOME || form.inquiryType !== "quote")) {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "quote",
+        desiredRole: "",
+        yearsExperience: "",
+        availability: "",
+        resumeLink: "",
+        collectibleType: "",
+        collectionValue: "",
+        estimatedItems: "",
+        storageMethod: "",
+        collectibleCondition: "",
+      }));
     }
 
     if (page === PAGE_JOBS && form.inquiryType !== "job") {
-      setForm((current) => ({ ...current, inquiryType: "job" }));
+      setForm((current) => ({
+        ...current,
+        inquiryType: "job",
+        insuranceType: "",
+        collectibleType: "",
+        collectionValue: "",
+        estimatedItems: "",
+        storageMethod: "",
+        collectibleCondition: "",
+      }));
     }
 
-    if (page === PAGE_HOME || page === PAGE_TEAM || page === PAGE_JOBS || page === PAGE_CANOPY) {
+    if (page === PAGE_COLLECTIBLES && form.inquiryType !== "collectibles") {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "collectibles",
+        insuranceType: "",
+        desiredRole: "",
+        yearsExperience: "",
+        availability: "",
+        resumeLink: "",
+        collectibleType: current.collectibleType || COLLECTIBLE_THEMES[0].key,
+      }));
+    }
+
+    if (
+      page === PAGE_HOME ||
+      page === PAGE_TEAM ||
+      page === PAGE_JOBS ||
+      page === PAGE_COLLECTIBLES ||
+      page === PAGE_CANOPY
+    ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -1442,6 +2016,12 @@ export default function OakCompassLandingPage() {
 
   const openJobApplication = () => {
     navigateToPage(PAGE_JOBS);
+    setIsSubmitted(false);
+    setSubmittedInquiryType("");
+  };
+
+  const openCollectiblesPage = () => {
+    navigateToPage(PAGE_COLLECTIBLES);
     setIsSubmitted(false);
     setSubmittedInquiryType("");
   };
@@ -1477,6 +2057,11 @@ export default function OakCompassLandingPage() {
         lead.yearsExperience,
         lead.availability,
         lead.resumeLink,
+        lead.collectibleType,
+        lead.collectionValue,
+        lead.estimatedItems,
+        lead.storageMethod,
+        lead.collectibleCondition,
       ]
         .join(" ")
         .toLowerCase();
@@ -1687,6 +2272,21 @@ export default function OakCompassLandingPage() {
         isSubmitting={isSubmitting}
         isSubmitted={isSubmitted}
         submittedIsJobApplication={submittedIsJobApplication}
+        onNavigate={navigateToPage}
+      />
+    );
+  }
+
+  if (activePage === PAGE_COLLECTIBLES) {
+    return (
+      <CollectiblesPage
+        language={language}
+        form={form}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        isSubmitted={isSubmitted}
+        submittedInquiryType={submittedInquiryType}
         onNavigate={navigateToPage}
       />
     );
@@ -1979,6 +2579,30 @@ export default function OakCompassLandingPage() {
           </div>
         </div>
 
+        <div className="mt-8 rounded-[2rem] bg-gradient-to-br from-slate-950 via-violet-950 to-cyan-950 px-6 py-8 text-white shadow-xl md:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-cyan-300">
+                {nav.collectibles}
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight">
+                {nav.collectiblesBannerTitle}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-slate-300">
+                {nav.collectiblesBannerBody}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={openCollectiblesPage}
+              className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+            >
+              {nav.collectiblesCta}
+            </button>
+          </div>
+        </div>
+
         <div className="mt-8 rounded-[2rem] bg-slate-900 px-6 py-8 text-white shadow-xl md:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -2030,6 +2654,8 @@ export function __oakCompassLandingPageChecks() {
     hasReferralOptionSpanish: INQUIRY_OPTIONS.es.some((option) => option.value === "referral"),
     hasJobOptionEnglish: INQUIRY_OPTIONS.en.some((option) => option.value === "job"),
     hasJobOptionSpanish: INQUIRY_OPTIONS.es.some((option) => option.value === "job"),
+    hasCollectiblesOptionEnglish: INQUIRY_OPTIONS.en.some((option) => option.value === "collectibles"),
+    hasCollectiblesOptionSpanish: INQUIRY_OPTIONS.es.some((option) => option.value === "collectibles"),
     optionCountEnglish: INSURANCE_OPTIONS.en.length,
     optionCountSpanish: INSURANCE_OPTIONS.es.length,
     hasPetInsuranceEnglish: INSURANCE_OPTIONS.en.includes("Pet Insurance"),
@@ -2043,6 +2669,7 @@ export function __oakCompassLandingPageChecks() {
     hasLeadExport: true,
     hasLeadFilter: true,
     hasJobApplicationFlow: true,
+    hasCollectiblesPage: true,
     hasSingleLeadDelete: true,
     hasPortalNotes: true,
     postsToApi: true,
