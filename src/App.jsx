@@ -988,30 +988,83 @@ function CollectiblesDragonSuccessBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-0 overflow-hidden text-white/[0.26]"
+      className="pointer-events-none absolute inset-0 overflow-hidden"
     >
-      <svg viewBox="0 0 1440 900" className="h-full w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-          <path strokeWidth="3" d="M0 806C154 781 306 778 461 788C617 799 767 824 923 828C1114 833 1287 811 1440 784" />
-          <path strokeWidth="3.2" d="M181 719C255 667 340 622 435 586C487 566 542 550 598 539" />
-          <path strokeWidth="3.8" d="M594 538C565 501 555 458 566 411C579 356 616 310 671 281C689 233 722 199 772 180C827 159 882 170 923 207C965 184 1013 182 1060 197C1126 218 1172 268 1184 334C1240 351 1282 390 1297 447C1316 522 1275 592 1204 629" />
-          <path strokeWidth="3" d="M616 530C667 521 720 519 773 523" />
-          <path strokeWidth="3.1" d="M900 249C956 230 1011 231 1063 252" />
-          <path strokeWidth="3" d="M737 227C758 181 793 150 842 135" />
-          <path strokeWidth="3" d="M865 137L926 75L972 156" />
-          <path strokeWidth="3" d="M700 301L638 240L609 337" />
-          <path strokeWidth="3" d="M1044 309L1126 242L1148 356" />
-          <path strokeWidth="3.4" d="M640 587C698 571 759 565 823 569C909 575 987 602 1056 651" />
-          <path strokeWidth="3.2" d="M538 627C576 654 610 686 640 722" />
-          <path strokeWidth="3.2" d="M1058 651C1124 677 1186 722 1242 786" />
-          <path strokeWidth="3.2" d="M699 378C728 350 761 337 800 338C846 340 882 359 906 395" />
-          <path strokeWidth="2.8" d="M792 392C811 389 828 394 840 407" />
-          <path strokeWidth="2.8" d="M755 434C789 450 822 453 855 442" />
-          <path strokeWidth="3.6" d="M349 719L446 647L557 681L490 764L349 719Z" />
-          <path strokeWidth="2.8" d="M381 684L423 717L482 700" />
-          <path strokeWidth="2.6" d="M264 757C336 742 405 742 470 758" />
-          <path strokeWidth="3.2" d="M1081 527C1137 509 1188 511 1235 532" />
-          <path strokeWidth="3.2" d="M1072 564C1131 548 1184 551 1232 575" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_52%_20%,rgba(251,191,36,0.22),transparent_18%),radial-gradient(circle_at_72%_38%,rgba(249,115,22,0.22),transparent_22%),radial-gradient(circle_at_26%_56%,rgba(239,68,68,0.18),transparent_24%)]" />
+      <svg viewBox="0 0 1440 900" className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="dragonStroke" x1="260" y1="120" x2="1140" y2="760" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#fef3c7" />
+            <stop offset="0.45" stopColor="#fb923c" />
+            <stop offset="1" stopColor="#f87171" />
+          </linearGradient>
+          <linearGradient id="dragonFire" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#fef08a" />
+            <stop offset="0.45" stopColor="#fb923c" />
+            <stop offset="1" stopColor="#dc262600" />
+          </linearGradient>
+          <filter id="dragonGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        <g opacity="0.28">
+          <path d="M0 808C164 786 329 783 495 793C669 804 833 828 1007 831C1174 834 1320 814 1440 790" fill="none" stroke="white" strokeOpacity="0.22" strokeWidth="3" strokeLinecap="round" />
+          <path d="M0 852C192 840 386 841 582 852C756 862 930 872 1105 867C1239 863 1351 849 1440 832" fill="none" stroke="white" strokeOpacity="0.14" strokeWidth="2" strokeLinecap="round" />
+        </g>
+
+        <g filter="url(#dragonGlow)" stroke="url(#dragonStroke)" strokeLinecap="round" strokeLinejoin="round" fill="none">
+          <g opacity="0.78">
+            <path d="M620 360C539 279 438 229 318 214C394 293 452 372 495 455C528 518 548 580 558 636" strokeWidth="5" />
+            <animateTransform attributeName="transform" type="rotate" values="-4 558 520; 6 558 520; -4 558 520" dur="3.4s" repeatCount="indefinite" />
+          </g>
+
+          <g opacity="0.78">
+            <path d="M1119 363C1199 279 1302 229 1420 214C1344 293 1286 372 1243 455C1210 518 1190 580 1180 636" strokeWidth="5" />
+            <animateTransform attributeName="transform" type="rotate" values="4 1180 520; -6 1180 520; 4 1180 520" dur="3.1s" repeatCount="indefinite" />
+          </g>
+
+          <g>
+            <path d="M595 628C573 545 583 465 625 389C668 310 735 253 826 219C895 192 965 187 1035 204C1120 224 1181 269 1216 340C1250 410 1249 483 1211 558C1174 631 1104 685 1001 719C890 756 778 766 665 748" strokeWidth="6" />
+            <animateTransform attributeName="transform" type="translate" values="0 0; 0 -8; 0 0; 0 5; 0 0" dur="4.2s" repeatCount="indefinite" />
+          </g>
+
+          <g opacity="0.92">
+            <path d="M642 598C688 559 742 538 805 532C878 525 940 545 991 590C948 569 901 562 850 567C789 573 733 596 680 636" strokeWidth="5" />
+            <animateTransform attributeName="transform" type="translate" values="0 0; 6 -2; 0 0" dur="2.5s" repeatCount="indefinite" />
+          </g>
+
+          <g>
+            <path d="M804 310C845 273 892 251 944 246C1006 241 1060 258 1104 294C1149 329 1178 378 1190 440" strokeWidth="5" />
+            <path d="M860 242C871 199 897 162 939 131" strokeWidth="4" />
+            <path d="M935 133L1001 80L1028 166" strokeWidth="4" />
+            <path d="M842 339C868 327 894 326 920 336" strokeWidth="4" />
+            <path d="M857 373C887 390 918 396 952 389" strokeWidth="4" />
+            <circle cx="977" cy="318" r="7" fill="#fff7d6" stroke="none">
+              <animate attributeName="opacity" values="1;0.45;1" dur="1.1s" repeatCount="indefinite" />
+            </circle>
+            <animateTransform attributeName="transform" type="rotate" values="-2 962 340; 3 962 340; -2 962 340" dur="2.7s" repeatCount="indefinite" />
+          </g>
+
+          <g opacity="0.95">
+            <path d="M1118 397C1163 408 1201 432 1231 470C1258 504 1277 544 1288 591" strokeWidth="4.6" />
+            <path d="M1124 434C1174 448 1215 477 1246 521" strokeWidth="4.2" />
+            <path d="M1127 473C1168 491 1203 518 1229 554" strokeWidth="4" />
+            <animateTransform attributeName="transform" type="translate" values="0 0; 12 4; 0 0" dur="2.1s" repeatCount="indefinite" />
+          </g>
+        </g>
+
+        <g opacity="0.95">
+          <path d="M1234 449C1290 470 1333 505 1362 555C1324 541 1290 539 1260 548C1283 571 1296 600 1298 635C1246 606 1184 591 1112 591C1155 554 1196 507 1234 449Z" fill="url(#dragonFire)">
+            <animateTransform attributeName="transform" type="translate" values="0 0; 20 -8; -4 6; 0 0" dur="1.3s" repeatCount="indefinite" />
+          </path>
+          <path d="M1249 478C1290 494 1322 520 1346 557C1319 549 1295 550 1273 559C1289 576 1297 598 1296 626C1255 604 1206 594 1148 594C1182 566 1216 527 1249 478Z" fill="#fef08ab8">
+            <animateTransform attributeName="transform" type="translate" values="0 0; 16 -10; -2 3; 0 0" dur="1.05s" repeatCount="indefinite" />
+          </path>
         </g>
       </svg>
     </div>
