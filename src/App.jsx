@@ -502,21 +502,25 @@ const TEAM_GALLERY = [
     src: "/IMG_2087.JPEG",
     alt: "Owner outdoors in a candid portrait",
     className: "lg:col-span-2 lg:row-span-2",
+    imageClassName: "object-center",
   },
   {
     src: "/20220429_083453.jpg",
     alt: "Owner with family by the water",
     className: "lg:col-span-1 lg:row-span-1",
+    imageClassName: "object-center",
   },
   {
     src: "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg",
     alt: "Deigo running on a snowy trail",
     className: "lg:col-span-1 lg:row-span-1",
+    imageClassName: "object-center",
   },
   {
     src: "/F8C773C4-7E55-4474-B200-06C7FDD76891.jpg",
     alt: "Climbing silhouette between canyon walls",
     className: "lg:col-span-2 lg:row-span-1",
+    imageClassName: "object-center object-top",
   },
 ];
 
@@ -1401,7 +1405,7 @@ function TeamPage({ language, onNavigate }) {
                 <img
                   src={photo.src}
                   alt={photo.alt}
-                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                  className={`h-full w-full object-cover transition duration-500 group-hover:scale-[1.03] ${photo.imageClassName || "object-center"}`}
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-900/10 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
