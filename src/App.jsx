@@ -4231,7 +4231,7 @@ function calculateSubProducerPay({ plan, nbPremium }) {
   return details;
 }
 
-function RetailBonusCalculator() {
+function RetailBonusCalculator({ onShowProducerCalculator }) {
   const [yourCommission, setYourCommission] = useState("2500");
   const [lifeCommission, setLifeCommission] = useState("300");
   const [commercialCommission, setCommercialCommission] = useState("100");
@@ -4326,6 +4326,13 @@ function RetailBonusCalculator() {
             Sub producer pay is calculated from their selected comp plan. Your bonus credit from
             their production is always based on 10% of their NB premium.
           </p>
+          <button
+            type="button"
+            onClick={onShowProducerCalculator}
+            className="mt-4 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            {`Open Producer Calculator`}
+          </button>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
@@ -4625,7 +4632,7 @@ const initialProducerPlans = {
   },
 };
 
-function ProducerOnlyCalculator() {
+function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
   const [nbPremium, setNbPremium] = useState("10000");
   const [plans, setPlans] = useState(initialProducerPlans);
 
@@ -4745,6 +4752,13 @@ function ProducerOnlyCalculator() {
             Compare producer pay plans side by side and make small changes to
             rates, thresholds, base pay, and bonuses live in the calculator.
           </p>
+          <button
+            type="button"
+            onClick={onShowAgencyCalculator}
+            className="mt-4 rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+          >
+            {`Back to Agency Calculator`}
+          </button>
         </div>
 
         <div className="rounded-3xl border bg-white p-5 shadow-sm">
@@ -5084,9 +5098,13 @@ function LeadsDashboard({
       </div>
 
       {portalView === "calculator" ? (
-        <RetailBonusCalculator />
+        <RetailBonusCalculator
+          onShowProducerCalculator={() => setPortalView("producer-calculator")}
+        />
       ) : portalView === "producer-calculator" ? (
-        <ProducerOnlyCalculator />
+        <ProducerOnlyCalculator
+          onShowAgencyCalculator={() => setPortalView("calculator")}
+        />
       ) : (
         <>
       <div className="mt-6 grid gap-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1fr,220px]">
