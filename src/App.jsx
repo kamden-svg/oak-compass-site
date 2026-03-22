@@ -999,9 +999,9 @@ const TEAM_PAGE_COPY = {
       },
     ],
     teamLabel: "Our story",
-    membersTitle: "Less about one person, more about the kind of team we are building",
+    membersTitle: "Built around good people, shared values, and the way we want to serve",
     membersBody:
-      "Oak & Compass may be growing, but the story has always been bigger than one person. The goal is to build a team environment where people work hard, care deeply, communicate well, and show up for clients and each other with consistency.",
+      "Oak & Compass was never meant to feel like one person at the center of everything. It is about building a team of good people who care about others, enjoy working together, and believe the best service comes from showing up with consistency, humility, and real heart.",
     hobbiesTitle: "The people behind Oak & Compass",
     hobbies: [
       "Family life",
@@ -1059,9 +1059,9 @@ const TEAM_PAGE_COPY = {
       },
     ],
     teamLabel: "Nuestra historia",
-    membersTitle: "Menos sobre una persona y mas sobre el tipo de equipo que estamos formando",
+    membersTitle: "Construido alrededor de buenas personas, valores compartidos y la forma en que queremos servir",
     membersBody:
-      "Oak & Compass sigue creciendo, pero la historia siempre ha sido mas grande que una sola persona. La meta es formar un ambiente de equipo donde se trabaja duro, se cuida de verdad, se comunica bien y se responde con constancia tanto a clientes como entre nosotros.",
+      "Oak & Compass nunca fue pensado para sentirse como una sola persona en el centro de todo. Se trata de formar un equipo de buenas personas que de verdad se preocupan por los demas, disfrutan trabajar juntas y creen que el mejor servicio nace de responder con constancia, humildad y corazon.",
     hobbiesTitle: "Las personas detras de Oak & Compass",
     hobbies: [
       "Vida en familia",
