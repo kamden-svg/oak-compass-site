@@ -492,9 +492,18 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     ],
     footerTitle: "Want a warm handoff?",
     footerBody:
-      "If a client is unsure who to call first, send them back to Oak & Compass and we can help point them in the right direction.",
-    footerPrimary: "Start a Quote",
-    footerSecondary: "Meet the Team",
+      "If someone wants a softer handoff, they can ask Oak & Compass to introduce them to one of the people I recommend here.",
+    introBadge: "Warm introduction",
+    introButton: "Request an introduction",
+    introOpenTitle: "Tell me who you want to meet",
+    introOpenBody:
+      "Choose one of my trusted people below, share the basics, and I will get your introduction request into my follow-up flow.",
+    introChoiceLabel: "Who would you like to be introduced to?",
+    introChoicePlaceholder: "Choose a person",
+    introNotesLabel: "Anything I should know before I connect you?",
+    introSubmit: "Send intro request",
+    introSuccess: "Thanks, your introduction request has been sent.",
+    introError: "Something went wrong. Please try again.",
     quickLinks: [
       {
         title: "Start a fresh quote",
@@ -781,9 +790,18 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     ],
     footerTitle: "Necesitan una recomendacion directa?",
     footerBody:
-      "Si un cliente no sabe a quien llamar primero, puede volver con Oak & Compass y le ayudamos a encontrar el siguiente paso correcto.",
-    footerPrimary: "Comenzar cotizacion",
-    footerSecondary: "Conocer al equipo",
+      "Si alguien quiere una conexion mas personal, puede pedirle a Oak & Compass que lo presente con una de las personas que recomiendo aqui.",
+    introBadge: "Introduccion",
+    introButton: "Pedir introduccion",
+    introOpenTitle: "Dime con quien te gustaria hablar",
+    introOpenBody:
+      "Elige una de mis personas de confianza aqui abajo, comparte lo basico y voy a poner tu solicitud de introduccion en mi flujo de seguimiento.",
+    introChoiceLabel: "A quien te gustaria que te presentara?",
+    introChoicePlaceholder: "Elige una persona",
+    introNotesLabel: "Hay algo que deba saber antes de conectarlos?",
+    introSubmit: "Enviar solicitud",
+    introSuccess: "Gracias, tu solicitud de introduccion fue enviada.",
+    introError: "Algo salio mal. Intentalo otra vez.",
     quickLinks: [
       {
         title: "Empezar una cotizacion",
@@ -1353,20 +1371,147 @@ function getPageFromHash(hash) {
 
 function getPageShellClassName(easterMode, baseClassName = "bg-slate-50 text-slate-900") {
   return easterMode
-    ? `min-h-screen !bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.24),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.20),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(134,239,172,0.22),_transparent_30%),linear-gradient(180deg,_#fff8f1_0%,_#fffafc_45%,_#f0fdf4_100%)] !text-rose-950 ${baseClassName}`
+    ? `min-h-screen !bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.45),_transparent_22%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.35),_transparent_24%),radial-gradient(circle_at_20%_80%,_rgba(96,165,250,0.28),_transparent_20%),radial-gradient(circle_at_80%_75%,_rgba(134,239,172,0.32),_transparent_24%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_28%,_#f5f3ff_56%,_#ecfeff_78%,_#f0fdf4_100%)] !text-rose-950 ${baseClassName}`
     : `min-h-screen ${baseClassName}`;
 }
 
+function getEasterPanelClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "border border-white/70 bg-[linear-gradient(145deg,rgba(255,255,255,0.94),rgba(254,240,138,0.65),rgba(251,207,232,0.62),rgba(191,219,254,0.72))] text-rose-950 shadow-[0_28px_80px_-36px_rgba(236,72,153,0.45)] backdrop-blur"
+    : fallbackClassName;
+}
+
+function getEasterSoftCardClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "border border-pink-100 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(254,249,195,0.92),rgba(224,231,255,0.88))] text-rose-950 shadow-[0_18px_55px_-32px_rgba(59,130,246,0.35)]"
+    : fallbackClassName;
+}
+
+function getEasterPrimaryButtonClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "rounded-full bg-[linear-gradient(135deg,#f97316_0%,#ec4899_45%,#8b5cf6_100%)] px-6 py-3 text-sm font-semibold text-white shadow-[0_16px_35px_-16px_rgba(236,72,153,0.65)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_45px_-18px_rgba(124,58,237,0.58)]"
+    : fallbackClassName;
+}
+
+function getEasterSecondaryButtonClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "rounded-full border border-pink-200 bg-white/90 px-6 py-3 text-sm font-semibold text-rose-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-pink-50"
+    : fallbackClassName;
+}
+
+function getEasterPillClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "rounded-full border border-white/80 bg-white/80 px-4 py-2 text-sm font-semibold text-rose-700 shadow-[0_10px_25px_-18px_rgba(236,72,153,0.5)] backdrop-blur"
+    : fallbackClassName;
+}
+
+function getEasterInputClassName(easterMode, fallbackClassName) {
+  return easterMode
+    ? "w-full rounded-2xl border border-pink-200 bg-white/95 px-4 py-3 text-rose-950 outline-none transition focus:border-fuchsia-400 focus:ring-4 focus:ring-pink-100"
+    : fallbackClassName;
+}
+
 function EasterDecor() {
+  const fallingEggs = [
+    { left: "6%", delay: "0s", duration: "11s", size: "text-3xl", rotate: "-8deg" },
+    { left: "18%", delay: "1.4s", duration: "9.5s", size: "text-2xl", rotate: "12deg" },
+    { left: "29%", delay: "3.1s", duration: "10.8s", size: "text-4xl", rotate: "-4deg" },
+    { left: "43%", delay: "0.8s", duration: "8.9s", size: "text-2xl", rotate: "10deg" },
+    { left: "58%", delay: "2.2s", duration: "11.4s", size: "text-3xl", rotate: "-10deg" },
+    { left: "71%", delay: "4s", duration: "9.8s", size: "text-2xl", rotate: "8deg" },
+    { left: "84%", delay: "1.9s", duration: "10.6s", size: "text-4xl", rotate: "-6deg" },
+  ];
+  const parade = [
+    { icon: "🐰", delay: "0s" },
+    { icon: "🥚", delay: "1.2s" },
+    { icon: "🐇", delay: "2.4s" },
+    { icon: "🐣", delay: "3.6s" },
+    { icon: "🥕", delay: "4.8s" },
+    { icon: "🌷", delay: "6s" },
+  ];
+
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute left-[8%] top-28 h-16 w-12 rounded-[999px] bg-pink-200/60 shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
-      <div className="absolute left-[18%] top-48 h-10 w-10 rounded-full bg-yellow-200/55" />
-      <div className="absolute right-[10%] top-32 h-14 w-10 rounded-[999px] bg-emerald-200/65 shadow-[inset_0_-8px_0_rgba(255,255,255,0.45)]" />
-      <div className="absolute right-[22%] top-56 h-12 w-12 rounded-full bg-sky-200/50" />
-      <div className="absolute bottom-24 left-[12%] h-14 w-10 rounded-[999px] bg-fuchsia-200/55 shadow-[inset_0_-8px_0_rgba(255,255,255,0.5)]" />
-      <div className="absolute bottom-20 right-[16%] h-16 w-12 rounded-[999px] bg-amber-200/60 shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
-      <div className="absolute inset-x-0 bottom-0 h-32 bg-[radial-gradient(circle_at_top,_rgba(134,239,172,0.18),_transparent_60%)]" />
+      <style>{`
+        @keyframes easter-fall {
+          0% { transform: translate3d(0,-16vh,0) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.95; }
+          100% { transform: translate3d(2vw,118vh,0) rotate(220deg); opacity: 0; }
+        }
+
+        @keyframes easter-parade {
+          0% { transform: translateX(-16vw) translateY(0); }
+          20% { transform: translateX(8vw) translateY(-4px); }
+          40% { transform: translateX(32vw) translateY(0); }
+          60% { transform: translateX(56vw) translateY(-5px); }
+          80% { transform: translateX(80vw) translateY(0); }
+          100% { transform: translateX(108vw) translateY(-3px); }
+        }
+
+        @keyframes easter-wiggle {
+          0%, 100% { transform: rotate(0deg) scale(1); }
+          50% { transform: rotate(6deg) scale(1.05); }
+        }
+      `}</style>
+
+      <div className="absolute inset-x-0 top-0 h-32 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.95),_transparent_72%)]" />
+      <div className="absolute left-[4%] top-20 text-4xl opacity-80 animate-bounce">🐰</div>
+      <div className="absolute left-[12%] top-36 h-20 w-14 rounded-[999px] bg-[linear-gradient(180deg,#f9a8d4_0%,#fef3c7_100%)] shadow-[inset_0_-12px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute left-[12.75%] top-[9.8rem] h-2 w-8 rounded-full bg-white/70" />
+      <div className="absolute left-[17%] top-56 text-3xl opacity-75">🥚</div>
+      <div className="absolute left-[24%] top-24 text-2xl opacity-75">🌼</div>
+      <div className="absolute right-[8%] top-24 text-5xl opacity-80 animate-bounce">🐇</div>
+      <div className="absolute right-[18%] top-44 h-16 w-12 rounded-[999px] bg-[linear-gradient(180deg,#93c5fd_0%,#ddd6fe_100%)] shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute right-[18.6%] top-[11.9rem] h-2 w-6 rounded-full bg-white/70" />
+      <div className="absolute right-[28%] top-60 text-3xl opacity-75">🥕</div>
+      <div className="absolute bottom-28 left-[8%] text-4xl opacity-75">🐣</div>
+      <div className="absolute bottom-24 left-[16%] h-16 w-11 rounded-[999px] bg-[linear-gradient(180deg,#fde68a_0%,#fdba74_100%)] shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute bottom-[7.4rem] left-[16.5%] h-2 w-6 rounded-full bg-white/70" />
+      <div className="absolute bottom-20 right-[12%] h-20 w-14 rounded-[999px] bg-[linear-gradient(180deg,#86efac_0%,#bfdbfe_100%)] shadow-[inset_0_-12px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute bottom-[6.2rem] right-[12.8%] h-2 w-8 rounded-full bg-white/70" />
+      <div className="absolute bottom-28 right-[24%] text-4xl opacity-80">🐰</div>
+      <div className="absolute bottom-14 left-[28%] text-2xl opacity-70">🌷</div>
+      <div className="absolute bottom-12 right-[34%] text-2xl opacity-70">🌸</div>
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-[radial-gradient(circle_at_top,_rgba(134,239,172,0.4),_transparent_62%)]" />
+
+      {fallingEggs.map((egg) => (
+        <div
+          key={`${egg.left}-${egg.delay}`}
+          className={`absolute top-0 ${egg.size} opacity-90`}
+          style={{
+            left: egg.left,
+            transform: `rotate(${egg.rotate})`,
+            animation: `easter-fall ${egg.duration} linear infinite`,
+            animationDelay: egg.delay,
+          }}
+        >
+          🥚
+        </div>
+      ))}
+
+      <div className="absolute inset-x-0 bottom-3 h-20 overflow-hidden">
+        {parade.map((item, index) => (
+          <div
+            key={`${item.icon}-${index}`}
+            className="absolute bottom-0 text-4xl"
+            style={{
+              left: "-18vw",
+              animation: "easter-parade 14s linear infinite",
+              animationDelay: item.delay,
+            }}
+          >
+            <span
+              className="inline-block"
+              style={{
+                animation: "easter-wiggle 1.4s ease-in-out infinite",
+                animationDelay: item.delay,
+              }}
+            >
+              {item.icon}
+            </span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -1394,22 +1539,10 @@ function SiteHeader({
       <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6">
         <button
           type="button"
-          onClick={onToggleEaster}
-          className={`absolute right-6 top-4 hidden h-10 w-10 items-center justify-center rounded-full border text-[11px] font-black uppercase tracking-[0.18em] shadow-sm transition md:inline-flex ${
-            easterMode
-              ? "border-pink-200 bg-pink-100 text-pink-700"
-              : "border-transparent bg-white/20 text-transparent hover:border-pink-100 hover:bg-pink-50 hover:text-pink-500"
-          }`}
-          aria-label="Toggle Easter theme"
-          title="A little spring surprise"
-        >
-          egg
-        </button>
-
-        <button
-          type="button"
           onClick={openBrandModal}
-          className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/92 p-2 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
+          className={easterMode
+            ? "inline-flex items-center justify-center rounded-full border border-pink-100 bg-[linear-gradient(145deg,rgba(255,255,255,0.95),rgba(254,249,195,0.88),rgba(251,207,232,0.82))] p-2 text-sm font-medium text-rose-700 shadow-[0_18px_35px_-18px_rgba(236,72,153,0.5)] transition hover:-translate-y-0.5"
+            : "inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/92 p-2 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"}
           aria-label="Open Oak & Compass brand details"
         >
           <img
@@ -1420,14 +1553,20 @@ function SiteHeader({
         </button>
 
         <div className="hidden items-center gap-3 md:flex">
-          <nav className="items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
+          <nav className={easterMode
+            ? "items-center gap-2 rounded-full border border-pink-100 bg-[linear-gradient(145deg,rgba(255,255,255,0.88),rgba(254,249,195,0.8),rgba(224,231,255,0.85))] p-1 shadow-[0_16px_35px_-20px_rgba(236,72,153,0.45)] backdrop-blur md:flex"
+            : "items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex"}>
             <button
               type="button"
               onClick={() => onNavigate(PAGE_HOME)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activePage === PAGE_HOME
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-white/70"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {nav.home}
@@ -1437,8 +1576,12 @@ function SiteHeader({
               onClick={() => onNavigate(PAGE_TEAM)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activePage === PAGE_TEAM
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-white/70"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {nav.team}
@@ -1448,8 +1591,12 @@ function SiteHeader({
               onClick={() => onNavigate(PAGE_COLLECTIBLES)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activePage === PAGE_COLLECTIBLES
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-white/70"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {nav.collectibles}
@@ -1459,22 +1606,32 @@ function SiteHeader({
               onClick={() => onNavigate(PAGE_RESOURCES)}
               className={`rounded-full px-4 py-2 text-sm font-medium transition ${
                 activePage === PAGE_RESOURCES
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-white/70"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {nav.resources}
             </button>
           </nav>
 
-          <div className="flex items-center gap-1 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur">
+          <div className={easterMode
+            ? "flex items-center gap-1 rounded-full border border-pink-100 bg-white/85 p-1 shadow-[0_16px_35px_-20px_rgba(236,72,153,0.45)] backdrop-blur"
+            : "flex items-center gap-1 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur"}>
             <button
               type="button"
               onClick={() => onLanguageChange("en")}
               className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
                 language === "en"
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-pink-50"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               EN
@@ -1484,8 +1641,12 @@ function SiteHeader({
               onClick={() => onLanguageChange("es")}
               className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
                 language === "es"
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? easterMode
+                    ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                    : "bg-slate-900 text-white"
+                  : easterMode
+                    ? "text-rose-700 hover:bg-pink-50"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               ES
@@ -1493,14 +1654,20 @@ function SiteHeader({
           </div>
         </div>
 
-        <nav className="fixed inset-x-4 bottom-4 z-20 flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
+        <nav className={easterMode
+          ? "fixed inset-x-4 bottom-4 z-20 flex flex-wrap items-center justify-center gap-2 rounded-full border border-pink-100 bg-[linear-gradient(145deg,rgba(255,255,255,0.94),rgba(254,249,195,0.9),rgba(224,231,255,0.88))] p-2 shadow-[0_18px_40px_-18px_rgba(236,72,153,0.45)] backdrop-blur md:hidden"
+          : "fixed inset-x-4 bottom-4 z-20 flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden"}>
           <button
             type="button"
             onClick={() => onNavigate(PAGE_HOME)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activePage === PAGE_HOME
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
+                ? easterMode
+                  ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                  : "bg-slate-900 text-white"
+                : easterMode
+                  ? "text-rose-700 hover:bg-white/70"
+                  : "text-slate-700 hover:bg-slate-100"
             }`}
           >
             {nav.home}
@@ -1510,8 +1677,12 @@ function SiteHeader({
             onClick={() => onNavigate(PAGE_TEAM)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activePage === PAGE_TEAM
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
+                ? easterMode
+                  ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                  : "bg-slate-900 text-white"
+                : easterMode
+                  ? "text-rose-700 hover:bg-white/70"
+                  : "text-slate-700 hover:bg-slate-100"
             }`}
           >
             {nav.team}
@@ -1521,8 +1692,12 @@ function SiteHeader({
             onClick={() => onNavigate(PAGE_COLLECTIBLES)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activePage === PAGE_COLLECTIBLES
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
+                ? easterMode
+                  ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                  : "bg-slate-900 text-white"
+                : easterMode
+                  ? "text-rose-700 hover:bg-white/70"
+                  : "text-slate-700 hover:bg-slate-100"
             }`}
           >
             {nav.collectibles}
@@ -1532,8 +1707,12 @@ function SiteHeader({
             onClick={() => onNavigate(PAGE_RESOURCES)}
             className={`rounded-full px-4 py-2 text-sm font-medium transition ${
               activePage === PAGE_RESOURCES
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
+                ? easterMode
+                  ? "bg-[linear-gradient(135deg,#fb7185_0%,#a855f7_100%)] text-white"
+                  : "bg-slate-900 text-white"
+                : easterMode
+                  ? "text-rose-700 hover:bg-white/70"
+                  : "text-slate-700 hover:bg-slate-100"
             }`}
           >
             {nav.resources}
@@ -1541,28 +1720,38 @@ function SiteHeader({
           <button
             type="button"
             onClick={() => onLanguageChange(language === "en" ? "es" : "en")}
-            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            className={easterMode
+              ? "rounded-full border border-pink-200 bg-white/90 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-pink-50"
+              : "rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"}
           >
             {language === "en" ? "ES" : "EN"}
-          </button>
-          <button
-            type="button"
-            onClick={onToggleEaster}
-            className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
-              easterMode
-                ? "border-pink-200 bg-pink-100 text-pink-700"
-                : "border-slate-200 bg-white text-slate-400 hover:border-pink-100 hover:bg-pink-50 hover:text-pink-500"
-            }`}
-            aria-label="Toggle Easter theme"
-          >
-            egg
           </button>
         </nav>
       </header>
 
+      <button
+        type="button"
+        onClick={onToggleEaster}
+        className={`fixed bottom-24 right-4 z-30 flex h-16 w-12 items-center justify-center rounded-[55%_55%_50%_50%/62%_62%_42%_42%] border shadow-[0_18px_40px_-20px_rgba(15,23,42,0.45)] transition hover:-translate-y-1 hover:rotate-3 md:bottom-6 md:right-6 ${
+          easterMode
+            ? "border-pink-100 bg-[linear-gradient(180deg,#fef3c7_0%,#f9a8d4_45%,#c4b5fd_100%)] text-pink-700"
+            : "border-amber-100 bg-[linear-gradient(180deg,#fffef7_0%,#fde68a_100%)] text-amber-700"
+        }`}
+        aria-label="Toggle Easter theme"
+        title="A little spring surprise"
+      >
+        <span className="pointer-events-none relative block h-10 w-7 rounded-[55%_55%_50%_50%/62%_62%_42%_42%] bg-white/30">
+          <span className="absolute left-1.5 top-2 h-1.5 w-1.5 rounded-full bg-pink-300/80" />
+          <span className="absolute right-1.5 top-4 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
+          <span className="absolute bottom-2 left-2 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
+        </span>
+      </button>
+
       {isBrandModalOpen ? (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/55 px-4 py-6">
-          <div className="relative w-full max-w-lg rounded-[2rem] bg-white p-6 shadow-2xl ring-1 ring-slate-200 md:p-8">
+          <div className={easterMode
+            ? "relative w-full max-w-lg rounded-[2rem] border border-pink-100 bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(254,249,195,0.92),rgba(251,207,232,0.86),rgba(224,231,255,0.9))] p-6 shadow-2xl ring-1 ring-pink-100 md:p-8"
+            : "relative w-full max-w-lg rounded-[2rem] bg-white p-6 shadow-2xl ring-1 ring-slate-200 md:p-8"}>
             <button
               type="button"
               onClick={() => setIsBrandModalOpen(false)}
@@ -1583,7 +1772,9 @@ function SiteHeader({
               </p>
             </div>
 
-            <div className="mt-6 rounded-[1.5rem] bg-emerald-50 p-5 ring-1 ring-emerald-100">
+            <div className={easterMode
+              ? "mt-6 rounded-[1.5rem] bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(254,240,138,0.55),rgba(191,219,254,0.55))] p-5 ring-1 ring-pink-100"
+              : "mt-6 rounded-[1.5rem] bg-emerald-50 p-5 ring-1 ring-emerald-100"}>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
                 Insurance Fact
               </p>
@@ -1591,7 +1782,9 @@ function SiteHeader({
               <button
                 type="button"
                 onClick={() => setFactIndex((current) => (current + 1) % facts.length)}
-                className="mt-4 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100"
+                className={easterMode
+                  ? "mt-4 rounded-full border border-pink-200 bg-white px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-pink-50"
+                  : "mt-4 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100"}
               >
                 Show Another Fact
               </button>
@@ -1601,7 +1794,9 @@ function SiteHeader({
               href={FACEBOOK_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+              className={easterMode
+                ? "mt-6 inline-flex w-full items-center justify-center rounded-full bg-[linear-gradient(135deg,#f97316_0%,#ec4899_45%,#8b5cf6_100%)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
+                : "mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"}
             >
               Visit Facebook
             </a>
@@ -2189,7 +2384,9 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
   return (
     <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <div className={easterMode
+          ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.4),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.32),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(96,165,250,0.24),_transparent_28%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_40%,_#ecfeff_100%)]"
+          : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]"} />
         {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
@@ -2219,14 +2416,14 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                 <button
                   type="button"
                   onClick={() => onNavigate(PAGE_HOME)}
-                  className="rounded-full bg-emerald-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90"
+                className={getEasterPrimaryButtonClassName(easterMode, "rounded-full bg-emerald-700 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:opacity-90")}
                 >
                   {teamText.primaryCta}
                 </button>
                 <button
                   type="button"
                   onClick={() => onNavigate(PAGE_HOME)}
-                  className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className={getEasterSecondaryButtonClassName(easterMode, "rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50")}
                 >
                   {teamText.secondaryCta}
                 </button>
@@ -2234,7 +2431,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
             </div>
 
             <div className="grid gap-4">
-              <div className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]">
+              <div className={`rounded-[2rem] p-6 ${getEasterPanelClassName(easterMode, "border border-white/70 bg-white/90 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]")}`}>
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
                   {teamText.snapshotTitle}
                 </p>
@@ -2242,7 +2439,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                   {teamText.snapshot.map((item) => (
                     <div
                       key={item.label}
-                      className="rounded-3xl bg-slate-50 px-4 py-4 ring-1 ring-slate-200"
+                      className={`rounded-3xl px-4 py-4 ${getEasterSoftCardClassName(easterMode, "bg-slate-50 ring-1 ring-slate-200")}`}
                     >
                       <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                         {item.label}
@@ -2256,7 +2453,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
               {teamText.values.map((value) => (
                 <div
                   key={value.title}
-                  className="rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]"
+                  className={`rounded-[2rem] p-6 ${getEasterPanelClassName(easterMode, "border border-white/70 bg-white/90 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]")}`}
                 >
                   <h2 className="text-lg font-semibold text-slate-900">{value.title}</h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{value.body}</p>
@@ -2794,7 +2991,9 @@ function JobApplicationPage({
   return (
     <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <div className={easterMode
+          ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.42),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.32),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(96,165,250,0.24),_transparent_30%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_44%,_#ecfeff_100%)]"
+          : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]"} />
         {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
@@ -2824,20 +3023,20 @@ function JobApplicationPage({
                 {text.careersPoints.map((point) => (
                   <span
                     key={point}
-                    className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200"
+                    className={getEasterPillClassName(easterMode, "rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200")}
                   >
                     {point}
                   </span>
                 ))}
               </div>
 
-              <div className="mt-8 rounded-[2rem] bg-white/90 p-6 shadow-sm ring-1 ring-slate-200">
+              <div className={`mt-8 rounded-[2rem] p-6 ${getEasterPanelClassName(easterMode, "bg-white/90 shadow-sm ring-1 ring-slate-200")}`}>
                 <h2 className="text-xl font-semibold text-slate-900">{text.jobTitle}</h2>
                 <p className="mt-3 text-sm leading-7 text-slate-600">{text.jobIntro}</p>
               </div>
             </div>
 
-            <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
+            <div className={`rounded-3xl p-6 md:p-8 ${getEasterPanelClassName(easterMode, "bg-white shadow-xl ring-1 ring-slate-200")}`}>
               <h2 className="text-2xl font-semibold">{text.jobTitle}</h2>
               <p className="mt-2 text-sm text-slate-500">{text.jobIntro}</p>
 
@@ -2854,7 +3053,7 @@ function JobApplicationPage({
                       value={form.firstName}
                       onChange={onChange}
                       placeholder={text.firstName}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
 
@@ -2869,7 +3068,7 @@ function JobApplicationPage({
                       value={form.lastName}
                       onChange={onChange}
                       placeholder={text.lastName}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
                 </div>
@@ -2886,7 +3085,7 @@ function JobApplicationPage({
                       value={form.phone}
                       onChange={onChange}
                       placeholder={text.phone}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
 
@@ -2901,7 +3100,7 @@ function JobApplicationPage({
                       value={form.email}
                       onChange={onChange}
                       placeholder={text.email}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
                 </div>
@@ -2915,7 +3114,7 @@ function JobApplicationPage({
                     name="needsSpanish"
                     value={form.needsSpanish}
                     onChange={onChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                   >
                     <option value="no">{text.no}</option>
                     <option value="yes">{text.yes}</option>
@@ -3058,7 +3257,9 @@ function InsuranceConnectPage({
   return (
     <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        <div className={easterMode
+          ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.42),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.32),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(96,165,250,0.24),_transparent_30%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_44%,_#ecfeff_100%)]"
+          : "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]"} />
         {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
@@ -3072,7 +3273,7 @@ function InsuranceConnectPage({
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
-          <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)] md:p-10">
+          <div className={`mx-auto max-w-4xl rounded-[2rem] p-6 md:p-10 ${getEasterPanelClassName(easterMode, "border border-white/70 bg-white/90 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]")}`}>
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div className="max-w-2xl">
                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
@@ -3087,7 +3288,7 @@ function InsuranceConnectPage({
               <button
                 type="button"
                 onClick={() => onNavigate(PAGE_HOME)}
-                className="rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className={getEasterSecondaryButtonClassName(easterMode, "rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50")}
               >
                 {text.backToSite}
               </button>
@@ -3117,7 +3318,9 @@ function ClientResourcesPage({
   onToggleEaster,
 }) {
   const pageText = CLIENT_RESOURCES_PAGE_COPY[language] || CLIENT_RESOURCES_PAGE_COPY.en;
+  const sharedText = COPY[language] || COPY.en;
   const carrierSelectId = useId();
+  const introSelectId = useId();
   const quickMoveLabel = language === "es" ? "Acceso rapido" : "Quick move";
   const bestUseLabel = language === "es" ? "Mejor uso" : "Best use";
   const easyWinLabel = language === "es" ? "Idea facil" : "Easy win";
@@ -3136,8 +3339,123 @@ function ClientResourcesPage({
   const [selectedCarrierName, setSelectedCarrierName] = useState(
     () => pageText.carriers?.[0]?.name || ""
   );
+  const introductionOptions = useMemo(
+    () =>
+      pageText.groups.flatMap((group) =>
+        group.items.map((professional) => ({
+          id: `${group.title}-${professional.name}`,
+          label: `${professional.name} | ${group.title}`,
+          groupTitle: group.title,
+          ...professional,
+        }))
+      ),
+    [pageText.groups]
+  );
+  const [isIntroFormOpen, setIsIntroFormOpen] = useState(false);
+  const [isIntroSubmitting, setIsIntroSubmitting] = useState(false);
+  const [introSubmitError, setIntroSubmitError] = useState("");
+  const [introSubmitted, setIntroSubmitted] = useState(false);
+  const [introForm, setIntroForm] = useState({
+    selectedProfessionalId: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    notes: "",
+  });
   const selectedCarrier =
     pageText.carriers.find((carrier) => carrier.name === selectedCarrierName) || pageText.carriers[0];
+  const selectedIntroductionProfessional =
+    introductionOptions.find((professional) => professional.id === introForm.selectedProfessionalId) ||
+    introductionOptions[0];
+
+  useEffect(() => {
+    if (!introductionOptions.length) return;
+
+    setIntroForm((current) => {
+      if (
+        current.selectedProfessionalId &&
+        introductionOptions.some((professional) => professional.id === current.selectedProfessionalId)
+      ) {
+        return current;
+      }
+
+      return {
+        ...current,
+        selectedProfessionalId: introductionOptions[0].id,
+      };
+    });
+  }, [introductionOptions]);
+
+  const handleIntroChange = (event) => {
+    const { name, value } = event.target;
+    setIntroForm((current) => ({
+      ...current,
+      [name]: value,
+    }));
+  };
+
+  const handleIntroSubmit = async (event) => {
+    event.preventDefault();
+    if (!selectedIntroductionProfessional) return;
+
+    setIsIntroSubmitting(true);
+    setIntroSubmitError("");
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inquiryType: "referral",
+          needsSpanish: "no",
+          firstName: introForm.firstName,
+          lastName: introForm.lastName,
+          phone: introForm.phone,
+          email: introForm.email,
+          insuranceType: `Introduction request: ${selectedIntroductionProfessional.name}`,
+          zipCode: "",
+          notes: [
+            `Requested introduction to ${selectedIntroductionProfessional.name}`,
+            `${selectedIntroductionProfessional.role} | ${selectedIntroductionProfessional.groupTitle}`,
+            introForm.notes ? `Client note: ${introForm.notes}` : "",
+          ]
+            .filter(Boolean)
+            .join("\n"),
+        }),
+      });
+
+      const rawText = await response.text();
+      let data = {};
+
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = { error: rawText || pageText.introError };
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || pageText.introError);
+      }
+
+      setIntroSubmitted(true);
+      setIsIntroFormOpen(false);
+      setIntroForm({
+        selectedProfessionalId: introductionOptions[0]?.id || "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        notes: "",
+      });
+    } catch (error) {
+      setIntroSubmitError(error.message || pageText.introError);
+    } finally {
+      setIsIntroSubmitting(false);
+    }
+  };
 
   const renderQuickLink = (item) => {
     const classes = `group rounded-[1.8rem] border bg-gradient-to-br p-6 shadow-[0_22px_60px_-34px_rgba(15,23,42,0.35)] ring-1 ${item.tone}`;
@@ -3469,8 +3787,11 @@ function ClientResourcesPage({
 
       <section className="mx-auto max-w-6xl px-6 pb-24">
         <div className="rounded-[2rem] bg-[linear-gradient(135deg,#052e2b_0%,#0f172a_50%,#1d4ed8_100%)] px-6 py-8 text-white shadow-[0_32px_80px_-44px_rgba(15,23,42,0.7)] md:px-8">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-6">
             <div className="max-w-2xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.26em] text-cyan-200">
+                {pageText.introBadge}
+              </p>
               <h2 className="text-3xl font-semibold tracking-tight">{pageText.footerTitle}</h2>
               <p className="mt-3 text-sm leading-7 text-slate-200">{pageText.footerBody}</p>
             </div>
@@ -3478,19 +3799,157 @@ function ClientResourcesPage({
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
-                onClick={() => onNavigate(PAGE_HOME)}
+                onClick={() => {
+                  setIsIntroFormOpen((current) => !current);
+                  setIntroSubmitError("");
+                  setIntroSubmitted(false);
+                }}
                 className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
               >
-                {pageText.footerPrimary}
-              </button>
-              <button
-                type="button"
-                onClick={() => onNavigate(PAGE_TEAM)}
-                className="rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
-              >
-                {pageText.footerSecondary}
+                {pageText.introButton}
               </button>
             </div>
+
+            {introSubmitted ? (
+              <div className="rounded-[1.6rem] border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm font-medium text-emerald-950">
+                {pageText.introSuccess}
+              </div>
+            ) : null}
+
+            {isIntroFormOpen ? (
+              <div className="rounded-[1.8rem] border border-white/15 bg-white/10 p-5 backdrop-blur md:p-6">
+                <h3 className="text-2xl font-semibold tracking-tight">{pageText.introOpenTitle}</h3>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-200">{pageText.introOpenBody}</p>
+
+                <form className="mt-6 space-y-4" onSubmit={handleIntroSubmit}>
+                  <div>
+                    <label
+                      htmlFor={introSelectId}
+                      className="mb-2 block text-sm font-medium text-white"
+                    >
+                      {pageText.introChoiceLabel}
+                    </label>
+                    <select
+                      id={introSelectId}
+                      name="selectedProfessionalId"
+                      value={introForm.selectedProfessionalId}
+                      onChange={handleIntroChange}
+                      className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                    >
+                      {!selectedIntroductionProfessional ? (
+                        <option value="">{pageText.introChoicePlaceholder}</option>
+                      ) : null}
+                      {introductionOptions.map((professional) => (
+                        <option key={professional.id} value={professional.id}>
+                          {professional.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-white" htmlFor="introFirstName">
+                        {sharedText.firstName}
+                      </label>
+                      <input
+                        id="introFirstName"
+                        name="firstName"
+                        type="text"
+                        value={introForm.firstName}
+                        onChange={handleIntroChange}
+                        required
+                        className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-white" htmlFor="introLastName">
+                        {sharedText.lastName}
+                      </label>
+                      <input
+                        id="introLastName"
+                        name="lastName"
+                        type="text"
+                        value={introForm.lastName}
+                        onChange={handleIntroChange}
+                        required
+                        className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-white" htmlFor="introPhone">
+                        {sharedText.phone}
+                      </label>
+                      <input
+                        id="introPhone"
+                        name="phone"
+                        type="tel"
+                        value={introForm.phone}
+                        onChange={handleIntroChange}
+                        required
+                        className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="mb-2 block text-sm font-medium text-white" htmlFor="introEmail">
+                        {sharedText.email}
+                      </label>
+                      <input
+                        id="introEmail"
+                        name="email"
+                        type="email"
+                        value={introForm.email}
+                        onChange={handleIntroChange}
+                        required
+                        className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-sm font-medium text-white" htmlFor="introNotes">
+                      {pageText.introNotesLabel}
+                    </label>
+                    <textarea
+                      id="introNotes"
+                      name="notes"
+                      rows={4}
+                      value={introForm.notes}
+                      onChange={handleIntroChange}
+                      className="w-full rounded-2xl border border-white/20 bg-white/95 px-4 py-3 text-slate-950 outline-none transition focus:border-emerald-400"
+                    />
+                  </div>
+
+                  {selectedIntroductionProfessional ? (
+                    <div className="rounded-[1.4rem] border border-cyan-200/25 bg-slate-950/20 px-4 py-3 text-sm text-cyan-50">
+                      <span className="font-semibold">{selectedIntroductionProfessional.name}</span>
+                      {` | ${selectedIntroductionProfessional.role} | ${selectedIntroductionProfessional.groupTitle}`}
+                    </div>
+                  ) : null}
+
+                  {introSubmitError ? (
+                    <p className="text-sm font-medium text-rose-200">{introSubmitError}</p>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    disabled={isIntroSubmitting || !selectedIntroductionProfessional}
+                    className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {isIntroSubmitting
+                      ? language === "es"
+                        ? "Enviando..."
+                        : "Submitting..."
+                      : pageText.introSubmit}
+                  </button>
+                </form>
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -4366,7 +4825,9 @@ export default function OakCompassLandingPage() {
   return (
     <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        <div className={easterMode
+          ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.42),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.34),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(96,165,250,0.24),_transparent_30%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_34%,_#f5f3ff_62%,_#ecfeff_100%)]"
+          : "absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50"} />
         {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground variant={homeBackgroundVariant} />
 
@@ -4382,7 +4843,7 @@ export default function OakCompassLandingPage() {
         <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             <div>
-              <div className="inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-sm font-medium text-emerald-700 shadow-sm">
+              <div className={getEasterPillClassName(easterMode, "inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-sm font-medium text-emerald-700 shadow-sm")}>
                 <span>{text.badge}</span>
               </div>
 
@@ -4395,20 +4856,20 @@ export default function OakCompassLandingPage() {
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-600">
-                <div className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
+                <div className={getEasterPillClassName(easterMode, "rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200")}>
                   {text.fastResponse}
                 </div>
-                <div className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
+                <div className={getEasterPillClassName(easterMode, "rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200")}>
                   {text.simpleProcess}
                 </div>
-                <div className="rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200">
+                <div className={getEasterPillClassName(easterMode, "rounded-full bg-white px-4 py-2 shadow-sm ring-1 ring-slate-200")}>
                   {text.localGuidance}
                 </div>
               </div>
 
             </div>
 
-            <div className="rounded-3xl bg-white p-6 shadow-xl ring-1 ring-slate-200 md:p-8">
+            <div className={`rounded-3xl p-6 md:p-8 ${getEasterPanelClassName(easterMode, "bg-white shadow-xl ring-1 ring-slate-200")}`}>
               <h2 className="text-2xl font-semibold">
                 {isReferral ? text.referTitle : text.quoteTitle}
               </h2>
@@ -4424,7 +4885,7 @@ export default function OakCompassLandingPage() {
                     name="inquiryType"
                     value={form.inquiryType}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                   >
                     {inquiryOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -4446,7 +4907,7 @@ export default function OakCompassLandingPage() {
                       value={form.firstName}
                       onChange={handleChange}
                       placeholder={text.firstName}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
 
@@ -4461,7 +4922,7 @@ export default function OakCompassLandingPage() {
                       value={form.lastName}
                       onChange={handleChange}
                       placeholder={text.lastName}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
                 </div>
@@ -4478,7 +4939,7 @@ export default function OakCompassLandingPage() {
                       value={form.phone}
                       onChange={handleChange}
                       placeholder={text.phone}
-                      className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                     />
                   </div>
 
@@ -4507,7 +4968,7 @@ export default function OakCompassLandingPage() {
                     name="needsSpanish"
                     value={form.needsSpanish}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                   >
                     <option value="no">{text.no}</option>
                     <option value="yes">{text.yes}</option>
@@ -4523,7 +4984,7 @@ export default function OakCompassLandingPage() {
                     name="insuranceType"
                     value={form.insuranceType}
                     onChange={handleChange}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                   >
                     <option value="">{text.selectOne}</option>
                     {insuranceOptions.map((option, index) => (
@@ -4545,7 +5006,7 @@ export default function OakCompassLandingPage() {
                     value={form.zipCode}
                     onChange={handleChange}
                     placeholder={text.zipCode}
-                    className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
                   />
                 </div>
 
@@ -4567,7 +5028,9 @@ export default function OakCompassLandingPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                  className={easterMode
+                    ? "w-full rounded-2xl bg-[linear-gradient(135deg,#f97316_0%,#ec4899_45%,#8b5cf6_100%)] px-5 py-3 text-base font-semibold text-white shadow-[0_18px_40px_-20px_rgba(236,72,153,0.65)] transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+                    : "w-full rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"}
                 >
                   {isSubmitting
                     ? language === "es"
