@@ -378,7 +378,7 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     momentsBody:
       "When a lot is happening at once, it helps to know where to start.",
     prosLabel: "Trusted professionals",
-    prosTitle: "Realtors",
+    prosTitle: "",
     prosBody:
       "These are people and companies I trust and feel good recommending.",
     groups: [
