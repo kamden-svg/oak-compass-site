@@ -378,9 +378,9 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     momentsBody:
       "When a lot is happening at once, it helps to know where to start.",
     prosLabel: "Trusted professionals",
-    prosTitle: "",
+    prosTitle: "People I recommend",
     prosBody:
-      "These are people and companies I trust and feel good recommending.",
+      "These are the people and businesses I trust and feel good sending clients to.",
     groups: [
       {
         title: "Realtors",
@@ -683,9 +683,9 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     momentsBody:
       "Cuando muchas cosas pasan al mismo tiempo, ayuda saber por donde empezar.",
     prosLabel: "Profesionales recomendados",
-    prosTitle: "Realtors",
+    prosTitle: "Personas que recomiendo",
     prosBody:
-      "Estas son personas y companias que recomiendo con confianza.",
+      "Estas son las personas y negocios que recomiendo con confianza.",
     groups: [
       {
         title: "Realtors",
