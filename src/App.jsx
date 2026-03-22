@@ -4968,6 +4968,46 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
   );
 }
 
+function PortalCalculatorTabs({ portalView, setPortalView, text }) {
+  return (
+    <div className="mt-6 flex flex-wrap gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-sm">
+      <button
+        type="button"
+        onClick={() => setPortalView("calculator")}
+        className={`rounded-2xl px-5 py-3 text-sm font-semibold transition ${
+          portalView === "calculator"
+            ? "bg-emerald-700 text-white hover:opacity-90"
+            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+        }`}
+      >
+        {text.calculatorButton}
+      </button>
+      <button
+        type="button"
+        onClick={() => setPortalView("producer-calculator")}
+        className={`rounded-2xl px-5 py-3 text-sm font-semibold transition ${
+          portalView === "producer-calculator"
+            ? "bg-slate-900 text-white hover:opacity-90"
+            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+        }`}
+      >
+        {text.producerCalculatorButton}
+      </button>
+      <button
+        type="button"
+        onClick={() => setPortalView("leads")}
+        className={`rounded-2xl px-5 py-3 text-sm font-semibold transition ${
+          portalView === "leads"
+            ? "bg-slate-900 text-white hover:opacity-90"
+            : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+        }`}
+      >
+        {text.leadsButton}
+      </button>
+    </div>
+  );
+}
+
 function LeadsDashboard({
   text,
   leads,
@@ -5045,34 +5085,24 @@ function LeadsDashboard({
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          <button
-            type="button"
-            onClick={() => setPortalView(portalView === "calculator" ? "leads" : "calculator")}
-            className={`rounded-2xl px-5 py-3 font-semibold transition ${
-              portalView === "calculator"
-                ? "bg-emerald-700 text-white hover:opacity-90"
-                : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-            }`}
-          >
-            {portalView === "calculator" ? text.leadsButton : text.calculatorButton}
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              setPortalView(
-                portalView === "producer-calculator" ? "leads" : "producer-calculator"
-              )
-            }
-            className={`rounded-2xl px-5 py-3 font-semibold transition ${
-              portalView === "producer-calculator"
-                ? "bg-slate-900 text-white hover:opacity-90"
-                : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
-            }`}
-          >
-            {portalView === "producer-calculator"
-              ? text.leadsButton
-              : text.producerCalculatorButton}
-          </button>
+          {portalView === "leads" ? (
+            <>
+              <button
+                type="button"
+                onClick={() => setPortalView("calculator")}
+                className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                {text.calculatorButton}
+              </button>
+              <button
+                type="button"
+                onClick={() => setPortalView("producer-calculator")}
+                className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+              >
+                {text.producerCalculatorButton}
+              </button>
+            </>
+          ) : null}
           <button
             type="button"
             onClick={onExport}
@@ -5096,6 +5126,14 @@ function LeadsDashboard({
           </button>
         </div>
       </div>
+
+      {portalView === "calculator" || portalView === "producer-calculator" ? (
+        <PortalCalculatorTabs
+          portalView={portalView}
+          setPortalView={setPortalView}
+          text={text}
+        />
+      ) : null}
 
       {portalView === "calculator" ? (
         <RetailBonusCalculator
