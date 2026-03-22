@@ -168,6 +168,8 @@ const COPY = {
     backToSite: "Back to Site",
     clearLeads: "Clear All Leads",
     exportLeads: "Export CSV",
+    calculatorButton: "Calculator",
+    leadsButton: "Leads",
     searchLeads: "Search leads",
     searchPlaceholder: "Search name, phone, email, ZIP, notes...",
     filterAll: "All inquiries",
@@ -270,6 +272,8 @@ const COPY = {
     backToSite: "Volver al sitio",
     clearLeads: "Borrar todos los prospectos",
     exportLeads: "Exportar CSV",
+    calculatorButton: "Calculadora",
+    leadsButton: "Prospectos",
     searchLeads: "Buscar prospectos",
     searchPlaceholder: "Buscar nombre, teléfono, correo, código postal, notas...",
     filterAll: "Todas las solicitudes",
@@ -4064,6 +4068,445 @@ function downloadCsv(leads) {
   URL.revokeObjectURL(url);
 }
 
+const LIFE_BONUS_CAP = 1400;
+const COMMERCIAL_BONUS_CAP = 3500;
+const SUB_BONUS_COMMISSION_RATE = 0.1;
+
+const currency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(Number(value || 0));
+
+const toNumber = (value) => {
+  const parsed = parseFloat(value);
+  return Number.isFinite(parsed) ? parsed : 0;
+};
+
+function Field({ label, value, onChange, type = "number", step = "0.01", hint }) {
+  return (
+    <div className="rounded-2xl border bg-white p-4 shadow-sm">
+      <label className="mb-1 block text-sm font-semibold text-gray-800">{label}</label>
+      <input
+        type={type}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+      />
+      {hint ? <p className="mt-2 text-xs text-gray-500">{hint}</p> : null}
+    </div>
+  );
+}
+
+function SelectField({ label, value, onChange, options, hint }) {
+  return (
+    <div className="rounded-2xl border bg-white p-4 shadow-sm">
+      <label className="mb-1 block text-sm font-semibold text-gray-800">{label}</label>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {hint ? <p className="mt-2 text-xs text-gray-500">{hint}</p> : null}
+    </div>
+  );
+}
+
+function StatCard({ label, value, subtext, tone = "default" }) {
+  const toneClass =
+    tone === "positive"
+      ? "border-green-200 bg-green-50"
+      : tone === "negative"
+        ? "border-red-200 bg-red-50"
+        : "border-gray-200 bg-white";
+
+  return (
+    <div className={`rounded-2xl border p-4 shadow-sm ${toneClass}`}>
+      <p className="text-sm font-medium text-gray-600">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-gray-900">{value}</p>
+      {subtext ? <p className="mt-2 text-xs text-gray-500">{subtext}</p> : null}
+    </div>
+  );
+}
+
+function BreakdownRow({ label, value, muted = false }) {
+  return (
+    <div className="flex items-center justify-between gap-4 py-2 text-sm">
+      <span className={muted ? "text-gray-500" : "text-gray-700"}>{label}</span>
+      <span className={muted ? "text-right text-gray-500" : "text-right font-semibold text-gray-900"}>
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function calculateSubProducerPay({ plan, nbPremium }) {
+  const details = {
+    basePay: 0,
+    commissionPay: 0,
+    bonusPay: 0,
+    effectiveRateLabel: "",
+    thresholdLabel: "",
+    totalPay: 0,
+  };
+
+  if (plan === "plan1") {
+    details.basePay = 500;
+
+    if (nbPremium >= 20000) {
+      details.commissionPay = nbPremium * 0.17;
+      details.effectiveRateLabel = "17%";
+      details.thresholdLabel = "Tier hit: $20,000+ NB";
+    } else if (nbPremium >= 10000) {
+      details.commissionPay = nbPremium * 0.125;
+      details.effectiveRateLabel = "12.5%";
+      details.thresholdLabel = "Tier hit: $10,000+ NB";
+    } else if (nbPremium >= 5000) {
+      details.commissionPay = nbPremium * 0.1;
+      details.effectiveRateLabel = "10%";
+      details.thresholdLabel = "Tier hit: $5,000+ NB";
+    } else {
+      details.effectiveRateLabel = "0%";
+      details.thresholdLabel = "Below $5,000 NB";
+    }
+  }
+
+  if (plan === "plan2") {
+    details.commissionPay = nbPremium * 0.1;
+    details.effectiveRateLabel = "10% flat";
+    details.thresholdLabel = "Flat commission plan";
+
+    if (nbPremium >= 25000) {
+      details.bonusPay = 2000;
+    } else if (nbPremium >= 20000) {
+      details.bonusPay = 1000;
+    } else if (nbPremium >= 10000) {
+      details.bonusPay = 750;
+    } else if (nbPremium >= 7500) {
+      details.bonusPay = 500;
+    }
+  }
+
+  if (plan === "plan3") {
+    details.basePay = 250;
+
+    if (nbPremium >= 25000) {
+      details.commissionPay = nbPremium * 0.2;
+      details.effectiveRateLabel = "20%";
+      details.thresholdLabel = "Tier hit: $25,000+ NB";
+    } else if (nbPremium >= 12500) {
+      details.commissionPay = nbPremium * 0.15;
+      details.effectiveRateLabel = "15%";
+      details.thresholdLabel = "Tier hit: $12,500+ NB";
+    } else if (nbPremium >= 5000) {
+      details.commissionPay = nbPremium * 0.12;
+      details.effectiveRateLabel = "12%";
+      details.thresholdLabel = "Tier hit: $5,000+ NB";
+    } else {
+      details.commissionPay = nbPremium * 0.08;
+      details.effectiveRateLabel = "8%";
+      details.thresholdLabel = "Starter tier";
+    }
+
+    if (nbPremium >= 20000) {
+      details.bonusPay = 1000;
+    } else if (nbPremium >= 15000) {
+      details.bonusPay = 500;
+    } else if (nbPremium >= 10000) {
+      details.bonusPay = 250;
+    }
+  }
+
+  details.totalPay = details.basePay + details.commissionPay + details.bonusPay;
+  return details;
+}
+
+function RetailBonusCalculator() {
+  const [yourCommission, setYourCommission] = useState("2500");
+  const [lifeCommission, setLifeCommission] = useState("300");
+  const [commercialCommission, setCommercialCommission] = useState("100");
+  const [bonusPercent, setBonusPercent] = useState("300");
+  const [extraPayment, setExtraPayment] = useState("3000");
+  const [leadBonus, setLeadBonus] = useState("0");
+  const [annualBonusMonthly, setAnnualBonusMonthly] = useState("0");
+  const [subPlan, setSubPlan] = useState("plan1");
+  const [subNbPremium, setSubNbPremium] = useState("5000");
+
+  const values = useMemo(() => {
+    const yourComm = toNumber(yourCommission);
+    const lifeComm = toNumber(lifeCommission);
+    const commercialComm = toNumber(commercialCommission);
+    const multiplier = toNumber(bonusPercent) / 100;
+    const extra = toNumber(extraPayment);
+    const leads = toNumber(leadBonus);
+    const annualMonthly = toNumber(annualBonusMonthly);
+    const subPremium = toNumber(subNbPremium);
+
+    const safeLife = Math.min(lifeComm, yourComm);
+    const safeCommercial = Math.min(commercialComm, Math.max(yourComm - safeLife, 0));
+    const otherCommission = Math.max(yourComm - safeLife - safeCommercial, 0);
+    const subBonusCommissionEquivalent = subPremium * SUB_BONUS_COMMISSION_RATE;
+    const subPay = calculateSubProducerPay({
+      plan: subPlan,
+      nbPremium: subPremium,
+    });
+
+    const lifeBonusRaw = safeLife * multiplier;
+    const commercialBonusRaw = safeCommercial * multiplier;
+    const uncappedBonusRaw = (otherCommission + subBonusCommissionEquivalent) * multiplier;
+
+    const lifeBonusApplied = Math.min(lifeBonusRaw, LIFE_BONUS_CAP);
+    const commercialBonusApplied = Math.min(commercialBonusRaw, COMMERCIAL_BONUS_CAP);
+
+    const lifeCapReduction = Math.max(lifeBonusRaw - lifeBonusApplied, 0);
+    const commercialCapReduction = Math.max(commercialBonusRaw - commercialBonusApplied, 0);
+
+    const totalMonthlyBonus =
+      lifeBonusApplied + commercialBonusApplied + uncappedBonusRaw;
+
+    const grossIncome =
+      yourComm + totalMonthlyBonus + extra + leads + annualMonthly;
+
+    const netIncomeAfterSub = grossIncome - subPay.totalPay;
+
+    return {
+      yourComm,
+      safeLife,
+      safeCommercial,
+      otherCommission,
+      multiplier,
+      subPremium,
+      subBonusCommissionEquivalent,
+      subPay,
+      lifeBonusApplied,
+      commercialBonusApplied,
+      lifeCapReduction,
+      commercialCapReduction,
+      uncappedBonusRaw,
+      totalMonthlyBonus,
+      grossIncome,
+      netIncomeAfterSub,
+      bonusBase: yourComm + subBonusCommissionEquivalent,
+    };
+  }, [
+    yourCommission,
+    lifeCommission,
+    commercialCommission,
+    bonusPercent,
+    extraPayment,
+    leadBonus,
+    annualBonusMonthly,
+    subPlan,
+    subNbPremium,
+  ]);
+
+  const planDescriptions = {
+    plan1: "$500 base, then 10% at $5k NB, 12.5% at $10k, 17% at $20k",
+    plan2: "No base, 10% flat, plus milestone bonuses",
+    plan3:
+      "$250 base, 8% starter rate, then accelerators + bonuses of $250 at $10k, $500 at $15k, and $1,000 at $20k",
+  };
+
+  return (
+    <div className="mt-8 bg-gray-100 p-6 text-gray-900">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold">Agency Bonus + Sub Producer Calculator</h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Sub producer pay is calculated from their selected comp plan. Your bonus credit from
+            their production is always based on 10% of their NB premium.
+          </p>
+        </div>
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="space-y-6 lg:col-span-2">
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Your Production</h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                <Field
+                  label="Your Total Commission"
+                  value={yourCommission}
+                  onChange={setYourCommission}
+                />
+                <Field
+                  label="Life Commission"
+                  value={lifeCommission}
+                  onChange={setLifeCommission}
+                />
+                <Field
+                  label="Commercial Commission"
+                  value={commercialCommission}
+                  onChange={setCommercialCommission}
+                />
+                <Field
+                  label="Bonus Percent"
+                  value={bonusPercent}
+                  onChange={setBonusPercent}
+                  hint="Example: 300 for a 300% bonus"
+                />
+                <Field
+                  label="Extra Payment"
+                  value={extraPayment}
+                  onChange={setExtraPayment}
+                />
+                <Field
+                  label="Lead Bonus"
+                  value={leadBonus}
+                  onChange={setLeadBonus}
+                />
+                <Field
+                  label="Annual Bonus Monthly Portion"
+                  value={annualBonusMonthly}
+                  onChange={setAnnualBonusMonthly}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Sub Producer</h2>
+              <div className="grid gap-4 md:grid-cols-2">
+                <SelectField
+                  label="Sub Producer Pay Plan"
+                  value={subPlan}
+                  onChange={setSubPlan}
+                  options={[
+                    { value: "plan1", label: "Plan 1: Base + Tiered Commission" },
+                    { value: "plan2", label: "Plan 2: Flat 10% + Bonus Milestones" },
+                    { value: "plan3", label: "Plan 3: Hybrid Accelerator" },
+                  ]}
+                  hint={planDescriptions[subPlan]}
+                />
+
+                <Field
+                  label="Sub Producer NB Premium"
+                  value={subNbPremium}
+                  onChange={setSubNbPremium}
+                  hint="Used for both their pay plan and your bonus credit"
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Income Summary</h2>
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <StatCard
+                  label="Bonus Base"
+                  value={currency(values.bonusBase)}
+                  subtext="Your commission + sub bonus commission equivalent"
+                />
+                <StatCard
+                  label="Sub Bonus Credit"
+                  value={currency(values.subBonusCommissionEquivalent)}
+                  subtext="Always 10% of sub NB premium"
+                />
+                <StatCard
+                  label="Gross Income"
+                  value={currency(values.grossIncome)}
+                  subtext="Before sub producer pay"
+                />
+                <StatCard
+                  label="Net After Sub Pay"
+                  value={currency(values.netIncomeAfterSub)}
+                  subtext="Your actual pocket number"
+                  tone="positive"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Sub Producer Pay Breakdown</h2>
+              <BreakdownRow label="Plan" value={subPlan.toUpperCase()} />
+              <BreakdownRow label="NB Premium" value={currency(values.subPremium)} />
+              <BreakdownRow label="Base Pay" value={currency(values.subPay.basePay)} />
+              <BreakdownRow label="Commission Pay" value={currency(values.subPay.commissionPay)} />
+              <BreakdownRow label="Bonus Pay" value={currency(values.subPay.bonusPay)} />
+              <BreakdownRow
+                label="Tier / Rate"
+                value={`${values.subPay.effectiveRateLabel} • ${values.subPay.thresholdLabel}`}
+                muted
+              />
+              <div className="mt-3 border-t pt-3">
+                <BreakdownRow
+                  label="Total Sub Producer Pay"
+                  value={currency(values.subPay.totalPay)}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Your Bonus Breakdown</h2>
+              <BreakdownRow label="Your Commission" value={currency(values.yourComm)} />
+              <BreakdownRow label="Life Commission" value={currency(values.safeLife)} />
+              <BreakdownRow label="Commercial Commission" value={currency(values.safeCommercial)} />
+              <BreakdownRow label="Other Commission" value={currency(values.otherCommission)} />
+              <BreakdownRow
+                label="Sub Bonus Credit Added"
+                value={currency(values.subBonusCommissionEquivalent)}
+              />
+              <BreakdownRow
+                label="Sub Bonus Credit Rule"
+                value="10% of NB premium"
+                muted
+              />
+              <div className="mt-3 border-t pt-3">
+                <BreakdownRow label="Life Bonus Applied" value={currency(values.lifeBonusApplied)} />
+                {values.lifeCapReduction > 0 ? (
+                  <BreakdownRow
+                    label="Life Cap Reduction"
+                    value={`-${currency(values.lifeCapReduction)}`}
+                    muted
+                  />
+                ) : null}
+                <BreakdownRow
+                  label="Commercial Bonus Applied"
+                  value={currency(values.commercialBonusApplied)}
+                />
+                {values.commercialCapReduction > 0 ? (
+                  <BreakdownRow
+                    label="Commercial Cap Reduction"
+                    value={`-${currency(values.commercialCapReduction)}`}
+                    muted
+                  />
+                ) : null}
+                <BreakdownRow
+                  label="Uncapped Bonus Portion"
+                  value={currency(values.uncappedBonusRaw)}
+                />
+                <BreakdownRow
+                  label="Total Monthly Bonus"
+                  value={currency(values.totalMonthlyBonus)}
+                />
+              </div>
+            </div>
+
+            <div className="rounded-3xl border bg-white p-5 shadow-sm">
+              <h2 className="mb-4 text-xl font-bold">Final Math</h2>
+              <BreakdownRow label="Gross Income" value={currency(values.grossIncome)} />
+              <BreakdownRow
+                label="Less Sub Producer Pay"
+                value={`-${currency(values.subPay.totalPay)}`}
+              />
+              <div className="mt-3 border-t pt-3">
+                <BreakdownRow label="Net Income" value={currency(values.netIncomeAfterSub)} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LeadsDashboard({
   text,
   leads,
@@ -4085,6 +4528,8 @@ function LeadsDashboard({
   passwordError,
   isLoading,
   loadError,
+  portalView,
+  setPortalView,
 }) {
   if (!isAuthenticated) {
     return (
@@ -4141,6 +4586,17 @@ function LeadsDashboard({
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
+            onClick={() => setPortalView(portalView === "calculator" ? "leads" : "calculator")}
+            className={`rounded-2xl px-5 py-3 font-semibold transition ${
+              portalView === "calculator"
+                ? "bg-emerald-700 text-white hover:opacity-90"
+                : "border border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+            }`}
+          >
+            {portalView === "calculator" ? text.leadsButton : text.calculatorButton}
+          </button>
+          <button
+            type="button"
             onClick={onExport}
             className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
           >
@@ -4163,6 +4619,10 @@ function LeadsDashboard({
         </div>
       </div>
 
+      {portalView === "calculator" ? (
+        <RetailBonusCalculator />
+      ) : (
+        <>
       <div className="mt-6 grid gap-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1fr,220px]">
         <div>
           <label htmlFor="leadSearch" className="mb-2 block text-sm font-medium text-slate-700">
@@ -4324,6 +4784,8 @@ function LeadsDashboard({
           ))}
         </div>
       )}
+        </>
+      )}
     </section>
   );
 }
@@ -4351,6 +4813,7 @@ export default function OakCompassLandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
   const [savingLeadId, setSavingLeadId] = useState("");
+  const [portalView, setPortalView] = useState("leads");
   const language = siteLanguage;
   const text = COPY[language];
   const inquiryOptions = INQUIRY_OPTIONS[language].filter(
@@ -4480,6 +4943,7 @@ export default function OakCompassLandingPage() {
       setLoadError("");
       setSearchTerm("");
       setInquiryFilter("all");
+      setPortalView("leads");
     }
 
     if (page === PAGE_HOME && (activePage !== PAGE_HOME || form.inquiryType !== "quote")) {
@@ -4779,6 +5243,8 @@ export default function OakCompassLandingPage() {
             passwordError={passwordError}
             isLoading={isLoadingLeads}
             loadError={loadError}
+            portalView={portalView}
+            setPortalView={setPortalView}
           />
         </div>
         <Analytics />
