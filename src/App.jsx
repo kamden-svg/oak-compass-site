@@ -4697,6 +4697,7 @@ const initialProducerPlans = {
 function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
   const [nbPremium, setNbPremium] = useState("10000");
   const [plans, setPlans] = useState(initialProducerPlans);
+  const [selectedPlanId, setSelectedPlanId] = useState("plan1");
 
   const updatePlanField = (planId, field, value) => {
     setPlans((prev) => ({
@@ -4804,6 +4805,9 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
 
   const sortedResults = [...results].sort((a, b) => b.totalPay - a.totalPay);
   const topPlanId = sortedResults[0]?.id;
+  const selectedPlan = plans[selectedPlanId] || Object.values(plans)[0];
+  const selectedPlanResult =
+    results.find((result) => result.id === selectedPlanId) || results[0];
 
   return (
     <div className="mt-8 bg-gray-100 p-6 text-gray-900">
@@ -4824,12 +4828,22 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
         </div>
 
         <div className="rounded-3xl border bg-white p-5 shadow-sm">
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <ProducerOnlyField
               label="NB Premium"
               value={nbPremium}
               onChange={setNbPremium}
               hint="Enter the producer's monthly new business premium"
+            />
+            <SelectField
+              label="Selected Plan"
+              value={selectedPlanId}
+              onChange={setSelectedPlanId}
+              options={Object.values(plans).map((plan) => ({
+                value: plan.id,
+                label: plan.name,
+              }))}
+              hint="Choose which plan you want to edit and review"
             />
             <div className="flex items-end">
               <button
@@ -4854,176 +4868,167 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
           ))}
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-3">
-          {Object.values(plans).map((plan) => {
-            const planResult = results.find((result) => result.id === plan.id);
+        <div
+          className={`rounded-3xl border p-5 shadow-sm ${
+            selectedPlanId === topPlanId ? "border-blue-200 bg-blue-50" : "bg-white"
+          }`}
+        >
+          <div className="mb-4">
+            <h2 className="text-xl font-bold">{selectedPlan.name}</h2>
+            <p className="text-sm text-gray-600">{selectedPlan.description}</p>
+          </div>
 
-            return (
-              <div
-                key={plan.id}
-                className={`rounded-3xl border p-5 shadow-sm ${
-                  plan.id === topPlanId ? "border-blue-200 bg-blue-50" : "bg-white"
-                }`}
+          <div className="space-y-4">
+            <ProducerOnlyTextField
+              label="Plan Name"
+              value={selectedPlan.name}
+              onChange={(value) => updatePlanField(selectedPlan.id, "name", value)}
+            />
+            <ProducerOnlyTextField
+              label="Description"
+              value={selectedPlan.description}
+              onChange={(value) =>
+                updatePlanField(selectedPlan.id, "description", value)
+              }
+            />
+            <ProducerOnlyField
+              label="Base Pay"
+              value={selectedPlan.basePay}
+              onChange={(value) => updatePlanField(selectedPlan.id, "basePay", value)}
+            />
+          </div>
+
+          <div className="mt-6">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="font-semibold">Commission Tiers</h3>
+              <button
+                onClick={() => addCommissionTier(selectedPlan.id)}
+                className="rounded-lg border px-3 py-1 text-xs font-semibold"
               >
-                <div className="mb-4">
-                  <h2 className="text-xl font-bold">{plan.name}</h2>
-                  <p className="text-sm text-gray-600">{plan.description}</p>
-                </div>
+                Add Tier
+              </button>
+            </div>
 
-                <div className="space-y-4">
-                  <ProducerOnlyTextField
-                    label="Plan Name"
-                    value={plan.name}
-                    onChange={(value) => updatePlanField(plan.id, "name", value)}
-                  />
-                  <ProducerOnlyTextField
-                    label="Description"
-                    value={plan.description}
+            <div className="space-y-3">
+              {selectedPlan.commissionTiers.map((tier, index) => (
+                <div
+                  key={`${selectedPlan.id}-producer-commission-${index}`}
+                  className="grid gap-3 md:grid-cols-3"
+                >
+                  <ProducerOnlyField
+                    label={`Min NB ${index + 1}`}
+                    value={tier.min}
                     onChange={(value) =>
-                      updatePlanField(plan.id, "description", value)
+                      updateCommissionTier(selectedPlan.id, index, "min", value)
                     }
                   />
                   <ProducerOnlyField
-                    label="Base Pay"
-                    value={plan.basePay}
-                    onChange={(value) => updatePlanField(plan.id, "basePay", value)}
-                  />
-                </div>
-
-                <div className="mt-6">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="font-semibold">Commission Tiers</h3>
-                    <button
-                      onClick={() => addCommissionTier(plan.id)}
-                      className="rounded-lg border px-3 py-1 text-xs font-semibold"
-                    >
-                      Add Tier
-                    </button>
-                  </div>
-
-                  <div className="space-y-3">
-                    {plan.commissionTiers.map((tier, index) => (
-                      <div
-                        key={`${plan.id}-producer-commission-${index}`}
-                        className="grid gap-3 md:grid-cols-3"
-                      >
-                            <ProducerOnlyField
-                              label={`Min NB ${index + 1}`}
-                              value={tier.min}
-                              onChange={(value) =>
-                                updateCommissionTier(plan.id, index, "min", value)
-                              }
-                            />
-                            <ProducerOnlyField
-                              label={`Rate ${index + 1}`}
-                              value={tier.rate}
-                              onChange={(value) =>
-                            updateCommissionTier(plan.id, index, "rate", value)
-                          }
-                          step="0.001"
-                          hint="0.10 = 10%"
-                        />
-                        <div className="flex items-end">
-                          <button
-                            onClick={() => removeCommissionTier(plan.id, index)}
-                            className="w-full rounded-xl border px-3 py-2 text-sm font-semibold"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="mt-6">
-                  <div className="mb-2 flex items-center justify-between">
-                    <h3 className="font-semibold">Bonus Tiers</h3>
-                    <button
-                      onClick={() => addBonusTier(plan.id)}
-                      className="rounded-lg border px-3 py-1 text-xs font-semibold"
-                    >
-                      Add Bonus
-                    </button>
-                  </div>
-
-                  {plan.bonusTiers.length === 0 ? (
-                    <p className="text-sm text-gray-500">No bonus tiers on this plan.</p>
-                  ) : (
-                    <div className="space-y-3">
-                      {plan.bonusTiers.map((tier, index) => (
-                        <div
-                          key={`${plan.id}-producer-bonus-${index}`}
-                          className="grid gap-3 md:grid-cols-3"
-                        >
-                              <ProducerOnlyField
-                                label={`Bonus Min ${index + 1}`}
-                                value={tier.min}
-                                onChange={(value) =>
-                                  updateBonusTier(plan.id, index, "min", value)
-                                }
-                              />
-                              <ProducerOnlyField
-                                label={`Bonus Amount ${index + 1}`}
-                                value={tier.amount}
-                                onChange={(value) =>
-                              updateBonusTier(plan.id, index, "amount", value)
-                            }
-                          />
-                          <div className="flex items-end">
-                            <button
-                              onClick={() => removeBonusTier(plan.id, index)}
-                              className="w-full rounded-xl border px-3 py-2 text-sm font-semibold"
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <div className="mt-6 rounded-2xl border bg-gray-50 p-4">
-                  <h3 className="mb-2 font-semibold">Plan Breakdown</h3>
-                  <ProducerOnlyBreakdownRow
-                    label="NB Premium"
-                    value={producerOnlyCurrency(planResult.nbPremium)}
-                  />
-                  <ProducerOnlyBreakdownRow
-                    label="Base Pay"
-                    value={producerOnlyCurrency(planResult.basePay)}
-                  />
-                  <ProducerOnlyBreakdownRow
-                    label="Active Commission Tier"
-                    value={`$${planResult.activeCommissionTier.min.toLocaleString()}+ @ ${(planResult.activeCommissionTier.rate * 100).toFixed(2)}%`}
-                  />
-                  <ProducerOnlyBreakdownRow
-                    label="Commission Pay"
-                    value={producerOnlyCurrency(planResult.commissionPay)}
-                  />
-                  <ProducerOnlyBreakdownRow
-                    label="Active Bonus Tier"
-                    value={
-                      planResult.activeBonusTier.amount > 0
-                        ? `$${planResult.activeBonusTier.min.toLocaleString()}+`
-                        : "None"
+                    label={`Rate ${index + 1}`}
+                    value={tier.rate}
+                    onChange={(value) =>
+                      updateCommissionTier(selectedPlan.id, index, "rate", value)
                     }
+                    step="0.001"
+                    hint="0.10 = 10%"
                   />
-                  <ProducerOnlyBreakdownRow
-                    label="Bonus Pay"
-                    value={producerOnlyCurrency(planResult.bonusPay)}
-                  />
-                  <div className="mt-2 border-t pt-2">
-                    <ProducerOnlyBreakdownRow
-                      label="Total Producer Pay"
-                      value={producerOnlyCurrency(planResult.totalPay)}
-                    />
+                  <div className="flex items-end">
+                    <button
+                      onClick={() => removeCommissionTier(selectedPlan.id, index)}
+                      className="w-full rounded-xl border px-3 py-2 text-sm font-semibold"
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="font-semibold">Bonus Tiers</h3>
+              <button
+                onClick={() => addBonusTier(selectedPlan.id)}
+                className="rounded-lg border px-3 py-1 text-xs font-semibold"
+              >
+                Add Bonus
+              </button>
+            </div>
+
+            {selectedPlan.bonusTiers.length === 0 ? (
+              <p className="text-sm text-gray-500">No bonus tiers on this plan.</p>
+            ) : (
+              <div className="space-y-3">
+                {selectedPlan.bonusTiers.map((tier, index) => (
+                  <div
+                    key={`${selectedPlan.id}-producer-bonus-${index}`}
+                    className="grid gap-3 md:grid-cols-3"
+                  >
+                    <ProducerOnlyField
+                      label={`Bonus Min ${index + 1}`}
+                      value={tier.min}
+                      onChange={(value) =>
+                        updateBonusTier(selectedPlan.id, index, "min", value)
+                      }
+                    />
+                    <ProducerOnlyField
+                      label={`Bonus Amount ${index + 1}`}
+                      value={tier.amount}
+                      onChange={(value) =>
+                        updateBonusTier(selectedPlan.id, index, "amount", value)
+                      }
+                    />
+                    <div className="flex items-end">
+                      <button
+                        onClick={() => removeBonusTier(selectedPlan.id, index)}
+                        className="w-full rounded-xl border px-3 py-2 text-sm font-semibold"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
-            );
-          })}
+            )}
+          </div>
+
+          <div className="mt-6 rounded-2xl border bg-gray-50 p-4">
+            <h3 className="mb-2 font-semibold">Plan Breakdown</h3>
+            <ProducerOnlyBreakdownRow
+              label="NB Premium"
+              value={producerOnlyCurrency(selectedPlanResult.nbPremium)}
+            />
+            <ProducerOnlyBreakdownRow
+              label="Base Pay"
+              value={producerOnlyCurrency(selectedPlanResult.basePay)}
+            />
+            <ProducerOnlyBreakdownRow
+              label="Active Commission Tier"
+              value={`$${selectedPlanResult.activeCommissionTier.min.toLocaleString()}+ @ ${(selectedPlanResult.activeCommissionTier.rate * 100).toFixed(2)}%`}
+            />
+            <ProducerOnlyBreakdownRow
+              label="Commission Pay"
+              value={producerOnlyCurrency(selectedPlanResult.commissionPay)}
+            />
+            <ProducerOnlyBreakdownRow
+              label="Active Bonus Tier"
+              value={
+                selectedPlanResult.activeBonusTier.amount > 0
+                  ? `$${selectedPlanResult.activeBonusTier.min.toLocaleString()}+`
+                  : "None"
+              }
+            />
+            <ProducerOnlyBreakdownRow
+              label="Bonus Pay"
+              value={producerOnlyCurrency(selectedPlanResult.bonusPay)}
+            />
+            <div className="mt-2 border-t pt-2">
+              <ProducerOnlyBreakdownRow
+                label="Total Producer Pay"
+                value={producerOnlyCurrency(selectedPlanResult.totalPay)}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
