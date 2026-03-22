@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
 
 const INITIAL_FORM = {
@@ -366,14 +366,130 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     numbersTitle: "Helpful phone numbers worth saving",
     numbersBody:
       "These are broad emergency and recovery contacts that are useful across the U.S. You can swap or add local numbers anytime.",
+    carrierLookupLabel: "Carrier lookup",
+    carrierLookupTitle: "Need your carrier directly?",
+    carrierLookupBody:
+      "If you cannot reach me right away, choose your insurance company below and call their customer support line directly.",
+    carrierLookupSelect: "Choose a carrier",
+    carrierLookupNumber: "Customer support",
+    carrierLookupHint: "More carriers can be added anytime.",
     momentsLabel: "What now?",
     momentsTitle: "A few common situations this page can help with",
     momentsBody:
       "The goal is to reduce decision fatigue. Clients can find a lane quickly instead of hunting through texts, emails, and bookmarks.",
     prosLabel: "Trusted professionals",
-    prosTitle: "Custom contact cards for the people you recommend",
+    prosTitle: "Realtors",
     prosBody:
-      "These starter cards are ready for your real referral partners. Replace the sample contact details with your preferred professionals and this page becomes even more valuable.",
+      "Open the dropdowns to see the people and companies I recommend.",
+    groups: [
+      {
+        title: "Realtors",
+        items: [
+          {
+            role: "Realtor",
+            name: "Reed Mackley",
+            tagline:
+              "My preferred realtor for Northern Utah, with a strong heart for first responders, military families, and anyone who wants a steady guide.",
+            phone: "435.720.8209",
+            email: "MackleyProperty@gmail.com",
+            website: "RE/MAX Ascent",
+            note: "I have worked with Reed and recommend him with confidence. He is a great guy, knows Northern Utah well, and is an especially strong fit for first responders and military clients.",
+            accent: "from-emerald-700 via-emerald-600 to-lime-500",
+          },
+          {
+            role: "Realtor",
+            name: "Eric Schmitz",
+            tagline:
+              "A great option for the Salt Lake area and one of the nicest people you could send a client to.",
+            phone: "(385) 899-2489",
+            email: "Eric@MarkHaaga.com",
+            website: "MarkHaaga.com",
+            note: "Eric is a wonderful recommendation for clients in the Salt Lake area. He brings a warm, easy presence that helps people feel comfortable through the real estate process.",
+            accent: "from-sky-700 via-cyan-600 to-teal-500",
+          },
+        ],
+      },
+      {
+        title: "Handyman & Contractor",
+        items: [
+          {
+            role: "HVAC & Plumbing",
+            name: "Canyon Plumbing & Heating",
+            tagline:
+              "A strong local option for HVAC and plumbing work, with a veteran-owned, family-operated approach and service across Cache Valley and nearby areas.",
+            phone: "(435) 881-6952",
+            email: "contact@canyonph.net",
+            website: "canyonph.net",
+            note: "Canyon Plumbing & Heating is based in Smithfield and offers HVAC, water heater, boiler, AC, and general plumbing services. Their site says they have served the area since 2005 and cover Cache Valley, Bear Lake Valley, and Malad, Idaho.",
+            accent: "from-slate-900 via-sky-800 to-cyan-500",
+          },
+        ],
+      },
+      {
+        title: "Health Insurance",
+        items: [
+          {
+            role: "Health Insurance",
+            name: "Kristen Gines",
+            tagline:
+              "A trusted option for health insurance guidance through Legacy Insurance and Financial Services.",
+            phone: "801-691-9767",
+            email: "kgines@legacyifs.com",
+            website: "Legacy Insurance and Financial Services",
+            note: "Kristen Gines is listed on her Blinq card as an Insurance Broker at Legacy Insurance and Financial Services. Her card includes direct phone and email contact for health insurance conversations.",
+            accent: "from-rose-700 via-rose-600 to-orange-400",
+          },
+        ],
+      },
+      {
+        title: "Mortgage Lender",
+        items: [
+          {
+            role: "Mortgage Originator",
+            name: "Elayne Bair",
+            tagline:
+              "A strong option for home loans, refinances, construction loans, lot loans, and first-time homebuyer financing.",
+            phone: "435-713-1863",
+            email: "ebair@usucu.org",
+            website: "gwcu.org/originators/elayne-bair",
+            note: "Goldenwest Credit Union lists Elayne Bair as a Mortgage Originator in Logan, Utah. Her mortgage page highlights home loans, refinances, construction loans, lot loans, and first-time homebuyer loans, with direct contact at 220 E 1400 N, Logan, UT.",
+            accent: "from-amber-700 via-orange-600 to-rose-500",
+          },
+        ],
+      },
+      {
+        title: "Business Lending",
+        items: [
+          {
+            role: "Business Banker | VP",
+            name: "Joseph Redzich",
+            tagline:
+              "A strong business lending contact for working capital, lines of credit, equipment financing, and commercial real estate lending.",
+            phone: "435-792-1227",
+            email: "Joseph.Redzich@zionsbank.com",
+            website: "zionsbank.com/personal/directory/business-bankers/joseph-redzich/",
+            note: "Joseph Redzich is listed as Business Banker | VP with NMLS #1219547. His profile highlights help with working capital, lines of credit, equipment financing, and commercial real estate lending.",
+            accent: "from-indigo-800 via-slate-800 to-blue-500",
+          },
+        ],
+      },
+      {
+        title: "Other Services",
+        items: [
+          {
+            role: "Dog Trainer",
+            name: "Robert Barlow",
+            tagline:
+              "A trusted dog trainer through B-Hyve K9, with private training, group classes, daycare, boarding, and grooming for Salt Lake County clients.",
+            phone: "(385) 457-5699",
+            email: "Robert@BHyvek9.com",
+            website: "bhyvek9.com",
+            note: "B-Hyve K9 is owned and operated by Rob Barlow in Millcreek, Utah at 3947 West Temple. The site highlights private training, group classes, board-and-train programs, daycare, boarding, and grooming, with hours listed Monday through Sunday from 7 AM to 8 PM.",
+            accent: "from-emerald-800 via-lime-700 to-amber-500",
+          },
+        ],
+      },
+    ],
     footerTitle: "Want a warm handoff?",
     footerBody:
       "If a client is unsure who to call first, send them back to Oak & Compass and we can help point them in the right direction.",
@@ -456,6 +572,53 @@ const CLIENT_RESOURCES_PAGE_COPY = {
         body: "Federal disaster assistance questions before, during, or after a declared event.",
       },
     ],
+    carriers: [
+      {
+        name: "Progressive",
+        phone: "1-888-671-4405",
+        note: "Customer service",
+      },
+      {
+        name: "Foremost",
+        phone: "1-800-527-3905",
+        note: "Policy service",
+      },
+      {
+        name: "National General",
+        phone: "1-888-293-5108",
+        note: "Customer support",
+      },
+      {
+        name: "American Modern",
+        phone: "1-800-543-2644",
+        note: "Customer service",
+      },
+      {
+        name: "Homeowners of America",
+        phone: "1-866-407-9896",
+        note: "Policyholder services",
+      },
+      {
+        name: "Farmers",
+        phone: "1-888-327-6335",
+        note: "Customer care",
+      },
+      {
+        name: "Bristol West",
+        phone: "1-888-888-0080",
+        note: "Customer service",
+      },
+      {
+        name: "Travelers",
+        phone: "1-800-252-4633",
+        note: "Customer service",
+      },
+      {
+        name: "Safeco",
+        phone: "1-800-332-3226",
+        note: "Customer service",
+      },
+    ],
     moments: [
       {
         title: "After an accident",
@@ -471,44 +634,6 @@ const CLIENT_RESOURCES_PAGE_COPY = {
         title: "After a move or major life change",
         body: "Big changes often mean coverage should be reviewed. This page helps clients know where to restart quickly.",
         points: ["Update address and vehicles", "Review home and renters needs", "Recheck deductibles and limits"],
-      },
-    ],
-    professionals: [
-      {
-        role: "Realtor partner",
-        name: "Reed Mackley",
-        tagline:
-          "My preferred realtor for Northern Utah, with a strong heart for first responders, military families, and anyone who wants a steady guide.",
-        phone: "435.720.8209",
-        email: "MackleyProperty@gmail.com",
-        website: "RE/MAX Ascent",
-        image: "/REED m..jpeg",
-        imageAlt: "Reed Mackley realtor contact card",
-        note: "I have worked with Reed and recommend him with confidence. He is a great guy, knows Northern Utah well, and is an especially strong fit for first responders and military clients.",
-        accent: "from-emerald-700 via-emerald-600 to-lime-500",
-      },
-      {
-        role: "Salt Lake realtor",
-        name: "Eric Schmitz",
-        tagline:
-          "A great option for the Salt Lake area and one of the nicest people you could send a client to.",
-        phone: "(385) 899-2489",
-        email: "Eric@MarkHaaga.com",
-        website: "MarkHaaga.com",
-        image: "/ES.jpg",
-        imageAlt: "Eric Schmitz real estate business card",
-        note: "Eric is a wonderful recommendation for clients in the Salt Lake area. He brings a warm, easy presence that helps people feel comfortable through the real estate process.",
-        accent: "from-sky-700 via-cyan-600 to-teal-500",
-      },
-      {
-        role: "Lender or finance partner",
-        name: "Add your mortgage or finance pro",
-        tagline: "Helpful when clients are refinancing, buying, or sorting through big financial transitions.",
-        phone: "Add direct phone",
-        email: "add-lender@email.com",
-        website: "Add website",
-        note: "This card works well for a lender, CPA, estate planner, or attorney you confidently recommend.",
-        accent: "from-slate-900 via-slate-700 to-amber-500",
       },
     ],
   },
@@ -530,14 +655,130 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     numbersTitle: "Telefonos utiles para guardar",
     numbersBody:
       "Estos son contactos amplios de emergencia y recuperacion utiles en Estados Unidos. Puedes cambiar o agregar numeros locales cuando quieras.",
+    carrierLookupLabel: "Buscar carrier",
+    carrierLookupTitle: "Necesitas hablar directo con tu carrier?",
+    carrierLookupBody:
+      "Si no puedes comunicarte conmigo de inmediato, elige tu compania abajo y llama directo a su numero de servicio al cliente.",
+    carrierLookupSelect: "Elige un carrier",
+    carrierLookupNumber: "Servicio al cliente",
+    carrierLookupHint: "Podemos agregar mas carriers cuando quieras.",
     momentsLabel: "Y ahora que?",
     momentsTitle: "Situaciones comunes donde esta pagina ayuda",
     momentsBody:
       "La idea es bajar el estres. Tus clientes pueden encontrar una direccion clara sin buscar entre mensajes, correos y favoritos.",
     prosLabel: "Profesionales recomendados",
-    prosTitle: "Tarjetas personalizadas para las personas que recomiendas",
+    prosTitle: "Realtors",
     prosBody:
-      "Estas tarjetas iniciales estan listas para tus socios reales. Cambia los datos de muestra por tus contactos preferidos y la pagina gana aun mas valor.",
+      "Abre los menus para ver las personas y companias que recomiendo.",
+    groups: [
+      {
+        title: "Realtors",
+        items: [
+          {
+            role: "Realtor",
+            name: "Reed Mackley",
+            tagline:
+              "Mi realtor preferido para el norte de Utah, con mucha afinidad para primeros respondedores, familias militares y personas que quieren una guia firme.",
+            phone: "435.720.8209",
+            email: "MackleyProperty@gmail.com",
+            website: "RE/MAX Ascent",
+            note: "He trabajado con Reed y lo recomiendo con mucha confianza. Es una gran persona, conoce muy bien el norte de Utah y es una opcion especialmente fuerte para clientes militares y primeros respondedores.",
+            accent: "from-emerald-700 via-emerald-600 to-lime-500",
+          },
+          {
+            role: "Realtor",
+            name: "Eric Schmitz",
+            tagline:
+              "Una gran opcion para el area de Salt Lake y una de las personas mas amables a las que puedes enviar un cliente.",
+            phone: "(385) 899-2489",
+            email: "Eric@MarkHaaga.com",
+            website: "MarkHaaga.com",
+            note: "Eric es una excelente recomendacion para clientes del area de Salt Lake. Tiene una energia muy amable y hace que la gente se sienta comoda durante todo el proceso.",
+            accent: "from-sky-700 via-cyan-600 to-teal-500",
+          },
+        ],
+      },
+      {
+        title: "Handyman & Contractor",
+        items: [
+          {
+            role: "HVAC y plomeria",
+            name: "Canyon Plumbing & Heating",
+            tagline:
+              "Una opcion local fuerte para HVAC y plomeria, con un enfoque veteran-owned, familiar y servicio en Cache Valley y areas cercanas.",
+            phone: "(435) 881-6952",
+            email: "contact@canyonph.net",
+            website: "canyonph.net",
+            note: "Canyon Plumbing & Heating esta en Smithfield y ofrece servicios de HVAC, boilers, calentadores de agua, AC y plomeria general. Su sitio dice que sirven la zona desde 2005 y cubren Cache Valley, Bear Lake Valley y Malad, Idaho.",
+            accent: "from-slate-900 via-sky-800 to-cyan-500",
+          },
+        ],
+      },
+      {
+        title: "Health Insurance",
+        items: [
+          {
+            role: "Seguro de salud",
+            name: "Kristen Gines",
+            tagline:
+              "Una opcion confiable para ayuda con seguro de salud por medio de Legacy Insurance and Financial Services.",
+            phone: "801-691-9767",
+            email: "kgines@legacyifs.com",
+            website: "Legacy Insurance and Financial Services",
+            note: "La tarjeta de Blinq de Kristen Gines la muestra como Insurance Broker en Legacy Insurance and Financial Services. Su tarjeta incluye telefono y correo directo para conversaciones sobre seguro de salud.",
+            accent: "from-rose-700 via-rose-600 to-orange-400",
+          },
+        ],
+      },
+      {
+        title: "Mortgage Lender",
+        items: [
+          {
+            role: "Originadora hipotecaria",
+            name: "Elayne Bair",
+            tagline:
+              "Una opcion fuerte para home loans, refinanciamientos, construction loans, lot loans y prestamos para first-time homebuyers.",
+            phone: "435-713-1863",
+            email: "ebair@usucu.org",
+            website: "gwcu.org/originators/elayne-bair",
+            note: "Goldenwest Credit Union muestra a Elayne Bair como Mortgage Originator en Logan, Utah. Su pagina de hipotecas destaca home loans, refinanciamientos, construction loans, lot loans y prestamos para first-time homebuyers, con contacto directo en 220 E 1400 N, Logan, UT.",
+            accent: "from-amber-700 via-orange-600 to-rose-500",
+          },
+        ],
+      },
+      {
+        title: "Business Lending",
+        items: [
+          {
+            role: "Business Banker | VP",
+            name: "Joseph Redzich",
+            tagline:
+              "Un contacto fuerte para business lending, working capital, lineas de credito, financiamiento de equipo y commercial real estate lending.",
+            phone: "435-792-1227",
+            email: "Joseph.Redzich@zionsbank.com",
+            website: "zionsbank.com/personal/directory/business-bankers/joseph-redzich/",
+            note: "Joseph Redzich aparece como Business Banker | VP con NMLS #1219547. Su perfil destaca ayuda con working capital, lineas de credito, financiamiento de equipo y commercial real estate lending.",
+            accent: "from-indigo-800 via-slate-800 to-blue-500",
+          },
+        ],
+      },
+      {
+        title: "Other Services",
+        items: [
+          {
+            role: "Entrenador de perros",
+            name: "Robert Barlow",
+            tagline:
+              "Una recomendacion confiable para entrenamiento de perros por medio de B-Hyve K9, con private training, group classes, daycare, boarding y grooming para clientes de Salt Lake County.",
+            phone: "(385) 457-5699",
+            email: "Robert@BHyvek9.com",
+            website: "bhyvek9.com",
+            note: "B-Hyve K9 es operado por Rob Barlow en Millcreek, Utah, en 3947 West Temple. El sitio destaca private training, group classes, programas de board and train, daycare, boarding y grooming, con horario de lunes a domingo de 7 AM a 8 PM.",
+            accent: "from-emerald-800 via-lime-700 to-amber-500",
+          },
+        ],
+      },
+    ],
     footerTitle: "Necesitan una recomendacion directa?",
     footerBody:
       "Si un cliente no sabe a quien llamar primero, puede volver con Oak & Compass y le ayudamos a encontrar el siguiente paso correcto.",
@@ -620,6 +861,53 @@ const CLIENT_RESOURCES_PAGE_COPY = {
         body: "Preguntas sobre asistencia federal antes o despues de un desastre declarado.",
       },
     ],
+    carriers: [
+      {
+        name: "Progressive",
+        phone: "1-888-671-4405",
+        note: "Servicio al cliente",
+      },
+      {
+        name: "Foremost",
+        phone: "1-800-527-3905",
+        note: "Servicio de poliza",
+      },
+      {
+        name: "National General",
+        phone: "1-888-293-5108",
+        note: "Soporte al cliente",
+      },
+      {
+        name: "American Modern",
+        phone: "1-800-543-2644",
+        note: "Servicio al cliente",
+      },
+      {
+        name: "Homeowners of America",
+        phone: "1-866-407-9896",
+        note: "Servicios para asegurados",
+      },
+      {
+        name: "Farmers",
+        phone: "1-888-327-6335",
+        note: "Atencion al cliente",
+      },
+      {
+        name: "Bristol West",
+        phone: "1-888-888-0080",
+        note: "Servicio al cliente",
+      },
+      {
+        name: "Travelers",
+        phone: "1-800-252-4633",
+        note: "Servicio al cliente",
+      },
+      {
+        name: "Safeco",
+        phone: "1-800-332-3226",
+        note: "Servicio al cliente",
+      },
+    ],
     moments: [
       {
         title: "Despues de un accidente",
@@ -635,44 +923,6 @@ const CLIENT_RESOURCES_PAGE_COPY = {
         title: "Despues de una mudanza o cambio grande",
         body: "Los cambios grandes suelen significar revisar cobertura. Esta pagina ayuda a recomenzar rapido.",
         points: ["Actualiza direccion y vehiculos", "Revisa hogar o renta", "Confirma deducibles y limites"],
-      },
-    ],
-    professionals: [
-      {
-        role: "Agente de bienes raices",
-        name: "Reed Mackley",
-        tagline:
-          "Mi realtor preferido para el norte de Utah, con mucha afinidad para primeros respondedores, familias militares y personas que quieren una guia firme.",
-        phone: "435.720.8209",
-        email: "MackleyProperty@gmail.com",
-        website: "RE/MAX Ascent",
-        image: "/REED m..jpeg",
-        imageAlt: "Tarjeta de contacto del realtor Reed Mackley",
-        note: "He trabajado con Reed y lo recomiendo con mucha confianza. Es una gran persona, conoce muy bien el norte de Utah y es una opcion especialmente fuerte para clientes militares y primeros respondedores.",
-        accent: "from-emerald-700 via-emerald-600 to-lime-500",
-      },
-      {
-        role: "Realtor de Salt Lake",
-        name: "Eric Schmitz",
-        tagline:
-          "Una gran opcion para el area de Salt Lake y una de las personas mas amables a las que puedes enviar un cliente.",
-        phone: "(385) 899-2489",
-        email: "Eric@MarkHaaga.com",
-        website: "MarkHaaga.com",
-        image: "/ES.jpg",
-        imageAlt: "Tarjeta de Eric Schmitz agente de bienes raices",
-        note: "Eric es una excelente recomendacion para clientes del area de Salt Lake. Tiene una energia muy amable y hace que la gente se sienta comoda durante todo el proceso.",
-        accent: "from-sky-700 via-cyan-600 to-teal-500",
-      },
-      {
-        role: "Prestamo o finanzas",
-        name: "Agrega tu socio financiero",
-        tagline: "Muy util cuando hay compra, refinanciamiento o cambios financieros grandes.",
-        phone: "Agrega telefono directo",
-        email: "agrega-finanzas@email.com",
-        website: "Agrega sitio",
-        note: "Esta tarjeta sirve muy bien para lender, CPA, planner o abogado de confianza.",
-        accent: "from-slate-900 via-slate-700 to-amber-500",
       },
     ],
   },
@@ -1101,7 +1351,34 @@ function getPageFromHash(hash) {
   return PAGE_HOME;
 }
 
-function SiteHeader({ language, activePage, onNavigate }) {
+function getPageShellClassName(easterMode, baseClassName = "bg-slate-50 text-slate-900") {
+  return easterMode
+    ? `min-h-screen !bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.24),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.20),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(134,239,172,0.22),_transparent_30%),linear-gradient(180deg,_#fff8f1_0%,_#fffafc_45%,_#f0fdf4_100%)] !text-rose-950 ${baseClassName}`
+    : `min-h-screen ${baseClassName}`;
+}
+
+function EasterDecor() {
+  return (
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="absolute left-[8%] top-28 h-16 w-12 rounded-[999px] bg-pink-200/60 shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute left-[18%] top-48 h-10 w-10 rounded-full bg-yellow-200/55" />
+      <div className="absolute right-[10%] top-32 h-14 w-10 rounded-[999px] bg-emerald-200/65 shadow-[inset_0_-8px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute right-[22%] top-56 h-12 w-12 rounded-full bg-sky-200/50" />
+      <div className="absolute bottom-24 left-[12%] h-14 w-10 rounded-[999px] bg-fuchsia-200/55 shadow-[inset_0_-8px_0_rgba(255,255,255,0.5)]" />
+      <div className="absolute bottom-20 right-[16%] h-16 w-12 rounded-[999px] bg-amber-200/60 shadow-[inset_0_-10px_0_rgba(255,255,255,0.45)]" />
+      <div className="absolute inset-x-0 bottom-0 h-32 bg-[radial-gradient(circle_at_top,_rgba(134,239,172,0.18),_transparent_60%)]" />
+    </div>
+  );
+}
+
+function SiteHeader({
+  language,
+  activePage,
+  onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
+}) {
   const nav = NAV_COPY[language];
   const facts = INSURANCE_FACTS[language] || INSURANCE_FACTS.en;
   const [isBrandModalOpen, setIsBrandModalOpen] = useState(false);
@@ -1117,6 +1394,20 @@ function SiteHeader({ language, activePage, onNavigate }) {
       <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 pt-6">
         <button
           type="button"
+          onClick={onToggleEaster}
+          className={`absolute right-6 top-4 hidden h-10 w-10 items-center justify-center rounded-full border text-[11px] font-black uppercase tracking-[0.18em] shadow-sm transition md:inline-flex ${
+            easterMode
+              ? "border-pink-200 bg-pink-100 text-pink-700"
+              : "border-transparent bg-white/20 text-transparent hover:border-pink-100 hover:bg-pink-50 hover:text-pink-500"
+          }`}
+          aria-label="Toggle Easter theme"
+          title="A little spring surprise"
+        >
+          egg
+        </button>
+
+        <button
+          type="button"
           onClick={openBrandModal}
           className="inline-flex items-center justify-center rounded-full border border-emerald-200 bg-white/92 p-2 text-sm font-medium text-emerald-800 shadow-sm transition hover:-translate-y-0.5"
           aria-label="Open Oak & Compass brand details"
@@ -1128,52 +1419,79 @@ function SiteHeader({ language, activePage, onNavigate }) {
           />
         </button>
 
-        <nav className="hidden items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
-          <button
-            type="button"
-            onClick={() => onNavigate(PAGE_HOME)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activePage === PAGE_HOME
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-            {nav.home}
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate(PAGE_TEAM)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activePage === PAGE_TEAM
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-            {nav.team}
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate(PAGE_COLLECTIBLES)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activePage === PAGE_COLLECTIBLES
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-            {nav.collectibles}
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate(PAGE_RESOURCES)}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-              activePage === PAGE_RESOURCES
-                ? "bg-slate-900 text-white"
-                : "text-slate-700 hover:bg-slate-100"
-            }`}
-          >
-            {nav.resources}
-          </button>
-        </nav>
+        <div className="hidden items-center gap-3 md:flex">
+          <nav className="items-center gap-2 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur md:flex">
+            <button
+              type="button"
+              onClick={() => onNavigate(PAGE_HOME)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activePage === PAGE_HOME
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {nav.home}
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate(PAGE_TEAM)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activePage === PAGE_TEAM
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {nav.team}
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate(PAGE_COLLECTIBLES)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activePage === PAGE_COLLECTIBLES
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {nav.collectibles}
+            </button>
+            <button
+              type="button"
+              onClick={() => onNavigate(PAGE_RESOURCES)}
+              className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                activePage === PAGE_RESOURCES
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {nav.resources}
+            </button>
+          </nav>
+
+          <div className="flex items-center gap-1 rounded-full border border-white/70 bg-white/80 p-1 shadow-sm backdrop-blur">
+            <button
+              type="button"
+              onClick={() => onLanguageChange("en")}
+              className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
+                language === "en"
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              onClick={() => onLanguageChange("es")}
+              className={`rounded-full px-3 py-2 text-xs font-semibold transition ${
+                language === "es"
+                  ? "bg-slate-900 text-white"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              ES
+            </button>
+          </div>
+        </div>
 
         <nav className="fixed inset-x-4 bottom-4 z-20 flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
           <button
@@ -1219,6 +1537,25 @@ function SiteHeader({ language, activePage, onNavigate }) {
             }`}
           >
             {nav.resources}
+          </button>
+          <button
+            type="button"
+            onClick={() => onLanguageChange(language === "en" ? "es" : "en")}
+            className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+          >
+            {language === "en" ? "ES" : "EN"}
+          </button>
+          <button
+            type="button"
+            onClick={onToggleEaster}
+            className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${
+              easterMode
+                ? "border-pink-200 bg-pink-100 text-pink-700"
+                : "border-slate-200 bg-white text-slate-400 hover:border-pink-100 hover:bg-pink-50 hover:text-pink-500"
+            }`}
+            aria-label="Toggle Easter theme"
+          >
+            egg
           </button>
         </nav>
       </header>
@@ -1845,17 +2182,25 @@ function CollectibleThemeTileArt({ themeId }) {
 }
 
 
-function TeamPage({ language, onNavigate }) {
+function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggleEaster }) {
   const teamText = TEAM_PAGE_COPY[language];
   const teamMembers = TEAM_MEMBERS[language] || TEAM_MEMBERS.en;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+    <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
-        <SiteHeader language={language} activePage={PAGE_TEAM} onNavigate={onNavigate} />
+        <SiteHeader
+          language={language}
+          activePage={PAGE_TEAM}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
           <div className="grid gap-10 lg:grid-cols-[1.2fr,0.8fr] lg:items-center">
@@ -2050,6 +2395,9 @@ function CollectiblesPage({
   isSubmitted,
   submittedInquiryType,
   onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
 }) {
   const pageText = COLLECTIBLES_PAGE_COPY[language] || COLLECTIBLES_PAGE_COPY.en;
   const activeTheme =
@@ -2060,9 +2408,13 @@ function CollectiblesPage({
   const dragonSurface = "bg-[radial-gradient(circle_at_top_left,_rgba(251,191,36,0.18),_transparent_24%),radial-gradient(circle_at_top_right,_rgba(248,113,113,0.24),_transparent_28%),radial-gradient(circle_at_bottom_left,_rgba(249,115,22,0.18),_transparent_26%),linear-gradient(145deg,_#14060a_0%,_#3f0a16_42%,_#7c2d12_100%)]";
 
   return (
-    <div className={`min-h-screen text-white ${submittedCollectibles ? dragonSurface : activeTheme.surface}`} lang={language}>
+    <div
+      className={`min-h-screen ${easterMode ? "bg-[linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_48%,_#f0fdf4_100%)] text-rose-950" : `text-white ${submittedCollectibles ? dragonSurface : activeTheme.surface}`}`}
+      lang={language}
+    >
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.12),_transparent_24%),radial-gradient(circle_at_bottom_right,_rgba(255,255,255,0.08),_transparent_28%)]" />
+        {easterMode ? <EasterDecor /> : null}
         {submittedCollectibles ? (
           <CollectiblesDragonSuccessBackground />
         ) : (
@@ -2070,7 +2422,14 @@ function CollectiblesPage({
         )}
 
         <div className="relative">
-          <SiteHeader language={language} activePage={PAGE_COLLECTIBLES} onNavigate={onNavigate} />
+          <SiteHeader
+            language={language}
+            activePage={PAGE_COLLECTIBLES}
+            onNavigate={onNavigate}
+            onLanguageChange={onLanguageChange}
+            easterMode={easterMode}
+            onToggleEaster={onToggleEaster}
+          />
 
           <div className="mx-auto max-w-6xl px-6 pb-8 pt-12 md:pt-20">
             <div className="grid gap-10 lg:grid-cols-[1fr,0.95fr] lg:items-start">
@@ -2428,14 +2787,25 @@ function JobApplicationPage({
   isSubmitted,
   submittedIsJobApplication,
   onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
 }) {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+    <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
-        <SiteHeader language={language} activePage={PAGE_JOBS} onNavigate={onNavigate} />
+        <SiteHeader
+          language={language}
+          activePage={PAGE_JOBS}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
           <div className="grid gap-10 lg:grid-cols-[0.95fr,1.05fr] lg:items-start">
@@ -2676,16 +3046,30 @@ function JobApplicationPage({
   );
 }
 
-function InsuranceConnectPage({ language, onNavigate }) {
+function InsuranceConnectPage({
+  language,
+  onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
+}) {
   const text = COPY[language];
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+    <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.16),_transparent_36%),radial-gradient(circle_at_bottom_right,_rgba(245,158,11,0.16),_transparent_32%),linear-gradient(180deg,_#f7fbf8_0%,_#ffffff_56%,_#f8fafc_100%)]" />
+        {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground />
 
-        <SiteHeader language={language} activePage={PAGE_CANOPY} onNavigate={onNavigate} />
+        <SiteHeader
+          language={language}
+          activePage={PAGE_CANOPY}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
           <div className="mx-auto max-w-4xl rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)] md:p-10">
@@ -2725,8 +3109,15 @@ function InsuranceConnectPage({ language, onNavigate }) {
   );
 }
 
-function ClientResourcesPage({ language, onNavigate }) {
+function ClientResourcesPage({
+  language,
+  onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
+}) {
   const pageText = CLIENT_RESOURCES_PAGE_COPY[language] || CLIENT_RESOURCES_PAGE_COPY.en;
+  const carrierSelectId = useId();
   const quickMoveLabel = language === "es" ? "Acceso rapido" : "Quick move";
   const bestUseLabel = language === "es" ? "Mejor uso" : "Best use";
   const easyWinLabel = language === "es" ? "Idea facil" : "Easy win";
@@ -2742,6 +3133,11 @@ function ClientResourcesPage({ language, onNavigate }) {
   const contactCardLabel = language === "es" ? "Tarjeta de contacto" : "Contact card";
   const phoneLabel = language === "es" ? "Telefono" : "Phone";
   const websiteLabel = language === "es" ? "Sitio web" : "Website";
+  const [selectedCarrierName, setSelectedCarrierName] = useState(
+    () => pageText.carriers?.[0]?.name || ""
+  );
+  const selectedCarrier =
+    pageText.carriers.find((carrier) => carrier.name === selectedCarrierName) || pageText.carriers[0];
 
   const renderQuickLink = (item) => {
     const classes = `group rounded-[1.8rem] border bg-gradient-to-br p-6 shadow-[0_22px_60px_-34px_rgba(15,23,42,0.35)] ring-1 ${item.tone}`;
@@ -2783,12 +3179,20 @@ function ClientResourcesPage({ language, onNavigate }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#f7f7f2] text-slate-900" lang={language}>
+    <div className={getPageShellClassName(easterMode, "bg-[#f7f7f2] text-slate-900")} lang={language}>
       <section className="relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.18),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(245,158,11,0.18),_transparent_28%),linear-gradient(180deg,_#f4fbf7_0%,_#fcfaf4_56%,_#f8fafc_100%)]" />
         <div className="absolute inset-x-0 top-20 h-72 bg-[linear-gradient(90deg,rgba(15,23,42,0.02)_0%,rgba(15,23,42,0.08)_50%,rgba(15,23,42,0.02)_100%)] blur-3xl" />
+        {easterMode ? <EasterDecor /> : null}
 
-        <SiteHeader language={language} activePage={PAGE_RESOURCES} onNavigate={onNavigate} />
+        <SiteHeader
+          language={language}
+          activePage={PAGE_RESOURCES}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
           <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
@@ -2874,6 +3278,60 @@ function ClientResourcesPage({ language, onNavigate }) {
             <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-200">{pageText.numbersBody}</p>
           </div>
 
+          <div className="border-b border-slate-200 bg-slate-50/90 p-6 md:p-8">
+            <div className="grid gap-5 lg:grid-cols-[0.95fr,1.05fr] lg:items-end">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-500">
+                  {pageText.carrierLookupLabel}
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-slate-950">
+                  {pageText.carrierLookupTitle}
+                </h3>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-slate-600">
+                  {pageText.carrierLookupBody}
+                </p>
+              </div>
+
+              <div className="rounded-[1.6rem] border border-slate-200 bg-white p-4 shadow-sm">
+                <label
+                  htmlFor={carrierSelectId}
+                  className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500"
+                >
+                  {pageText.carrierLookupSelect}
+                </label>
+                <select
+                  id={carrierSelectId}
+                  value={selectedCarrierName}
+                  onChange={(event) => setSelectedCarrierName(event.target.value)}
+                  className="mt-3 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-900 outline-none transition focus:border-emerald-500"
+                >
+                  {pageText.carriers.map((carrier) => (
+                    <option key={carrier.name} value={carrier.name}>
+                      {carrier.name}
+                    </option>
+                  ))}
+                </select>
+
+                {selectedCarrier ? (
+                  <div className="mt-4 rounded-[1.3rem] border border-emerald-200 bg-emerald-50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.22em] text-emerald-700">
+                      {pageText.carrierLookupNumber}
+                    </p>
+                    <a
+                      href={`tel:${selectedCarrier.phone.replace(/[^0-9]/g, "")}`}
+                      className="mt-2 block text-2xl font-black tracking-tight text-emerald-950"
+                    >
+                      {selectedCarrier.phone}
+                    </a>
+                    <p className="mt-2 text-sm text-emerald-900">{selectedCarrier.note}</p>
+                  </div>
+                ) : null}
+
+                <p className="mt-3 text-xs text-slate-500">{pageText.carrierLookupHint}</p>
+              </div>
+            </div>
+          </div>
+
           <div className="grid gap-4 p-6 md:grid-cols-2 md:p-8 xl:grid-cols-5">
             {pageText.numbers.map((item) => (
               <a
@@ -2940,62 +3398,71 @@ function ClientResourcesPage({ language, onNavigate }) {
           <p className="mt-3 text-sm leading-7 text-slate-600">{pageText.prosBody}</p>
         </div>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {pageText.professionals.map((professional) => (
-            <div
-              key={professional.role}
-              className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-48px_rgba(15,23,42,0.55)]"
+        <div className="mt-8 space-y-5">
+          {pageText.groups.map((group, index) => (
+            <details
+              key={group.title}
+              className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-48px_rgba(15,23,42,0.45)]"
+              open={index === 0}
             >
-              {professional.image ? (
-                <div className="border-b border-slate-200 bg-slate-100">
-                  <img
-                    src={professional.image}
-                    alt={professional.imageAlt || professional.name}
-                    className="h-52 w-full object-cover object-center"
-                  />
+              <summary className="cursor-pointer list-none px-6 py-5 text-lg font-semibold text-slate-950 marker:content-none md:px-8">
+                <div className="flex items-center justify-between gap-4">
+                  <span>{group.title}</span>
+                  <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-600">
+                    {group.items.length}
+                  </span>
                 </div>
-              ) : null}
+              </summary>
 
-              <div className={`bg-gradient-to-r ${professional.accent} px-6 py-6 text-white`}>
-                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/75">
-                  {professional.role}
-                </p>
-                <h3 className="mt-3 text-3xl font-semibold tracking-tight">{professional.name}</h3>
-                <p className="mt-3 text-sm leading-7 text-white/90">{professional.tagline}</p>
-              </div>
+              <div className="grid gap-5 border-t border-slate-200 p-6 md:p-8 lg:grid-cols-2">
+                {group.items.map((professional) => (
+                  <div
+                    key={`${group.title}-${professional.name}`}
+                    className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-48px_rgba(15,23,42,0.55)]"
+                  >
+                    <div className={`bg-gradient-to-r ${professional.accent} px-6 py-6 text-white`}>
+                      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/75">
+                        {professional.role}
+                      </p>
+                      <h3 className="mt-3 text-3xl font-semibold tracking-tight">{professional.name}</h3>
+                      <p className="mt-3 text-sm leading-7 text-white/90">{professional.tagline}</p>
+                    </div>
 
-              <div className="space-y-5 p-6">
-                <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
-                    {contactCardLabel}
-                  </p>
-                  <div className="mt-4 space-y-3 text-sm text-slate-700">
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        {phoneLabel}
-                      </p>
-                      <p className="mt-1 font-medium text-slate-950">{professional.phone}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        Email
-                      </p>
-                      <p className="mt-1 break-words font-medium text-slate-950">{professional.email}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                        {websiteLabel}
-                      </p>
-                      <p className="mt-1 font-medium text-slate-950">{professional.website}</p>
+                    <div className="space-y-5 p-6">
+                      <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-4">
+                        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                          {contactCardLabel}
+                        </p>
+                        <div className="mt-4 space-y-3 text-sm text-slate-700">
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                              {phoneLabel}
+                            </p>
+                            <p className="mt-1 font-medium text-slate-950">{professional.phone}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                              Email
+                            </p>
+                            <p className="mt-1 break-words font-medium text-slate-950">{professional.email}</p>
+                          </div>
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                              {websiteLabel}
+                            </p>
+                            <p className="mt-1 font-medium text-slate-950">{professional.website}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="rounded-[1.4rem] border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950">
+                        {professional.note}
+                      </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="rounded-[1.4rem] border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950">
-                  {professional.note}
-                </div>
+                ))}
               </div>
-            </div>
+            </details>
           ))}
         </div>
       </section>
@@ -3367,6 +3834,14 @@ function LeadsDashboard({
 
 export default function OakCompassLandingPage() {
   const [form, setForm] = useState(INITIAL_FORM);
+  const [siteLanguage, setSiteLanguage] = useState(() => {
+    if (typeof window === "undefined") return "en";
+    return window.localStorage.getItem("oak-compass-language") === "es" ? "es" : "en";
+  });
+  const [easterMode, setEasterMode] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem("oak-compass-easter-mode") === "on";
+  });
   const [leads, setLeads] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedInquiryType, setSubmittedInquiryType] = useState("");
@@ -3380,13 +3855,21 @@ export default function OakCompassLandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
   const [savingLeadId, setSavingLeadId] = useState("");
-  const language = form.needsSpanish === "yes" ? "es" : "en";
+  const language = siteLanguage;
   const text = COPY[language];
   const inquiryOptions = INQUIRY_OPTIONS[language].filter(
     (option) => option.value !== "job" && option.value !== "collectibles"
   );
   const insuranceOptions = INSURANCE_OPTIONS[language];
   const nav = NAV_COPY[language];
+
+  useEffect(() => {
+    window.localStorage.setItem("oak-compass-language", siteLanguage);
+  }, [siteLanguage]);
+
+  useEffect(() => {
+    window.localStorage.setItem("oak-compass-easter-mode", easterMode ? "on" : "off");
+  }, [easterMode]);
 
   useEffect(() => {
     document.title =
@@ -3776,36 +4259,47 @@ export default function OakCompassLandingPage() {
 
   if (activePage === PAGE_PORTAL) {
     return (
-      <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
-        <LeadsDashboard
-          text={text}
-          leads={localizedLeads}
-          filteredLeads={filteredLeads}
-          onBack={handleBackToSite}
-          onClear={handleClearLeads}
-          onExport={() => downloadCsv(filteredLeads)}
-          onDeleteLead={handleDeleteLead}
-          onSaveLeadNote={handleSaveLeadNote}
-          savingLeadId={savingLeadId}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          inquiryFilter={inquiryFilter}
-          setInquiryFilter={setInquiryFilter}
-          passwordInput={passwordInput}
-          setPasswordInput={setPasswordInput}
-          onUnlock={handleUnlockLeads}
-          isAuthenticated={isLeadsAuthenticated}
-          passwordError={passwordError}
-          isLoading={isLoadingLeads}
-          loadError={loadError}
-        />
+      <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
+        <div className="relative">
+          {easterMode ? <EasterDecor /> : null}
+          <LeadsDashboard
+            text={text}
+            leads={localizedLeads}
+            filteredLeads={filteredLeads}
+            onBack={handleBackToSite}
+            onClear={handleClearLeads}
+            onExport={() => downloadCsv(filteredLeads)}
+            onDeleteLead={handleDeleteLead}
+            onSaveLeadNote={handleSaveLeadNote}
+            savingLeadId={savingLeadId}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            inquiryFilter={inquiryFilter}
+            setInquiryFilter={setInquiryFilter}
+            passwordInput={passwordInput}
+            setPasswordInput={setPasswordInput}
+            onUnlock={handleUnlockLeads}
+            isAuthenticated={isLeadsAuthenticated}
+            passwordError={passwordError}
+            isLoading={isLoadingLeads}
+            loadError={loadError}
+          />
+        </div>
         <Analytics />
       </div>
     );
   }
 
   if (activePage === PAGE_TEAM) {
-    return <TeamPage language={language} onNavigate={navigateToPage} />;
+    return (
+      <TeamPage
+        language={language}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
+      />
+    );
   }
 
   if (activePage === PAGE_JOBS) {
@@ -3820,6 +4314,9 @@ export default function OakCompassLandingPage() {
         isSubmitted={isSubmitted}
         submittedIsJobApplication={submittedIsJobApplication}
         onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -3835,25 +4332,52 @@ export default function OakCompassLandingPage() {
         isSubmitted={isSubmitted}
         submittedInquiryType={submittedInquiryType}
         onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
 
   if (activePage === PAGE_RESOURCES) {
-    return <ClientResourcesPage language={language} onNavigate={navigateToPage} />;
+    return (
+      <ClientResourcesPage
+        language={language}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
+      />
+    );
   }
 
   if (activePage === PAGE_CANOPY) {
-    return <InsuranceConnectPage language={language} onNavigate={navigateToPage} />;
+    return (
+      <InsuranceConnectPage
+        language={language}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
+      />
+    );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900" lang={language}>
+    <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50" />
+        {easterMode ? <EasterDecor /> : null}
         <ForestLandscapeBackground variant={homeBackgroundVariant} />
 
-        <SiteHeader language={language} activePage={PAGE_HOME} onNavigate={navigateToPage} />
+        <SiteHeader
+          language={language}
+          activePage={PAGE_HOME}
+          onNavigate={navigateToPage}
+          onLanguageChange={setSiteLanguage}
+          easterMode={easterMode}
+          onToggleEaster={() => setEasterMode((current) => !current)}
+        />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
