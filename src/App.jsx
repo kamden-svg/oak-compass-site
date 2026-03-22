@@ -4516,6 +4516,38 @@ function RetailBonusCalculator({ onShowProducerCalculator }) {
   );
 }
 
+const producerOnlyCurrency = (value) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(Number(value || 0));
+
+function ProducerOnlyField({
+  label,
+  value,
+  onChange,
+  type = "number",
+  step = "0.01",
+  hint,
+}) {
+  return (
+    <div className="rounded-2xl border bg-white p-4 shadow-sm">
+      <label className="mb-1 block text-sm font-semibold text-gray-800">
+        {label}
+      </label>
+      <input
+        type={type}
+        step={step}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+      />
+      {hint ? <p className="mt-2 text-xs text-gray-500">{hint}</p> : null}
+    </div>
+  );
+}
+
 function ProducerOnlyTextField({ label, value, onChange, hint }) {
   return (
     <div className="rounded-2xl border bg-white p-4 shadow-sm">
@@ -4529,6 +4561,38 @@ function ProducerOnlyTextField({ label, value, onChange, hint }) {
         className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
       />
       {hint ? <p className="mt-2 text-xs text-gray-500">{hint}</p> : null}
+    </div>
+  );
+}
+
+function ProducerOnlyBreakdownRow({ label, value, muted = false }) {
+  return (
+    <div className="flex items-center justify-between gap-4 py-2 text-sm">
+      <span className={muted ? "text-gray-500" : "text-gray-700"}>{label}</span>
+      <span
+        className={
+          muted
+            ? "text-right text-gray-500"
+            : "text-right font-semibold text-gray-900"
+        }
+      >
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function ProducerOnlyStatCard({ label, value, subtext, tone = "default" }) {
+  const toneClass =
+    tone === "highlight"
+      ? "border-blue-200 bg-blue-50"
+      : "border-gray-200 bg-white";
+
+  return (
+    <div className={`rounded-2xl border p-4 shadow-sm ${toneClass}`}>
+      <p className="text-sm font-medium text-gray-600">{label}</p>
+      <p className="mt-1 text-2xl font-bold text-gray-900">{value}</p>
+      {subtext ? <p className="mt-2 text-xs text-gray-500">{subtext}</p> : null}
     </div>
   );
 }
@@ -4564,13 +4628,11 @@ function producerOnlyGetActiveBonusTier(tiers, nbPremium) {
 function calculateProducerOnlyPlanPay(plan, nbPremiumRaw) {
   const nbPremium = Math.max(0, toNumber(nbPremiumRaw));
   const basePay = toNumber(plan.basePay);
-
   const activeCommissionTier = producerOnlyGetActiveCommissionTier(
     plan.commissionTiers,
     nbPremium
   );
   const activeBonusTier = producerOnlyGetActiveBonusTier(plan.bonusTiers, nbPremium);
-
   const commissionPay = nbPremium * activeCommissionTier.rate;
   const bonusPay = activeBonusTier.amount;
   const totalPay = basePay + commissionPay + bonusPay;
@@ -4763,7 +4825,7 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
 
         <div className="rounded-3xl border bg-white p-5 shadow-sm">
           <div className="grid gap-4 md:grid-cols-2">
-            <Field
+            <ProducerOnlyField
               label="NB Premium"
               value={nbPremium}
               onChange={setNbPremium}
@@ -4782,12 +4844,12 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
 
         <div className="grid gap-4 md:grid-cols-3">
           {sortedResults.map((plan) => (
-            <StatCard
+            <ProducerOnlyStatCard
               key={plan.id}
               label={plan.name}
-              value={formatCurrency(plan.totalPay)}
+              value={producerOnlyCurrency(plan.totalPay)}
               subtext={`${plan.description} | Rate ${(plan.activeCommissionTier.rate * 100).toFixed(2)}%`}
-              tone={plan.id === topPlanId ? "positive" : "default"}
+              tone={plan.id === topPlanId ? "highlight" : "default"}
             />
           ))}
         </div>
@@ -4821,7 +4883,7 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
                       updatePlanField(plan.id, "description", value)
                     }
                   />
-                  <Field
+                  <ProducerOnlyField
                     label="Base Pay"
                     value={plan.basePay}
                     onChange={(value) => updatePlanField(plan.id, "basePay", value)}
@@ -4845,17 +4907,17 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
                         key={`${plan.id}-producer-commission-${index}`}
                         className="grid gap-3 md:grid-cols-3"
                       >
-                        <Field
-                          label={`Min NB ${index + 1}`}
-                          value={tier.min}
-                          onChange={(value) =>
-                            updateCommissionTier(plan.id, index, "min", value)
-                          }
-                        />
-                        <Field
-                          label={`Rate ${index + 1}`}
-                          value={tier.rate}
-                          onChange={(value) =>
+                            <ProducerOnlyField
+                              label={`Min NB ${index + 1}`}
+                              value={tier.min}
+                              onChange={(value) =>
+                                updateCommissionTier(plan.id, index, "min", value)
+                              }
+                            />
+                            <ProducerOnlyField
+                              label={`Rate ${index + 1}`}
+                              value={tier.rate}
+                              onChange={(value) =>
                             updateCommissionTier(plan.id, index, "rate", value)
                           }
                           step="0.001"
@@ -4894,17 +4956,17 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
                           key={`${plan.id}-producer-bonus-${index}`}
                           className="grid gap-3 md:grid-cols-3"
                         >
-                          <Field
-                            label={`Bonus Min ${index + 1}`}
-                            value={tier.min}
-                            onChange={(value) =>
-                              updateBonusTier(plan.id, index, "min", value)
-                            }
-                          />
-                          <Field
-                            label={`Bonus Amount ${index + 1}`}
-                            value={tier.amount}
-                            onChange={(value) =>
+                              <ProducerOnlyField
+                                label={`Bonus Min ${index + 1}`}
+                                value={tier.min}
+                                onChange={(value) =>
+                                  updateBonusTier(plan.id, index, "min", value)
+                                }
+                              />
+                              <ProducerOnlyField
+                                label={`Bonus Amount ${index + 1}`}
+                                value={tier.amount}
+                                onChange={(value) =>
                               updateBonusTier(plan.id, index, "amount", value)
                             }
                           />
@@ -4924,23 +4986,23 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
 
                 <div className="mt-6 rounded-2xl border bg-gray-50 p-4">
                   <h3 className="mb-2 font-semibold">Plan Breakdown</h3>
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="NB Premium"
-                    value={formatCurrency(planResult.nbPremium)}
+                    value={producerOnlyCurrency(planResult.nbPremium)}
                   />
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="Base Pay"
-                    value={formatCurrency(planResult.basePay)}
+                    value={producerOnlyCurrency(planResult.basePay)}
                   />
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="Active Commission Tier"
                     value={`$${planResult.activeCommissionTier.min.toLocaleString()}+ @ ${(planResult.activeCommissionTier.rate * 100).toFixed(2)}%`}
                   />
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="Commission Pay"
-                    value={formatCurrency(planResult.commissionPay)}
+                    value={producerOnlyCurrency(planResult.commissionPay)}
                   />
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="Active Bonus Tier"
                     value={
                       planResult.activeBonusTier.amount > 0
@@ -4948,14 +5010,14 @@ function ProducerOnlyCalculator({ onShowAgencyCalculator }) {
                         : "None"
                     }
                   />
-                  <BreakdownRow
+                  <ProducerOnlyBreakdownRow
                     label="Bonus Pay"
-                    value={formatCurrency(planResult.bonusPay)}
+                    value={producerOnlyCurrency(planResult.bonusPay)}
                   />
                   <div className="mt-2 border-t pt-2">
-                    <BreakdownRow
+                    <ProducerOnlyBreakdownRow
                       label="Total Producer Pay"
-                      value={formatCurrency(planResult.totalPay)}
+                      value={producerOnlyCurrency(planResult.totalPay)}
                     />
                   </div>
                 </div>
