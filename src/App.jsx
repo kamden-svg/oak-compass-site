@@ -962,121 +962,121 @@ const CLIENT_RESOURCES_PAGE_COPY = {
 
 const TEAM_PAGE_COPY = {
   en: {
-    badge: "Meet the owner",
-    headline: "Insurance built by a real person, for real life",
+    badge: "Meet the team",
+    headline: "Values first. People always. Coverage that serves real life.",
     subheadline:
-      "Oak & Compass is for people who want solid coverage and a real person in their corner. The goal is simple: work hard, show up well, protect what matters, and make people feel taken care of from the start.",
-    ownerLabel: "Owner-led",
-    ownerTitle: "The same values behind the brand are the ones behind the work",
+      "Oak & Compass is built around a simple belief: insurance should feel human. We want people to feel understood, cared for, and confidently guided by a team that takes relationships seriously.",
+    ownerLabel: "Why we do this",
+    ownerTitle: "We want to help people feel steady in moments that can feel overwhelming",
     ownerBody:
-      "Behind Oak & Compass is someone who loves the outdoors, values family, and believes insurance should feel clear, personal, and steady. With 6 years of experience, the focus is on listening well, explaining things clearly, and helping people feel confident about protecting the life they have built.",
-    snapshotTitle: "What matters here",
+      "Most people do not come looking for insurance because life feels simple. They come because they are protecting a home, a family, a car, a business, or a future they have worked hard to build. Oak & Compass exists to meet that responsibility with patience, honesty, and follow-through from a team that genuinely wants to help.",
+    snapshotTitle: "What guides our team",
     snapshot: [
-      { label: "Experience", value: "6 years helping people protect what matters" },
-      { label: "Trail partner", value: "Deigo, a black lab mix with endless energy" },
-      { label: "Style", value: "Clear advice, no pressure, real follow-through" },
+      { label: "People first", value: "We lead with care, clarity, and respect in every conversation." },
+      { label: "No pressure", value: "Advice should feel helpful and honest, never pushy." },
+      { label: "Real follow-through", value: "We stay present before, during, and after the quote." },
     ],
-    galleryLabel: "The life behind Oak & Compass",
-    galleryTitle: "A business shaped by discipline, family, and the outdoors",
+    galleryLabel: "The lives behind the work",
+    galleryTitle: "The way we live shapes the way we serve people",
     galleryBody:
-      "The story behind this company is not just office hours and paperwork. It is mountains, movement, loyalty, family, and a real life worth protecting. That energy is part of what makes the company feel grounded and trustworthy.",
-    valuesLabel: "What clients feel",
-    introTitle: "The experience should feel calm, clear, and personal",
+      "Oak & Compass is not just built from office hours and paperwork. It is shaped by family, time outdoors, discipline, community, and the kinds of everyday responsibilities that make protection matter. That real-life perspective is part of why our work stays grounded.",
+    valuesLabel: "How that shows up",
+    introTitle: "The team environment is meant to feel calm, supportive, and personal",
     introBody:
-      "People do not come looking for insurance because they want more confusion. They come because something in their life matters. Oak & Compass is built to meet that moment with honesty, clarity, and real follow-through.",
+      "We want the experience of working with Oak & Compass to feel like being helped by good people who communicate clearly, care about getting it right, and treat your situation like it matters because it does.",
     values: [
       {
-        title: "Easy to talk to",
-        body: "Questions are welcome, and answers are given in plain language without making people feel behind.",
+        title: "Clear and approachable",
+        body: "Questions are welcome here. We explain things in plain language so people can make confident decisions without feeling rushed or talked down to.",
       },
       {
-        title: "Local and personal",
-        body: "The experience is meant to feel like talking with someone who knows the area and genuinely wants to help.",
+        title: "Grounded in real life",
+        body: "We care about the day-to-day realities behind a policy because coverage is really about homes, families, routines, goals, and the people connected to them.",
       },
       {
-        title: "Still there after the quote",
-        body: "Support does not disappear once a form is submitted. The relationship keeps going when life changes.",
+        title: "Built on steady relationships",
+        body: "Our goal is not to disappear after a form is submitted. We want to be the kind of team people feel good coming back to when life changes.",
       },
     ],
-    teamLabel: "The people you work with matter",
-    membersTitle: "A team people can feel good about working with",
+    teamLabel: "Our story",
+    membersTitle: "Less about one person, more about the kind of team we are building",
     membersBody:
-      "Right now that starts with an owner who genuinely cares, but the vision is bigger than one person. As Oak & Compass grows, the team will be built around the same kind of energy clients already feel here: dependable, approachable, thoughtful, and all-in on doing right by people.",
-    hobbiesTitle: "A few things that make the brand feel real",
+      "Oak & Compass may be growing, but the story has always been bigger than one person. The goal is to build a team environment where people work hard, care deeply, communicate well, and show up for clients and each other with consistency.",
+    hobbiesTitle: "The people behind Oak & Compass",
     hobbies: [
-      "Climbing",
-      "Hiking",
-      "Camping",
-      "Magic: The Gathering",
-      "Running",
-      "Reading fantasy",
-      "Time outside with Deigo",
+      "Family life",
+      "Time outdoors",
+      "Hiking and camping",
+      "Running and discipline",
+      "Games and shared interests",
+      "Reading and curiosity",
+      "Life with Deigo",
     ],
     expectationsTitle: "What it feels like to work together",
     expectations: [
-      "A first conversation that feels straightforward instead of stressful.",
-      "Coverage options explained clearly, with room to ask honest questions.",
-      "A team that stays helpful before, during, and after the quote process.",
+      "A first conversation that feels straightforward, welcoming, and low-pressure.",
+      "Coverage options explained clearly, with room for real questions and honest answers.",
+      "A team that stays helpful and steady instead of disappearing once the paperwork starts.",
     ],
     primaryCta: "Start a Quote",
     secondaryCta: "Back to Home",
   },
   es: {
-    badge: "Conoce al dueno",
-    headline: "Seguro hecho por una persona real, para la vida real",
+    badge: "Conoce al equipo",
+    headline: "Valores primero. Personas siempre. Cobertura para la vida real.",
     subheadline:
-      "Oak & Compass es para personas que quieren buena cobertura y una experiencia que se siga sintiendo humana. La idea de fondo es simple: trabajar duro, responder bien, proteger lo importante y hacer que la gente se sienta cuidada desde el principio.",
-    ownerLabel: "Dirigido por el dueno",
-    ownerTitle: "Los valores detras de la marca son los mismos detras del trabajo",
+      "Oak & Compass esta construido sobre una idea simple: el seguro debe sentirse humano. Queremos que las personas se sientan escuchadas, cuidadas y guiadas con confianza por un equipo que toma en serio las relaciones.",
+    ownerLabel: "Por que hacemos esto",
+    ownerTitle: "Queremos ayudar a la gente a sentirse mas tranquila en momentos que pueden ser pesados",
     ownerBody:
-      "Detras de Oak & Compass hay una persona que ama la naturaleza, valora a su familia y cree que el seguro debe sentirse claro, cercano y firme. Con 6 anos de experiencia, la prioridad es escuchar bien, explicar con claridad y ayudar a que la gente se sienta segura con lo que esta protegiendo.",
-    snapshotTitle: "Lo que importa aqui",
+      "La mayoria de las personas no busca seguro porque la vida se sienta simple. Llegan porque estan protegiendo su hogar, su familia, su carro, su negocio o un futuro por el que han trabajado mucho. Oak & Compass existe para responder a esa responsabilidad con paciencia, honestidad y seguimiento real de parte de un equipo que de verdad quiere ayudar.",
+    snapshotTitle: "Lo que guia a nuestro equipo",
     snapshot: [
-      { label: "Experiencia", value: "6 anos ayudando a proteger lo importante" },
-      { label: "Companero de sendero", value: "Deigo, un black lab mix con mucha energia" },
-      { label: "Estilo", value: "Consejo claro, sin presion y con seguimiento real" },
+      { label: "Personas primero", value: "Actuamos con cuidado, claridad y respeto en cada conversacion." },
+      { label: "Sin presion", value: "La orientacion debe sentirse util y honesta, nunca forzada." },
+      { label: "Seguimiento real", value: "Seguimos presentes antes, durante y despues de la cotizacion." },
     ],
-    galleryLabel: "La vida detras de Oak & Compass",
-    galleryTitle: "Un negocio formado por disciplina, familia y aire libre",
+    galleryLabel: "La vida detras del trabajo",
+    galleryTitle: "La manera en que vivimos influye en la manera en que servimos",
     galleryBody:
-      "La historia de esta empresa no es solo oficina y papeles. Tambien son montanas, movimiento, lealtad, familia y una vida real que vale la pena proteger. Esa energia es parte de lo que hace que la marca se sienta firme y confiable.",
-    valuesLabel: "Lo que siente la gente",
-    introTitle: "La experiencia debe sentirse clara, tranquila y cercana",
+      "Oak & Compass no esta hecho solo de oficina y papeles. Tambien esta formado por familia, tiempo afuera, disciplina, comunidad y las responsabilidades de todos los dias que hacen que la proteccion importe. Esa perspectiva real mantiene nuestro trabajo firme.",
+    valuesLabel: "Como se nota",
+    introTitle: "El ambiente del equipo debe sentirse tranquilo, cercano y atento",
     introBody:
-      "La gente no busca seguro porque quiera mas confusion. Llega porque algo en su vida importa. Oak & Compass esta construido para responder a ese momento con honestidad, claridad y seguimiento real.",
+      "Queremos que trabajar con Oak & Compass se sienta como recibir ayuda de buenas personas que explican bien, quieren hacer las cosas correctamente y tratan tu situacion como algo importante porque si lo es.",
     values: [
       {
-        title: "Facil de hablar",
-        body: "Las preguntas son bienvenidas y las respuestas se dan con palabras claras y sencillas.",
+        title: "Claro y facil de hablar",
+        body: "Las preguntas son bienvenidas. Explicamos con palabras sencillas para que la gente pueda decidir con confianza y sin sentirse presionada.",
       },
       {
-        title: "Cercano y local",
-        body: "La experiencia busca sentirse como hablar con alguien que conoce la comunidad y quiere ayudar de verdad.",
+        title: "Con los pies en la vida real",
+        body: "Nos importan las realidades diarias detras de una poliza porque la cobertura en verdad trata de hogares, familias, rutinas, metas y las personas conectadas a todo eso.",
       },
       {
-        title: "Apoyo continuo",
-        body: "La ayuda no termina cuando se envia el formulario. El acompanamiento sigue cuando la vida cambia.",
+        title: "Relaciones estables",
+        body: "La meta no es desaparecer despues de enviar un formulario. Queremos ser el tipo de equipo al que la gente quiere volver cuando la vida cambia.",
       },
     ],
-    teamLabel: "Importa con quien trabajas",
-    membersTitle: "Un equipo con el que la gente se puede sentir bien",
+    teamLabel: "Nuestra historia",
+    membersTitle: "Menos sobre una persona y mas sobre el tipo de equipo que estamos formando",
     membersBody:
-      "Hoy empieza con un dueno que de verdad se preocupa, pero la vision va mas alla de una sola persona. Conforme Oak & Compass crezca, el equipo se va a formar con la misma energia que la gente ya siente aqui: personas confiables, cercanas, atentas y comprometidas con hacer bien las cosas.",
-    hobbiesTitle: "Cosas que hacen que la marca se sienta real",
+      "Oak & Compass sigue creciendo, pero la historia siempre ha sido mas grande que una sola persona. La meta es formar un ambiente de equipo donde se trabaja duro, se cuida de verdad, se comunica bien y se responde con constancia tanto a clientes como entre nosotros.",
+    hobbiesTitle: "Las personas detras de Oak & Compass",
     hobbies: [
-      "Escalada",
-      "Caminatas",
-      "Campamento",
-      "Magic: The Gathering",
-      "Correr",
-      "Lectura de fantasia",
-      "Tiempo afuera con Deigo",
+      "Vida en familia",
+      "Tiempo al aire libre",
+      "Caminatas y campamento",
+      "Correr y disciplina",
+      "Juegos e intereses compartidos",
+      "Lectura y curiosidad",
+      "Tiempo con Deigo",
     ],
     expectationsTitle: "Como se siente trabajar juntos",
     expectations: [
-      "Una primera conversacion mas simple y menos estresante.",
-      "Opciones explicadas con claridad y espacio para hacer preguntas reales.",
-      "Un equipo que sigue ayudando antes, durante y despues de la cotizacion.",
+      "Una primera conversacion mas simple, cercana y sin presion.",
+      "Opciones explicadas con claridad y espacio para preguntas reales con respuestas honestas.",
+      "Un equipo que sigue ayudando con firmeza en lugar de desaparecer cuando empieza el papeleo.",
     ],
     primaryCta: "Comenzar cotizacion",
     secondaryCta: "Volver al inicio",
@@ -1107,30 +1107,42 @@ const TEAM_GALLERY = [
 const TEAM_MEMBERS = {
   en: [
     {
-      name: "Owner & Founder",
-      role: "The steady hand behind Oak & Compass",
-      bio: "The business is built around showing up well for people, keeping things clear, and making sure clients feel taken care of instead of sold to.",
-      highlights: ["6 years of experience", "Outdoorsy", "Client-first"],
+      name: "A people-first team",
+      role: "Relationships matter here",
+      bio: "We are building Oak & Compass around the idea that good service starts with genuinely caring about the person on the other side of the conversation.",
+      highlights: ["Supportive", "Respectful", "Client-centered"],
     },
     {
-      name: "How We Show Up",
-      role: "What clients can expect every time",
-      bio: "Clear answers, honest help, and the kind of follow-through that makes people feel taken care of instead of left guessing.",
-      highlights: ["Approachable", "Dependable", "Real follow-through"],
+      name: "A grounded culture",
+      role: "Real lives shape our work",
+      bio: "Family, community, the outdoors, discipline, and everyday responsibilities all shape how we show up: steady, practical, and aware that protection is personal.",
+      highlights: ["Family-minded", "Grounded", "Thoughtful"],
+    },
+    {
+      name: "A steady client experience",
+      role: "How we want people to feel",
+      bio: "Clear answers, honest help, and consistent follow-through are not extras to us. They are the standard for how a good team should work.",
+      highlights: ["Clear communication", "Dependable", "Low-pressure"],
     },
   ],
   es: [
     {
-      name: "Dueno y fundador",
-      role: "La persona firme detras de Oak & Compass",
-      bio: "El negocio esta construido para atender bien, explicar con claridad y hacer que cada cliente se sienta cuidado en lugar de sentirse vendido.",
-      highlights: ["6 anos de experiencia", "Amor por el aire libre", "Enfoque en el cliente"],
+      name: "Un equipo centrado en las personas",
+      role: "Las relaciones importan aqui",
+      bio: "Estamos formando Oak & Compass sobre la idea de que un buen servicio empieza al preocuparse de verdad por la persona que esta del otro lado de la conversacion.",
+      highlights: ["Atentos", "Respetuosos", "Enfocados en el cliente"],
     },
     {
-      name: "Como trabajamos",
-      role: "Lo que un cliente puede esperar cada vez",
-      bio: "Respuestas claras, ayuda honesta y seguimiento real para que la gente se sienta atendida y no confundida.",
-      highlights: ["Cercanos", "Confiables", "Buen seguimiento"],
+      name: "Una cultura con los pies en la tierra",
+      role: "La vida real influye en nuestro trabajo",
+      bio: "La familia, la comunidad, el aire libre, la disciplina y las responsabilidades diarias influyen en nuestra manera de responder: con calma, sentido practico y entendiendo que la proteccion es algo personal.",
+      highlights: ["Familia", "Firmeza", "Buena atencion"],
+    },
+    {
+      name: "Una experiencia estable para el cliente",
+      role: "Como queremos que se sienta la gente",
+      bio: "Respuestas claras, ayuda honesta y seguimiento constante no son extras para nosotros. Son la base de como debe trabajar un buen equipo.",
+      highlights: ["Comunicacion clara", "Confiables", "Sin presion"],
     },
   ],
 };
@@ -2464,15 +2476,22 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                 </div>
               </div>
 
-              {teamText.values.map((value) => (
-                <div
-                  key={value.title}
-                  className={`rounded-[2rem] p-6 ${getEasterPanelClassName(easterMode, "border border-white/70 bg-white/90 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]")}`}
-                >
-                  <h2 className="text-lg font-semibold text-slate-900">{value.title}</h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">{value.body}</p>
+              <div className={`rounded-[2rem] p-6 ${getEasterPanelClassName(easterMode, "border border-white/70 bg-white/90 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]")}`}>
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                  {teamText.valuesLabel}
+                </p>
+                <div className="mt-5 grid gap-4">
+                  {teamText.values.map((value) => (
+                    <div
+                      key={value.title}
+                      className={`rounded-3xl p-5 ${getEasterSoftCardClassName(easterMode, "bg-slate-50 ring-1 ring-slate-200")}`}
+                    >
+                      <h2 className="text-lg font-semibold text-slate-900">{value.title}</h2>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">{value.body}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
@@ -2504,9 +2523,6 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
           </div>
 
           <div className="rounded-[2rem] bg-white p-8 shadow-sm ring-1 ring-slate-200">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
-              {teamText.valuesLabel}
-            </p>
             <h2 className="text-3xl font-semibold tracking-tight text-slate-900">
               {teamText.introTitle}
             </h2>
@@ -2566,7 +2582,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
           <p className="text-base leading-7 text-slate-600">{teamText.membersBody}</p>
         </div>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
           {teamMembers.map((member) => (
             <article
               key={member.name}
