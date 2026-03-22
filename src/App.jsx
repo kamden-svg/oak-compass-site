@@ -302,6 +302,7 @@ const PAGE_HOME = "home";
 const PAGE_TEAM = "team";
 const PAGE_JOBS = "jobs";
 const PAGE_COLLECTIBLES = "collectibles";
+const PAGE_RESOURCES = "resources";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
 
@@ -310,29 +311,370 @@ const NAV_COPY = {
     home: "Home",
     team: "Meet the Team",
     collectibles: "Collectibles",
+    resources: "Client Resources",
     quote: "Get a Quote",
     teamCta: "Get to Know the Team",
     collectiblesCta: "Protect Your Collection",
+    resourcesCta: "Open the Resource Hub",
     teamBannerTitle: "Put faces, values, and style of service behind the quote form",
     teamBannerBody:
       "See how Oak & Compass supports clients with calm, local, people-first guidance.",
     collectiblesBannerTitle: "Insure the pieces that make your collection feel personal",
     collectiblesBannerBody:
       "Explore a themed collectibles page built for cards, books, firearms, comics, coins, and more.",
+    resourcesBannerTitle: "Give clients one great page for next steps, support links, and trusted pros",
+    resourcesBannerBody:
+      "Open a high-energy client resources hub with quick help, important numbers, and polished referral cards you can personalize.",
   },
   es: {
     home: "Inicio",
     team: "Conoce al equipo",
     collectibles: "Coleccionables",
+    resources: "Recursos",
     quote: "Obtener cotizacion",
     teamCta: "Conoce al equipo",
     collectiblesCta: "Protege tu coleccion",
+    resourcesCta: "Abrir recursos",
     teamBannerTitle: "Conoce a las personas y valores detras de la experiencia de Oak & Compass",
     teamBannerBody:
       "Explora la nueva pagina del equipo para ver como Oak & Compass acompana a cada cliente con cercania y claridad.",
     collectiblesBannerTitle: "Asegura las piezas que hacen especial tu coleccion",
     collectiblesBannerBody:
       "Explora una pagina interactiva para tarjetas, libros, armas, comics, monedas y mas.",
+    resourcesBannerTitle: "Dale a tus clientes una pagina clara para ayuda, numeros y contactos recomendados",
+    resourcesBannerBody:
+      "Abre un centro de recursos con accesos rapidos, numeros importantes y tarjetas elegantes para los profesionales que recomiendas.",
+  },
+};
+
+const CLIENT_RESOURCES_PAGE_COPY = {
+  en: {
+    badge: "Client Resource Hub",
+    headline: "One page your clients can come back to when life gets messy",
+    subheadline:
+      "Built for people who already trust Oak & Compass and want a fast place to find support, helpful links, important phone numbers, and solid local recommendations.",
+    heroPoints: ["Fast help", "Clear next steps", "Trusted referrals"],
+    spotlightLabel: "Built for real life",
+    spotlightTitle: "Keep the most useful stuff in one beautiful place",
+    spotlightBody:
+      "Whether someone is moving, dealing with storm damage, replacing documents, or just trying to remember who to call next, this page gives them one strong starting point.",
+    quickLinksLabel: "Quick links",
+    quickLinksTitle: "Tap into the most common next steps",
+    quickLinksBody:
+      "These cards mix Oak & Compass actions with practical resources people often need after a move, claim, or major life update.",
+    numbersLabel: "Important numbers",
+    numbersTitle: "Helpful phone numbers worth saving",
+    numbersBody:
+      "These are broad emergency and recovery contacts that are useful across the U.S. You can swap or add local numbers anytime.",
+    momentsLabel: "What now?",
+    momentsTitle: "A few common situations this page can help with",
+    momentsBody:
+      "The goal is to reduce decision fatigue. Clients can find a lane quickly instead of hunting through texts, emails, and bookmarks.",
+    prosLabel: "Trusted professionals",
+    prosTitle: "Custom contact cards for the people you recommend",
+    prosBody:
+      "These starter cards are ready for your real referral partners. Replace the sample contact details with your preferred professionals and this page becomes even more valuable.",
+    footerTitle: "Want a warm handoff?",
+    footerBody:
+      "If a client is unsure who to call first, send them back to Oak & Compass and we can help point them in the right direction.",
+    footerPrimary: "Start a Quote",
+    footerSecondary: "Meet the Team",
+    quickLinks: [
+      {
+        title: "Start a fresh quote",
+        body: "Perfect when coverage needs changed after a move, purchase, or renewal check-in.",
+        actionLabel: "Open quote form",
+        page: PAGE_HOME,
+        tone:
+          "from-emerald-400/20 via-white to-amber-200/30 text-emerald-950 ring-emerald-200",
+      },
+      {
+        title: "Connect current insurance",
+        body: "Share existing policy details securely so review work can move faster.",
+        actionLabel: "Connect now",
+        page: PAGE_CANOPY,
+        tone: "from-sky-400/20 via-white to-cyan-200/30 text-slate-950 ring-sky-200",
+      },
+      {
+        title: "Ready.gov checklists",
+        body: "A solid place to start for emergency kits, disaster prep, and recovery planning.",
+        actionLabel: "Open Ready.gov",
+        href: "https://www.ready.gov/",
+        tone: "from-orange-300/25 via-white to-rose-200/30 text-slate-950 ring-orange-200",
+      },
+      {
+        title: "Replace key documents",
+        body: "Helpful if IDs, titles, or important records were lost, stolen, or damaged.",
+        actionLabel: "Open guide",
+        href: "https://www.usa.gov/replace-vital-documents",
+        tone: "from-violet-300/20 via-white to-fuchsia-200/25 text-slate-950 ring-violet-200",
+      },
+      {
+        title: "See who is behind the brand",
+        body: "Clients who like working with people, not just forms, can get to know the team.",
+        actionLabel: "Meet Oak & Compass",
+        page: PAGE_TEAM,
+        tone: "from-slate-300/20 via-white to-slate-100 text-slate-950 ring-slate-200",
+      },
+      {
+        title: "Follow on Facebook",
+        body: "A quick way to stay close to Oak & Compass updates and community content.",
+        actionLabel: "Visit Facebook",
+        href: FACEBOOK_URL,
+        tone: "from-emerald-300/20 via-white to-lime-200/25 text-slate-950 ring-emerald-200",
+      },
+    ],
+    numbers: [
+      {
+        title: "Emergency services",
+        number: "911",
+        dial: "911",
+        body: "For immediate danger, medical emergencies, fires, or situations that cannot wait.",
+      },
+      {
+        title: "Suicide and Crisis Lifeline",
+        number: "988",
+        dial: "988",
+        body: "24/7 mental health crisis support for calls or texts.",
+      },
+      {
+        title: "Poison Control",
+        number: "1-800-222-1222",
+        dial: "18002221222",
+        body: "Fast expert guidance for poisoning questions and urgent exposure concerns.",
+      },
+      {
+        title: "American Red Cross",
+        number: "1-800-733-2767",
+        dial: "18007332767",
+        body: "Disaster relief support, shelter information, and recovery guidance.",
+      },
+      {
+        title: "FEMA Helpline",
+        number: "1-800-621-3362",
+        dial: "18006213362",
+        body: "Federal disaster assistance questions before, during, or after a declared event.",
+      },
+    ],
+    moments: [
+      {
+        title: "After an accident",
+        body: "Take a breath, make sure everyone is safe, document the scene, and start gathering what you need for the claim conversation.",
+        points: ["Check for injuries first", "Take photos", "Collect names and policy details"],
+      },
+      {
+        title: "After storm or water damage",
+        body: "Protect the property from further damage if it is safe, save receipts, and begin documenting everything right away.",
+        points: ["Photograph damage early", "Prevent further loss", "Keep a simple timeline"],
+      },
+      {
+        title: "After a move or major life change",
+        body: "Big changes often mean coverage should be reviewed. This page helps clients know where to restart quickly.",
+        points: ["Update address and vehicles", "Review home and renters needs", "Recheck deductibles and limits"],
+      },
+    ],
+    professionals: [
+      {
+        role: "Realtor partner",
+        name: "Reed Mackley",
+        tagline:
+          "My preferred realtor for Northern Utah, with a strong heart for first responders, military families, and anyone who wants a steady guide.",
+        phone: "435.720.8209",
+        email: "MackleyProperty@gmail.com",
+        website: "RE/MAX Ascent",
+        image: "/REED m..jpeg",
+        imageAlt: "Reed Mackley realtor contact card",
+        note: "I have worked with Reed and recommend him with confidence. He is a great guy, knows Northern Utah well, and is an especially strong fit for first responders and military clients.",
+        accent: "from-emerald-700 via-emerald-600 to-lime-500",
+      },
+      {
+        role: "Salt Lake realtor",
+        name: "Eric Schmitz",
+        tagline:
+          "A great option for the Salt Lake area and one of the nicest people you could send a client to.",
+        phone: "(385) 899-2489",
+        email: "Eric@MarkHaaga.com",
+        website: "MarkHaaga.com",
+        image: "/ES.jpg",
+        imageAlt: "Eric Schmitz real estate business card",
+        note: "Eric is a wonderful recommendation for clients in the Salt Lake area. He brings a warm, easy presence that helps people feel comfortable through the real estate process.",
+        accent: "from-sky-700 via-cyan-600 to-teal-500",
+      },
+      {
+        role: "Lender or finance partner",
+        name: "Add your mortgage or finance pro",
+        tagline: "Helpful when clients are refinancing, buying, or sorting through big financial transitions.",
+        phone: "Add direct phone",
+        email: "add-lender@email.com",
+        website: "Add website",
+        note: "This card works well for a lender, CPA, estate planner, or attorney you confidently recommend.",
+        accent: "from-slate-900 via-slate-700 to-amber-500",
+      },
+    ],
+  },
+  es: {
+    badge: "Centro de recursos",
+    headline: "Una pagina para clientes cuando la vida se pone complicada",
+    subheadline:
+      "Hecha para personas que ya confian en Oak & Compass y quieren un lugar rapido para encontrar ayuda, enlaces utiles, numeros importantes y recomendaciones confiables.",
+    heroPoints: ["Ayuda rapida", "Pasos claros", "Referencias confiables"],
+    spotlightLabel: "Hecha para la vida real",
+    spotlightTitle: "Guarda lo mas util en un solo lugar bonito y facil",
+    spotlightBody:
+      "Si alguien se esta mudando, lidia con dano por tormenta, necesita documentos o solo quiere recordar a quien llamar, esta pagina le da un buen punto de partida.",
+    quickLinksLabel: "Accesos rapidos",
+    quickLinksTitle: "Entra directo a los pasos mas comunes",
+    quickLinksBody:
+      "Estas tarjetas mezclan acciones de Oak & Compass con recursos practicos que mucha gente necesita despues de una mudanza, un reclamo o un cambio grande.",
+    numbersLabel: "Numeros importantes",
+    numbersTitle: "Telefonos utiles para guardar",
+    numbersBody:
+      "Estos son contactos amplios de emergencia y recuperacion utiles en Estados Unidos. Puedes cambiar o agregar numeros locales cuando quieras.",
+    momentsLabel: "Y ahora que?",
+    momentsTitle: "Situaciones comunes donde esta pagina ayuda",
+    momentsBody:
+      "La idea es bajar el estres. Tus clientes pueden encontrar una direccion clara sin buscar entre mensajes, correos y favoritos.",
+    prosLabel: "Profesionales recomendados",
+    prosTitle: "Tarjetas personalizadas para las personas que recomiendas",
+    prosBody:
+      "Estas tarjetas iniciales estan listas para tus socios reales. Cambia los datos de muestra por tus contactos preferidos y la pagina gana aun mas valor.",
+    footerTitle: "Necesitan una recomendacion directa?",
+    footerBody:
+      "Si un cliente no sabe a quien llamar primero, puede volver con Oak & Compass y le ayudamos a encontrar el siguiente paso correcto.",
+    footerPrimary: "Comenzar cotizacion",
+    footerSecondary: "Conocer al equipo",
+    quickLinks: [
+      {
+        title: "Empezar una cotizacion",
+        body: "Ideal cuando la cobertura cambio despues de una mudanza, compra o renovacion.",
+        actionLabel: "Abrir formulario",
+        page: PAGE_HOME,
+        tone:
+          "from-emerald-400/20 via-white to-amber-200/30 text-emerald-950 ring-emerald-200",
+      },
+      {
+        title: "Conectar seguro actual",
+        body: "Comparte tus polizas actuales de forma segura para acelerar la revision.",
+        actionLabel: "Conectar ahora",
+        page: PAGE_CANOPY,
+        tone: "from-sky-400/20 via-white to-cyan-200/30 text-slate-950 ring-sky-200",
+      },
+      {
+        title: "Listas de Ready.gov",
+        body: "Buen punto de inicio para kits de emergencia, preparacion y recuperacion.",
+        actionLabel: "Abrir Ready.gov",
+        href: "https://www.ready.gov/",
+        tone: "from-orange-300/25 via-white to-rose-200/30 text-slate-950 ring-orange-200",
+      },
+      {
+        title: "Reemplazar documentos",
+        body: "Util si se perdieron, robaron o danaron identificaciones o papeles importantes.",
+        actionLabel: "Abrir guia",
+        href: "https://www.usa.gov/replace-vital-documents",
+        tone: "from-violet-300/20 via-white to-fuchsia-200/25 text-slate-950 ring-violet-200",
+      },
+      {
+        title: "Conoce al equipo",
+        body: "Para clientes que quieren conocer a la persona detras del servicio.",
+        actionLabel: "Ver equipo",
+        page: PAGE_TEAM,
+        tone: "from-slate-300/20 via-white to-slate-100 text-slate-950 ring-slate-200",
+      },
+      {
+        title: "Seguir en Facebook",
+        body: "Una forma rapida de seguir novedades y contenido de la comunidad.",
+        actionLabel: "Visitar Facebook",
+        href: FACEBOOK_URL,
+        tone: "from-emerald-300/20 via-white to-lime-200/25 text-slate-950 ring-emerald-200",
+      },
+    ],
+    numbers: [
+      {
+        title: "Emergencias",
+        number: "911",
+        dial: "911",
+        body: "Para peligro inmediato, emergencias medicas, incendios o situaciones urgentes.",
+      },
+      {
+        title: "Linea 988",
+        number: "988",
+        dial: "988",
+        body: "Apoyo 24/7 para crisis de salud mental por llamada o texto.",
+      },
+      {
+        title: "Poison Control",
+        number: "1-800-222-1222",
+        dial: "18002221222",
+        body: "Ayuda rapida de expertos para intoxicaciones o exposiciones.",
+      },
+      {
+        title: "American Red Cross",
+        number: "1-800-733-2767",
+        dial: "18007332767",
+        body: "Apoyo por desastres, refugios y orientacion para recuperacion.",
+      },
+      {
+        title: "FEMA",
+        number: "1-800-621-3362",
+        dial: "18006213362",
+        body: "Preguntas sobre asistencia federal antes o despues de un desastre declarado.",
+      },
+    ],
+    moments: [
+      {
+        title: "Despues de un accidente",
+        body: "Respira, confirma que todos esten bien, documenta la escena y reune la informacion importante.",
+        points: ["Revisa lesiones primero", "Toma fotos", "Guarda nombres y datos del seguro"],
+      },
+      {
+        title: "Despues de dano por tormenta o agua",
+        body: "Protege la propiedad si es seguro, guarda recibos y documenta todo desde el inicio.",
+        points: ["Toma fotos rapido", "Evita dano adicional", "Lleva una linea de tiempo simple"],
+      },
+      {
+        title: "Despues de una mudanza o cambio grande",
+        body: "Los cambios grandes suelen significar revisar cobertura. Esta pagina ayuda a recomenzar rapido.",
+        points: ["Actualiza direccion y vehiculos", "Revisa hogar o renta", "Confirma deducibles y limites"],
+      },
+    ],
+    professionals: [
+      {
+        role: "Agente de bienes raices",
+        name: "Reed Mackley",
+        tagline:
+          "Mi realtor preferido para el norte de Utah, con mucha afinidad para primeros respondedores, familias militares y personas que quieren una guia firme.",
+        phone: "435.720.8209",
+        email: "MackleyProperty@gmail.com",
+        website: "RE/MAX Ascent",
+        image: "/REED m..jpeg",
+        imageAlt: "Tarjeta de contacto del realtor Reed Mackley",
+        note: "He trabajado con Reed y lo recomiendo con mucha confianza. Es una gran persona, conoce muy bien el norte de Utah y es una opcion especialmente fuerte para clientes militares y primeros respondedores.",
+        accent: "from-emerald-700 via-emerald-600 to-lime-500",
+      },
+      {
+        role: "Realtor de Salt Lake",
+        name: "Eric Schmitz",
+        tagline:
+          "Una gran opcion para el area de Salt Lake y una de las personas mas amables a las que puedes enviar un cliente.",
+        phone: "(385) 899-2489",
+        email: "Eric@MarkHaaga.com",
+        website: "MarkHaaga.com",
+        image: "/ES.jpg",
+        imageAlt: "Tarjeta de Eric Schmitz agente de bienes raices",
+        note: "Eric es una excelente recomendacion para clientes del area de Salt Lake. Tiene una energia muy amable y hace que la gente se sienta comoda durante todo el proceso.",
+        accent: "from-sky-700 via-cyan-600 to-teal-500",
+      },
+      {
+        role: "Prestamo o finanzas",
+        name: "Agrega tu socio financiero",
+        tagline: "Muy util cuando hay compra, refinanciamiento o cambios financieros grandes.",
+        phone: "Agrega telefono directo",
+        email: "agrega-finanzas@email.com",
+        website: "Agrega sitio",
+        note: "Esta tarjeta sirve muy bien para lender, CPA, planner o abogado de confianza.",
+        accent: "from-slate-900 via-slate-700 to-amber-500",
+      },
+    ],
   },
 };
 
@@ -753,6 +1095,7 @@ function getPageFromHash(hash) {
   if (value === PAGE_TEAM) return PAGE_TEAM;
   if (value === PAGE_JOBS) return PAGE_JOBS;
   if (value === PAGE_COLLECTIBLES) return PAGE_COLLECTIBLES;
+  if (value === PAGE_RESOURCES) return PAGE_RESOURCES;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   return PAGE_HOME;
@@ -819,9 +1162,20 @@ function SiteHeader({ language, activePage, onNavigate }) {
           >
             {nav.collectibles}
           </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_RESOURCES)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_RESOURCES
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.resources}
+          </button>
         </nav>
 
-        <nav className="fixed inset-x-4 bottom-4 z-20 flex items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
+        <nav className="fixed inset-x-4 bottom-4 z-20 flex flex-wrap items-center justify-center gap-2 rounded-full border border-white/70 bg-white/95 p-2 shadow-lg backdrop-blur md:hidden">
           <button
             type="button"
             onClick={() => onNavigate(PAGE_HOME)}
@@ -854,6 +1208,17 @@ function SiteHeader({ language, activePage, onNavigate }) {
             }`}
           >
             {nav.collectibles}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_RESOURCES)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+              activePage === PAGE_RESOURCES
+                ? "bg-slate-900 text-white"
+                : "text-slate-700 hover:bg-slate-100"
+            }`}
+          >
+            {nav.resources}
           </button>
         </nav>
       </header>
@@ -2360,6 +2725,314 @@ function InsuranceConnectPage({ language, onNavigate }) {
   );
 }
 
+function ClientResourcesPage({ language, onNavigate }) {
+  const pageText = CLIENT_RESOURCES_PAGE_COPY[language] || CLIENT_RESOURCES_PAGE_COPY.en;
+  const quickMoveLabel = language === "es" ? "Acceso rapido" : "Quick move";
+  const bestUseLabel = language === "es" ? "Mejor uso" : "Best use";
+  const easyWinLabel = language === "es" ? "Idea facil" : "Easy win";
+  const bestUseBody =
+    language === "es"
+      ? "Reclamos, mudanzas, renovaciones y cambios de vida"
+      : "Claims, moves, renewals, and life changes";
+  const easyWinBody =
+    language === "es"
+      ? "Cambia estos contactos por tus referidos reales y comparte esta pagina seguido"
+      : "Swap in your real referral partners and send this page often";
+  const callNowLabel = language === "es" ? "Llamar ahora" : "Call now";
+  const contactCardLabel = language === "es" ? "Tarjeta de contacto" : "Contact card";
+  const phoneLabel = language === "es" ? "Telefono" : "Phone";
+  const websiteLabel = language === "es" ? "Sitio web" : "Website";
+
+  const renderQuickLink = (item) => {
+    const classes = `group rounded-[1.8rem] border bg-gradient-to-br p-6 shadow-[0_22px_60px_-34px_rgba(15,23,42,0.35)] ring-1 ${item.tone}`;
+
+    if (item.href) {
+      return (
+        <a
+          key={item.title}
+          href={item.href}
+          target="_blank"
+          rel="noreferrer"
+          className={classes}
+        >
+          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">{quickMoveLabel}</p>
+          <h3 className="mt-4 text-2xl font-semibold tracking-tight">{item.title}</h3>
+          <p className="mt-3 text-sm leading-7 text-slate-600">{item.body}</p>
+          <div className="mt-6 inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition group-hover:translate-x-1">
+            {item.actionLabel}
+          </div>
+        </a>
+      );
+    }
+
+    return (
+      <button
+        key={item.title}
+        type="button"
+        onClick={() => onNavigate(item.page)}
+        className={`${classes} text-left`}
+      >
+        <p className="text-xs font-semibold uppercase tracking-[0.26em] text-slate-500">{quickMoveLabel}</p>
+        <h3 className="mt-4 text-2xl font-semibold tracking-tight">{item.title}</h3>
+        <p className="mt-3 text-sm leading-7 text-slate-600">{item.body}</p>
+        <div className="mt-6 inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition group-hover:translate-x-1">
+          {item.actionLabel}
+        </div>
+      </button>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-[#f7f7f2] text-slate-900" lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.18),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(245,158,11,0.18),_transparent_28%),linear-gradient(180deg,_#f4fbf7_0%,_#fcfaf4_56%,_#f8fafc_100%)]" />
+        <div className="absolute inset-x-0 top-20 h-72 bg-[linear-gradient(90deg,rgba(15,23,42,0.02)_0%,rgba(15,23,42,0.08)_50%,rgba(15,23,42,0.02)_100%)] blur-3xl" />
+
+        <SiteHeader language={language} activePage={PAGE_RESOURCES} onNavigate={onNavigate} />
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr,0.9fr] lg:items-center">
+            <div>
+              <div className="inline-flex rounded-full border border-emerald-200 bg-white/90 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
+                {pageText.badge}
+              </div>
+
+              <h1 className="mt-6 max-w-4xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl md:text-6xl">
+                {pageText.headline}
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+                {pageText.subheadline}
+              </p>
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                {pageText.heroPoints.map((point) => (
+                  <div
+                    key={point}
+                    className="rounded-full border border-white/80 bg-white/90 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm"
+                  >
+                    {point}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-slate-950 p-7 text-white shadow-[0_28px_80px_-36px_rgba(15,23,42,0.75)]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(52,211,153,0.22),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(250,204,21,0.18),_transparent_34%)]" />
+              <div className="relative">
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-emerald-300">
+                  {pageText.spotlightLabel}
+                </p>
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight">
+                  {pageText.spotlightTitle}
+                </h2>
+                <p className="mt-4 text-sm leading-7 text-slate-300">{pageText.spotlightBody}</p>
+
+                <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-[1.6rem] border border-white/10 bg-white/8 p-5 backdrop-blur">
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">
+                      {bestUseLabel}
+                    </p>
+                    <p className="mt-3 text-lg font-semibold">{bestUseBody}</p>
+                  </div>
+                  <div className="rounded-[1.6rem] border border-white/10 bg-white/8 p-5 backdrop-blur">
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-white/60">
+                      {easyWinLabel}
+                    </p>
+                    <p className="mt-3 text-lg font-semibold">{easyWinBody}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.26em] text-emerald-700">
+            {pageText.quickLinksLabel}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+            {pageText.quickLinksTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">{pageText.quickLinksBody}</p>
+        </div>
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
+          {pageText.quickLinks.map((item) => renderQuickLink(item))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_70px_-40px_rgba(15,23,42,0.35)]">
+          <div className="bg-[linear-gradient(135deg,#0f172a_0%,#164e63_48%,#14532d_100%)] px-6 py-8 text-white md:px-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-cyan-200">
+              {pageText.numbersLabel}
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight">{pageText.numbersTitle}</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-200">{pageText.numbersBody}</p>
+          </div>
+
+          <div className="grid gap-4 p-6 md:grid-cols-2 md:p-8 xl:grid-cols-5">
+            {pageText.numbers.map((item) => (
+              <a
+                key={item.title}
+                href={`tel:${item.dial}`}
+                className="rounded-[1.6rem] border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:bg-white hover:shadow-lg"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                  {item.title}
+                </p>
+                <p className="mt-4 text-3xl font-black tracking-tight text-slate-950">{item.number}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-600">{item.body}</p>
+                <div className="mt-5 inline-flex rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-white">
+                  {callNowLabel}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-8">
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.26em] text-emerald-700">
+            {pageText.momentsLabel}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+            {pageText.momentsTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">{pageText.momentsBody}</p>
+        </div>
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
+          {pageText.moments.map((moment) => (
+            <div
+              key={moment.title}
+              className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-[0_18px_60px_-42px_rgba(15,23,42,0.45)]"
+            >
+              <h3 className="text-2xl font-semibold tracking-tight text-slate-950">{moment.title}</h3>
+              <p className="mt-4 text-sm leading-7 text-slate-600">{moment.body}</p>
+              <div className="mt-6 space-y-3">
+                {moment.points.map((point) => (
+                  <div
+                    key={point}
+                    className="rounded-2xl border border-emerald-100 bg-emerald-50/70 px-4 py-3 text-sm font-medium text-emerald-900"
+                  >
+                    {point}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-12">
+        <div className="max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.26em] text-emerald-700">
+            {pageText.prosLabel}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+            {pageText.prosTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-slate-600">{pageText.prosBody}</p>
+        </div>
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-3">
+          {pageText.professionals.map((professional) => (
+            <div
+              key={professional.role}
+              className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_24px_80px_-48px_rgba(15,23,42,0.55)]"
+            >
+              {professional.image ? (
+                <div className="border-b border-slate-200 bg-slate-100">
+                  <img
+                    src={professional.image}
+                    alt={professional.imageAlt || professional.name}
+                    className="h-52 w-full object-cover object-center"
+                  />
+                </div>
+              ) : null}
+
+              <div className={`bg-gradient-to-r ${professional.accent} px-6 py-6 text-white`}>
+                <p className="text-xs font-semibold uppercase tracking-[0.26em] text-white/75">
+                  {professional.role}
+                </p>
+                <h3 className="mt-3 text-3xl font-semibold tracking-tight">{professional.name}</h3>
+                <p className="mt-3 text-sm leading-7 text-white/90">{professional.tagline}</p>
+              </div>
+
+              <div className="space-y-5 p-6">
+                <div className="rounded-[1.4rem] border border-slate-200 bg-slate-50 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
+                    {contactCardLabel}
+                  </p>
+                  <div className="mt-4 space-y-3 text-sm text-slate-700">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        {phoneLabel}
+                      </p>
+                      <p className="mt-1 font-medium text-slate-950">{professional.phone}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        Email
+                      </p>
+                      <p className="mt-1 break-words font-medium text-slate-950">{professional.email}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
+                        {websiteLabel}
+                      </p>
+                      <p className="mt-1 font-medium text-slate-950">{professional.website}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="rounded-[1.4rem] border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950">
+                  {professional.note}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="rounded-[2rem] bg-[linear-gradient(135deg,#052e2b_0%,#0f172a_50%,#1d4ed8_100%)] px-6 py-8 text-white shadow-[0_32px_80px_-44px_rgba(15,23,42,0.7)] md:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-semibold tracking-tight">{pageText.footerTitle}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-200">{pageText.footerBody}</p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => onNavigate(PAGE_HOME)}
+                className="rounded-full bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+              >
+                {pageText.footerPrimary}
+              </button>
+              <button
+                type="button"
+                onClick={() => onNavigate(PAGE_TEAM)}
+                className="rounded-full border border-white/20 bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/15"
+              >
+                {pageText.footerSecondary}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Analytics />
+    </div>
+  );
+}
+
 function formatInquiryType(value, language) {
   const options = INQUIRY_OPTIONS[language] || INQUIRY_OPTIONS.en;
   const match = options.find((option) => option.value === value);
@@ -2723,6 +3396,8 @@ export default function OakCompassLandingPage() {
           ? "Apply Now | Oak & Compass Insurance"
         : activePage === PAGE_COLLECTIBLES
           ? "Collectibles Insurance | Oak & Compass Insurance"
+        : activePage === PAGE_RESOURCES
+          ? "Client Resources | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
@@ -3164,6 +3839,10 @@ export default function OakCompassLandingPage() {
     );
   }
 
+  if (activePage === PAGE_RESOURCES) {
+    return <ClientResourcesPage language={language} onNavigate={navigateToPage} />;
+  }
+
   if (activePage === PAGE_CANOPY) {
     return <InsuranceConnectPage language={language} onNavigate={navigateToPage} />;
   }
@@ -3475,6 +4154,30 @@ export default function OakCompassLandingPage() {
           </div>
         </div>
 
+        <div className="mt-8 overflow-hidden rounded-[2rem] border border-emerald-200 bg-[linear-gradient(135deg,#f0fdf4_0%,#ffffff_45%,#eff6ff_100%)] px-6 py-8 shadow-sm ring-1 ring-white/70 md:px-8">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                {nav.resources}
+              </p>
+              <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">
+                {nav.resourcesBannerTitle}
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">
+                {nav.resourcesBannerBody}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => navigateToPage(PAGE_RESOURCES)}
+              className="rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-slate-800"
+            >
+              {nav.resourcesCta}
+            </button>
+          </div>
+        </div>
+
         <div className="mt-8 rounded-[2rem] bg-slate-900 px-6 py-8 text-white shadow-xl md:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
@@ -3532,6 +4235,7 @@ export function __oakCompassLandingPageChecks() {
     optionCountSpanish: INSURANCE_OPTIONS.es.length,
     hasPetInsuranceEnglish: INSURANCE_OPTIONS.en.includes("Pet Insurance"),
     hasPetInsuranceSpanish: INSURANCE_OPTIONS.es.includes("Seguro para mascotas"),
+    hasResourcesPage: true,
     hasPortalButtonEnglish: COPY.en.viewLeads === "Oak & Compass Portal",
     hasPortalButtonSpanish: COPY.es.viewLeads === "Portal Oak & Compass",
     usesVercelAnalyticsReact: true,
