@@ -135,10 +135,10 @@ const COPY = {
     submittedReferral: "Thanks, your referral has been submitted.",
     submittedJob: "Thanks, your job application has been submitted.",
     canopyQuote:
-      "Want to speed things up? You can securely connect your current insurance information below.",
+      "If you want to make this easier, you can securely share your current insurance information below.",
     canopyReferral:
-      "Want to speed things up? You can securely connect the current insurance information below if available.",
-    canopyButton: "Connect My Current Insurance",
+      "If you have their current insurance information, you can securely share it below so we can help faster.",
+    canopyButton: "Share Current Insurance",
     simpleTitle: "Simple",
     simpleBody: "No long forms. Just the basics so we can get started.",
     helpfulTitle: "Helpful",
@@ -148,12 +148,12 @@ const COPY = {
     careersEyebrow: "Job Opportunity",
     careersTitle: "Want to work with Oak & Compass?",
     careersBody:
-      "We are opening the door for people who care about helping clients feel informed, comfortable, and supported.",
+      "We are looking for people who care about clients, communicate clearly, and want to do good work with good people.",
     careersPoints: ["People-first team", "Local relationships", "Growth-minded support"],
     applyNow: "Apply Now",
     canopyTitle: "Connect Your Insurance",
     canopyBody:
-      "Securely connect your current policy information so we can review options faster.",
+      "Securely share your current policy information so we can review your options with less back-and-forth.",
     viewLeads: "Oak & Compass Portal",
     passwordTitle: "Lead Dashboard",
     passwordIntro: "Enter the password to view submitted leads.",
@@ -237,10 +237,10 @@ const COPY = {
     submittedQuote: "Gracias, tu solicitud de cotización ha sido enviada.",
     submittedReferral: "Gracias, tu referencia ha sido enviada.",
     canopyQuote:
-      "¿Quieres acelerar el proceso? Puedes conectar de forma segura tu información actual de seguro abajo.",
+      "Si quieres hacerlo mas facil, puedes compartir de forma segura tu informacion actual de seguro aqui abajo.",
     canopyReferral:
-      "¿Quieres acelerar el proceso? Puedes conectar de forma segura la información actual del seguro si está disponible.",
-    canopyButton: "Conectar mi seguro actual",
+      "Si tienes la informacion actual del seguro, puedes compartirla aqui abajo para ayudarnos a avanzar mas rapido.",
+    canopyButton: "Compartir seguro actual",
     simpleTitle: "Simple",
     simpleBody: "Sin formularios largos. Solo lo básico para comenzar.",
     helpfulTitle: "Útil",
@@ -250,12 +250,12 @@ const COPY = {
     careersEyebrow: "Oportunidad laboral",
     careersTitle: "Quieres trabajar con Oak & Compass?",
     careersBody:
-      "Estamos abriendo la puerta a personas que quieren ayudar a los clientes con claridad, calma y atencion humana.",
+      "Estamos buscando personas que sepan tratar bien a los clientes, explicar con claridad y hacer buen trabajo con buena actitud.",
     careersPoints: ["Equipo humano", "Relaciones locales", "Espacio para crecer"],
     applyNow: "Aplica ahora",
     canopyTitle: "Conecta tu seguro",
     canopyBody:
-      "Conecta de forma segura la información de tu póliza actual para que podamos revisar opciones más rápido.",
+      "Comparte de forma segura la informacion de tu poliza actual para revisar opciones con menos vueltas.",
     viewLeads: "Portal Oak & Compass",
     passwordTitle: "Panel de prospectos",
     passwordIntro: "Ingresa la contraseña para ver los prospectos enviados.",
@@ -315,16 +315,16 @@ const NAV_COPY = {
     quote: "Get a Quote",
     teamCta: "Get to Know the Team",
     collectiblesCta: "Protect Your Collection",
-    resourcesCta: "Open the Resource Hub",
-    teamBannerTitle: "Put faces, values, and style of service behind the quote form",
+    resourcesCta: "Helpful Resources",
+    teamBannerTitle: "Meet the people behind Oak & Compass",
     teamBannerBody:
-      "See how Oak & Compass supports clients with calm, local, people-first guidance.",
+      "Get a feel for how Oak & Compass shows up: clear, steady, and genuinely helpful.",
     collectiblesBannerTitle: "Insure the pieces that make your collection feel personal",
     collectiblesBannerBody:
-      "Explore a themed collectibles page built for cards, books, firearms, comics, coins, and more.",
-    resourcesBannerTitle: "Give clients one great page for next steps, support links, and trusted pros",
+      "Tell us what you collect and we will help you protect the pieces that matter most.",
+    resourcesBannerTitle: "Helpful numbers, trusted people, and real next steps in one place",
     resourcesBannerBody:
-      "Open a high-energy client resources hub with quick help, important numbers, and polished referral cards you can personalize.",
+      "A simple page clients can come back to when they need support, a recommendation, or the right number fast.",
   },
   es: {
     home: "Inicio",
@@ -334,53 +334,53 @@ const NAV_COPY = {
     quote: "Obtener cotizacion",
     teamCta: "Conoce al equipo",
     collectiblesCta: "Protege tu coleccion",
-    resourcesCta: "Abrir recursos",
-    teamBannerTitle: "Conoce a las personas y valores detras de la experiencia de Oak & Compass",
+    resourcesCta: "Ver recursos",
+    teamBannerTitle: "Conoce a las personas detras de Oak & Compass",
     teamBannerBody:
-      "Explora la nueva pagina del equipo para ver como Oak & Compass acompana a cada cliente con cercania y claridad.",
+      "Conoce como trabaja Oak & Compass: con claridad, calma y atencion real.",
     collectiblesBannerTitle: "Asegura las piezas que hacen especial tu coleccion",
     collectiblesBannerBody:
-      "Explora una pagina interactiva para tarjetas, libros, armas, comics, monedas y mas.",
-    resourcesBannerTitle: "Dale a tus clientes una pagina clara para ayuda, numeros y contactos recomendados",
+      "Dinos que coleccionas y te ayudamos a proteger lo que mas valor tiene para ti.",
+    resourcesBannerTitle: "Numeros utiles, personas de confianza y pasos claros en un solo lugar",
     resourcesBannerBody:
-      "Abre un centro de recursos con accesos rapidos, numeros importantes y tarjetas elegantes para los profesionales que recomiendas.",
+      "Una pagina simple para volver cuando necesitas ayuda, una recomendacion o el numero correcto rapido.",
   },
 };
 
 const CLIENT_RESOURCES_PAGE_COPY = {
   en: {
-    badge: "Client Resource Hub",
-    headline: "One page your clients can come back to when life gets messy",
+    badge: "Client Support",
+    headline: "A place to come back to when you need help fast",
     subheadline:
-      "Built for people who already trust Oak & Compass and want a fast place to find support, helpful links, important phone numbers, and solid local recommendations.",
+      "If life gets busy, stressful, or unexpectedly messy, you can come here for quick help, important numbers, and people I trust.",
     heroPoints: ["Fast help", "Clear next steps", "Trusted referrals"],
-    spotlightLabel: "Built for real life",
-    spotlightTitle: "Keep the most useful stuff in one beautiful place",
+    spotlightLabel: "Here when you need it",
+    spotlightTitle: "Good help should be easy to find",
     spotlightBody:
-      "Whether someone is moving, dealing with storm damage, replacing documents, or just trying to remember who to call next, this page gives them one strong starting point.",
+      "Whether you are moving, dealing with damage, replacing documents, or just trying to figure out who to call next, the important stuff is all here.",
     quickLinksLabel: "Quick links",
-    quickLinksTitle: "Tap into the most common next steps",
+    quickLinksTitle: "A few places people usually need first",
     quickLinksBody:
-      "These cards mix Oak & Compass actions with practical resources people often need after a move, claim, or major life update.",
+      "These links are here to save time when you need to start a quote, pull up a trusted resource, or get pointed in the right direction.",
     numbersLabel: "Important numbers",
     numbersTitle: "Helpful phone numbers worth saving",
     numbersBody:
-      "These are broad emergency and recovery contacts that are useful across the U.S. You can swap or add local numbers anytime.",
+      "These are solid numbers to keep handy when something urgent or stressful is happening.",
     carrierLookupLabel: "Carrier lookup",
     carrierLookupTitle: "Need your carrier directly?",
     carrierLookupBody:
       "If you cannot reach me right away, choose your insurance company below and call their customer support line directly.",
     carrierLookupSelect: "Choose a carrier",
     carrierLookupNumber: "Customer support",
-    carrierLookupHint: "More carriers can be added anytime.",
-    momentsLabel: "What now?",
-    momentsTitle: "A few common situations this page can help with",
+    carrierLookupHint: "If you want another carrier added, I can add it.",
+    momentsLabel: "Common moments",
+    momentsTitle: "A few situations where this can really help",
     momentsBody:
-      "The goal is to reduce decision fatigue. Clients can find a lane quickly instead of hunting through texts, emails, and bookmarks.",
+      "When a lot is happening at once, it helps to know where to start.",
     prosLabel: "Trusted professionals",
     prosTitle: "Realtors",
     prosBody:
-      "Open the dropdowns to see the people and companies I recommend.",
+      "These are people and companies I trust and feel good recommending.",
     groups: [
       {
         title: "Realtors",
@@ -492,12 +492,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     ],
     footerTitle: "Want a warm handoff?",
     footerBody:
-      "If someone wants a softer handoff, they can ask Oak & Compass to introduce them to one of the people I recommend here.",
+      "If you want an introduction instead of reaching out cold, I am happy to help make that connection.",
     introBadge: "Warm introduction",
     introButton: "Request an introduction",
     introOpenTitle: "Tell me who you want to meet",
     introOpenBody:
-      "Choose one of my trusted people below, share the basics, and I will get your introduction request into my follow-up flow.",
+      "Pick the person you want to talk to, send me your basic info, and I will follow up on the introduction.",
     introChoiceLabel: "Who would you like to be introduced to?",
     introChoicePlaceholder: "Choose a person",
     introNotesLabel: "Anything I should know before I connect you?",
@@ -507,44 +507,44 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     quickLinks: [
       {
         title: "Start a fresh quote",
-        body: "Perfect when coverage needs changed after a move, purchase, or renewal check-in.",
-        actionLabel: "Open quote form",
+        body: "A good place to start if your coverage needs changed after a move, purchase, or renewal.",
+        actionLabel: "Start here",
         page: PAGE_HOME,
         tone:
           "from-emerald-400/20 via-white to-amber-200/30 text-emerald-950 ring-emerald-200",
       },
       {
         title: "Connect current insurance",
-        body: "Share existing policy details securely so review work can move faster.",
-        actionLabel: "Connect now",
+        body: "Share your current policy details securely so I can review things faster.",
+        actionLabel: "Share details",
         page: PAGE_CANOPY,
         tone: "from-sky-400/20 via-white to-cyan-200/30 text-slate-950 ring-sky-200",
       },
       {
         title: "Ready.gov checklists",
-        body: "A solid place to start for emergency kits, disaster prep, and recovery planning.",
-        actionLabel: "Open Ready.gov",
+        body: "Helpful checklists for emergency kits, disaster prep, and recovery planning.",
+        actionLabel: "See checklists",
         href: "https://www.ready.gov/",
         tone: "from-orange-300/25 via-white to-rose-200/30 text-slate-950 ring-orange-200",
       },
       {
         title: "Replace key documents",
-        body: "Helpful if IDs, titles, or important records were lost, stolen, or damaged.",
-        actionLabel: "Open guide",
+        body: "Helpful if IDs, titles, or other important records were lost, stolen, or damaged.",
+        actionLabel: "See guide",
         href: "https://www.usa.gov/replace-vital-documents",
         tone: "from-violet-300/20 via-white to-fuchsia-200/25 text-slate-950 ring-violet-200",
       },
       {
         title: "See who is behind the brand",
-        body: "Clients who like working with people, not just forms, can get to know the team.",
+        body: "If you like knowing who you are working with, this is a good place to start.",
         actionLabel: "Meet Oak & Compass",
         page: PAGE_TEAM,
         tone: "from-slate-300/20 via-white to-slate-100 text-slate-950 ring-slate-200",
       },
       {
         title: "Follow on Facebook",
-        body: "A quick way to stay close to Oak & Compass updates and community content.",
-        actionLabel: "Visit Facebook",
+        body: "Keep up with updates, community posts, and what is happening at Oak & Compass.",
+        actionLabel: "Follow along",
         href: FACEBOOK_URL,
         tone: "from-emerald-300/20 via-white to-lime-200/25 text-slate-950 ring-emerald-200",
       },
@@ -641,44 +641,44 @@ const CLIENT_RESOURCES_PAGE_COPY = {
       },
       {
         title: "After a move or major life change",
-        body: "Big changes often mean coverage should be reviewed. This page helps clients know where to restart quickly.",
+        body: "Big changes usually mean it is time to review coverage and make sure everything still fits.",
         points: ["Update address and vehicles", "Review home and renters needs", "Recheck deductibles and limits"],
       },
     ],
   },
   es: {
     badge: "Centro de recursos",
-    headline: "Una pagina para clientes cuando la vida se pone complicada",
+    headline: "Un lugar para volver cuando necesitas ayuda rapido",
     subheadline:
-      "Hecha para personas que ya confian en Oak & Compass y quieren un lugar rapido para encontrar ayuda, enlaces utiles, numeros importantes y recomendaciones confiables.",
+      "Si la vida se pone pesada, estresante o complicada, aqui tienes ayuda rapida, numeros importantes y personas en las que confio.",
     heroPoints: ["Ayuda rapida", "Pasos claros", "Referencias confiables"],
-    spotlightLabel: "Hecha para la vida real",
-    spotlightTitle: "Guarda lo mas util en un solo lugar bonito y facil",
+    spotlightLabel: "Aqui cuando lo necesites",
+    spotlightTitle: "La buena ayuda debe ser facil de encontrar",
     spotlightBody:
-      "Si alguien se esta mudando, lidia con dano por tormenta, necesita documentos o solo quiere recordar a quien llamar, esta pagina le da un buen punto de partida.",
+      "Si te estas mudando, lidiando con danos, reemplazando documentos o solo tratando de recordar a quien llamar, aqui tienes un buen punto de partida.",
     quickLinksLabel: "Accesos rapidos",
-    quickLinksTitle: "Entra directo a los pasos mas comunes",
+    quickLinksTitle: "Algunos lugares que la gente suele necesitar primero",
     quickLinksBody:
-      "Estas tarjetas mezclan acciones de Oak & Compass con recursos practicos que mucha gente necesita despues de una mudanza, un reclamo o un cambio grande.",
+      "Estos enlaces estan aqui para ahorrarte tiempo cuando necesitas empezar una cotizacion, usar un recurso util o encontrar la direccion correcta.",
     numbersLabel: "Numeros importantes",
     numbersTitle: "Telefonos utiles para guardar",
     numbersBody:
-      "Estos son contactos amplios de emergencia y recuperacion utiles en Estados Unidos. Puedes cambiar o agregar numeros locales cuando quieras.",
+      "Estos son buenos numeros para tener a la mano cuando algo urgente o estresante esta pasando.",
     carrierLookupLabel: "Buscar carrier",
     carrierLookupTitle: "Necesitas hablar directo con tu carrier?",
     carrierLookupBody:
       "Si no puedes comunicarte conmigo de inmediato, elige tu compania abajo y llama directo a su numero de servicio al cliente.",
     carrierLookupSelect: "Elige un carrier",
     carrierLookupNumber: "Servicio al cliente",
-    carrierLookupHint: "Podemos agregar mas carriers cuando quieras.",
+    carrierLookupHint: "Si quieres agregar otro carrier, lo puedo hacer.",
     momentsLabel: "Y ahora que?",
-    momentsTitle: "Situaciones comunes donde esta pagina ayuda",
+    momentsTitle: "Situaciones donde esta pagina realmente ayuda",
     momentsBody:
-      "La idea es bajar el estres. Tus clientes pueden encontrar una direccion clara sin buscar entre mensajes, correos y favoritos.",
+      "Cuando muchas cosas pasan al mismo tiempo, ayuda saber por donde empezar.",
     prosLabel: "Profesionales recomendados",
     prosTitle: "Realtors",
     prosBody:
-      "Abre los menus para ver las personas y companias que recomiendo.",
+      "Estas son personas y companias que recomiendo con confianza.",
     groups: [
       {
         title: "Realtors",
@@ -790,12 +790,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     ],
     footerTitle: "Necesitan una recomendacion directa?",
     footerBody:
-      "Si alguien quiere una conexion mas personal, puede pedirle a Oak & Compass que lo presente con una de las personas que recomiendo aqui.",
+      "Si prefieres una introduccion en vez de escribirles en frio, con gusto te ayudo a hacer esa conexion.",
     introBadge: "Introduccion",
     introButton: "Pedir introduccion",
     introOpenTitle: "Dime con quien te gustaria hablar",
     introOpenBody:
-      "Elige una de mis personas de confianza aqui abajo, comparte lo basico y voy a poner tu solicitud de introduccion en mi flujo de seguimiento.",
+      "Elige a la persona con la que quieres hablar, mandame tus datos basicos y yo doy seguimiento a la introduccion.",
     introChoiceLabel: "A quien te gustaria que te presentara?",
     introChoicePlaceholder: "Elige una persona",
     introNotesLabel: "Hay algo que deba saber antes de conectarlos?",
@@ -805,44 +805,44 @@ const CLIENT_RESOURCES_PAGE_COPY = {
     quickLinks: [
       {
         title: "Empezar una cotizacion",
-        body: "Ideal cuando la cobertura cambio despues de una mudanza, compra o renovacion.",
-        actionLabel: "Abrir formulario",
+        body: "Un buen lugar para empezar si tu cobertura cambio despues de una mudanza, compra o renovacion.",
+        actionLabel: "Empezar aqui",
         page: PAGE_HOME,
         tone:
           "from-emerald-400/20 via-white to-amber-200/30 text-emerald-950 ring-emerald-200",
       },
       {
         title: "Conectar seguro actual",
-        body: "Comparte tus polizas actuales de forma segura para acelerar la revision.",
+        body: "Comparte tus polizas actuales de forma segura para revisar todo mas rapido.",
         actionLabel: "Conectar ahora",
         page: PAGE_CANOPY,
         tone: "from-sky-400/20 via-white to-cyan-200/30 text-slate-950 ring-sky-200",
       },
       {
         title: "Listas de Ready.gov",
-        body: "Buen punto de inicio para kits de emergencia, preparacion y recuperacion.",
+        body: "Listas utiles para kits de emergencia, preparacion y recuperacion.",
         actionLabel: "Abrir Ready.gov",
         href: "https://www.ready.gov/",
         tone: "from-orange-300/25 via-white to-rose-200/30 text-slate-950 ring-orange-200",
       },
       {
         title: "Reemplazar documentos",
-        body: "Util si se perdieron, robaron o danaron identificaciones o papeles importantes.",
-        actionLabel: "Abrir guia",
+        body: "Util si se perdieron, robaron o danaron identificaciones o documentos importantes.",
+        actionLabel: "Ver guia",
         href: "https://www.usa.gov/replace-vital-documents",
         tone: "from-violet-300/20 via-white to-fuchsia-200/25 text-slate-950 ring-violet-200",
       },
       {
         title: "Conoce al equipo",
-        body: "Para clientes que quieren conocer a la persona detras del servicio.",
+        body: "Si te gusta saber con quien estas trabajando, este es un buen lugar para empezar.",
         actionLabel: "Ver equipo",
         page: PAGE_TEAM,
         tone: "from-slate-300/20 via-white to-slate-100 text-slate-950 ring-slate-200",
       },
       {
         title: "Seguir en Facebook",
-        body: "Una forma rapida de seguir novedades y contenido de la comunidad.",
-        actionLabel: "Visitar Facebook",
+        body: "Sigue novedades, contenido de la comunidad y lo que esta pasando en Oak & Compass.",
+        actionLabel: "Seguir pagina",
         href: FACEBOOK_URL,
         tone: "from-emerald-300/20 via-white to-lime-200/25 text-slate-950 ring-emerald-200",
       },
@@ -939,7 +939,7 @@ const CLIENT_RESOURCES_PAGE_COPY = {
       },
       {
         title: "Despues de una mudanza o cambio grande",
-        body: "Los cambios grandes suelen significar revisar cobertura. Esta pagina ayuda a recomenzar rapido.",
+        body: "Los cambios grandes casi siempre significan revisar cobertura y confirmar que todo siga bien acomodado.",
         points: ["Actualiza direccion y vehiculos", "Revisa hogar o renta", "Confirma deducibles y limites"],
       },
     ],
@@ -951,11 +951,11 @@ const TEAM_PAGE_COPY = {
     badge: "Meet the owner",
     headline: "Insurance built by a real person, for real life",
     subheadline:
-      "Oak & Compass was built for people who want great coverage and an experience that still feels human. The heart behind the company is simple: work hard, show up well, protect what matters, and make people feel taken care of from the start.",
+      "Oak & Compass is for people who want solid coverage and a real person in their corner. The goal is simple: work hard, show up well, protect what matters, and make people feel taken care of from the start.",
     ownerLabel: "Owner-led",
     ownerTitle: "The same values behind the brand are the ones behind the work",
     ownerBody:
-      "Behind Oak & Compass is someone who loves the outdoors, values family, and believes insurance should feel clear, personal, and steady. With 6 years of experience, the goal is not to push people through a script. It is to listen well, explain things clearly, and help people feel confident about protecting the life they have built.",
+      "Behind Oak & Compass is someone who loves the outdoors, values family, and believes insurance should feel clear, personal, and steady. With 6 years of experience, the focus is on listening well, explaining things clearly, and helping people feel confident about protecting the life they have built.",
     snapshotTitle: "What matters here",
     snapshot: [
       { label: "Experience", value: "6 years helping people protect what matters" },
@@ -1011,11 +1011,11 @@ const TEAM_PAGE_COPY = {
     badge: "Conoce al dueno",
     headline: "Seguro hecho por una persona real, para la vida real",
     subheadline:
-      "Oak & Compass fue creado para personas que quieren buena cobertura y una experiencia que se siga sintiendo humana. La idea de fondo es simple: trabajar duro, responder bien, proteger lo importante y hacer que la gente se sienta cuidada desde el principio.",
+      "Oak & Compass es para personas que quieren buena cobertura y una experiencia que se siga sintiendo humana. La idea de fondo es simple: trabajar duro, responder bien, proteger lo importante y hacer que la gente se sienta cuidada desde el principio.",
     ownerLabel: "Dirigido por el dueno",
     ownerTitle: "Los valores detras de la marca son los mismos detras del trabajo",
     ownerBody:
-      "Detras de Oak & Compass hay una persona que ama la naturaleza, valora a su familia y cree que el seguro debe sentirse claro, cercano y firme. Con 6 anos de experiencia, la meta no es empujar un guion. La meta es escuchar bien, explicar con claridad y ayudar a que la gente se sienta segura con lo que esta protegiendo.",
+      "Detras de Oak & Compass hay una persona que ama la naturaleza, valora a su familia y cree que el seguro debe sentirse claro, cercano y firme. Con 6 anos de experiencia, la prioridad es escuchar bien, explicar con claridad y ayudar a que la gente se sienta segura con lo que esta protegiendo.",
     snapshotTitle: "Lo que importa aqui",
     snapshot: [
       { label: "Experiencia", value: "6 anos ayudando a proteger lo importante" },
@@ -1099,10 +1099,10 @@ const TEAM_MEMBERS = {
       highlights: ["6 years of experience", "Outdoorsy", "Client-first"],
     },
     {
-      name: "Growing Team",
-      role: "Future advisors who match the same standard",
-      bio: "As the company grows, new team members can be added here with the same focus on clarity, care, and being the kind of people others genuinely want to work with.",
-      highlights: ["Approachable", "Dependable", "Built to grow"],
+      name: "How We Show Up",
+      role: "What clients can expect every time",
+      bio: "Clear answers, honest help, and the kind of follow-through that makes people feel taken care of instead of left guessing.",
+      highlights: ["Approachable", "Dependable", "Real follow-through"],
     },
   ],
   es: [
@@ -1113,10 +1113,10 @@ const TEAM_MEMBERS = {
       highlights: ["6 anos de experiencia", "Amor por el aire libre", "Enfoque en el cliente"],
     },
     {
-      name: "Equipo en crecimiento",
-      role: "Futuros asesores con el mismo nivel humano",
-      bio: "Conforme la empresa crezca, aqui se pueden sumar nuevas personas con la misma energia de claridad, atencion y confianza que ya define la marca.",
-      highlights: ["Cercanos", "Confiables", "Listo para crecer"],
+      name: "Como trabajamos",
+      role: "Lo que un cliente puede esperar cada vez",
+      bio: "Respuestas claras, ayuda honesta y seguimiento real para que la gente se sienta atendida y no confundida.",
+      highlights: ["Cercanos", "Confiables", "Buen seguimiento"],
     },
   ],
 };
@@ -1768,7 +1768,7 @@ function SiteHeader({
               />
               <h2 className="mt-4 text-2xl font-semibold text-slate-900">Oak & Compass Insurance</h2>
               <p className="mt-2 max-w-md text-sm leading-7 text-slate-600">
-                Follow along on Facebook and explore a quick insurance fact while you are here.
+                Follow along on Facebook and pick up a quick insurance tip while you are here.
               </p>
             </div>
 
@@ -1786,7 +1786,7 @@ function SiteHeader({
                   ? "mt-4 rounded-full border border-pink-200 bg-white px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-pink-50"
                   : "mt-4 rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-100"}
               >
-                Show Another Fact
+                Another quick fact
               </button>
             </div>
 
@@ -1798,7 +1798,7 @@ function SiteHeader({
                 ? "mt-6 inline-flex w-full items-center justify-center rounded-full bg-[linear-gradient(135deg,#f97316_0%,#ec4899_45%,#8b5cf6_100%)] px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
                 : "mt-6 inline-flex w-full items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"}
             >
-              Visit Facebook
+              Follow on Facebook
             </a>
           </div>
         </div>
@@ -3323,15 +3323,15 @@ function ClientResourcesPage({
   const introSelectId = useId();
   const quickMoveLabel = language === "es" ? "Acceso rapido" : "Quick move";
   const bestUseLabel = language === "es" ? "Mejor uso" : "Best use";
-  const easyWinLabel = language === "es" ? "Idea facil" : "Easy win";
+  const easyWinLabel = language === "es" ? "Por que sirve" : "Why it helps";
   const bestUseBody =
     language === "es"
       ? "Reclamos, mudanzas, renovaciones y cambios de vida"
       : "Claims, moves, renewals, and life changes";
   const easyWinBody =
     language === "es"
-      ? "Cambia estos contactos por tus referidos reales y comparte esta pagina seguido"
-      : "Swap in your real referral partners and send this page often";
+      ? "Todo esta reunido aqui para que no tengas que buscar entre mensajes, correos y notas"
+      : "Everything is gathered here so you do not have to dig through texts, emails, and notes";
   const callNowLabel = language === "es" ? "Llamar ahora" : "Call now";
   const contactCardLabel = language === "es" ? "Tarjeta de contacto" : "Contact card";
   const phoneLabel = language === "es" ? "Telefono" : "Phone";
