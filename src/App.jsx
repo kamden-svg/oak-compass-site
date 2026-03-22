@@ -389,22 +389,24 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Realtor",
             name: "Reed Mackley",
             tagline:
-              "My preferred realtor for Northern Utah, with a strong heart for first responders, military families, and anyone who wants a steady guide.",
+              "Reed is the kind of person who makes people feel settled quickly. He is steady, genuine, and really good at taking the stress out of a move.",
             phone: "435.720.8209",
             email: "MackleyProperty@gmail.com",
             website: "RE/MAX Ascent",
-            note: "I have worked with Reed and recommend him with confidence. He is a great guy, knows Northern Utah well, and is an especially strong fit for first responders and military clients.",
+            note: "I recommend Reed because he is the real deal. He is easy to trust, he knows Northern Utah well, and he shows up like someone who actually cares about the people he is helping.",
+            bestFor: "Especially great for Northern Utah clients, first responders, military families, and anyone who wants a calm guide through the process.",
             accent: "from-emerald-700 via-emerald-600 to-lime-500",
           },
           {
             role: "Realtor",
             name: "Eric Schmitz",
             tagline:
-              "A great option for the Salt Lake area and one of the nicest people you could send a client to.",
+              "Eric brings a warm, welcoming energy that instantly puts people at ease. He feels like someone you can comfortably send good people to.",
             phone: "(385) 899-2489",
             email: "Eric@MarkHaaga.com",
             website: "MarkHaaga.com",
-            note: "Eric is a wonderful recommendation for clients in the Salt Lake area. He brings a warm, easy presence that helps people feel comfortable through the real estate process.",
+            note: "I love recommending Eric because he is genuinely kind, easy to talk to, and the kind of person who makes a stressful process feel a lot more manageable.",
+            bestFor: "A great fit for Salt Lake area clients who want someone patient, personable, and easy to work with from start to finish.",
             accent: "from-sky-700 via-cyan-600 to-teal-500",
           },
         ],
@@ -416,11 +418,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "HVAC & Plumbing",
             name: "Canyon Plumbing & Heating",
             tagline:
-              "A strong local option for HVAC and plumbing work, with a veteran-owned, family-operated approach and service across Cache Valley and nearby areas.",
+              "Canyon feels like a dependable local crew you can call when something in the house really needs to get handled right.",
             phone: "(435) 881-6952",
             email: "contact@canyonph.net",
             website: "canyonph.net",
-            note: "Canyon Plumbing & Heating is based in Smithfield and offers HVAC, water heater, boiler, AC, and general plumbing services. Their site says they have served the area since 2005 and cover Cache Valley, Bear Lake Valley, and Malad, Idaho.",
+            note: "I like having Canyon on this list because they cover the kind of home issues people cannot afford to let sit. They come across as solid, capable, and built for real day-to-day homeowner needs.",
+            bestFor: "A strong option for HVAC, plumbing, water heaters, boilers, AC work, and those home problems that need a reliable local company.",
             accent: "from-slate-900 via-sky-800 to-cyan-500",
           },
         ],
@@ -432,11 +435,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Health Insurance",
             name: "Kristen Gines",
             tagline:
-              "A trusted option for health insurance guidance through Legacy Insurance and Financial Services.",
+              "Kristen is a great person to have in your corner when health insurance feels confusing and you just want somebody to walk you through it clearly.",
             phone: "801-691-9767",
             email: "kgines@legacyifs.com",
             website: "Legacy Insurance and Financial Services",
-            note: "Kristen Gines is listed on her Blinq card as an Insurance Broker at Legacy Insurance and Financial Services. Her card includes direct phone and email contact for health insurance conversations.",
+            note: "I recommend Kristen because health insurance can feel overwhelming fast, and she is the kind of person who can help bring clarity and direction to the conversation.",
+            bestFor: "A strong fit for anyone who wants more personal guidance around health insurance options and next steps.",
             accent: "from-rose-700 via-rose-600 to-orange-400",
           },
         ],
@@ -448,11 +452,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Mortgage Originator",
             name: "Elayne Bair",
             tagline:
-              "A strong option for home loans, refinances, construction loans, lot loans, and first-time homebuyer financing.",
+              "Elayne is someone I would feel good sending people to when they need a lender who can help them move forward with confidence.",
             phone: "435-713-1863",
             email: "ebair@usucu.org",
             website: "gwcu.org/originators/elayne-bair",
-            note: "Goldenwest Credit Union lists Elayne Bair as a Mortgage Originator in Logan, Utah. Her mortgage page highlights home loans, refinances, construction loans, lot loans, and first-time homebuyer loans, with direct contact at 220 E 1400 N, Logan, UT.",
+            note: "I like Elayne as a recommendation because buying or refinancing a home is a big deal, and she is connected to the kinds of loan conversations people need help understanding clearly.",
+            bestFor: "A strong fit for home loans, refinances, construction loans, lot loans, and first-time buyers who want a lender they can talk through things with.",
             accent: "from-amber-700 via-orange-600 to-rose-500",
           },
         ],
@@ -464,11 +469,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Business Banker | VP",
             name: "Joseph Redzich",
             tagline:
-              "A strong business lending contact for working capital, lines of credit, equipment financing, and commercial real estate lending.",
+              "Joseph is a great contact for business owners who need somebody sharp, capable, and steady on the banking side.",
             phone: "435-792-1227",
             email: "Joseph.Redzich@zionsbank.com",
             website: "zionsbank.com/personal/directory/business-bankers/joseph-redzich/",
-            note: "Joseph Redzich is listed as Business Banker | VP with NMLS #1219547. His profile highlights help with working capital, lines of credit, equipment financing, and commercial real estate lending.",
+            note: "I like having Joseph here because business owners need real relationships too, especially when they are making big financial decisions and need someone who knows the space.",
+            bestFor: "A strong fit for working capital, lines of credit, equipment financing, and commercial real estate conversations.",
             accent: "from-indigo-800 via-slate-800 to-blue-500",
           },
         ],
@@ -480,11 +486,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Dog Trainer",
             name: "Robert Barlow",
             tagline:
-              "A trusted dog trainer through B-Hyve K9, with private training, group classes, daycare, boarding, and grooming for Salt Lake County clients.",
+              "Robert is the kind of dog trainer people remember because he is all-in on helping both the dog and the owner succeed.",
             phone: "(385) 457-5699",
             email: "Robert@BHyvek9.com",
             website: "bhyvek9.com",
-            note: "B-Hyve K9 is owned and operated by Rob Barlow in Millcreek, Utah at 3947 West Temple. The site highlights private training, group classes, board-and-train programs, daycare, boarding, and grooming, with hours listed Monday through Sunday from 7 AM to 8 PM.",
+            note: "I recommend Robert because good dog training changes everyday life at home, and he offers the kind of hands-on help people really appreciate when they want better results with their dog.",
+            bestFor: "A great fit for private training, group classes, daycare, boarding, grooming, and owners who want real support with their dog.",
             accent: "from-emerald-800 via-lime-700 to-amber-500",
           },
         ],
@@ -687,22 +694,24 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Realtor",
             name: "Reed Mackley",
             tagline:
-              "Mi realtor preferido para el norte de Utah, con mucha afinidad para primeros respondedores, familias militares y personas que quieren una guia firme.",
+              "Reed es de esas personas que rapido hacen que la gente se sienta tranquila. Es firme, genuino y muy bueno para bajar el estres de una mudanza.",
             phone: "435.720.8209",
             email: "MackleyProperty@gmail.com",
             website: "RE/MAX Ascent",
-            note: "He trabajado con Reed y lo recomiendo con mucha confianza. Es una gran persona, conoce muy bien el norte de Utah y es una opcion especialmente fuerte para clientes militares y primeros respondedores.",
+            note: "Recomiendo a Reed con muchisima confianza. Es buena persona, conoce muy bien el norte de Utah y se nota que de verdad le importa la gente a la que ayuda.",
+            bestFor: "Especialmente fuerte para clientes del norte de Utah, primeros respondedores, familias militares y personas que quieren una guia calmada.",
             accent: "from-emerald-700 via-emerald-600 to-lime-500",
           },
           {
             role: "Realtor",
             name: "Eric Schmitz",
             tagline:
-              "Una gran opcion para el area de Salt Lake y una de las personas mas amables a las que puedes enviar un cliente.",
+              "Eric tiene una energia muy calida y cercana que ayuda a que la gente se sienta comoda desde el principio.",
             phone: "(385) 899-2489",
             email: "Eric@MarkHaaga.com",
             website: "MarkHaaga.com",
-            note: "Eric es una excelente recomendacion para clientes del area de Salt Lake. Tiene una energia muy amable y hace que la gente se sienta comoda durante todo el proceso.",
+            note: "Me gusta recomendar a Eric porque es genuinamente amable, facil de tratar y de esas personas que hacen que un proceso pesado se sienta mucho mas llevadero.",
+            bestFor: "Muy buena opcion para clientes del area de Salt Lake que quieren alguien paciente, amable y facil de trabajar.",
             accent: "from-sky-700 via-cyan-600 to-teal-500",
           },
         ],
@@ -714,11 +723,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "HVAC y plomeria",
             name: "Canyon Plumbing & Heating",
             tagline:
-              "Una opcion local fuerte para HVAC y plomeria, con un enfoque veteran-owned, familiar y servicio en Cache Valley y areas cercanas.",
+              "Canyon se siente como ese equipo local confiable al que puedes llamar cuando algo en la casa de verdad necesita resolverse bien.",
             phone: "(435) 881-6952",
             email: "contact@canyonph.net",
             website: "canyonph.net",
-            note: "Canyon Plumbing & Heating esta en Smithfield y ofrece servicios de HVAC, boilers, calentadores de agua, AC y plomeria general. Su sitio dice que sirven la zona desde 2005 y cubren Cache Valley, Bear Lake Valley y Malad, Idaho.",
+            note: "Me gusta tener a Canyon aqui porque cubren esos problemas de casa que no se pueden dejar para despues. Se sienten como una opcion seria, capaz y bien aterrizada para necesidades reales del hogar.",
+            bestFor: "Muy buena opcion para HVAC, plomeria, calentadores de agua, boilers, aire acondicionado y problemas importantes en casa.",
             accent: "from-slate-900 via-sky-800 to-cyan-500",
           },
         ],
@@ -730,11 +740,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Seguro de salud",
             name: "Kristen Gines",
             tagline:
-              "Una opcion confiable para ayuda con seguro de salud por medio de Legacy Insurance and Financial Services.",
+              "Kristen es una gran persona para tener de tu lado cuando el seguro de salud se siente confuso y solo quieres que alguien te lo explique bien.",
             phone: "801-691-9767",
             email: "kgines@legacyifs.com",
             website: "Legacy Insurance and Financial Services",
-            note: "La tarjeta de Blinq de Kristen Gines la muestra como Insurance Broker en Legacy Insurance and Financial Services. Su tarjeta incluye telefono y correo directo para conversaciones sobre seguro de salud.",
+            note: "Recomiendo a Kristen porque el seguro de salud puede sentirse pesado muy rapido, y ella es el tipo de persona que puede traer claridad y direccion a la conversacion.",
+            bestFor: "Muy buena opcion para quien quiere guia mas personal con sus opciones de seguro de salud y los siguientes pasos.",
             accent: "from-rose-700 via-rose-600 to-orange-400",
           },
         ],
@@ -746,11 +757,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Originadora hipotecaria",
             name: "Elayne Bair",
             tagline:
-              "Una opcion fuerte para home loans, refinanciamientos, construction loans, lot loans y prestamos para first-time homebuyers.",
+              "Elayne es alguien a quien si me sentiria comodo mandando gente cuando necesitan una lender que les ayude a avanzar con confianza.",
             phone: "435-713-1863",
             email: "ebair@usucu.org",
             website: "gwcu.org/originators/elayne-bair",
-            note: "Goldenwest Credit Union muestra a Elayne Bair como Mortgage Originator en Logan, Utah. Su pagina de hipotecas destaca home loans, refinanciamientos, construction loans, lot loans y prestamos para first-time homebuyers, con contacto directo en 220 E 1400 N, Logan, UT.",
+            note: "Me gusta Elayne como recomendacion porque comprar o refinanciar casa es algo grande, y ella esta conectada con las conversaciones de prestamos que la gente necesita entender con claridad.",
+            bestFor: "Muy buena opcion para home loans, refinanciamientos, construction loans, lot loans y first-time buyers que quieren poder hablar bien sus opciones.",
             accent: "from-amber-700 via-orange-600 to-rose-500",
           },
         ],
@@ -762,11 +774,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Business Banker | VP",
             name: "Joseph Redzich",
             tagline:
-              "Un contacto fuerte para business lending, working capital, lineas de credito, financiamiento de equipo y commercial real estate lending.",
+              "Joseph es un gran contacto para duenos de negocio que necesitan a alguien capaz, estable y fuerte del lado bancario.",
             phone: "435-792-1227",
             email: "Joseph.Redzich@zionsbank.com",
             website: "zionsbank.com/personal/directory/business-bankers/joseph-redzich/",
-            note: "Joseph Redzich aparece como Business Banker | VP con NMLS #1219547. Su perfil destaca ayuda con working capital, lineas de credito, financiamiento de equipo y commercial real estate lending.",
+            note: "Me gusta tener a Joseph aqui porque los duenos de negocio tambien necesitan relaciones reales, sobre todo cuando estan tomando decisiones financieras grandes y quieren hablar con alguien que si conoce ese mundo.",
+            bestFor: "Muy buena opcion para working capital, lineas de credito, financiamiento de equipo y conversaciones de commercial real estate.",
             accent: "from-indigo-800 via-slate-800 to-blue-500",
           },
         ],
@@ -778,11 +791,12 @@ const CLIENT_RESOURCES_PAGE_COPY = {
             role: "Entrenador de perros",
             name: "Robert Barlow",
             tagline:
-              "Una recomendacion confiable para entrenamiento de perros por medio de B-Hyve K9, con private training, group classes, daycare, boarding y grooming para clientes de Salt Lake County.",
+              "Robert es de esos entrenadores que la gente recuerda porque de verdad se mete a ayudar tanto al perro como al dueno.",
             phone: "(385) 457-5699",
             email: "Robert@BHyvek9.com",
             website: "bhyvek9.com",
-            note: "B-Hyve K9 es operado por Rob Barlow en Millcreek, Utah, en 3947 West Temple. El sitio destaca private training, group classes, programas de board and train, daycare, boarding y grooming, con horario de lunes a domingo de 7 AM a 8 PM.",
+            note: "Recomiendo a Robert porque un buen entrenamiento cambia la vida diaria en casa, y el ofrece esa ayuda practica que la gente agradece cuando quiere ver resultados reales con su perro.",
+            bestFor: "Muy buena opcion para private training, group classes, daycare, boarding, grooming y duenos que quieren apoyo real con su perro.",
             accent: "from-emerald-800 via-lime-700 to-amber-500",
           },
         ],
@@ -3333,9 +3347,10 @@ function ClientResourcesPage({
       ? "Todo esta reunido aqui para que no tengas que buscar entre mensajes, correos y notas"
       : "Everything is gathered here so you do not have to dig through texts, emails, and notes";
   const callNowLabel = language === "es" ? "Llamar ahora" : "Call now";
-  const contactCardLabel = language === "es" ? "Tarjeta de contacto" : "Contact card";
+  const contactCardLabel = language === "es" ? "Contacto directo" : "Direct contact";
   const phoneLabel = language === "es" ? "Telefono" : "Phone";
-  const websiteLabel = language === "es" ? "Sitio web" : "Website";
+  const whyRecommendLabel = language === "es" ? "Por que lo recomiendo" : "Why I recommend them";
+  const greatFitLabel = language === "es" ? "Ideal para" : "Great fit for";
   const [selectedCarrierName, setSelectedCarrierName] = useState(
     () => pageText.carriers?.[0]?.name || ""
   );
@@ -3751,7 +3766,7 @@ function ClientResourcesPage({
                         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
                           {contactCardLabel}
                         </p>
-                        <div className="mt-4 space-y-3 text-sm text-slate-700">
+                        <div className="mt-4 grid gap-3 text-sm text-slate-700 sm:grid-cols-2">
                           <div>
                             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
                               {phoneLabel}
@@ -3764,17 +3779,23 @@ function ClientResourcesPage({
                             </p>
                             <p className="mt-1 break-words font-medium text-slate-950">{professional.email}</p>
                           </div>
-                          <div>
-                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                              {websiteLabel}
-                            </p>
-                            <p className="mt-1 font-medium text-slate-950">{professional.website}</p>
-                          </div>
                         </div>
                       </div>
 
-                      <div className="rounded-[1.4rem] border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950">
-                        {professional.note}
+                      <div className="grid gap-4 lg:grid-cols-2">
+                        <div className="rounded-[1.4rem] border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-950">
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+                            {whyRecommendLabel}
+                          </p>
+                          <p className="mt-3">{professional.note}</p>
+                        </div>
+
+                        <div className="rounded-[1.4rem] border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-950">
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                            {greatFitLabel}
+                          </p>
+                          <p className="mt-3">{professional.bestFor}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
