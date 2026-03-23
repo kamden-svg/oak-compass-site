@@ -4364,6 +4364,7 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
   const [agencyName, setAgencyName] = useState("Oak and Compass Insurance");
   const [reportTitle, setReportTitle] = useState("Agency Profit Report");
   const [yourComm, setYourComm] = useState(2500);
+  const [extraIncome, setExtraIncome] = useState(0);
   const [lifeCommission, setLifeCommission] = useState(300);
   const [commercialCommission, setCommercialCommission] = useState(100);
   const [bonusPercent, setBonusPercent] = useState(300);
@@ -4441,7 +4442,7 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
   );
   const uncappedBonus = (otherCommission + producerBonusCredit) * multiplier;
   const totalBonus = lifeBonusApplied + commercialBonusApplied + uncappedBonus;
-  const gross = calculatorToNum(yourComm) + totalBonus;
+  const gross = calculatorToNum(yourComm) + totalBonus + calculatorToNum(extraIncome);
   const net = gross - payroll - directCosts - totalExpenses;
   const margin = gross ? net / gross : 0;
 
@@ -4533,6 +4534,11 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
               label="Your Total Commission"
               value={yourComm}
               onChange={(e) => setYourComm(e.target.value)}
+            />
+            <Input
+              label="Extra Income"
+              value={extraIncome}
+              onChange={(e) => setExtraIncome(e.target.value)}
             />
             <Input
               label="Life Commission"
@@ -4767,6 +4773,10 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
                   <span className="font-semibold">{calculatorCurrency(yourComm)}</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-gray-600">Extra income</span>
+                  <span className="font-semibold">{calculatorCurrency(extraIncome)}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-gray-600">Life commission</span>
                   <span className="font-semibold">{calculatorCurrency(safeLifeCommission)}</span>
                 </div>
@@ -4812,6 +4822,10 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
               <div className="flex justify-between">
                 <span className="text-gray-600">Gross revenue</span>
                 <span className="font-semibold">{calculatorCurrency(gross)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Includes extra income</span>
+                <span className="font-semibold">{calculatorCurrency(extraIncome)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Less payroll</span>
