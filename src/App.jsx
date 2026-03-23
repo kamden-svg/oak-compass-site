@@ -1,5 +1,7 @@
-import { useEffect, useId, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const INITIAL_FORM = {
   needsSpanish: "no",
@@ -4231,6 +4233,506 @@ function calculateSubProducerPay({ plan, nbPremium }) {
   return details;
 }
 
+function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
+  const reportRef = useRef(null);
+
+  const calculatorCurrency = (v) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }).format(Number(v || 0));
+
+  const calculatorPercent = (v) => `${(Number(v || 0) * 100).toFixed(1)}%`;
+
+  const calculatorToNum = (v) => {
+    const n = parseFloat(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+
+  const defaultExpenses = {
+    rent: 600,
+    eo: 120,
+    leads: 600,
+    tech: 150,
+    supplies: 50,
+    other: 75,
+    mvr: 50,
+    payroll: 1250,
+  };
+
+  const defaultPlans = {
+    plan1: {
+      name: "Plan 1",
+      base: 500,
+      tiers: [
+        { min: 0, rate: 0 },
+        { min: 5000, rate: 0.1 },
+        { min: 10000, rate: 0.125 },
+        { min: 20000, rate: 0.17 },
+      ],
+      bonuses: [],
+    },
+    plan2: {
+      name: "Plan 2",
+      base: 0,
+      tiers: [{ min: 0, rate: 0.1 }],
+      bonuses: [
+        { min: 7500, amount: 500 },
+        { min: 10000, amount: 750 },
+        { min: 20000, amount: 1000 },
+        { min: 25000, amount: 2000 },
+      ],
+    },
+    plan3: {
+      name: "Plan 3",
+      base: 150,
+      tiers: [
+        { min: 0, rate: 0.06 },
+        { min: 5000, rate: 0.09 },
+        { min: 12500, rate: 0.12 },
+        { min: 20000, rate: 0.15 },
+      ],
+      bonuses: [
+        { min: 10000, amount: 150 },
+        { min: 15000, amount: 300 },
+        { min: 20000, amount: 600 },
+      ],
+    },
+  };
+
+  const getTier = (tiers, nb) => {
+    let active = tiers[0];
+    tiers.forEach((tier) => {
+      if (nb >= tier.min) active = tier;
+    });
+    return active;
+  };
+
+  const getBonus = (tiers, nb) => {
+    let active = { amount: 0 };
+    tiers.forEach((tier) => {
+      if (nb >= tier.min) active = tier;
+    });
+    return active;
+  };
+
+  const calcPay = (plan, nb) => {
+    const tier = getTier(plan.tiers, nb);
+    const bonus = getBonus(plan.bonuses, nb);
+    const base = calculatorToNum(plan.base);
+    const commission = nb * calculatorToNum(tier.rate);
+
+    return {
+      base,
+      rate: calculatorToNum(tier.rate),
+      commission,
+      bonus: calculatorToNum(bonus.amount),
+      total: base + commission + calculatorToNum(bonus.amount),
+    };
+  };
+
+  function Input({ label, value, onChange, type = "number" }) {
+    return (
+      <div className="rounded-2xl border bg-white p-4 shadow-sm">
+        <label className="mb-2 block text-sm font-semibold text-gray-700">
+          {label}
+        </label>
+        <input
+          type={type}
+          value={value}
+          onChange={onChange}
+          className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+        />
+      </div>
+    );
+  }
+
+  function SummaryCard({ title, value, sub }) {
+    return (
+      <div className="rounded-2xl border bg-white p-4 shadow-sm">
+        <div className="text-sm font-medium text-gray-500">{title}</div>
+        <div className="mt-1 text-2xl font-bold text-gray-900">{value}</div>
+        {sub ? <div className="mt-1 text-xs text-gray-500">{sub}</div> : null}
+      </div>
+    );
+  }
+
+  const [agencyName, setAgencyName] = useState("Oak and Compass Insurance");
+  const [reportTitle, setReportTitle] = useState("Agency Profit Report");
+  const [yourComm, setYourComm] = useState(2500);
+  const [bonusPercent, setBonusPercent] = useState(300);
+  const [expenses, setExpenses] = useState(defaultExpenses);
+  const [plans] = useState(defaultPlans);
+  const [producers, setProducers] = useState([
+    { id: 1, name: "Producer 1", plan: "plan3", nb: 5000, cost: 0 },
+  ]);
+
+  const totalExpenses = useMemo(
+    () => Object.values(expenses).reduce((sum, val) => sum + calculatorToNum(val), 0),
+    [expenses]
+  );
+
+  const multiplier = calculatorToNum(bonusPercent) / 100;
+
+  const producerData = useMemo(() => {
+    const overheadPerProducer = producers.length
+      ? totalExpenses / producers.length
+      : 0;
+
+    return producers.map((producer) => {
+      const nb = calculatorToNum(producer.nb);
+      const plan = plans[producer.plan];
+      const pay = calcPay(plan, nb);
+      const bonusCredit = nb * 0.1;
+      const bonusRevenue = bonusCredit * multiplier;
+      const totalCost =
+        pay.total + calculatorToNum(producer.cost) + overheadPerProducer;
+      const profit = bonusRevenue - totalCost;
+
+      return {
+        ...producer,
+        nb,
+        pay,
+        bonusCredit,
+        bonusRevenue,
+        totalCost,
+        profit,
+        margin: bonusRevenue ? profit / bonusRevenue : 0,
+      };
+    });
+  }, [producers, plans, multiplier, totalExpenses]);
+
+  const payroll = producerData.reduce((sum, producer) => sum + producer.pay.total, 0);
+  const directCosts = producerData.reduce(
+    (sum, producer) => sum + calculatorToNum(producer.cost),
+    0
+  );
+  const bonusCredit = producerData.reduce(
+    (sum, producer) => sum + producer.bonusCredit,
+    0
+  );
+  const gross = calculatorToNum(yourComm) + bonusCredit * multiplier;
+  const net = gross - payroll - directCosts - totalExpenses;
+  const margin = gross ? net / gross : 0;
+
+  const updateExpense = (key, value) => {
+    setExpenses((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const updateProducer = (id, field, value) => {
+    setProducers((prev) =>
+      prev.map((producer) =>
+        producer.id === id ? { ...producer, [field]: value } : producer
+      )
+    );
+  };
+
+  const addProducer = () => {
+    setProducers((prev) => [
+      ...prev,
+      {
+        id: Date.now(),
+        name: `Producer ${prev.length + 1}`,
+        plan: "plan3",
+        nb: 0,
+        cost: 0,
+      },
+    ]);
+  };
+
+  const removeProducer = (id) => {
+    setProducers((prev) => prev.filter((producer) => producer.id !== id));
+  };
+
+  const exportToPDF = async () => {
+    const element = reportRef.current;
+    if (!element) return;
+
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = 210;
+    const pageHeight = 297;
+    const marginMm = 10;
+    const usableWidth = pdfWidth - marginMm * 2;
+    const imgWidth = usableWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = marginMm;
+
+    pdf.addImage(imgData, "PNG", marginMm, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight - marginMm * 2;
+
+    while (heightLeft > 0) {
+      position = -(imgHeight - heightLeft) + marginMm;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", marginMm, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight - marginMm * 2;
+    }
+
+    const safeName = agencyName.replace(/[^a-z0-9]/gi, "_").toLowerCase();
+    pdf.save(`${safeName}_profit_report.pdf`);
+  };
+
+  const generatedAt = new Date().toLocaleString();
+
+  return (
+    <div className="mt-8 bg-gray-100 p-6 text-gray-900">
+      <div className="mx-auto max-w-7xl space-y-6">
+        <div className="flex flex-col gap-4 rounded-3xl border bg-white p-5 shadow-sm md:flex-row md:items-end md:justify-between">
+          <div className="grid flex-1 gap-4 md:grid-cols-2">
+            <Input
+              label="Agency Name"
+              type="text"
+              value={agencyName}
+              onChange={(e) => setAgencyName(e.target.value)}
+            />
+            <Input
+              label="Report Title"
+              type="text"
+              value={reportTitle}
+              onChange={(e) => setReportTitle(e.target.value)}
+            />
+            <Input
+              label="Your Commission"
+              value={yourComm}
+              onChange={(e) => setYourComm(e.target.value)}
+            />
+            <Input
+              label="Bonus Percent"
+              value={bonusPercent}
+              onChange={(e) => setBonusPercent(e.target.value)}
+            />
+          </div>
+
+          <div className="flex flex-col gap-3 md:w-auto">
+            <button
+              type="button"
+              onClick={onShowProducerCalculator}
+              className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              Producer Calculator
+            </button>
+            <button
+              type="button"
+              onClick={exportToPDF}
+              className="rounded-2xl bg-black px-5 py-3 font-semibold text-white"
+            >
+              Export to PDF
+            </button>
+          </div>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-4">
+          {Object.entries(expenses).map(([key, value]) => (
+            <Input
+              key={key}
+              label={key}
+              value={value}
+              onChange={(e) => updateExpense(key, e.target.value)}
+            />
+          ))}
+        </div>
+
+        <div className="rounded-3xl border bg-white p-5 shadow-sm">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="text-xl font-bold">Producers</h2>
+            <button
+              type="button"
+              onClick={addProducer}
+              className="rounded-xl border px-4 py-2 font-semibold"
+            >
+              Add Producer
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {producers.map((producer) => (
+              <div
+                key={producer.id}
+                className="grid gap-4 rounded-2xl border p-4 md:grid-cols-5"
+              >
+                <Input
+                  label="Name"
+                  type="text"
+                  value={producer.name}
+                  onChange={(e) =>
+                    updateProducer(producer.id, "name", e.target.value)
+                  }
+                />
+                <div className="rounded-2xl border bg-white p-4 shadow-sm">
+                  <label className="mb-2 block text-sm font-semibold text-gray-700">
+                    Plan
+                  </label>
+                  <select
+                    value={producer.plan}
+                    onChange={(e) =>
+                      updateProducer(producer.id, "plan", e.target.value)
+                    }
+                    className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+                  >
+                    {Object.keys(plans).map((key) => (
+                      <option key={key} value={key}>
+                        {plans[key].name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <Input
+                  label="NB Premium"
+                  value={producer.nb}
+                  onChange={(e) =>
+                    updateProducer(producer.id, "nb", e.target.value)
+                  }
+                />
+                <Input
+                  label="Direct Cost"
+                  value={producer.cost}
+                  onChange={(e) =>
+                    updateProducer(producer.id, "cost", e.target.value)
+                  }
+                />
+                <div className="flex items-end">
+                  <button
+                    type="button"
+                    onClick={() => removeProducer(producer.id)}
+                    className="w-full rounded-xl border px-4 py-2 font-semibold"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div ref={reportRef} className="rounded-3xl bg-white p-8 shadow-sm">
+          <div className="border-b pb-6">
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <h1 className="text-3xl font-bold">{agencyName}</h1>
+                <p className="mt-1 text-sm text-gray-500">{reportTitle}</p>
+              </div>
+              <div className="text-right text-sm text-gray-500">
+                <div>Generated</div>
+                <div>{generatedAt}</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-4">
+            <SummaryCard title="Gross Revenue" value={calculatorCurrency(gross)} />
+            <SummaryCard title="Producer Payroll" value={calculatorCurrency(payroll)} />
+            <SummaryCard title="Fixed Expenses" value={calculatorCurrency(totalExpenses)} />
+            <SummaryCard
+              title="Net Profit"
+              value={calculatorCurrency(net)}
+              sub={`Margin ${calculatorPercent(margin)}`}
+            />
+          </div>
+
+          <div className="mt-8">
+            <h2 className="mb-3 text-xl font-bold">Producer Breakdown</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse overflow-hidden rounded-2xl border">
+                <thead className="bg-gray-50">
+                  <tr className="text-left text-sm text-gray-600">
+                    <th className="border-b px-4 py-3">Producer</th>
+                    <th className="border-b px-4 py-3">Plan</th>
+                    <th className="border-b px-4 py-3">NB Premium</th>
+                    <th className="border-b px-4 py-3">Pay</th>
+                    <th className="border-b px-4 py-3">Bonus Revenue</th>
+                    <th className="border-b px-4 py-3">All-In Cost</th>
+                    <th className="border-b px-4 py-3">Profit</th>
+                    <th className="border-b px-4 py-3">Margin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {producerData.map((producer) => (
+                    <tr key={producer.id} className="text-sm">
+                      <td className="border-b px-4 py-3">{producer.name}</td>
+                      <td className="border-b px-4 py-3">{plans[producer.plan].name}</td>
+                      <td className="border-b px-4 py-3">{calculatorCurrency(producer.nb)}</td>
+                      <td className="border-b px-4 py-3">{calculatorCurrency(producer.pay.total)}</td>
+                      <td className="border-b px-4 py-3">{calculatorCurrency(producer.bonusRevenue)}</td>
+                      <td className="border-b px-4 py-3">{calculatorCurrency(producer.totalCost)}</td>
+                      <td className="border-b px-4 py-3">{calculatorCurrency(producer.profit)}</td>
+                      <td className="border-b px-4 py-3">{calculatorPercent(producer.margin)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <div className="rounded-2xl border p-5">
+              <h3 className="mb-3 text-lg font-bold">Expense Summary</h3>
+              <div className="space-y-2 text-sm">
+                {Object.entries(expenses).map(([key, value]) => (
+                  <div key={key} className="flex justify-between">
+                    <span className="capitalize text-gray-600">{key}</span>
+                    <span className="font-semibold">{calculatorCurrency(value)}</span>
+                  </div>
+                ))}
+                <div className="flex justify-between border-t pt-2">
+                  <span className="font-semibold">Total</span>
+                  <span className="font-bold">{calculatorCurrency(totalExpenses)}</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border p-5">
+              <h3 className="mb-3 text-lg font-bold">Top-Level Math</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Your commission</span>
+                  <span className="font-semibold">{calculatorCurrency(yourComm)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Producer bonus credit</span>
+                  <span className="font-semibold">{calculatorCurrency(bonusCredit)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Bonus multiplier</span>
+                  <span className="font-semibold">{Number(multiplier).toFixed(2)}x</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Gross revenue</span>
+                  <span className="font-semibold">{calculatorCurrency(gross)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Less payroll</span>
+                  <span className="font-semibold">-{calculatorCurrency(payroll)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Less direct costs</span>
+                  <span className="font-semibold">-{calculatorCurrency(directCosts)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Less fixed expenses</span>
+                  <span className="font-semibold">-{calculatorCurrency(totalExpenses)}</span>
+                </div>
+                <div className="flex justify-between border-t pt-2">
+                  <span className="font-semibold">Net profit</span>
+                  <span className="font-bold">{calculatorCurrency(net)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function RetailBonusCalculator({ onShowProducerCalculator }) {
   const [yourCommission, setYourCommission] = useState("2500");
   const [lifeCommission, setLifeCommission] = useState("300");
@@ -5203,7 +5705,7 @@ function LeadsDashboard({
       ) : null}
 
       {portalView === "calculator" ? (
-        <RetailBonusCalculator
+        <AgencyProfitCalculatorPortal
           onShowProducerCalculator={() => setPortalView("producer-calculator")}
         />
       ) : portalView === "producer-calculator" ? (
