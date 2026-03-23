@@ -4235,6 +4235,9 @@ function calculateSubProducerPay({ plan, nbPremium }) {
 
 function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
   const reportRef = useRef(null);
+  const LIFE_BONUS_CAP = 1400;
+  const COMMERCIAL_BONUS_CAP = 3500;
+  const SUB_BONUS_CREDIT_RATE = 0.1;
 
   const calculatorCurrency = (v) =>
     new Intl.NumberFormat("en-US", {
@@ -4361,6 +4364,8 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
   const [agencyName, setAgencyName] = useState("Oak and Compass Insurance");
   const [reportTitle, setReportTitle] = useState("Agency Profit Report");
   const [yourComm, setYourComm] = useState(2500);
+  const [lifeCommission, setLifeCommission] = useState(300);
+  const [commercialCommission, setCommercialCommission] = useState(100);
   const [bonusPercent, setBonusPercent] = useState(300);
   const [expenses, setExpenses] = useState(defaultExpenses);
   const [plans] = useState(defaultPlans);
@@ -4384,7 +4389,7 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
       const nb = calculatorToNum(producer.nb);
       const plan = plans[producer.plan];
       const pay = calcPay(plan, nb);
-      const bonusCredit = nb * 0.1;
+      const bonusCredit = nb * SUB_BONUS_CREDIT_RATE;
       const bonusRevenue = bonusCredit * multiplier;
       const totalCost =
         pay.total + calculatorToNum(producer.cost) + overheadPerProducer;
@@ -4399,20 +4404,44 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
         totalCost,
         profit,
         margin: bonusRevenue ? profit / bonusRevenue : 0,
+        overheadPerProducer,
       };
     });
-  }, [producers, plans, multiplier, totalExpenses]);
+  }, [producers, plans, multiplier, totalExpenses, SUB_BONUS_CREDIT_RATE]);
 
   const payroll = producerData.reduce((sum, producer) => sum + producer.pay.total, 0);
   const directCosts = producerData.reduce(
     (sum, producer) => sum + calculatorToNum(producer.cost),
     0
   );
-  const bonusCredit = producerData.reduce(
+  const producerBonusCredit = producerData.reduce(
     (sum, producer) => sum + producer.bonusCredit,
     0
   );
-  const gross = calculatorToNum(yourComm) + bonusCredit * multiplier;
+  const safeLifeCommission = Math.min(
+    calculatorToNum(lifeCommission),
+    calculatorToNum(yourComm)
+  );
+  const safeCommercialCommission = Math.min(
+    calculatorToNum(commercialCommission),
+    Math.max(calculatorToNum(yourComm) - safeLifeCommission, 0)
+  );
+  const otherCommission = Math.max(
+    calculatorToNum(yourComm) - safeLifeCommission - safeCommercialCommission,
+    0
+  );
+  const lifeBonusRaw = safeLifeCommission * multiplier;
+  const commercialBonusRaw = safeCommercialCommission * multiplier;
+  const lifeBonusApplied = Math.min(lifeBonusRaw, LIFE_BONUS_CAP);
+  const commercialBonusApplied = Math.min(commercialBonusRaw, COMMERCIAL_BONUS_CAP);
+  const lifeCapReduction = Math.max(lifeBonusRaw - lifeBonusApplied, 0);
+  const commercialCapReduction = Math.max(
+    commercialBonusRaw - commercialBonusApplied,
+    0
+  );
+  const uncappedBonus = (otherCommission + producerBonusCredit) * multiplier;
+  const totalBonus = lifeBonusApplied + commercialBonusApplied + uncappedBonus;
+  const gross = calculatorToNum(yourComm) + totalBonus;
   const net = gross - payroll - directCosts - totalExpenses;
   const margin = gross ? net / gross : 0;
 
@@ -4487,7 +4516,7 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
     <div className="mt-8 bg-gray-100 p-6 text-gray-900">
       <div className="mx-auto max-w-7xl space-y-6">
         <div className="flex flex-col gap-4 rounded-3xl border bg-white p-5 shadow-sm md:flex-row md:items-end md:justify-between">
-          <div className="grid flex-1 gap-4 md:grid-cols-2">
+          <div className="grid flex-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             <Input
               label="Agency Name"
               type="text"
@@ -4501,9 +4530,19 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
               onChange={(e) => setReportTitle(e.target.value)}
             />
             <Input
-              label="Your Commission"
+              label="Your Total Commission"
               value={yourComm}
               onChange={(e) => setYourComm(e.target.value)}
+            />
+            <Input
+              label="Life Commission"
+              value={lifeCommission}
+              onChange={(e) => setLifeCommission(e.target.value)}
+            />
+            <Input
+              label="Commercial Commission"
+              value={commercialCommission}
+              onChange={(e) => setCommercialCommission(e.target.value)}
             />
             <Input
               label="Bonus Percent"
@@ -4629,12 +4668,43 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
 
           <div className="mt-6 grid gap-4 md:grid-cols-4">
             <SummaryCard title="Gross Revenue" value={calculatorCurrency(gross)} />
+            <SummaryCard title="Total Bonus" value={calculatorCurrency(totalBonus)} />
             <SummaryCard title="Producer Payroll" value={calculatorCurrency(payroll)} />
-            <SummaryCard title="Fixed Expenses" value={calculatorCurrency(totalExpenses)} />
             <SummaryCard
               title="Net Profit"
               value={calculatorCurrency(net)}
               sub={`Margin ${calculatorPercent(margin)}`}
+            />
+          </div>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <SummaryCard
+              title="Life Bonus"
+              value={calculatorCurrency(lifeBonusApplied)}
+              sub={
+                lifeCapReduction > 0
+                  ? `Capped, reduced by ${calculatorCurrency(lifeCapReduction)}`
+                  : `From ${calculatorCurrency(safeLifeCommission)} life commission`
+              }
+            />
+            <SummaryCard
+              title="Commercial Bonus"
+              value={calculatorCurrency(commercialBonusApplied)}
+              sub={
+                commercialCapReduction > 0
+                  ? `Capped, reduced by ${calculatorCurrency(commercialCapReduction)}`
+                  : `From ${calculatorCurrency(safeCommercialCommission)} commercial commission`
+              }
+            />
+            <SummaryCard
+              title="Other Commission"
+              value={calculatorCurrency(otherCommission)}
+              sub="Your remaining uncapped commission"
+            />
+            <SummaryCard
+              title="Producer Bonus Credit"
+              value={calculatorCurrency(producerBonusCredit)}
+              sub="10% of producer NB premium"
             />
           </div>
 
@@ -4690,40 +4760,74 @@ function AgencyProfitCalculatorPortal({ onShowProducerCalculator }) {
             </div>
 
             <div className="rounded-2xl border p-5">
-              <h3 className="mb-3 text-lg font-bold">Top-Level Math</h3>
+              <h3 className="mb-3 text-lg font-bold">Bonus Breakdown</h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Your commission</span>
+                  <span className="text-gray-600">Your total commission</span>
                   <span className="font-semibold">{calculatorCurrency(yourComm)}</span>
                 </div>
                 <div className="flex justify-between">
+                  <span className="text-gray-600">Life commission</span>
+                  <span className="font-semibold">{calculatorCurrency(safeLifeCommission)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Commercial commission</span>
+                  <span className="font-semibold">{calculatorCurrency(safeCommercialCommission)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Other commission</span>
+                  <span className="font-semibold">{calculatorCurrency(otherCommission)}</span>
+                </div>
+                <div className="flex justify-between">
                   <span className="text-gray-600">Producer bonus credit</span>
-                  <span className="font-semibold">{calculatorCurrency(bonusCredit)}</span>
+                  <span className="font-semibold">{calculatorCurrency(producerBonusCredit)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Bonus multiplier</span>
                   <span className="font-semibold">{Number(multiplier).toFixed(2)}x</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Gross revenue</span>
-                  <span className="font-semibold">{calculatorCurrency(gross)}</span>
+                  <span className="text-gray-600">Life bonus applied</span>
+                  <span className="font-semibold">{calculatorCurrency(lifeBonusApplied)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Less payroll</span>
-                  <span className="font-semibold">-{calculatorCurrency(payroll)}</span>
+                  <span className="text-gray-600">Commercial bonus applied</span>
+                  <span className="font-semibold">{calculatorCurrency(commercialBonusApplied)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Less direct costs</span>
-                  <span className="font-semibold">-{calculatorCurrency(directCosts)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Less fixed expenses</span>
-                  <span className="font-semibold">-{calculatorCurrency(totalExpenses)}</span>
+                  <span className="text-gray-600">Uncapped bonus</span>
+                  <span className="font-semibold">{calculatorCurrency(uncappedBonus)}</span>
                 </div>
                 <div className="flex justify-between border-t pt-2">
-                  <span className="font-semibold">Net profit</span>
-                  <span className="font-bold">{calculatorCurrency(net)}</span>
+                  <span className="font-semibold">Total bonus</span>
+                  <span className="font-bold">{calculatorCurrency(totalBonus)}</span>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 rounded-2xl border p-5">
+            <h3 className="mb-3 text-lg font-bold">Top-Level Math</h3>
+            <div className="grid gap-2 text-sm md:grid-cols-2">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Gross revenue</span>
+                <span className="font-semibold">{calculatorCurrency(gross)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Less payroll</span>
+                <span className="font-semibold">-{calculatorCurrency(payroll)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Less direct costs</span>
+                <span className="font-semibold">-{calculatorCurrency(directCosts)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Less fixed expenses</span>
+                <span className="font-semibold">-{calculatorCurrency(totalExpenses)}</span>
+              </div>
+              <div className="flex justify-between border-t pt-2 md:col-span-2">
+                <span className="font-semibold">Net profit</span>
+                <span className="font-bold">{calculatorCurrency(net)}</span>
               </div>
             </div>
           </div>
