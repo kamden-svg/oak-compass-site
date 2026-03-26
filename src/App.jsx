@@ -4555,7 +4555,11 @@ export default function OakCompassLandingPage() {
   }, []);
 
   useEffect(() => {
-    if (activePage === PAGE_HOME && form.inquiryType !== "quote") {
+    if (
+      activePage === PAGE_HOME &&
+      form.inquiryType !== "quote" &&
+      form.inquiryType !== "referral"
+    ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
@@ -4645,7 +4649,11 @@ export default function OakCompassLandingPage() {
       setInquiryFilter("all");
     }
 
-    if (page === PAGE_HOME && (activePage !== PAGE_HOME || form.inquiryType !== "quote")) {
+    if (
+      page === PAGE_HOME &&
+      (activePage !== PAGE_HOME ||
+        (form.inquiryType !== "quote" && form.inquiryType !== "referral"))
+    ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
