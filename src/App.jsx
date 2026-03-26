@@ -5716,8 +5716,6 @@ function LeadsDashboard({
   passwordError,
   isLoading,
   loadError,
-  portalView,
-  setPortalView,
 }) {
   if (!isAuthenticated) {
     return (
@@ -5772,24 +5770,6 @@ function LeadsDashboard({
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
-          {portalView === "leads" ? (
-            <>
-              <button
-                type="button"
-                onClick={() => setPortalView("calculator")}
-                className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
-              >
-                {text.calculatorButton}
-              </button>
-              <button
-                type="button"
-                onClick={() => setPortalView("producer-calculator")}
-                className="rounded-2xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-50"
-              >
-                {text.producerCalculatorButton}
-              </button>
-            </>
-          ) : null}
           <button
             type="button"
             onClick={onExport}
@@ -5814,24 +5794,7 @@ function LeadsDashboard({
         </div>
       </div>
 
-      {portalView === "calculator" || portalView === "producer-calculator" ? (
-        <PortalCalculatorTabs
-          portalView={portalView}
-          setPortalView={setPortalView}
-          text={text}
-        />
-      ) : null}
-
-      {portalView === "calculator" ? (
-        <AgencyProfitCalculatorPortal
-          onShowProducerCalculator={() => setPortalView("producer-calculator")}
-        />
-      ) : portalView === "producer-calculator" ? (
-        <ProducerOnlyCalculator
-          onShowAgencyCalculator={() => setPortalView("calculator")}
-        />
-      ) : (
-        <>
+      <>
       <div className="mt-6 grid gap-4 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200 md:grid-cols-[1fr,220px]">
         <div>
           <label htmlFor="leadSearch" className="mb-2 block text-sm font-medium text-slate-700">
@@ -5994,7 +5957,6 @@ function LeadsDashboard({
         </div>
       )}
         </>
-      )}
     </section>
   );
 }
