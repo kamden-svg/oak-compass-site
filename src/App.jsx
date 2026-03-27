@@ -4757,29 +4757,6 @@ function RetailCompExpenseCalculator({
         {error ? <p className="mt-4 text-sm font-medium text-red-600">{error}</p> : null}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Revenue earned" value={currency(model.totals.revenueEarned)} />
-        <StatCard label="Bonuses" value={currency(model.totals.bonuses)} />
-        <StatCard label="Expenses" value={currency(model.totals.expenses)} tone="negative" />
-        <StatCard
-          label="Net after taxes"
-          value={currency(model.totals.netProfit)}
-          tone={model.totals.netProfit >= 0 ? "positive" : "negative"}
-          subtext={`Taxes: ${currency(model.totals.taxes)}`}
-        />
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {model.quarterResults.map((quarter) => (
-          <StatCard
-            key={`rate-${quarter.label}`}
-            label={`${quarter.label} bonus rate`}
-            value={`${(quarter.retailBonusRate * 100).toFixed(0)}%`}
-            subtext={`Retail bonus: ${currency(quarter.retailBonus)}`}
-          />
-        ))}
-      </div>
-
       <div className="grid gap-6 xl:grid-cols-[250px_minmax(0,1fr)]">
         <aside className="h-fit rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200 xl:sticky xl:top-6">
           <div className="space-y-2">
@@ -4808,6 +4785,34 @@ function RetailCompExpenseCalculator({
         </aside>
 
         <div className="space-y-6">
+      {activeEditor === null ? (
+        <>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <StatCard label="Revenue earned" value={currency(model.totals.revenueEarned)} />
+            <StatCard label="Bonuses" value={currency(model.totals.bonuses)} />
+            <StatCard label="Expenses" value={currency(model.totals.expenses)} tone="negative" />
+            <StatCard
+              label="Net after taxes"
+              value={currency(model.totals.netProfit)}
+              tone={model.totals.netProfit >= 0 ? "positive" : "negative"}
+              subtext={`Taxes: ${currency(model.totals.taxes)}`}
+            />
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {model.quarterResults.map((quarter) => (
+              <StatCard
+                key={`rate-${quarter.label}`}
+                label={`${quarter.label} bonus rate`}
+                value={`${(quarter.retailBonusRate * 100).toFixed(0)}%`}
+                subtext={`Retail bonus: ${currency(quarter.retailBonus)}`}
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
+
+      {activeEditor === "revenue" ? (
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         {renderSummaryCard(
           "revenue",
@@ -4879,6 +4884,11 @@ function RetailCompExpenseCalculator({
           </>
         )}
 
+      </div>
+      ) : null}
+
+      {activeEditor === "settings" ? (
+      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         {renderSummaryCard(
           "settings",
           "Settings",
@@ -4906,7 +4916,9 @@ function RetailCompExpenseCalculator({
           </>
         )}
       </div>
+      ) : null}
 
+      {activeEditor === "expenses" ? (
       <div className="grid gap-6 xl:grid-cols-2">
         {renderExpenseList(
           "Recurring Expenses",
@@ -4920,6 +4932,11 @@ function RetailCompExpenseCalculator({
           "annual",
           "Expenses paid once each year."
         )}
+      </div>
+      ) : null}
+
+      {activeEditor === "bonuses" ? (
+      <div className="grid gap-6 xl:grid-cols-2">
         {renderSummaryCard(
           "bonuses",
           "Bonuses",
@@ -4956,8 +4973,9 @@ function RetailCompExpenseCalculator({
           </>
         )}
       </div>
+      ) : null}
 
-      {renderSummaryCard(
+      {activeEditor === "producers" ? renderSummaryCard(
         "producers",
         "Producers",
         `${data.producers.length} producer${data.producers.length === 1 ? "" : "s"} configured. Monthly producer payroll ${currency(model.payrollMonthly)}.`,
@@ -5137,8 +5155,9 @@ function RetailCompExpenseCalculator({
           ))}
         </div>
         </>
-      )}
+      ) : null}
 
+      {activeEditor === "expenses" ? (
       <div className="grid gap-6 xl:grid-cols-2">
         {QUARTER_LABELS.map((label, quarterIndex) => (
           <div key={label} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -5221,8 +5240,9 @@ function RetailCompExpenseCalculator({
           </div>
         ))}
       </div>
+      ) : null}
 
-      {renderSummaryCard(
+      {activeEditor === "results-quarterly" ? renderSummaryCard(
         "results-quarterly",
         "Quarterly Summary",
         `Net after taxes: ${currency(model.totals.netProfit)}. Open to see quarter-by-quarter detail.`,
@@ -5258,9 +5278,9 @@ function RetailCompExpenseCalculator({
             </tbody>
           </table>
         </div>
-      )}
+      ) : null}
 
-      {renderSummaryCard(
+      {activeEditor === "results-quarterly" ? renderSummaryCard(
         "results-monthly",
         "Monthly Breakdown",
         `Estimated business savings ${currency(model.totals.savings)}. Open to see month-by-month detail.`,
@@ -5274,7 +5294,7 @@ function RetailCompExpenseCalculator({
             </div>
           ))}
         </div>
-      )}
+      ) : null}
         </div>
       </div>
     </section>
