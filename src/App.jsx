@@ -4612,6 +4612,7 @@ function RetailCompExpenseCalculator({
   onRemoveProducer,
 }) {
   const model = useMemo(() => calculateRetailCompModel(data), [data]);
+  const [activeEditor, setActiveEditor] = useState(null);
 
   const updateValue = (path, value) => onChange(path, value);
 
@@ -4625,83 +4626,96 @@ function RetailCompExpenseCalculator({
 
   const renderExpenseList = (title, items, sectionKey, helperText) => {
     const total = items.reduce((sum, item) => sum + toNumber(item.amount), 0);
+    const panelKey = `expense-${sectionKey}`;
 
     return (
-      <details className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-        <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+      <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div className="flex items-start justify-between gap-4">
           <div>
             <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
             <p className="mt-1 text-sm text-slate-500">
               {helperText} Total: {currency(total)}
             </p>
           </div>
-          <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
-            Open
-          </span>
-        </summary>
-        <div className="mt-4 flex items-start justify-between gap-4">
-          <div className="text-sm text-slate-500">{items.length} item(s)</div>
           <button
             type="button"
-            onClick={() => onAddExpense(sectionKey)}
-            className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+            onClick={() => setActiveEditor(activeEditor === panelKey ? null : panelKey)}
+            className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
           >
-            Add item
+            {activeEditor === panelKey ? "Close" : "Edit"}
           </button>
         </div>
-        <div className="mt-4 space-y-3">
-          {items.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
-              No items yet.
-            </div>
-          ) : (
-            items.map((item, index) => (
-              <div
-                key={`${sectionKey}-${index}`}
-                className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+        {activeEditor === panelKey ? (
+          <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="text-sm text-slate-500">{items.length} item(s)</div>
+              <button
+                type="button"
+                onClick={() => onAddExpense(sectionKey)}
+                className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
               >
-                <Field
-                  type="text"
-                  step="any"
-                  label="Name"
-                  value={item.name}
-                  onChange={(value) => updateValue(["expenses", sectionKey, index, "name"], value)}
-                />
-                <Field
-                  label="Amount"
-                  value={item.amount}
-                  onChange={(value) => updateValue(["expenses", sectionKey, index, "amount"], value)}
-                />
-                <div className="flex items-end">
-                  <button
-                    type="button"
-                    onClick={() => onRemoveExpense(sectionKey, index)}
-                    className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
-                  >
-                    Remove
-                  </button>
-                </div>
+                Add item
+              </button>
+            </div>
+            {items.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
+                No items yet.
               </div>
-            ))
-          )}
-        </div>
-      </details>
+            ) : (
+              items.map((item, index) => (
+                <div
+                  key={`${sectionKey}-${index}`}
+                  className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+                >
+                  <Field
+                    type="text"
+                    step="any"
+                    label="Name"
+                    value={item.name}
+                    onChange={(value) => updateValue(["expenses", sectionKey, index, "name"], value)}
+                  />
+                  <Field
+                    label="Amount"
+                    value={item.amount}
+                    onChange={(value) => updateValue(["expenses", sectionKey, index, "amount"], value)}
+                  />
+                  <div className="flex items-end">
+                    <button
+                      type="button"
+                      onClick={() => onRemoveExpense(sectionKey, index)}
+                      className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        ) : null}
+      </div>
     );
   };
 
-  const renderSummaryCard = (title, summary, children) => (
-    <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-      <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+  const renderSummaryCard = (panelKey, title, summary, children) => (
+    <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-xl font-semibold text-slate-950">{title}</h3>
           <p className="mt-1 text-sm text-slate-500">{summary}</p>
         </div>
-        <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
-          Open
-        </span>
-      </summary>
-      <div className="mt-5">{children}</div>
-    </details>
+        <button
+          type="button"
+          onClick={() => setActiveEditor(activeEditor === panelKey ? null : panelKey)}
+          className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+        >
+          {activeEditor === panelKey ? "Close" : "Edit"}
+        </button>
+      </div>
+      {activeEditor === panelKey ? (
+        <div className="mt-5 border-t border-slate-200 pt-5">{children}</div>
+      ) : null}
+    </div>
   );
 
   return (
@@ -4759,6 +4773,7 @@ function RetailCompExpenseCalculator({
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         {renderSummaryCard(
+          "revenue",
           "Revenue Assumptions",
           `Other income ${currency(data.revenue.otherIncomeMonthly)} per month. Rates: P&C ${(toNumber(data.revenue.pncRate) * 100).toFixed(1)}%, Life ${(toNumber(data.revenue.lifeRate) * 100).toFixed(1)}%, Commercial ${(toNumber(data.revenue.commercialRate) * 100).toFixed(1)}%.`,
           <>
@@ -4828,6 +4843,7 @@ function RetailCompExpenseCalculator({
         )}
 
         {renderSummaryCard(
+          "settings",
           "Settings",
           `Take home ${currency(data.expenses.takeHomeMonthly)} monthly. Tax ${(toNumber(data.expenses.taxRate) * 100).toFixed(1)}%, buffer ${(toNumber(data.expenses.bufferRate) * 100).toFixed(1)}%, APR ${(toNumber(data.expenses.apr) * 100).toFixed(1)}%.`,
           <>
@@ -4868,6 +4884,7 @@ function RetailCompExpenseCalculator({
           "Expenses paid once each year."
         )}
         {renderSummaryCard(
+          "bonuses",
           "Bonuses",
           QUARTER_LABELS.map(
             (label, index) =>
@@ -4904,6 +4921,7 @@ function RetailCompExpenseCalculator({
       </div>
 
       {renderSummaryCard(
+        "producers",
         "Producers",
         `${data.producers.length} producer${data.producers.length === 1 ? "" : "s"} configured. Monthly producer payroll ${currency(model.payrollMonthly)}.`,
         <>
@@ -5086,8 +5104,8 @@ function RetailCompExpenseCalculator({
 
       <div className="grid gap-6 xl:grid-cols-2">
         {QUARTER_LABELS.map((label, quarterIndex) => (
-          <details key={label} className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-            <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+          <div key={label} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="flex items-start justify-between gap-4">
               <div>
                 <h3 className="text-lg font-semibold text-slate-950">{label} One-Time Expenses</h3>
                 <p className="mt-1 text-sm text-slate-500">
@@ -5100,64 +5118,75 @@ function RetailCompExpenseCalculator({
                   )}
                 </p>
               </div>
-              <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
-                Open
-              </span>
-            </summary>
-            <div className="mt-4 flex justify-end">
               <button
                 type="button"
-                onClick={() => onAddExpense("oneTime", quarterIndex)}
-                className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+                onClick={() =>
+                  setActiveEditor(
+                    activeEditor === `one-time-${quarterIndex}` ? null : `one-time-${quarterIndex}`
+                  )
+                }
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
-                Add item
+                {activeEditor === `one-time-${quarterIndex}` ? "Close" : "Edit"}
               </button>
             </div>
-            <div className="mt-4 space-y-3">
-              {(data.expenses.oneTime[quarterIndex] || []).length === 0 ? (
-                <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
-                  No items yet.
-                </div>
-              ) : (
-                (data.expenses.oneTime[quarterIndex] || []).map((item, index) => (
-                  <div
-                    key={`${label}-${index}`}
-                    className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+            {activeEditor === `one-time-${quarterIndex}` ? (
+              <div className="mt-4 space-y-3 border-t border-slate-200 pt-4">
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => onAddExpense("oneTime", quarterIndex)}
+                    className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
                   >
-                    <Field
-                      type="text"
-                      step="any"
-                      label="Name"
-                      value={item.name}
-                      onChange={(value) =>
-                        updateValue(["expenses", "oneTime", quarterIndex, index, "name"], value)
-                      }
-                    />
-                    <Field
-                      label="Amount"
-                      value={item.amount}
-                      onChange={(value) =>
-                        updateValue(["expenses", "oneTime", quarterIndex, index, "amount"], value)
-                      }
-                    />
-                    <div className="flex items-end">
-                      <button
-                        type="button"
-                        onClick={() => onRemoveExpense("oneTime", index, quarterIndex)}
-                        className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
-                      >
-                        Remove
-                      </button>
-                    </div>
+                    Add item
+                  </button>
+                </div>
+                {(data.expenses.oneTime[quarterIndex] || []).length === 0 ? (
+                  <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
+                    No items yet.
                   </div>
-                ))
-              )}
-            </div>
-          </details>
+                ) : (
+                  (data.expenses.oneTime[quarterIndex] || []).map((item, index) => (
+                    <div
+                      key={`${label}-${index}`}
+                      className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+                    >
+                      <Field
+                        type="text"
+                        step="any"
+                        label="Name"
+                        value={item.name}
+                        onChange={(value) =>
+                          updateValue(["expenses", "oneTime", quarterIndex, index, "name"], value)
+                        }
+                      />
+                      <Field
+                        label="Amount"
+                        value={item.amount}
+                        onChange={(value) =>
+                          updateValue(["expenses", "oneTime", quarterIndex, index, "amount"], value)
+                        }
+                      />
+                      <div className="flex items-end">
+                        <button
+                          type="button"
+                          onClick={() => onRemoveExpense("oneTime", index, quarterIndex)}
+                          className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            ) : null}
+          </div>
         ))}
       </div>
 
       {renderSummaryCard(
+        "results-quarterly",
         "Quarterly Summary",
         `Net after taxes: ${currency(model.totals.netProfit)}. Open to see quarter-by-quarter detail.`,
         <div className="mt-5 overflow-x-auto">
@@ -5195,6 +5224,7 @@ function RetailCompExpenseCalculator({
       )}
 
       {renderSummaryCard(
+        "results-monthly",
         "Monthly Breakdown",
         `Estimated business savings ${currency(model.totals.savings)}. Open to see month-by-month detail.`,
         <div className="mt-4 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
