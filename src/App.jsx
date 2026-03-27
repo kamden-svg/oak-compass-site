@@ -4902,21 +4902,135 @@ function RetailCompExpenseCalculator({
                   </button>
                 </div>
               </div>
-              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                <Field label="Base Monthly" value={producer.baseMonthly} onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)} />
-                <Field label="NB Life" value={producer.nbLife} onChange={(value) => updateValue(["producers", index, "nbLife"], value)} />
-                <Field label="NB Commercial" value={producer.nbCommercial} onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)} />
-                <Field label="NB Personal" value={producer.nbPersonal} onChange={(value) => updateValue(["producers", index, "nbPersonal"], value)} />
-                <Field label="Life Rate" value={producer.rateLife} onChange={(value) => updateValue(["producers", index, "rateLife"], value)} />
-                <Field label="Commercial Rate" value={producer.rateCommercial} onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)} />
-                <Field label="Personal Rate" value={producer.ratePersonal} onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)} />
-                <Field label="Bonus Low" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
-                <Field label="Bonus Tier 1" value={producer.bonusMid} onChange={(value) => updateValue(["producers", index, "bonusMid"], value)} />
-                <Field label="Bonus Tier 2" value={producer.bonusHigh} onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)} />
-                <Field label="Bonus Tier 3" value={producer.bonusTop} onChange={(value) => updateValue(["producers", index, "bonusTop"], value)} />
-                <Field label="Threshold 1" value={producer.thresholdMid} onChange={(value) => updateValue(["producers", index, "thresholdMid"], value)} />
-                <Field label="Threshold 2" value={producer.thresholdHigh} onChange={(value) => updateValue(["producers", index, "thresholdHigh"], value)} />
-                <Field label="Threshold 3" value={producer.thresholdTop} onChange={(value) => updateValue(["producers", index, "thresholdTop"], value)} />
+              <div className="mt-5 grid gap-4 xl:grid-cols-[1fr_1fr_1.1fr]">
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
+                    Basics
+                  </h4>
+                  <div className="mt-3 grid gap-3">
+                    <Field
+                      label="Base Monthly"
+                      value={producer.baseMonthly}
+                      onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
+                    Monthly Production
+                  </h4>
+                  <div className="mt-3 grid gap-3">
+                    <Field
+                      label="NB Personal"
+                      value={producer.nbPersonal}
+                      onChange={(value) => updateValue(["producers", index, "nbPersonal"], value)}
+                    />
+                    <Field
+                      label="NB Commercial"
+                      value={producer.nbCommercial}
+                      onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)}
+                    />
+                    <Field
+                      label="NB Life"
+                      value={producer.nbLife}
+                      onChange={(value) => updateValue(["producers", index, "nbLife"], value)}
+                    />
+                  </div>
+                </div>
+
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
+                    Rates
+                  </h4>
+                  <div className="mt-3 grid gap-3 md:grid-cols-3">
+                    <Field
+                      label="Personal Rate"
+                      value={producer.ratePersonal}
+                      onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)}
+                    />
+                    <Field
+                      label="Commercial Rate"
+                      value={producer.rateCommercial}
+                      onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)}
+                    />
+                    <Field
+                      label="Life Rate"
+                      value={producer.rateLife}
+                      onChange={(value) => updateValue(["producers", index, "rateLife"], value)}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-2xl bg-white ring-1 ring-slate-200">
+                <div className="border-b border-slate-200 px-4 py-3">
+                  <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-700">
+                    Bonus Plan
+                  </h4>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Set the production threshold and the bonus that gets paid at that level.
+                  </p>
+                </div>
+                <div className="grid gap-3 p-4">
+                  <div className="grid gap-3 rounded-2xl bg-slate-50 p-3 md:grid-cols-[140px_1fr_1fr] md:items-center">
+                    <div className="text-sm font-semibold text-slate-700">Below tier</div>
+                    <div className="text-sm text-slate-500">Default monthly bonus</div>
+                    <Field
+                      label="Bonus"
+                      value={producer.bonusLow}
+                      onChange={(value) => updateValue(["producers", index, "bonusLow"], value)}
+                    />
+                  </div>
+
+                  <div className="grid gap-3 rounded-2xl bg-slate-50 p-3 md:grid-cols-[140px_1fr_1fr] md:items-center">
+                    <div className="text-sm font-semibold text-slate-700">Tier 1</div>
+                    <Field
+                      label="Threshold"
+                      value={producer.thresholdMid}
+                      onChange={(value) =>
+                        updateValue(["producers", index, "thresholdMid"], value)
+                      }
+                    />
+                    <Field
+                      label="Bonus"
+                      value={producer.bonusMid}
+                      onChange={(value) => updateValue(["producers", index, "bonusMid"], value)}
+                    />
+                  </div>
+
+                  <div className="grid gap-3 rounded-2xl bg-slate-50 p-3 md:grid-cols-[140px_1fr_1fr] md:items-center">
+                    <div className="text-sm font-semibold text-slate-700">Tier 2</div>
+                    <Field
+                      label="Threshold"
+                      value={producer.thresholdHigh}
+                      onChange={(value) =>
+                        updateValue(["producers", index, "thresholdHigh"], value)
+                      }
+                    />
+                    <Field
+                      label="Bonus"
+                      value={producer.bonusHigh}
+                      onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)}
+                    />
+                  </div>
+
+                  <div className="grid gap-3 rounded-2xl bg-slate-50 p-3 md:grid-cols-[140px_1fr_1fr] md:items-center">
+                    <div className="text-sm font-semibold text-slate-700">Tier 3</div>
+                    <Field
+                      label="Threshold"
+                      value={producer.thresholdTop}
+                      onChange={(value) =>
+                        updateValue(["producers", index, "thresholdTop"], value)
+                      }
+                    />
+                    <Field
+                      label="Bonus"
+                      value={producer.bonusTop}
+                      onChange={(value) => updateValue(["producers", index, "bonusTop"], value)}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           ))}
