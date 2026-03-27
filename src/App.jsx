@@ -193,6 +193,12 @@ const COPY = {
     portalNotesPlaceholder: "Add private follow-up notes here",
     deleteLead: "Delete",
     loading: "Loading...",
+    employeeReferralButton: "Employee Referral Form",
+    referralSourceLabel: "Referral Source",
+    referredByLabel: "Referred By",
+    referrerEmailLabel: "Referrer Email",
+    referrerPhoneLabel: "Referrer Phone",
+    employeeReferralSource: "Employee Referral",
   },
   es: {
     badge: "Oak & Compass Insurance",
@@ -295,6 +301,12 @@ const COPY = {
     portalNotesPlaceholder: "Agrega notas privadas de seguimiento",
     deleteLead: "Eliminar",
     loading: "Cargando...",
+    employeeReferralButton: "Formulario para empleados",
+    referralSourceLabel: "Fuente de referencia",
+    referredByLabel: "Referido por",
+    referrerEmailLabel: "Correo del empleado",
+    referrerPhoneLabel: "Telefono del empleado",
+    employeeReferralSource: "Referencia de empleado",
   },
 };
 
@@ -303,8 +315,74 @@ const PAGE_TEAM = "team";
 const PAGE_JOBS = "jobs";
 const PAGE_COLLECTIBLES = "collectibles";
 const PAGE_RESOURCES = "resources";
+const PAGE_EMPLOYEE_REFERRALS = "employee-referrals";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
+
+const EMPLOYEE_REFERRAL_PAGE_COPY = {
+  en: {
+    badge: "Employee Referral",
+    headline: "Send client referrals over in one clean place",
+    subheadline:
+      "Use this page to send over the client details we need so we can follow up fast and take good care of them.",
+    employeeTitle: "Your information",
+    clientTitle: "Client information",
+    employeeName: "Your name",
+    employeeEmail: "Your email",
+    employeePhone: "Your phone",
+    clientFirstName: "Client first name",
+    clientLastName: "Client last name",
+    clientPhone: "Client phone",
+    clientEmail: "Client email",
+    insuranceType: "What do they need help with?",
+    zipCode: "Client ZIP code",
+    needsSpanish: "Do they want a Spanish-speaking agent?",
+    notes: "Anything we should know before we reach out?",
+    notesPlaceholder: "Best time to call, what they are shopping for, or anything helpful",
+    submit: "Send Referral",
+    success: "Thanks, this employee referral has been sent.",
+    error: "We could not send the referral. Please try again.",
+    helperPoints: [
+      "Built for staff referrals",
+      "Sends straight to your leads page",
+      "Keeps client details organized",
+    ],
+    sectionIntro:
+      "The more complete the info is, the easier it is for us to reach out quickly and make a good first impression.",
+    backHome: "Back to home",
+  },
+  es: {
+    badge: "Referencia de empleado",
+    headline: "Envia las referencias de clientes en un solo lugar",
+    subheadline:
+      "Usa esta pagina para mandarnos los datos del cliente y podamos dar seguimiento rapido y atenderlo bien.",
+    employeeTitle: "Tu informacion",
+    clientTitle: "Informacion del cliente",
+    employeeName: "Tu nombre",
+    employeeEmail: "Tu correo",
+    employeePhone: "Tu telefono",
+    clientFirstName: "Nombre del cliente",
+    clientLastName: "Apellido del cliente",
+    clientPhone: "Telefono del cliente",
+    clientEmail: "Correo del cliente",
+    insuranceType: "En que necesita ayuda?",
+    zipCode: "Codigo postal del cliente",
+    needsSpanish: "Quiere un agente que hable espanol?",
+    notes: "Hay algo que debamos saber antes de llamar?",
+    notesPlaceholder: "Mejor horario, que necesita o cualquier detalle util",
+    submit: "Enviar referencia",
+    success: "Gracias, la referencia del empleado ya fue enviada.",
+    error: "No pudimos enviar la referencia. Intentalo otra vez.",
+    helperPoints: [
+      "Hecho para referencias de empleados",
+      "Llega directo a tu pagina de leads",
+      "Mantiene todo organizado",
+    ],
+    sectionIntro:
+      "Mientras mas completa este la informacion, mas facil sera contactar al cliente rapido y dar una buena primera impresion.",
+    backHome: "Volver al inicio",
+  },
+};
 
 const NAV_COPY = {
   en: {
@@ -1390,6 +1468,7 @@ function getPageFromHash(hash) {
   if (value === PAGE_JOBS) return PAGE_JOBS;
   if (value === PAGE_COLLECTIBLES) return PAGE_COLLECTIBLES;
   if (value === PAGE_RESOURCES) return PAGE_RESOURCES;
+  if (value === PAGE_EMPLOYEE_REFERRALS) return PAGE_EMPLOYEE_REFERRALS;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   return PAGE_HOME;
@@ -3340,6 +3419,350 @@ function InsuranceConnectPage({
   );
 }
 
+function EmployeeReferralPage({
+  language,
+  onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
+}) {
+  const pageText = EMPLOYEE_REFERRAL_PAGE_COPY[language] || EMPLOYEE_REFERRAL_PAGE_COPY.en;
+  const sharedText = COPY[language] || COPY.en;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [form, setForm] = useState({
+    employeeName: "",
+    employeeEmail: "",
+    employeePhone: "",
+    clientFirstName: "",
+    clientLastName: "",
+    clientPhone: "",
+    clientEmail: "",
+    insuranceType: "",
+    zipCode: "",
+    needsSpanish: "no",
+    notes: "",
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    if (isSubmitted) {
+      setIsSubmitted(false);
+    }
+    setForm((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inquiryType: "referral",
+          referralSourceType: "employee",
+          referralSourceName: form.employeeName,
+          referralSourceEmail: form.employeeEmail,
+          referralSourcePhone: form.employeePhone,
+          firstName: form.clientFirstName,
+          lastName: form.clientLastName,
+          phone: form.clientPhone,
+          email: form.clientEmail,
+          insuranceType: form.insuranceType,
+          zipCode: form.zipCode,
+          needsSpanish: form.needsSpanish,
+          notes: form.notes,
+        }),
+      });
+
+      const rawText = await response.text();
+      let data = {};
+
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = { error: rawText || pageText.error };
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || pageText.error);
+      }
+
+      setForm({
+        employeeName: "",
+        employeeEmail: "",
+        employeePhone: "",
+        clientFirstName: "",
+        clientLastName: "",
+        clientPhone: "",
+        clientEmail: "",
+        insuranceType: "",
+        zipCode: "",
+        needsSpanish: "no",
+        notes: "",
+      });
+      setIsSubmitted(true);
+    } catch (error) {
+      setSubmitError(error.message || pageText.error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.18),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.18),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(245,158,11,0.18),_transparent_28%),linear-gradient(180deg,_#f8fafc_0%,_#f8fafc_40%,_#ecfdf5_100%)]" />
+        {easterMode ? <EasterDecor /> : null}
+
+        <SiteHeader
+          language={language}
+          activePage={PAGE_EMPLOYEE_REFERRALS}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr,1.05fr] lg:items-start">
+            <div className="space-y-6">
+              <div className={getEasterPillClassName(easterMode, "inline-flex rounded-full border border-emerald-200 bg-white px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm")}>
+                {pageText.badge}
+              </div>
+
+              <div>
+                <h1 className="max-w-3xl text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+                  {pageText.headline}
+                </h1>
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+                  {pageText.subheadline}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                {pageText.helperPoints.map((point) => (
+                  <div
+                    key={point}
+                    className={getEasterPillClassName(easterMode, "rounded-full border border-white/80 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm")}
+                  >
+                    {point}
+                  </div>
+                ))}
+              </div>
+
+              <div className={getEasterSoftCardClassName(easterMode, "rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm")}>
+                <p className="text-sm leading-7 text-slate-600">{pageText.sectionIntro}</p>
+                <button
+                  type="button"
+                  onClick={() => onNavigate(PAGE_HOME)}
+                  className={`mt-5 ${getEasterSecondaryButtonClassName(easterMode, "rounded-full border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50")}`}
+                >
+                  {pageText.backHome}
+                </button>
+              </div>
+            </div>
+
+            <div className={getEasterPanelClassName(easterMode, "rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl sm:p-8")}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                <div>
+                  <h2 className="text-xl font-semibold text-slate-950">{pageText.employeeTitle}</h2>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                      <label htmlFor="employeeName" className="mb-2 block text-sm font-medium">
+                        {pageText.employeeName}
+                      </label>
+                      <input
+                        id="employeeName"
+                        name="employeeName"
+                        type="text"
+                        value={form.employeeName}
+                        onChange={handleChange}
+                        required
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="employeeEmail" className="mb-2 block text-sm font-medium">
+                        {pageText.employeeEmail}
+                      </label>
+                      <input
+                        id="employeeEmail"
+                        name="employeeEmail"
+                        type="email"
+                        value={form.employeeEmail}
+                        onChange={handleChange}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="employeePhone" className="mb-2 block text-sm font-medium">
+                        {pageText.employeePhone}
+                      </label>
+                      <input
+                        id="employeePhone"
+                        name="employeePhone"
+                        type="tel"
+                        value={form.employeePhone}
+                        onChange={handleChange}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-semibold text-slate-950">{pageText.clientTitle}</h2>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="clientFirstName" className="mb-2 block text-sm font-medium">
+                        {pageText.clientFirstName}
+                      </label>
+                      <input
+                        id="clientFirstName"
+                        name="clientFirstName"
+                        type="text"
+                        value={form.clientFirstName}
+                        onChange={handleChange}
+                        required
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="clientLastName" className="mb-2 block text-sm font-medium">
+                        {pageText.clientLastName}
+                      </label>
+                      <input
+                        id="clientLastName"
+                        name="clientLastName"
+                        type="text"
+                        value={form.clientLastName}
+                        onChange={handleChange}
+                        required
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="clientPhone" className="mb-2 block text-sm font-medium">
+                        {pageText.clientPhone}
+                      </label>
+                      <input
+                        id="clientPhone"
+                        name="clientPhone"
+                        type="tel"
+                        value={form.clientPhone}
+                        onChange={handleChange}
+                        required
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="clientEmail" className="mb-2 block text-sm font-medium">
+                        {pageText.clientEmail}
+                      </label>
+                      <input
+                        id="clientEmail"
+                        name="clientEmail"
+                        type="email"
+                        value={form.clientEmail}
+                        onChange={handleChange}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="insuranceType" className="mb-2 block text-sm font-medium">
+                        {pageText.insuranceType}
+                      </label>
+                      <select
+                        id="insuranceType"
+                        name="insuranceType"
+                        value={form.insuranceType}
+                        onChange={handleChange}
+                        required
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      >
+                        <option value="">{sharedText.selectOne}</option>
+                        {(INSURANCE_OPTIONS[language] || INSURANCE_OPTIONS.en).map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="zipCode" className="mb-2 block text-sm font-medium">
+                        {pageText.zipCode}
+                      </label>
+                      <input
+                        id="zipCode"
+                        name="zipCode"
+                        type="text"
+                        value={form.zipCode}
+                        onChange={handleChange}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label htmlFor="needsSpanish" className="mb-2 block text-sm font-medium">
+                        {pageText.needsSpanish}
+                      </label>
+                      <select
+                        id="needsSpanish"
+                        name="needsSpanish"
+                        value={form.needsSpanish}
+                        onChange={handleChange}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      >
+                        <option value="no">{sharedText.no}</option>
+                        <option value="yes">{sharedText.yes}</option>
+                      </select>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label htmlFor="notes" className="mb-2 block text-sm font-medium">
+                        {pageText.notes}
+                      </label>
+                      <textarea
+                        id="notes"
+                        name="notes"
+                        rows={5}
+                        value={form.notes}
+                        onChange={handleChange}
+                        placeholder={pageText.notesPlaceholder}
+                        className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full ${getEasterPrimaryButtonClassName(easterMode, "rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60")}`}
+                >
+                  {isSubmitting ? `${pageText.submit}...` : pageText.submit}
+                </button>
+
+                {submitError ? <p className="text-sm text-red-600">{submitError}</p> : null}
+                {isSubmitted ? (
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+                    {pageText.success}
+                  </div>
+                ) : null}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function ClientResourcesPage({
   language,
   onNavigate,
@@ -4006,6 +4429,10 @@ function downloadCsv(leads) {
   const headers = [
     "Submitted",
     "Inquiry Type",
+    "Referral Source",
+    "Referred By",
+    "Referrer Email",
+    "Referrer Phone",
     "First Name",
     "Last Name",
     "Phone",
@@ -4033,6 +4460,10 @@ function downloadCsv(leads) {
   const rows = leads.map((lead) => [
     lead.submittedAt,
     lead.inquiryTypeRaw || lead.inquiryType,
+    lead.referralSourceType || "",
+    lead.referralSourceName || "",
+    lead.referralSourceEmail || "",
+    lead.referralSourcePhone || "",
     lead.firstName,
     lead.lastName,
     lead.phone,
@@ -4248,6 +4679,32 @@ function LeadsDashboard({
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.email}</p>
                   <p className="mt-1 break-words text-slate-900">{lead.email || "-"}</p>
                 </div>
+                {lead.referralSourceName ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.referredByLabel}</p>
+                    <p className="mt-1 text-slate-900">{lead.referralSourceName}</p>
+                  </div>
+                ) : null}
+                {lead.referralSourceEmail ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.referrerEmailLabel}</p>
+                    <p className="mt-1 break-words text-slate-900">{lead.referralSourceEmail}</p>
+                  </div>
+                ) : null}
+                {lead.referralSourcePhone ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.referrerPhoneLabel}</p>
+                    <p className="mt-1 text-slate-900">{lead.referralSourcePhone}</p>
+                  </div>
+                ) : null}
+                {lead.referralSourceType ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.referralSourceLabel}</p>
+                    <p className="mt-1 text-slate-900">
+                      {lead.referralSourceType === "employee" ? text.employeeReferralSource : lead.referralSourceType}
+                    </p>
+                  </div>
+                ) : null}
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{text.spanishNeeded}</p>
                   <p className="mt-1 text-slate-900">{lead.needsSpanish}</p>
@@ -4377,6 +4834,8 @@ export default function OakCompassLandingPage() {
           ? "Collectibles Insurance | Oak & Compass Insurance"
         : activePage === PAGE_RESOURCES
           ? "Client Resources | Oak & Compass Insurance"
+        : activePage === PAGE_EMPLOYEE_REFERRALS
+          ? "Employee Referrals | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
@@ -4537,6 +4996,7 @@ export default function OakCompassLandingPage() {
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
+      page === PAGE_EMPLOYEE_REFERRALS ||
       page === PAGE_CANOPY
     ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -4596,6 +5056,9 @@ export default function OakCompassLandingPage() {
         lead.estimatedItems,
         lead.storageMethod,
         lead.collectibleCondition,
+        lead.referralSourceName,
+        lead.referralSourceEmail,
+        lead.referralSourcePhone,
       ]
         .join(" ")
         .toLowerCase();
@@ -4846,6 +5309,18 @@ export default function OakCompassLandingPage() {
   if (activePage === PAGE_RESOURCES) {
     return (
       <ClientResourcesPage
+        language={language}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
+      />
+    );
+  }
+
+  if (activePage === PAGE_EMPLOYEE_REFERRALS) {
+    return (
+      <EmployeeReferralPage
         language={language}
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
@@ -5236,7 +5711,7 @@ export default function OakCompassLandingPage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-20">
-        <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center gap-3">
           <button
             type="button"
             onClick={handleOpenLeads}
@@ -5280,6 +5755,7 @@ export function __oakCompassLandingPageChecks() {
     hasCollectiblesPage: true,
     hasSingleLeadDelete: true,
     hasPortalNotes: true,
+    hasEmployeeReferralPage: true,
     postsToApi: true,
     canopyAlias: "waddoups-insurance-agency-llc-kamden-young",
   };
