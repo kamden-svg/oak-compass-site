@@ -4067,6 +4067,106 @@ function downloadCsv(leads) {
 const LIFE_BONUS_CAP = 1400;
 const COMMERCIAL_BONUS_CAP = 3500;
 const SUB_BONUS_COMMISSION_RATE = 0.1;
+const QUARTER_LABELS = ["Q1", "Q2", "Q3", "Q4"];
+const MONTH_LABELS = [
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+];
+const DEFAULT_RETAIL_CALCULATOR = {
+  revenue: {
+    pnc: ["60000", "60000", "60000", "60000"],
+    life: ["500", "1000", "1000", "1000"],
+    commercial: ["1000", "1000", "1000", "1000"],
+    pncRate: "0.1",
+    lifeRate: "0.3",
+    commercialRate: "0.15",
+    subBasePayMonthly: "3000",
+  },
+  expenses: {
+    rentMonthly: "0",
+    rentQuarterly: "0",
+    rentAnnual: "0",
+    eoMonthly: "120",
+    leadsMonthly: "600",
+    technologyMonthly: "400",
+    officeMonthly: "50",
+    otherInsuranceMonthly: "75",
+    mvrMonthly: "50",
+    managerMonthly: "1000",
+    oneTime: ["0", "0", "0", "0"],
+    taxRate: "0.1",
+    bufferRate: "0.1",
+    apr: "0.04",
+    takeHomeMonthly: "8800",
+  },
+  bonuses: {
+    signing: ["5000", "0", "0", "0"],
+    grad: ["4000", "0", "0", "0"],
+  },
+  producers: [
+    {
+      name: "Producer 1 (Matt)",
+      baseMonthly: "500",
+      nbLife: "0",
+      nbCommercial: "500",
+      nbPersonal: "7500",
+      rateLife: "0.2",
+      rateCommercial: "0.125",
+      ratePersonal: "0.1",
+      bonusLow: "0",
+      bonusMid: "500",
+      bonusHigh: "800",
+      bonusTop: "1000",
+      thresholdMid: "10000",
+      thresholdHigh: "15000",
+      thresholdTop: "20000",
+    },
+    {
+      name: "Producer 2 (Kilee)",
+      baseMonthly: "500",
+      nbLife: "0",
+      nbCommercial: "0",
+      nbPersonal: "5000",
+      rateLife: "0.2",
+      rateCommercial: "0.125",
+      ratePersonal: "0.1",
+      bonusLow: "0",
+      bonusMid: "250",
+      bonusHigh: "500",
+      bonusTop: "1000",
+      thresholdMid: "7500",
+      thresholdHigh: "12500",
+      thresholdTop: "20000",
+    },
+    {
+      name: "Producer 3 (P/T)",
+      baseMonthly: "0",
+      nbLife: "0",
+      nbCommercial: "0",
+      nbPersonal: "5000",
+      rateLife: "0.2",
+      rateCommercial: "0.125",
+      ratePersonal: "0.1",
+      bonusLow: "200",
+      bonusMid: "300",
+      bonusHigh: "700",
+      bonusTop: "1000",
+      thresholdMid: "7500",
+      thresholdHigh: "12500",
+      thresholdTop: "20000",
+    },
+  ],
+};
 
 const currency = (value) =>
   new Intl.NumberFormat("en-US", {
@@ -4079,6 +4179,168 @@ const toNumber = (value) => {
   const parsed = parseFloat(value);
   return Number.isFinite(parsed) ? parsed : 0;
 };
+
+function calculateProducerComp(producer) {
+  const baseMonthly = toNumber(producer.baseMonthly);
+  const nbLife = toNumber(producer.nbLife);
+  const nbCommercial = toNumber(producer.nbCommercial);
+  const nbPersonal = toNumber(producer.nbPersonal);
+  const commissionMonthly =
+    nbLife * toNumber(producer.rateLife) +
+    nbCommercial * toNumber(producer.rateCommercial) +
+    nbPersonal * toNumber(producer.ratePersonal);
+  const nbTotal = nbLife + nbCommercial + nbPersonal;
+  const thresholdMid = toNumber(producer.thresholdMid);
+  const thresholdHigh = toNumber(producer.thresholdHigh);
+  const thresholdTop = toNumber(producer.thresholdTop);
+
+  let bonusMonthly = toNumber(producer.bonusLow);
+  if (nbTotal >= thresholdTop) {
+    bonusMonthly = toNumber(producer.bonusTop);
+  } else if (nbTotal >= thresholdHigh) {
+    bonusMonthly = toNumber(producer.bonusHigh);
+  } else if (nbTotal >= thresholdMid) {
+    bonusMonthly = toNumber(producer.bonusMid);
+  }
+
+  return {
+    baseMonthly,
+    nbLife,
+    nbCommercial,
+    nbPersonal,
+    nbTotal,
+    commissionMonthly,
+    bonusMonthly,
+  };
+}
+
+function getRetailBonusRate(quarterIndex, commissionBase) {
+  if (quarterIndex === 0) return 3;
+  const thresholds = [
+    { high: 9450, mid: 6750 },
+    { high: 9900, mid: 7200 },
+    { high: 10350, mid: 7650 },
+  ];
+  const quarterThresholds = thresholds[quarterIndex - 1];
+  if (!quarterThresholds) return 2.4;
+  if (commissionBase >= quarterThresholds.high) return 3;
+  if (commissionBase >= quarterThresholds.mid) return 2.7;
+  return 2.4;
+}
+
+function calculateRetailCompModel(data) {
+  const producerSummaries = data.producers.map(calculateProducerComp);
+  const payrollMonthly =
+    toNumber(data.expenses.managerMonthly) +
+    producerSummaries.reduce((sum, producer) => sum + producer.baseMonthly, 0);
+  const subProducerCommissionMonthly = producerSummaries.reduce(
+    (sum, producer) => sum + producer.commissionMonthly,
+    0
+  );
+  const subProducerBonusMonthly = producerSummaries.reduce(
+    (sum, producer) => sum + producer.bonusMonthly,
+    0
+  );
+  const recurringMonthly =
+    toNumber(data.expenses.rentMonthly) +
+    toNumber(data.expenses.eoMonthly) +
+    toNumber(data.expenses.leadsMonthly) +
+    toNumber(data.expenses.technologyMonthly) +
+    toNumber(data.expenses.officeMonthly) +
+    toNumber(data.expenses.otherInsuranceMonthly) +
+    toNumber(data.expenses.mvrMonthly) +
+    payrollMonthly;
+  const recurringQuarterly = toNumber(data.expenses.rentQuarterly);
+  const recurringAnnual = toNumber(data.expenses.rentAnnual);
+  const baseQuarterExpenses =
+    recurringMonthly * 3 +
+    recurringQuarterly +
+    recurringAnnual / 4 +
+    (subProducerCommissionMonthly + subProducerBonusMonthly) * 3;
+  const annualExpenses =
+    recurringMonthly * 12 +
+    recurringQuarterly * 4 +
+    recurringAnnual +
+    (subProducerCommissionMonthly + subProducerBonusMonthly) * 12 +
+    data.expenses.oneTime.reduce((sum, value) => sum + toNumber(value), 0);
+  const quarterResults = QUARTER_LABELS.map((label, index) => {
+    const pncCommission = toNumber(data.revenue.pnc[index]) * toNumber(data.revenue.pncRate);
+    const lifeCommission = toNumber(data.revenue.life[index]) * toNumber(data.revenue.lifeRate);
+    const commercialCommission =
+      toNumber(data.revenue.commercial[index]) * toNumber(data.revenue.commercialRate);
+    const totalRevenueCommission = pncCommission + lifeCommission + commercialCommission;
+    const revenueEarned =
+      totalRevenueCommission +
+      subProducerCommissionMonthly * 3 +
+      toNumber(data.revenue.subBasePayMonthly) * 3;
+    const commissionBase = totalRevenueCommission + subProducerCommissionMonthly * 3;
+    const retailBonusRate = getRetailBonusRate(index, commissionBase);
+    const retailBonus = commissionBase * retailBonusRate;
+    const otherBonus =
+      toNumber(data.bonuses.signing[index]) + toNumber(data.bonuses.grad[index]);
+    const totalBonus = retailBonus + otherBonus;
+    const bufferedExpenses =
+      (baseQuarterExpenses + toNumber(data.expenses.oneTime[index])) *
+      (1 + toNumber(data.expenses.bufferRate));
+    const profitBeforeTax = revenueEarned + totalBonus - bufferedExpenses;
+    const taxes =
+      (revenueEarned + totalBonus - annualExpenses / 4) * toNumber(data.expenses.taxRate);
+    const netProfit = profitBeforeTax - taxes;
+
+    return {
+      label,
+      revenueEarned,
+      totalRevenueCommission,
+      retailBonusRate,
+      retailBonus,
+      otherBonus,
+      totalBonus,
+      bufferedExpenses,
+      profitBeforeTax,
+      taxes,
+      netProfit,
+    };
+  });
+  const monthlyApprox = quarterResults.flatMap((quarter) =>
+    Array.from({ length: 3 }, () => quarter.netProfit / 3)
+  );
+  const monthlyBreakdown = MONTH_LABELS.map((month, index) => {
+    const approx = monthlyApprox[index] || 0;
+    const takeHome = toNumber(data.expenses.takeHomeMonthly);
+    const businessSavings = approx - takeHome;
+    const priorSavings = monthlyApprox
+      .slice(0, index + 1)
+      .reduce((sum, value) => sum + value - takeHome, 0);
+    const interest = priorSavings * (toNumber(data.expenses.apr) / 12);
+    return {
+      month,
+      approx,
+      takeHome,
+      businessSavings,
+      interest,
+    };
+  });
+
+  return {
+    producerSummaries,
+    payrollMonthly,
+    subProducerCommissionMonthly,
+    subProducerBonusMonthly,
+    recurringMonthly,
+    annualExpenses,
+    quarterResults,
+    monthlyBreakdown,
+    totals: {
+      revenueEarned: quarterResults.reduce((sum, quarter) => sum + quarter.revenueEarned, 0),
+      bonuses: quarterResults.reduce((sum, quarter) => sum + quarter.totalBonus, 0),
+      expenses: quarterResults.reduce((sum, quarter) => sum + quarter.bufferedExpenses, 0),
+      netProfit: quarterResults.reduce((sum, quarter) => sum + quarter.netProfit, 0),
+      taxes: quarterResults.reduce((sum, quarter) => sum + quarter.taxes, 0),
+      savings: monthlyBreakdown.reduce((sum, month) => sum + month.businessSavings, 0),
+      interest: monthlyBreakdown.reduce((sum, month) => sum + month.interest, 0),
+    },
+  };
+}
 
 function Field({ label, value, onChange, type = "number", step = "0.01", hint }) {
   return (
@@ -4225,6 +4487,255 @@ function calculateSubProducerPay({ plan, nbPremium }) {
   return details;
 }
 
+function RetailCompExpenseCalculator({
+  data,
+  onChange,
+  onSave,
+  isSaving,
+  isLoading,
+  error,
+}) {
+  const model = useMemo(() => calculateRetailCompModel(data), [data]);
+
+  const updateValue = (path, value) => onChange(path, value);
+
+  if (isLoading) {
+    return (
+      <div className="mt-10 rounded-3xl bg-white p-8 text-slate-600 shadow-sm ring-1 ring-slate-200">
+        Loading calculator...
+      </div>
+    );
+  }
+
+  return (
+    <section className="mt-10 space-y-6">
+      <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">
+              Admin Calculator
+            </p>
+            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
+              Retail Comp & Expense Calculator
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              This takes your spreadsheet logic and puts it into a usable calculator here in the
+              admin section. Edit the assumptions, review the outputs, and save when you want to
+              keep the changes.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={onSave}
+            disabled={isSaving}
+            className="rounded-2xl bg-slate-900 px-5 py-3 font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {isSaving ? "Saving..." : "Save Calculator"}
+          </button>
+        </div>
+
+        {error ? <p className="mt-4 text-sm font-medium text-red-600">{error}</p> : null}
+      </div>
+
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <StatCard label="Revenue earned" value={currency(model.totals.revenueEarned)} />
+        <StatCard label="Total bonus" value={currency(model.totals.bonuses)} />
+        <StatCard label="Buffered expenses" value={currency(model.totals.expenses)} tone="negative" />
+        <StatCard label="Taxes" value={currency(model.totals.taxes)} tone="negative" />
+        <StatCard label="Net after taxes" value={currency(model.totals.netProfit)} tone={model.totals.netProfit >= 0 ? "positive" : "negative"} />
+        <StatCard label="Business savings" value={currency(model.totals.savings)} tone={model.totals.savings >= 0 ? "positive" : "negative"} subtext={`Interest estimate: ${currency(model.totals.interest)}`} />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h3 className="text-xl font-semibold text-slate-950">Revenue Assumptions</h3>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`pnc-${label}`}
+                label={`P&C Written ${label}`}
+                value={data.revenue.pnc[index]}
+                onChange={(value) => updateValue(["revenue", "pnc", index], value)}
+              />
+            ))}
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`life-${label}`}
+                label={`Life Written ${label}`}
+                value={data.revenue.life[index]}
+                onChange={(value) => updateValue(["revenue", "life", index], value)}
+              />
+            ))}
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`commercial-${label}`}
+                label={`Commercial Written ${label}`}
+                value={data.revenue.commercial[index]}
+                onChange={(value) => updateValue(["revenue", "commercial", index], value)}
+              />
+            ))}
+            <Field
+              label="P&C Commission Rate"
+              value={data.revenue.pncRate}
+              onChange={(value) => updateValue(["revenue", "pncRate"], value)}
+            />
+            <Field
+              label="Life Commission Rate"
+              value={data.revenue.lifeRate}
+              onChange={(value) => updateValue(["revenue", "lifeRate"], value)}
+            />
+            <Field
+              label="Commercial Commission Rate"
+              value={data.revenue.commercialRate}
+              onChange={(value) => updateValue(["revenue", "commercialRate"], value)}
+            />
+            <Field
+              label="Sub Producer Base Pay Monthly"
+              value={data.revenue.subBasePayMonthly}
+              onChange={(value) => updateValue(["revenue", "subBasePayMonthly"], value)}
+              hint="Workbook default was 3000 monthly, which becomes 9000 each quarter."
+            />
+          </div>
+        </div>
+
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+          <h3 className="text-xl font-semibold text-slate-950">Expenses & Settings</h3>
+          <div className="mt-5 grid gap-4 md:grid-cols-2">
+            <Field label="Rent Monthly" value={data.expenses.rentMonthly} onChange={(value) => updateValue(["expenses", "rentMonthly"], value)} />
+            <Field label="Rent Quarterly" value={data.expenses.rentQuarterly} onChange={(value) => updateValue(["expenses", "rentQuarterly"], value)} />
+            <Field label="Rent Annual" value={data.expenses.rentAnnual} onChange={(value) => updateValue(["expenses", "rentAnnual"], value)} />
+            <Field label="E&O Insurance Monthly" value={data.expenses.eoMonthly} onChange={(value) => updateValue(["expenses", "eoMonthly"], value)} />
+            <Field label="Leads Monthly" value={data.expenses.leadsMonthly} onChange={(value) => updateValue(["expenses", "leadsMonthly"], value)} />
+            <Field label="Technology Monthly" value={data.expenses.technologyMonthly} onChange={(value) => updateValue(["expenses", "technologyMonthly"], value)} />
+            <Field label="Office Supplies Monthly" value={data.expenses.officeMonthly} onChange={(value) => updateValue(["expenses", "officeMonthly"], value)} />
+            <Field label="Other Insurance Monthly" value={data.expenses.otherInsuranceMonthly} onChange={(value) => updateValue(["expenses", "otherInsuranceMonthly"], value)} />
+            <Field label="MVR Monthly" value={data.expenses.mvrMonthly} onChange={(value) => updateValue(["expenses", "mvrMonthly"], value)} />
+            <Field label="Business Manager Monthly" value={data.expenses.managerMonthly} onChange={(value) => updateValue(["expenses", "managerMonthly"], value)} />
+            <Field label="Tax Rate" value={data.expenses.taxRate} onChange={(value) => updateValue(["expenses", "taxRate"], value)} />
+            <Field label="Expense Buffer Rate" value={data.expenses.bufferRate} onChange={(value) => updateValue(["expenses", "bufferRate"], value)} />
+            <Field label="APR" value={data.expenses.apr} onChange={(value) => updateValue(["expenses", "apr"], value)} />
+            <Field label="Monthly Take Home" value={data.expenses.takeHomeMonthly} onChange={(value) => updateValue(["expenses", "takeHomeMonthly"], value)} />
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`one-time-${label}`}
+                label={`One-Time Expenses ${label}`}
+                value={data.expenses.oneTime[index]}
+                onChange={(value) => updateValue(["expenses", "oneTime", index], value)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <h3 className="text-xl font-semibold text-slate-950">Bonus Inputs</h3>
+        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {QUARTER_LABELS.map((label, index) => (
+            <Field
+              key={`signing-${label}`}
+              label={`Signing Bonus ${label}`}
+              value={data.bonuses.signing[index]}
+              onChange={(value) => updateValue(["bonuses", "signing", index], value)}
+            />
+          ))}
+          {QUARTER_LABELS.map((label, index) => (
+            <Field
+              key={`grad-${label}`}
+              label={`Grad Bonus ${label}`}
+              value={data.bonuses.grad[index]}
+              onChange={(value) => updateValue(["bonuses", "grad", index], value)}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        {data.producers.map((producer, index) => (
+          <div key={producer.name} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <h3 className="text-xl font-semibold text-slate-950">{producer.name}</h3>
+                <p className="text-sm text-slate-600">
+                  NB total: {currency(model.producerSummaries[index].nbTotal)} | Commission monthly: {currency(model.producerSummaries[index].commissionMonthly)} | Bonus monthly: {currency(model.producerSummaries[index].bonusMonthly)}
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <Field label="Base Monthly" value={producer.baseMonthly} onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)} />
+              <Field label="NB Life" value={producer.nbLife} onChange={(value) => updateValue(["producers", index, "nbLife"], value)} />
+              <Field label="NB Commercial" value={producer.nbCommercial} onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)} />
+              <Field label="NB Personal" value={producer.nbPersonal} onChange={(value) => updateValue(["producers", index, "nbPersonal"], value)} />
+              <Field label="Life Rate" value={producer.rateLife} onChange={(value) => updateValue(["producers", index, "rateLife"], value)} />
+              <Field label="Commercial Rate" value={producer.rateCommercial} onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)} />
+              <Field label="Personal Rate" value={producer.ratePersonal} onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)} />
+              <Field label="Bonus Below Tier" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
+              <Field label="Bonus Tier 1" value={producer.bonusMid} onChange={(value) => updateValue(["producers", index, "bonusMid"], value)} />
+              <Field label="Bonus Tier 2" value={producer.bonusHigh} onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)} />
+              <Field label="Bonus Tier 3" value={producer.bonusTop} onChange={(value) => updateValue(["producers", index, "bonusTop"], value)} />
+              <Field label="Threshold 1" value={producer.thresholdMid} onChange={(value) => updateValue(["producers", index, "thresholdMid"], value)} />
+              <Field label="Threshold 2" value={producer.thresholdHigh} onChange={(value) => updateValue(["producers", index, "thresholdHigh"], value)} />
+              <Field label="Threshold 3" value={producer.thresholdTop} onChange={(value) => updateValue(["producers", index, "thresholdTop"], value)} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
+        <div className="mt-5 overflow-x-auto">
+          <table className="min-w-full text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 text-left text-slate-500">
+                <th className="py-3 pr-4">Quarter</th>
+                <th className="py-3 pr-4">Revenue Earned</th>
+                <th className="py-3 pr-4">Bonus</th>
+                <th className="py-3 pr-4">Expenses</th>
+                <th className="py-3 pr-4">Taxes</th>
+                <th className="py-3 pr-4">Net</th>
+              </tr>
+            </thead>
+            <tbody>
+              {model.quarterResults.map((quarter) => (
+                <tr key={quarter.label} className="border-b border-slate-100">
+                  <td className="py-3 pr-4 font-semibold text-slate-900">{quarter.label}</td>
+                  <td className="py-3 pr-4 text-slate-700">{currency(quarter.revenueEarned)}</td>
+                  <td className="py-3 pr-4 text-slate-700">
+                    {currency(quarter.totalBonus)}
+                    <div className="text-xs text-slate-500">
+                      Retail rate: {(quarter.retailBonusRate * 100).toFixed(0)}%
+                    </div>
+                  </td>
+                  <td className="py-3 pr-4 text-slate-700">{currency(quarter.bufferedExpenses)}</td>
+                  <td className="py-3 pr-4 text-slate-700">{currency(quarter.taxes)}</td>
+                  <td className={`py-3 pr-4 font-semibold ${quarter.netProfit >= 0 ? "text-emerald-700" : "text-red-600"}`}>
+                    {currency(quarter.netProfit)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <h3 className="text-xl font-semibold text-slate-950">Monthly Breakdown</h3>
+        <div className="mt-4 grid gap-2">
+          {model.monthlyBreakdown.map((month) => (
+            <div key={month.month} className="rounded-2xl border border-slate-100 px-4 py-3">
+              <BreakdownRow label={`${month.month} approx.`} value={currency(month.approx)} />
+              <BreakdownRow label="Take home" value={currency(month.takeHome)} muted />
+              <BreakdownRow label="Business savings" value={currency(month.businessSavings)} />
+              <BreakdownRow label="Interest estimate" value={currency(month.interest)} muted />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function LeadsDashboard({
   text,
   leads,
@@ -4246,6 +4757,12 @@ function LeadsDashboard({
   passwordError,
   isLoading,
   loadError,
+  retailCalculator,
+  onRetailCalculatorChange,
+  onSaveRetailCalculator,
+  isSavingRetailCalculator,
+  isLoadingRetailCalculator,
+  retailCalculatorError,
 }) {
   if (!isAuthenticated) {
     return (
@@ -4486,6 +5003,14 @@ function LeadsDashboard({
           ))}
         </div>
       )}
+        <RetailCompExpenseCalculator
+          data={retailCalculator}
+          onChange={onRetailCalculatorChange}
+          onSave={onSaveRetailCalculator}
+          isSaving={isSavingRetailCalculator}
+          isLoading={isLoadingRetailCalculator}
+          error={retailCalculatorError}
+        />
         </>
     </section>
   );
@@ -4514,6 +5039,10 @@ export default function OakCompassLandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
   const [savingLeadId, setSavingLeadId] = useState("");
+  const [retailCalculator, setRetailCalculator] = useState(DEFAULT_RETAIL_CALCULATOR);
+  const [isLoadingRetailCalculator, setIsLoadingRetailCalculator] = useState(false);
+  const [isSavingRetailCalculator, setIsSavingRetailCalculator] = useState(false);
+  const [retailCalculatorError, setRetailCalculatorError] = useState("");
   const language = siteLanguage;
   const text = COPY[language];
   const inquiryOptions = INQUIRY_OPTIONS[language].filter(
@@ -4812,7 +5341,9 @@ export default function OakCompassLandingPage() {
   const handleUnlockLeads = async () => {
     setPasswordError("");
     setLoadError("");
+    setRetailCalculatorError("");
     setIsLoadingLeads(true);
+    setIsLoadingRetailCalculator(true);
 
     try {
       const response = await fetch("/api/leads", {
@@ -4839,6 +5370,39 @@ export default function OakCompassLandingPage() {
       setLeads(Array.isArray(data.leads) ? data.leads : []);
       setIsLeadsAuthenticated(true);
       setPasswordError("");
+
+      try {
+        const calculatorResponse = await fetch("/api/retail-calculator", {
+          method: "GET",
+          headers: {
+            "x-admin-password": passwordInput,
+          },
+        });
+
+        const calculatorRawText = await calculatorResponse.text();
+        let calculatorData = {};
+
+        try {
+          calculatorData = calculatorRawText ? JSON.parse(calculatorRawText) : {};
+        } catch {
+          calculatorData = { error: calculatorRawText || "Unable to load calculator data." };
+        }
+
+        if (!calculatorResponse.ok) {
+          throw new Error(calculatorData.error || "Unable to load calculator data.");
+        }
+
+        if (calculatorData.calculator) {
+          setRetailCalculator(calculatorData.calculator);
+        } else {
+          setRetailCalculator(DEFAULT_RETAIL_CALCULATOR);
+        }
+      } catch (calculatorError) {
+        setRetailCalculator(DEFAULT_RETAIL_CALCULATOR);
+        setRetailCalculatorError(
+          calculatorError.message || "Unable to load calculator data."
+        );
+      }
     } catch (error) {
       if (error.message === text.passwordError) {
         setPasswordError(error.message);
@@ -4847,6 +5411,7 @@ export default function OakCompassLandingPage() {
       }
     } finally {
       setIsLoadingLeads(false);
+      setIsLoadingRetailCalculator(false);
     }
   };
 
@@ -4858,6 +5423,7 @@ export default function OakCompassLandingPage() {
     setLoadError("");
     setSearchTerm("");
     setInquiryFilter("all");
+    setRetailCalculatorError("");
   };
 
   const handleClearLeads = async () => {
@@ -4924,6 +5490,53 @@ export default function OakCompassLandingPage() {
     }
   };
 
+  const handleRetailCalculatorChange = (path, value) => {
+    setRetailCalculator((current) => {
+      const next = structuredClone(current);
+      let target = next;
+
+      for (let index = 0; index < path.length - 1; index += 1) {
+        target = target[path[index]];
+      }
+
+      target[path[path.length - 1]] = value;
+      return next;
+    });
+  };
+
+  const handleSaveRetailCalculator = async () => {
+    setIsSavingRetailCalculator(true);
+    setRetailCalculatorError("");
+
+    try {
+      const response = await fetch("/api/retail-calculator", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": passwordInput,
+        },
+        body: JSON.stringify({ calculator: retailCalculator }),
+      });
+
+      const rawText = await response.text();
+      let data = {};
+
+      try {
+        data = rawText ? JSON.parse(rawText) : {};
+      } catch {
+        data = { error: rawText || "Unable to save calculator data." };
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to save calculator data.");
+      }
+    } catch (error) {
+      setRetailCalculatorError(error.message || "Unable to save calculator data.");
+    } finally {
+      setIsSavingRetailCalculator(false);
+    }
+  };
+
   if (activePage === PAGE_PORTAL) {
     return (
       <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
@@ -4950,6 +5563,12 @@ export default function OakCompassLandingPage() {
             passwordError={passwordError}
             isLoading={isLoadingLeads}
             loadError={loadError}
+            retailCalculator={retailCalculator}
+            onRetailCalculatorChange={handleRetailCalculatorChange}
+            onSaveRetailCalculator={handleSaveRetailCalculator}
+            isSavingRetailCalculator={isSavingRetailCalculator}
+            isLoadingRetailCalculator={isLoadingRetailCalculator}
+            retailCalculatorError={retailCalculatorError}
           />
         </div>
         <Analytics />
