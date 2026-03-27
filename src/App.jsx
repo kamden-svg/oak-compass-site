@@ -4623,58 +4623,85 @@ function RetailCompExpenseCalculator({
     );
   }
 
-  const renderExpenseList = (title, items, sectionKey, helperText) => (
-    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
-          <p className="mt-1 text-sm text-slate-500">{helperText}</p>
-        </div>
-        <button
-          type="button"
-          onClick={() => onAddExpense(sectionKey)}
-          className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
-        >
-          Add item
-        </button>
-      </div>
-      <div className="mt-4 space-y-3">
-        {items.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
-            No items yet.
+  const renderExpenseList = (title, items, sectionKey, helperText) => {
+    const total = items.reduce((sum, item) => sum + toNumber(item.amount), 0);
+
+    return (
+      <details className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+          <div>
+            <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              {helperText} Total: {currency(total)}
+            </p>
           </div>
-        ) : (
-          items.map((item, index) => (
-            <div
-              key={`${sectionKey}-${index}`}
-              className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
-            >
-              <Field
-                type="text"
-                step="any"
-                label="Name"
-                value={item.name}
-                onChange={(value) => updateValue(["expenses", sectionKey, index, "name"], value)}
-              />
-              <Field
-                label="Amount"
-                value={item.amount}
-                onChange={(value) => updateValue(["expenses", sectionKey, index, "amount"], value)}
-              />
-              <div className="flex items-end">
-                <button
-                  type="button"
-                  onClick={() => onRemoveExpense(sectionKey, index)}
-                  className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
-                >
-                  Remove
-                </button>
-              </div>
+          <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
+            Open
+          </span>
+        </summary>
+        <div className="mt-4 flex items-start justify-between gap-4">
+          <div className="text-sm text-slate-500">{items.length} item(s)</div>
+          <button
+            type="button"
+            onClick={() => onAddExpense(sectionKey)}
+            className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+          >
+            Add item
+          </button>
+        </div>
+        <div className="mt-4 space-y-3">
+          {items.length === 0 ? (
+            <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
+              No items yet.
             </div>
-          ))
-        )}
-      </div>
-    </div>
+          ) : (
+            items.map((item, index) => (
+              <div
+                key={`${sectionKey}-${index}`}
+                className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+              >
+                <Field
+                  type="text"
+                  step="any"
+                  label="Name"
+                  value={item.name}
+                  onChange={(value) => updateValue(["expenses", sectionKey, index, "name"], value)}
+                />
+                <Field
+                  label="Amount"
+                  value={item.amount}
+                  onChange={(value) => updateValue(["expenses", sectionKey, index, "amount"], value)}
+                />
+                <div className="flex items-end">
+                  <button
+                    type="button"
+                    onClick={() => onRemoveExpense(sectionKey, index)}
+                    className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </details>
+    );
+  };
+
+  const renderSummaryCard = (title, summary, children) => (
+    <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
+        <div>
+          <h3 className="text-xl font-semibold text-slate-950">{title}</h3>
+          <p className="mt-1 text-sm text-slate-500">{summary}</p>
+        </div>
+        <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
+          Open
+        </span>
+      </summary>
+      <div className="mt-5">{children}</div>
+    </details>
   );
 
   return (
@@ -4719,11 +4746,24 @@ function RetailCompExpenseCalculator({
         />
       </div>
 
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        {model.quarterResults.map((quarter) => (
+          <StatCard
+            key={`rate-${quarter.label}`}
+            label={`${quarter.label} bonus rate`}
+            value={`${(quarter.retailBonusRate * 100).toFixed(0)}%`}
+            subtext={`Retail bonus: ${currency(quarter.retailBonus)}`}
+          />
+        ))}
+      </div>
+
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        {renderSummaryCard(
+          "Revenue Assumptions",
+          `Other income ${currency(data.revenue.otherIncomeMonthly)} per month. Rates: P&C ${(toNumber(data.revenue.pncRate) * 100).toFixed(1)}%, Life ${(toNumber(data.revenue.lifeRate) * 100).toFixed(1)}%, Commercial ${(toNumber(data.revenue.commercialRate) * 100).toFixed(1)}%.`,
+          <>
           <div>
-            <h3 className="text-xl font-semibold text-slate-950">Revenue Assumptions</h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="text-sm text-slate-500">
               Quarterly production plus the commission rates you want the calculator to use.
             </p>
           </div>
@@ -4784,12 +4824,15 @@ function RetailCompExpenseCalculator({
               hint="This replaces the old $3,000 line."
             />
           </div>
-        </div>
+          </>
+        )}
 
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        {renderSummaryCard(
+          "Settings",
+          `Take home ${currency(data.expenses.takeHomeMonthly)} monthly. Tax ${(toNumber(data.expenses.taxRate) * 100).toFixed(1)}%, buffer ${(toNumber(data.expenses.bufferRate) * 100).toFixed(1)}%, APR ${(toNumber(data.expenses.apr) * 100).toFixed(1)}%.`,
+          <>
           <div>
-            <h3 className="text-xl font-semibold text-slate-950">Settings</h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="text-sm text-slate-500">
               The global settings that affect expenses, savings, and taxes.
             </p>
           </div>
@@ -4807,7 +4850,8 @@ function RetailCompExpenseCalculator({
             <BreakdownRow label="Estimated business savings" value={currency(model.totals.savings)} />
             <BreakdownRow label="Interest estimate" value={currency(model.totals.interest)} muted />
           </div>
-        </div>
+          </>
+        )}
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -4818,21 +4862,22 @@ function RetailCompExpenseCalculator({
           "Monthly expenses that repeat every month."
         )}
         {renderExpenseList(
-          "Quarterly Expenses",
-          data.expenses.quarterly,
-          "quarterly",
-          "Expenses that hit once each quarter."
-        )}
-        {renderExpenseList(
           "Annual Expenses",
           data.expenses.annual,
           "annual",
           "Expenses paid once each year."
         )}
-        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+        {renderSummaryCard(
+          "Bonuses",
+          QUARTER_LABELS.map(
+            (label, index) =>
+              `${label}: ${currency(data.bonuses.signing[index])} signing, ${currency(
+                data.bonuses.grad[index]
+              )} grad`
+          ).join(" | "),
+          <>
           <div>
-            <h3 className="text-lg font-semibold text-slate-950">Bonuses</h3>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="text-sm text-slate-500">
               Signing and graduation bonus inputs by quarter.
             </p>
           </div>
@@ -4854,16 +4899,17 @@ function RetailCompExpenseCalculator({
               />
             ))}
           </div>
-        </div>
+          </>
+        )}
       </div>
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+      {renderSummaryCard(
+        "Producers",
+        `${data.producers.length} producer${data.producers.length === 1 ? "" : "s"} configured. Monthly producer payroll ${currency(model.payrollMonthly)}.`,
+        <>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h3 className="text-xl font-semibold text-slate-950">Producers</h3>
-            <p className="mt-1 text-sm text-slate-500">
-              Rename producers, adjust their pay setup, or add more whenever you need them.
-            </p>
+          <div className="text-sm text-slate-500">
+            Rename producers, adjust their pay setup, or add more whenever you need them.
           </div>
           <button
             type="button"
@@ -5035,18 +5081,30 @@ function RetailCompExpenseCalculator({
             </div>
           ))}
         </div>
-      </div>
+        </>
+      )}
 
       <div className="grid gap-6 xl:grid-cols-2">
         {QUARTER_LABELS.map((label, quarterIndex) => (
-          <div key={label} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
-            <div className="flex items-start justify-between gap-4">
+          <details key={label} className="group rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
               <div>
                 <h3 className="text-lg font-semibold text-slate-950">{label} One-Time Expenses</h3>
                 <p className="mt-1 text-sm text-slate-500">
-                  Costs that only hit during {label}.
+                  {(data.expenses.oneTime[quarterIndex] || []).length} item(s), total{" "}
+                  {currency(
+                    (data.expenses.oneTime[quarterIndex] || []).reduce(
+                      (sum, item) => sum + toNumber(item.amount),
+                      0
+                    )
+                  )}
                 </p>
               </div>
+              <span className="rounded-full border border-slate-200 px-3 py-1.5 text-sm font-semibold text-slate-600">
+                Open
+              </span>
+            </summary>
+            <div className="mt-4 flex justify-end">
               <button
                 type="button"
                 onClick={() => onAddExpense("oneTime", quarterIndex)}
@@ -5095,17 +5153,13 @@ function RetailCompExpenseCalculator({
                 ))
               )}
             </div>
-          </div>
+          </details>
         ))}
       </div>
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <div>
-          <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
-          <p className="mt-1 text-sm text-slate-500">
-            Your fast read on revenue, bonuses, expenses, taxes, and net by quarter.
-          </p>
-        </div>
+      {renderSummaryCard(
+        "Quarterly Summary",
+        `Net after taxes: ${currency(model.totals.netProfit)}. Open to see quarter-by-quarter detail.`,
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>
@@ -5113,6 +5167,7 @@ function RetailCompExpenseCalculator({
                 <th className="py-3 pr-4">Quarter</th>
                 <th className="py-3 pr-4">Revenue Earned</th>
                 <th className="py-3 pr-4">Bonus</th>
+                <th className="py-3 pr-4">Bonus Rate</th>
                 <th className="py-3 pr-4">Expenses</th>
                 <th className="py-3 pr-4">Taxes</th>
                 <th className="py-3 pr-4">Net</th>
@@ -5123,11 +5178,9 @@ function RetailCompExpenseCalculator({
                 <tr key={quarter.label} className="border-b border-slate-100">
                   <td className="py-3 pr-4 font-semibold text-slate-900">{quarter.label}</td>
                   <td className="py-3 pr-4 text-slate-700">{currency(quarter.revenueEarned)}</td>
+                  <td className="py-3 pr-4 text-slate-700">{currency(quarter.totalBonus)}</td>
                   <td className="py-3 pr-4 text-slate-700">
-                    {currency(quarter.totalBonus)}
-                    <div className="text-xs text-slate-500">
-                      Retail rate: {(quarter.retailBonusRate * 100).toFixed(0)}%
-                    </div>
+                    {(quarter.retailBonusRate * 100).toFixed(0)}%
                   </td>
                   <td className="py-3 pr-4 text-slate-700">{currency(quarter.bufferedExpenses)}</td>
                   <td className="py-3 pr-4 text-slate-700">{currency(quarter.taxes)}</td>
@@ -5139,17 +5192,11 @@ function RetailCompExpenseCalculator({
             </tbody>
           </table>
         </div>
-      </div>
+      )}
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <div>
-          <div>
-            <h3 className="text-xl font-semibold text-slate-950">Monthly Breakdown</h3>
-            <p className="mt-1 text-sm text-slate-500">
-              Month-by-month estimated savings after take home.
-            </p>
-          </div>
-        </div>
+      {renderSummaryCard(
+        "Monthly Breakdown",
+        `Estimated business savings ${currency(model.totals.savings)}. Open to see month-by-month detail.`,
         <div className="mt-4 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {model.monthlyBreakdown.map((month) => (
             <div key={month.month} className="rounded-2xl border border-slate-100 px-4 py-3">
@@ -5160,7 +5207,7 @@ function RetailCompExpenseCalculator({
             </div>
           ))}
         </div>
-      </div>
+      )}
     </section>
   );
 }
