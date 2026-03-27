@@ -4718,6 +4718,15 @@ function RetailCompExpenseCalculator({
     </div>
   );
 
+  const sidebarItems = [
+    { id: null, label: "Overview", summary: "See the full picture" },
+    { id: "revenue", label: "Revenue", summary: "Production and rates" },
+    { id: "settings", label: "Settings", summary: "Tax, buffer, take home" },
+    { id: "bonuses", label: "Bonuses", summary: "Retail rate and bonus inputs" },
+    { id: "producers", label: "Producers", summary: "Sub producer setup" },
+    { id: "results-quarterly", label: "Results", summary: "Quarterly and monthly output" },
+  ];
+
   return (
     <section className="mt-10 space-y-6">
       <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
@@ -4771,6 +4780,34 @@ function RetailCompExpenseCalculator({
         ))}
       </div>
 
+      <div className="grid gap-6 xl:grid-cols-[250px_minmax(0,1fr)]">
+        <aside className="h-fit rounded-3xl bg-white p-4 shadow-sm ring-1 ring-slate-200 xl:sticky xl:top-6">
+          <div className="space-y-2">
+            {sidebarItems.map((item) => {
+              const isActive = activeEditor === item.id;
+              const isOverview = item.id === null && activeEditor === null;
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => setActiveEditor(item.id)}
+                  className={`w-full rounded-2xl px-4 py-3 text-left transition ${
+                    isActive || isOverview
+                      ? "bg-slate-900 text-white shadow-sm"
+                      : "bg-slate-50 text-slate-900 hover:bg-slate-100"
+                  }`}
+                >
+                  <div className="text-sm font-semibold">{item.label}</div>
+                  <div className={`mt-1 text-xs ${isActive || isOverview ? "text-slate-200" : "text-slate-500"}`}>
+                    {item.summary}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </aside>
+
+        <div className="space-y-6">
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
         {renderSummaryCard(
           "revenue",
@@ -5238,6 +5275,8 @@ function RetailCompExpenseCalculator({
           ))}
         </div>
       )}
+        </div>
+      </div>
     </section>
   );
 }
