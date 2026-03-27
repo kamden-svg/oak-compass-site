@@ -4082,6 +4082,34 @@ const MONTH_LABELS = [
   "April",
   "May",
 ];
+
+function createExpenseItem(name = "", amount = "0") {
+  return {
+    name,
+    amount,
+  };
+}
+
+function createProducer(name = "New Producer") {
+  return {
+    name,
+    baseMonthly: "0",
+    nbLife: "0",
+    nbCommercial: "0",
+    nbPersonal: "0",
+    rateLife: "0.2",
+    rateCommercial: "0.125",
+    ratePersonal: "0.1",
+    bonusLow: "0",
+    bonusMid: "250",
+    bonusHigh: "500",
+    bonusTop: "1000",
+    thresholdMid: "7500",
+    thresholdHigh: "12500",
+    thresholdTop: "20000",
+  };
+}
+
 const DEFAULT_RETAIL_CALCULATOR = {
   revenue: {
     pnc: ["60000", "60000", "60000", "60000"],
@@ -4090,20 +4118,22 @@ const DEFAULT_RETAIL_CALCULATOR = {
     pncRate: "0.1",
     lifeRate: "0.3",
     commercialRate: "0.15",
-    subBasePayMonthly: "3000",
+    otherIncomeMonthly: "3000",
   },
   expenses: {
-    rentMonthly: "0",
-    rentQuarterly: "0",
-    rentAnnual: "0",
-    eoMonthly: "120",
-    leadsMonthly: "600",
-    technologyMonthly: "400",
-    officeMonthly: "50",
-    otherInsuranceMonthly: "75",
-    mvrMonthly: "50",
-    managerMonthly: "1000",
-    oneTime: ["0", "0", "0", "0"],
+    recurring: [
+      createExpenseItem("Rent", "0"),
+      createExpenseItem("E&O Insurance", "120"),
+      createExpenseItem("Leads", "600"),
+      createExpenseItem("Technology", "400"),
+      createExpenseItem("Office Supplies", "50"),
+      createExpenseItem("Other Insurance", "75"),
+      createExpenseItem("MVR", "50"),
+      createExpenseItem("Business Manager", "1000"),
+    ],
+    quarterly: [],
+    annual: [],
+    oneTime: QUARTER_LABELS.map(() => []),
     taxRate: "0.1",
     bufferRate: "0.1",
     apr: "0.04",
@@ -4115,58 +4145,129 @@ const DEFAULT_RETAIL_CALCULATOR = {
   },
   producers: [
     {
-      name: "Producer 1 (Matt)",
+      ...createProducer("Matt"),
       baseMonthly: "500",
-      nbLife: "0",
       nbCommercial: "500",
       nbPersonal: "7500",
-      rateLife: "0.2",
-      rateCommercial: "0.125",
-      ratePersonal: "0.1",
-      bonusLow: "0",
       bonusMid: "500",
       bonusHigh: "800",
-      bonusTop: "1000",
       thresholdMid: "10000",
       thresholdHigh: "15000",
-      thresholdTop: "20000",
     },
     {
-      name: "Producer 2 (Kilee)",
+      ...createProducer("Kilee"),
       baseMonthly: "500",
-      nbLife: "0",
-      nbCommercial: "0",
       nbPersonal: "5000",
-      rateLife: "0.2",
-      rateCommercial: "0.125",
-      ratePersonal: "0.1",
-      bonusLow: "0",
       bonusMid: "250",
       bonusHigh: "500",
-      bonusTop: "1000",
       thresholdMid: "7500",
       thresholdHigh: "12500",
-      thresholdTop: "20000",
     },
     {
-      name: "Producer 3 (P/T)",
-      baseMonthly: "0",
-      nbLife: "0",
-      nbCommercial: "0",
+      ...createProducer("Part-Time Producer"),
       nbPersonal: "5000",
-      rateLife: "0.2",
-      rateCommercial: "0.125",
-      ratePersonal: "0.1",
       bonusLow: "200",
       bonusMid: "300",
       bonusHigh: "700",
-      bonusTop: "1000",
       thresholdMid: "7500",
       thresholdHigh: "12500",
-      thresholdTop: "20000",
     },
   ],
 };
+
+function normalizeExpenseItems(items) {
+  if (!Array.isArray(items)) return [];
+
+  return items.map((item) => {
+    if (typeof item === "string" || typeof item === "number") {
+      return createExpenseItem("", String(item));
+    }
+
+    return createExpenseItem(item?.name || "", item?.amount ?? "0");
+  });
+}
+
+function normalizeProducer(producer, index) {
+  return {
+    ...createProducer(`Producer ${index + 1}`),
+    ...(producer || {}),
+    name: producer?.name || `Producer ${index + 1}`,
+  };
+}
+
+function normalizeRetailCalculator(data) {
+  const source = data || {};
+  const legacyRevenue = source.revenue || {};
+  const legacyExpenses = source.expenses || {};
+
+  const recurring =
+    legacyExpenses.recurring ??
+    [
+      createExpenseItem("Rent", legacyExpenses.rentMonthly ?? "0"),
+      createExpenseItem("E&O Insurance", legacyExpenses.eoMonthly ?? "120"),
+      createExpenseItem("Leads", legacyExpenses.leadsMonthly ?? "600"),
+      createExpenseItem("Technology", legacyExpenses.technologyMonthly ?? "400"),
+      createExpenseItem("Office Supplies", legacyExpenses.officeMonthly ?? "50"),
+      createExpenseItem("Other Insurance", legacyExpenses.otherInsuranceMonthly ?? "75"),
+      createExpenseItem("MVR", legacyExpenses.mvrMonthly ?? "50"),
+      createExpenseItem("Business Manager", legacyExpenses.managerMonthly ?? "1000"),
+    ];
+
+  const quarterly =
+    legacyExpenses.quarterly ??
+    (legacyExpenses.rentQuarterly ? [createExpenseItem("Quarterly Rent", legacyExpenses.rentQuarterly)] : []);
+
+  const annual =
+    legacyExpenses.annual ??
+    (legacyExpenses.rentAnnual ? [createExpenseItem("Annual Rent", legacyExpenses.rentAnnual)] : []);
+
+  const oneTime = Array.isArray(legacyExpenses.oneTime)
+    ? legacyExpenses.oneTime.map((entry) =>
+        Array.isArray(entry) ? normalizeExpenseItems(entry) : [createExpenseItem("", entry ?? "0")]
+      )
+    : QUARTER_LABELS.map(() => []);
+
+  return {
+    revenue: {
+      pnc: Array.isArray(legacyRevenue.pnc) ? legacyRevenue.pnc : DEFAULT_RETAIL_CALCULATOR.revenue.pnc,
+      life: Array.isArray(legacyRevenue.life) ? legacyRevenue.life : DEFAULT_RETAIL_CALCULATOR.revenue.life,
+      commercial: Array.isArray(legacyRevenue.commercial)
+        ? legacyRevenue.commercial
+        : DEFAULT_RETAIL_CALCULATOR.revenue.commercial,
+      pncRate: legacyRevenue.pncRate ?? DEFAULT_RETAIL_CALCULATOR.revenue.pncRate,
+      lifeRate: legacyRevenue.lifeRate ?? DEFAULT_RETAIL_CALCULATOR.revenue.lifeRate,
+      commercialRate:
+        legacyRevenue.commercialRate ?? DEFAULT_RETAIL_CALCULATOR.revenue.commercialRate,
+      otherIncomeMonthly:
+        legacyRevenue.otherIncomeMonthly ??
+        legacyRevenue.subBasePayMonthly ??
+        DEFAULT_RETAIL_CALCULATOR.revenue.otherIncomeMonthly,
+    },
+    expenses: {
+      recurring: normalizeExpenseItems(recurring),
+      quarterly: normalizeExpenseItems(quarterly),
+      annual: normalizeExpenseItems(annual),
+      oneTime: QUARTER_LABELS.map((_, index) => normalizeExpenseItems(oneTime[index] || [])),
+      taxRate: legacyExpenses.taxRate ?? DEFAULT_RETAIL_CALCULATOR.expenses.taxRate,
+      bufferRate: legacyExpenses.bufferRate ?? DEFAULT_RETAIL_CALCULATOR.expenses.bufferRate,
+      apr: legacyExpenses.apr ?? DEFAULT_RETAIL_CALCULATOR.expenses.apr,
+      takeHomeMonthly:
+        legacyExpenses.takeHomeMonthly ?? DEFAULT_RETAIL_CALCULATOR.expenses.takeHomeMonthly,
+    },
+    bonuses: {
+      signing: Array.isArray(source.bonuses?.signing)
+        ? source.bonuses.signing
+        : DEFAULT_RETAIL_CALCULATOR.bonuses.signing,
+      grad: Array.isArray(source.bonuses?.grad)
+        ? source.bonuses.grad
+        : DEFAULT_RETAIL_CALCULATOR.bonuses.grad,
+    },
+    producers:
+      Array.isArray(source.producers) && source.producers.length > 0
+        ? source.producers.map(normalizeProducer)
+        : DEFAULT_RETAIL_CALCULATOR.producers.map(normalizeProducer),
+  };
+}
 
 const currency = (value) =>
   new Intl.NumberFormat("en-US", {
@@ -4230,9 +4331,7 @@ function getRetailBonusRate(quarterIndex, commissionBase) {
 
 function calculateRetailCompModel(data) {
   const producerSummaries = data.producers.map(calculateProducerComp);
-  const payrollMonthly =
-    toNumber(data.expenses.managerMonthly) +
-    producerSummaries.reduce((sum, producer) => sum + producer.baseMonthly, 0);
+  const payrollMonthly = producerSummaries.reduce((sum, producer) => sum + producer.baseMonthly, 0);
   const subProducerCommissionMonthly = producerSummaries.reduce(
     (sum, producer) => sum + producer.commissionMonthly,
     0
@@ -4241,17 +4340,19 @@ function calculateRetailCompModel(data) {
     (sum, producer) => sum + producer.bonusMonthly,
     0
   );
-  const recurringMonthly =
-    toNumber(data.expenses.rentMonthly) +
-    toNumber(data.expenses.eoMonthly) +
-    toNumber(data.expenses.leadsMonthly) +
-    toNumber(data.expenses.technologyMonthly) +
-    toNumber(data.expenses.officeMonthly) +
-    toNumber(data.expenses.otherInsuranceMonthly) +
-    toNumber(data.expenses.mvrMonthly) +
-    payrollMonthly;
-  const recurringQuarterly = toNumber(data.expenses.rentQuarterly);
-  const recurringAnnual = toNumber(data.expenses.rentAnnual);
+  const recurringExpensesMonthly = data.expenses.recurring.reduce(
+    (sum, item) => sum + toNumber(item.amount),
+    0
+  );
+  const recurringQuarterly = data.expenses.quarterly.reduce(
+    (sum, item) => sum + toNumber(item.amount),
+    0
+  );
+  const recurringAnnual = data.expenses.annual.reduce(
+    (sum, item) => sum + toNumber(item.amount),
+    0
+  );
+  const recurringMonthly = recurringExpensesMonthly + payrollMonthly;
   const baseQuarterExpenses =
     recurringMonthly * 3 +
     recurringQuarterly +
@@ -4262,7 +4363,11 @@ function calculateRetailCompModel(data) {
     recurringQuarterly * 4 +
     recurringAnnual +
     (subProducerCommissionMonthly + subProducerBonusMonthly) * 12 +
-    data.expenses.oneTime.reduce((sum, value) => sum + toNumber(value), 0);
+    data.expenses.oneTime.reduce(
+      (sum, quarterItems) =>
+        sum + quarterItems.reduce((quarterSum, item) => quarterSum + toNumber(item.amount), 0),
+      0
+    );
   const quarterResults = QUARTER_LABELS.map((label, index) => {
     const pncCommission = toNumber(data.revenue.pnc[index]) * toNumber(data.revenue.pncRate);
     const lifeCommission = toNumber(data.revenue.life[index]) * toNumber(data.revenue.lifeRate);
@@ -4272,15 +4377,19 @@ function calculateRetailCompModel(data) {
     const revenueEarned =
       totalRevenueCommission +
       subProducerCommissionMonthly * 3 +
-      toNumber(data.revenue.subBasePayMonthly) * 3;
+      toNumber(data.revenue.otherIncomeMonthly) * 3;
     const commissionBase = totalRevenueCommission + subProducerCommissionMonthly * 3;
     const retailBonusRate = getRetailBonusRate(index, commissionBase);
     const retailBonus = commissionBase * retailBonusRate;
     const otherBonus =
       toNumber(data.bonuses.signing[index]) + toNumber(data.bonuses.grad[index]);
     const totalBonus = retailBonus + otherBonus;
+    const quarterOneTimeExpenses = (data.expenses.oneTime[index] || []).reduce(
+      (sum, item) => sum + toNumber(item.amount),
+      0
+    );
     const bufferedExpenses =
-      (baseQuarterExpenses + toNumber(data.expenses.oneTime[index])) *
+      (baseQuarterExpenses + quarterOneTimeExpenses) *
       (1 + toNumber(data.expenses.bufferRate));
     const profitBeforeTax = revenueEarned + totalBonus - bufferedExpenses;
     const taxes =
@@ -4327,6 +4436,7 @@ function calculateRetailCompModel(data) {
     subProducerCommissionMonthly,
     subProducerBonusMonthly,
     recurringMonthly,
+    recurringExpensesMonthly,
     annualExpenses,
     quarterResults,
     monthlyBreakdown,
@@ -4496,6 +4606,10 @@ function RetailCompExpenseCalculator({
   isSaving,
   isLoading,
   error,
+  onAddExpense,
+  onRemoveExpense,
+  onAddProducer,
+  onRemoveProducer,
 }) {
   const model = useMemo(() => calculateRetailCompModel(data), [data]);
 
@@ -4509,11 +4623,65 @@ function RetailCompExpenseCalculator({
     );
   }
 
+  const renderExpenseList = (title, items, sectionKey, helperText) => (
+    <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h3 className="text-lg font-semibold text-slate-950">{title}</h3>
+          <p className="mt-1 text-sm text-slate-500">{helperText}</p>
+        </div>
+        <button
+          type="button"
+          onClick={() => onAddExpense(sectionKey)}
+          className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+        >
+          Add item
+        </button>
+      </div>
+      <div className="mt-4 space-y-3">
+        {items.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
+            No items yet.
+          </div>
+        ) : (
+          items.map((item, index) => (
+            <div
+              key={`${sectionKey}-${index}`}
+              className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+            >
+              <Field
+                type="text"
+                step="any"
+                label="Name"
+                value={item.name}
+                onChange={(value) => updateValue(["expenses", sectionKey, index, "name"], value)}
+              />
+              <Field
+                label="Amount"
+                value={item.amount}
+                onChange={(value) => updateValue(["expenses", sectionKey, index, "amount"], value)}
+              />
+              <div className="flex items-end">
+                <button
+                  type="button"
+                  onClick={() => onRemoveExpense(sectionKey, index)}
+                  className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <section className="mt-10 space-y-6">
       <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-2xl">
+          <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">
               Admin Calculator
             </p>
@@ -4521,8 +4689,8 @@ function RetailCompExpenseCalculator({
               Retail Comp & Expense Calculator
             </h2>
             <p className="mt-3 text-sm leading-6 text-slate-600">
-              Update your assumptions, check the numbers that matter most, and save your changes
-              without digging through a giant spreadsheet.
+              This is your working version of the spreadsheet. Update revenue, expenses, and
+              producer assumptions here, then save when you want those changes kept in the portal.
             </p>
           </div>
 
@@ -4539,67 +4707,61 @@ function RetailCompExpenseCalculator({
         {error ? <p className="mt-4 text-sm font-medium text-red-600">{error}</p> : null}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Revenue earned" value={currency(model.totals.revenueEarned)} />
-        <StatCard label="Total bonus" value={currency(model.totals.bonuses)} />
-        <StatCard label="Buffered expenses" value={currency(model.totals.expenses)} tone="negative" />
-        <StatCard label="Taxes" value={currency(model.totals.taxes)} tone="negative" />
-        <StatCard label="Net after taxes" value={currency(model.totals.netProfit)} tone={model.totals.netProfit >= 0 ? "positive" : "negative"} />
-        <StatCard label="Business savings" value={currency(model.totals.savings)} tone={model.totals.savings >= 0 ? "positive" : "negative"} subtext={`Interest estimate: ${currency(model.totals.interest)}`} />
+        <StatCard label="Bonuses" value={currency(model.totals.bonuses)} />
+        <StatCard label="Expenses" value={currency(model.totals.expenses)} tone="negative" />
+        <StatCard
+          label="Net after taxes"
+          value={currency(model.totals.netProfit)}
+          tone={model.totals.netProfit >= 0 ? "positive" : "negative"}
+          subtext={`Taxes: ${currency(model.totals.taxes)}`}
+        />
       </div>
 
-      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200" open>
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div>
             <h3 className="text-xl font-semibold text-slate-950">Revenue Assumptions</h3>
-            <p className="mt-1 text-sm text-slate-500">Quarterly production and commission rates.</p>
+            <p className="mt-1 text-sm text-slate-500">
+              Quarterly production plus the commission rates you want the calculator to use.
+            </p>
           </div>
-          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
-          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-        </summary>
-        <div className="mt-5 space-y-5">
-          <div className="grid gap-4 xl:grid-cols-3">
-            <div className="rounded-2xl border border-slate-200 p-4">
-              <h4 className="text-sm font-semibold text-slate-900">P&C Written</h4>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                {QUARTER_LABELS.map((label, index) => (
-                  <Field
-                    key={`pnc-${label}`}
-                    label={label}
-                    value={data.revenue.pnc[index]}
-                    onChange={(value) => updateValue(["revenue", "pnc", index], value)}
-                  />
+          <div className="mt-5 overflow-x-auto">
+            <table className="min-w-full text-sm">
+              <thead>
+                <tr className="border-b border-slate-200 text-left text-slate-500">
+                  <th className="py-3 pr-4">Category</th>
+                  {QUARTER_LABELS.map((label) => (
+                    <th key={label} className="py-3 pr-4">
+                      {label}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { label: "P&C Written", key: "pnc" },
+                  { label: "Life Written", key: "life" },
+                  { label: "Commercial Written", key: "commercial" },
+                ].map((row) => (
+                  <tr key={row.key} className="border-b border-slate-100 align-top">
+                    <td className="py-3 pr-4 font-semibold text-slate-900">{row.label}</td>
+                    {QUARTER_LABELS.map((_, index) => (
+                      <td key={`${row.key}-${index}`} className="py-3 pr-4">
+                        <Field
+                          label={QUARTER_LABELS[index]}
+                          value={data.revenue[row.key][index]}
+                          onChange={(value) => updateValue(["revenue", row.key, index], value)}
+                        />
+                      </td>
+                    ))}
+                  </tr>
                 ))}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-200 p-4">
-              <h4 className="text-sm font-semibold text-slate-900">Life Written</h4>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                {QUARTER_LABELS.map((label, index) => (
-                  <Field
-                    key={`life-${label}`}
-                    label={label}
-                    value={data.revenue.life[index]}
-                    onChange={(value) => updateValue(["revenue", "life", index], value)}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-200 p-4">
-              <h4 className="text-sm font-semibold text-slate-900">Commercial Written</h4>
-              <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                {QUARTER_LABELS.map((label, index) => (
-                  <Field
-                    key={`commercial-${label}`}
-                    label={label}
-                    value={data.revenue.commercial[index]}
-                    onChange={(value) => updateValue(["revenue", "commercial", index], value)}
-                  />
-                ))}
-              </div>
-            </div>
+              </tbody>
+            </table>
           </div>
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             <Field
               label="P&C Rate"
               value={data.revenue.pncRate}
@@ -4616,124 +4778,220 @@ function RetailCompExpenseCalculator({
               onChange={(value) => updateValue(["revenue", "commercialRate"], value)}
             />
             <Field
-              label="Sub Producer Base Pay"
-              value={data.revenue.subBasePayMonthly}
-              onChange={(value) => updateValue(["revenue", "subBasePayMonthly"], value)}
-              hint="Monthly amount."
+              label="Other Income Monthly"
+              value={data.revenue.otherIncomeMonthly}
+              onChange={(value) => updateValue(["revenue", "otherIncomeMonthly"], value)}
+              hint="This replaces the old $3,000 line."
             />
           </div>
         </div>
-      </details>
 
-      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
           <div>
-            <h3 className="text-xl font-semibold text-slate-950">Expenses & Settings</h3>
-            <p className="mt-1 text-sm text-slate-500">Recurring costs, tax settings, and one-time expenses.</p>
+            <h3 className="text-xl font-semibold text-slate-950">Settings</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              The global settings that affect expenses, savings, and taxes.
+            </p>
           </div>
-          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
-          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-        </summary>
-        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          <Field label="Rent Monthly" value={data.expenses.rentMonthly} onChange={(value) => updateValue(["expenses", "rentMonthly"], value)} />
-          <Field label="Rent Quarterly" value={data.expenses.rentQuarterly} onChange={(value) => updateValue(["expenses", "rentQuarterly"], value)} />
-          <Field label="Rent Annual" value={data.expenses.rentAnnual} onChange={(value) => updateValue(["expenses", "rentAnnual"], value)} />
-          <Field label="E&O Monthly" value={data.expenses.eoMonthly} onChange={(value) => updateValue(["expenses", "eoMonthly"], value)} />
-          <Field label="Leads Monthly" value={data.expenses.leadsMonthly} onChange={(value) => updateValue(["expenses", "leadsMonthly"], value)} />
-          <Field label="Technology Monthly" value={data.expenses.technologyMonthly} onChange={(value) => updateValue(["expenses", "technologyMonthly"], value)} />
-          <Field label="Office Monthly" value={data.expenses.officeMonthly} onChange={(value) => updateValue(["expenses", "officeMonthly"], value)} />
-          <Field label="Other Insurance" value={data.expenses.otherInsuranceMonthly} onChange={(value) => updateValue(["expenses", "otherInsuranceMonthly"], value)} />
-          <Field label="MVR Monthly" value={data.expenses.mvrMonthly} onChange={(value) => updateValue(["expenses", "mvrMonthly"], value)} />
-          <Field label="Manager Monthly" value={data.expenses.managerMonthly} onChange={(value) => updateValue(["expenses", "managerMonthly"], value)} />
-          <Field label="Tax Rate" value={data.expenses.taxRate} onChange={(value) => updateValue(["expenses", "taxRate"], value)} />
-          <Field label="Buffer Rate" value={data.expenses.bufferRate} onChange={(value) => updateValue(["expenses", "bufferRate"], value)} />
-          <Field label="APR" value={data.expenses.apr} onChange={(value) => updateValue(["expenses", "apr"], value)} />
-          <Field label="Monthly Take Home" value={data.expenses.takeHomeMonthly} onChange={(value) => updateValue(["expenses", "takeHomeMonthly"], value)} />
-          {QUARTER_LABELS.map((label, index) => (
-            <Field
-              key={`one-time-${label}`}
-              label={`One-Time ${label}`}
-              value={data.expenses.oneTime[index]}
-              onChange={(value) => updateValue(["expenses", "oneTime", index], value)}
-            />
-          ))}
+          <div className="mt-5 grid gap-3 md:grid-cols-2">
+            <Field label="Tax Rate" value={data.expenses.taxRate} onChange={(value) => updateValue(["expenses", "taxRate"], value)} />
+            <Field label="Buffer Rate" value={data.expenses.bufferRate} onChange={(value) => updateValue(["expenses", "bufferRate"], value)} />
+            <Field label="APR" value={data.expenses.apr} onChange={(value) => updateValue(["expenses", "apr"], value)} />
+            <Field label="Monthly Take Home" value={data.expenses.takeHomeMonthly} onChange={(value) => updateValue(["expenses", "takeHomeMonthly"], value)} />
+          </div>
+          <div className="mt-5 space-y-3 rounded-2xl bg-slate-50 p-4">
+            <BreakdownRow label="Recurring monthly expenses" value={currency(model.recurringExpensesMonthly)} />
+            <BreakdownRow label="Producer base payroll monthly" value={currency(model.payrollMonthly)} />
+            <BreakdownRow label="Sub producer commission monthly" value={currency(model.subProducerCommissionMonthly)} />
+            <BreakdownRow label="Sub producer bonus monthly" value={currency(model.subProducerBonusMonthly)} />
+            <BreakdownRow label="Estimated business savings" value={currency(model.totals.savings)} />
+            <BreakdownRow label="Interest estimate" value={currency(model.totals.interest)} muted />
+          </div>
         </div>
-      </details>
+      </div>
 
-      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+      <div className="grid gap-6 xl:grid-cols-2">
+        {renderExpenseList(
+          "Recurring Expenses",
+          data.expenses.recurring,
+          "recurring",
+          "Monthly expenses that repeat every month."
+        )}
+        {renderExpenseList(
+          "Quarterly Expenses",
+          data.expenses.quarterly,
+          "quarterly",
+          "Expenses that hit once each quarter."
+        )}
+        {renderExpenseList(
+          "Annual Expenses",
+          data.expenses.annual,
+          "annual",
+          "Expenses paid once each year."
+        )}
+        <div className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
           <div>
-            <h3 className="text-xl font-semibold text-slate-950">Bonus Inputs</h3>
-            <p className="mt-1 text-sm text-slate-500">Quarter-specific signing and graduation bonuses.</p>
+            <h3 className="text-lg font-semibold text-slate-950">Bonuses</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Signing and graduation bonus inputs by quarter.
+            </p>
           </div>
-          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
-          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-        </summary>
-        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-          {QUARTER_LABELS.map((label, index) => (
-            <Field
-              key={`signing-${label}`}
-              label={`Signing ${label}`}
-              value={data.bonuses.signing[index]}
-              onChange={(value) => updateValue(["bonuses", "signing", index], value)}
-            />
-          ))}
-          {QUARTER_LABELS.map((label, index) => (
-            <Field
-              key={`grad-${label}`}
-              label={`Grad ${label}`}
-              value={data.bonuses.grad[index]}
-              onChange={(value) => updateValue(["bonuses", "grad", index], value)}
-            />
-          ))}
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`signing-${label}`}
+                label={`Signing ${label}`}
+                value={data.bonuses.signing[index]}
+                onChange={(value) => updateValue(["bonuses", "signing", index], value)}
+              />
+            ))}
+            {QUARTER_LABELS.map((label, index) => (
+              <Field
+                key={`grad-${label}`}
+                label={`Grad ${label}`}
+                value={data.bonuses.grad[index]}
+                onChange={(value) => updateValue(["bonuses", "grad", index], value)}
+              />
+            ))}
+          </div>
         </div>
-      </details>
+      </div>
 
-      <div className="space-y-4">
-        {data.producers.map((producer, index) => (
-          <details key={producer.name} className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Producers</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Rename producers, adjust their pay setup, or add more whenever you need them.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onAddProducer}
+            className="rounded-full border border-emerald-200 px-4 py-2 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+          >
+            Add producer
+          </button>
+        </div>
+
+        <div className="mt-5 space-y-4">
+          {data.producers.map((producer, index) => (
+            <div key={`${producer.name}-${index}`} className="rounded-3xl border border-slate-200 p-5">
               <div>
-                <h3 className="text-xl font-semibold text-slate-950">{producer.name}</h3>
-                <p className="mt-1 text-sm text-slate-600">
-                  NB total {currency(model.producerSummaries[index].nbTotal)} | Commission{" "}
-                  {currency(model.producerSummaries[index].commissionMonthly)} | Bonus{" "}
-                  {currency(model.producerSummaries[index].bonusMonthly)}
+                <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                  <div className="grid gap-3 md:grid-cols-[minmax(0,320px)_1fr] md:items-end">
+                    <Field
+                      type="text"
+                      step="any"
+                      label="Producer Name"
+                      value={producer.name}
+                      onChange={(value) => updateValue(["producers", index, "name"], value)}
+                    />
+                    <div className="rounded-2xl bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                      NB total {currency(model.producerSummaries[index].nbTotal)} | Commission{" "}
+                      {currency(model.producerSummaries[index].commissionMonthly)} | Bonus{" "}
+                      {currency(model.producerSummaries[index].bonusMonthly)}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => onRemoveProducer(index)}
+                    className="rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                  >
+                    Remove producer
+                  </button>
+                </div>
+              </div>
+              <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <Field label="Base Monthly" value={producer.baseMonthly} onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)} />
+                <Field label="NB Life" value={producer.nbLife} onChange={(value) => updateValue(["producers", index, "nbLife"], value)} />
+                <Field label="NB Commercial" value={producer.nbCommercial} onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)} />
+                <Field label="NB Personal" value={producer.nbPersonal} onChange={(value) => updateValue(["producers", index, "nbPersonal"], value)} />
+                <Field label="Life Rate" value={producer.rateLife} onChange={(value) => updateValue(["producers", index, "rateLife"], value)} />
+                <Field label="Commercial Rate" value={producer.rateCommercial} onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)} />
+                <Field label="Personal Rate" value={producer.ratePersonal} onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)} />
+                <Field label="Bonus Low" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
+                <Field label="Bonus Tier 1" value={producer.bonusMid} onChange={(value) => updateValue(["producers", index, "bonusMid"], value)} />
+                <Field label="Bonus Tier 2" value={producer.bonusHigh} onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)} />
+                <Field label="Bonus Tier 3" value={producer.bonusTop} onChange={(value) => updateValue(["producers", index, "bonusTop"], value)} />
+                <Field label="Threshold 1" value={producer.thresholdMid} onChange={(value) => updateValue(["producers", index, "thresholdMid"], value)} />
+                <Field label="Threshold 2" value={producer.thresholdHigh} onChange={(value) => updateValue(["producers", index, "thresholdHigh"], value)} />
+                <Field label="Threshold 3" value={producer.thresholdTop} onChange={(value) => updateValue(["producers", index, "thresholdTop"], value)} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-2">
+        {QUARTER_LABELS.map((label, quarterIndex) => (
+          <div key={label} className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <h3 className="text-lg font-semibold text-slate-950">{label} One-Time Expenses</h3>
+                <p className="mt-1 text-sm text-slate-500">
+                  Costs that only hit during {label}.
                 </p>
               </div>
-              <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Edit</span>
-              <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-            </summary>
-
-            <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-              <Field label="Base Monthly" value={producer.baseMonthly} onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)} />
-              <Field label="NB Life" value={producer.nbLife} onChange={(value) => updateValue(["producers", index, "nbLife"], value)} />
-              <Field label="NB Commercial" value={producer.nbCommercial} onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)} />
-              <Field label="NB Personal" value={producer.nbPersonal} onChange={(value) => updateValue(["producers", index, "nbPersonal"], value)} />
-              <Field label="Life Rate" value={producer.rateLife} onChange={(value) => updateValue(["producers", index, "rateLife"], value)} />
-              <Field label="Commercial Rate" value={producer.rateCommercial} onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)} />
-              <Field label="Personal Rate" value={producer.ratePersonal} onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)} />
-              <Field label="Bonus Low" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
-              <Field label="Bonus Tier 1" value={producer.bonusMid} onChange={(value) => updateValue(["producers", index, "bonusMid"], value)} />
-              <Field label="Bonus Tier 2" value={producer.bonusHigh} onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)} />
-              <Field label="Bonus Tier 3" value={producer.bonusTop} onChange={(value) => updateValue(["producers", index, "bonusTop"], value)} />
-              <Field label="Threshold 1" value={producer.thresholdMid} onChange={(value) => updateValue(["producers", index, "thresholdMid"], value)} />
-              <Field label="Threshold 2" value={producer.thresholdHigh} onChange={(value) => updateValue(["producers", index, "thresholdHigh"], value)} />
-              <Field label="Threshold 3" value={producer.thresholdTop} onChange={(value) => updateValue(["producers", index, "thresholdTop"], value)} />
+              <button
+                type="button"
+                onClick={() => onAddExpense("oneTime", quarterIndex)}
+                className="rounded-full border border-emerald-200 px-3 py-1.5 text-sm font-semibold text-emerald-700 transition hover:bg-emerald-50"
+              >
+                Add item
+              </button>
             </div>
-          </details>
+            <div className="mt-4 space-y-3">
+              {(data.expenses.oneTime[quarterIndex] || []).length === 0 ? (
+                <div className="rounded-2xl border border-dashed border-slate-200 px-4 py-5 text-sm text-slate-500">
+                  No items yet.
+                </div>
+              ) : (
+                (data.expenses.oneTime[quarterIndex] || []).map((item, index) => (
+                  <div
+                    key={`${label}-${index}`}
+                    className="grid gap-3 rounded-2xl border border-slate-200 p-3 md:grid-cols-[1fr_180px_auto]"
+                  >
+                    <Field
+                      type="text"
+                      step="any"
+                      label="Name"
+                      value={item.name}
+                      onChange={(value) =>
+                        updateValue(["expenses", "oneTime", quarterIndex, index, "name"], value)
+                      }
+                    />
+                    <Field
+                      label="Amount"
+                      value={item.amount}
+                      onChange={(value) =>
+                        updateValue(["expenses", "oneTime", quarterIndex, index, "amount"], value)
+                      }
+                    />
+                    <div className="flex items-end">
+                      <button
+                        type="button"
+                        onClick={() => onRemoveExpense("oneTime", index, quarterIndex)}
+                        className="w-full rounded-2xl border border-red-200 px-3 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         ))}
       </div>
 
-      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200" open>
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
-            <p className="mt-1 text-sm text-slate-500">The fast view for revenue, bonuses, expenses, taxes, and net.</p>
-          </div>
-          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
-          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-        </summary>
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div>
+          <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
+          <p className="mt-1 text-sm text-slate-500">
+            Your fast read on revenue, bonuses, expenses, taxes, and net by quarter.
+          </p>
+        </div>
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>
@@ -4767,17 +5025,17 @@ function RetailCompExpenseCalculator({
             </tbody>
           </table>
         </div>
-      </details>
+      </div>
 
-      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <div>
           <div>
             <h3 className="text-xl font-semibold text-slate-950">Monthly Breakdown</h3>
-            <p className="mt-1 text-sm text-slate-500">Open when you want the month-by-month view.</p>
+            <p className="mt-1 text-sm text-slate-500">
+              Month-by-month estimated savings after take home.
+            </p>
           </div>
-          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
-          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
-        </summary>
+        </div>
         <div className="mt-4 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {model.monthlyBreakdown.map((month) => (
             <div key={month.month} className="rounded-2xl border border-slate-100 px-4 py-3">
@@ -4788,7 +5046,7 @@ function RetailCompExpenseCalculator({
             </div>
           ))}
         </div>
-      </details>
+      </div>
     </section>
   );
 }
@@ -4820,6 +5078,10 @@ function LeadsDashboard({
   isSavingRetailCalculator,
   isLoadingRetailCalculator,
   retailCalculatorError,
+  onAddRetailExpense,
+  onRemoveRetailExpense,
+  onAddRetailProducer,
+  onRemoveRetailProducer,
 }) {
   if (!isAuthenticated) {
     return (
@@ -5067,6 +5329,10 @@ function LeadsDashboard({
           isSaving={isSavingRetailCalculator}
           isLoading={isLoadingRetailCalculator}
           error={retailCalculatorError}
+          onAddExpense={onAddRetailExpense}
+          onRemoveExpense={onRemoveRetailExpense}
+          onAddProducer={onAddRetailProducer}
+          onRemoveProducer={onRemoveRetailProducer}
         />
         </>
     </section>
@@ -5096,7 +5362,9 @@ export default function OakCompassLandingPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [inquiryFilter, setInquiryFilter] = useState("all");
   const [savingLeadId, setSavingLeadId] = useState("");
-  const [retailCalculator, setRetailCalculator] = useState(DEFAULT_RETAIL_CALCULATOR);
+  const [retailCalculator, setRetailCalculator] = useState(() =>
+    normalizeRetailCalculator(DEFAULT_RETAIL_CALCULATOR)
+  );
   const [isLoadingRetailCalculator, setIsLoadingRetailCalculator] = useState(false);
   const [isSavingRetailCalculator, setIsSavingRetailCalculator] = useState(false);
   const [retailCalculatorError, setRetailCalculatorError] = useState("");
@@ -5450,12 +5718,12 @@ export default function OakCompassLandingPage() {
         }
 
         if (calculatorData.calculator) {
-          setRetailCalculator(calculatorData.calculator);
+          setRetailCalculator(normalizeRetailCalculator(calculatorData.calculator));
         } else {
-          setRetailCalculator(DEFAULT_RETAIL_CALCULATOR);
+          setRetailCalculator(normalizeRetailCalculator(DEFAULT_RETAIL_CALCULATOR));
         }
       } catch (calculatorError) {
-        setRetailCalculator(DEFAULT_RETAIL_CALCULATOR);
+        setRetailCalculator(normalizeRetailCalculator(DEFAULT_RETAIL_CALCULATOR));
         setRetailCalculatorError(
           calculatorError.message || "Unable to load calculator data."
         );
@@ -5549,7 +5817,7 @@ export default function OakCompassLandingPage() {
 
   const handleRetailCalculatorChange = (path, value) => {
     setRetailCalculator((current) => {
-      const next = structuredClone(current);
+      const next = normalizeRetailCalculator(structuredClone(current));
       let target = next;
 
       for (let index = 0; index < path.length - 1; index += 1) {
@@ -5557,6 +5825,50 @@ export default function OakCompassLandingPage() {
       }
 
       target[path[path.length - 1]] = value;
+      return next;
+    });
+  };
+
+  const handleAddRetailExpense = (sectionKey, quarterIndex = null) => {
+    setRetailCalculator((current) => {
+      const next = normalizeRetailCalculator(structuredClone(current));
+
+      if (sectionKey === "oneTime" && quarterIndex !== null) {
+        next.expenses.oneTime[quarterIndex].push(createExpenseItem("", "0"));
+      } else {
+        next.expenses[sectionKey].push(createExpenseItem("", "0"));
+      }
+
+      return next;
+    });
+  };
+
+  const handleRemoveRetailExpense = (sectionKey, index, quarterIndex = null) => {
+    setRetailCalculator((current) => {
+      const next = normalizeRetailCalculator(structuredClone(current));
+
+      if (sectionKey === "oneTime" && quarterIndex !== null) {
+        next.expenses.oneTime[quarterIndex].splice(index, 1);
+      } else {
+        next.expenses[sectionKey].splice(index, 1);
+      }
+
+      return next;
+    });
+  };
+
+  const handleAddRetailProducer = () => {
+    setRetailCalculator((current) => {
+      const next = normalizeRetailCalculator(structuredClone(current));
+      next.producers.push(createProducer(`Producer ${next.producers.length + 1}`));
+      return next;
+    });
+  };
+
+  const handleRemoveRetailProducer = (index) => {
+    setRetailCalculator((current) => {
+      const next = normalizeRetailCalculator(structuredClone(current));
+      next.producers.splice(index, 1);
       return next;
     });
   };
@@ -5572,7 +5884,7 @@ export default function OakCompassLandingPage() {
           "Content-Type": "application/json",
           "x-admin-password": passwordInput,
         },
-        body: JSON.stringify({ calculator: retailCalculator }),
+        body: JSON.stringify({ calculator: normalizeRetailCalculator(retailCalculator) }),
       });
 
       const rawText = await response.text();
@@ -5626,6 +5938,10 @@ export default function OakCompassLandingPage() {
             isSavingRetailCalculator={isSavingRetailCalculator}
             isLoadingRetailCalculator={isLoadingRetailCalculator}
             retailCalculatorError={retailCalculatorError}
+            onAddRetailExpense={handleAddRetailExpense}
+            onRemoveRetailExpense={handleRemoveRetailExpense}
+            onAddRetailProducer={handleAddRetailProducer}
+            onRemoveRetailProducer={handleRemoveRetailProducer}
           />
         </div>
         <Analytics />
