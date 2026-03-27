@@ -4344,14 +4344,16 @@ function calculateRetailCompModel(data) {
 
 function Field({ label, value, onChange, type = "number", step = "0.01", hint }) {
   return (
-    <div className="rounded-2xl border bg-white p-4 shadow-sm">
-      <label className="mb-1 block text-sm font-semibold text-gray-800">{label}</label>
+    <div className="rounded-2xl border bg-white p-3 shadow-sm">
+      <label className="mb-1 block text-xs font-semibold uppercase tracking-wide text-gray-600">
+        {label}
+      </label>
       <input
         type={type}
         step={step}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-xl border border-gray-300 px-3 py-2 outline-none focus:border-black"
+        className="w-full rounded-xl border border-gray-300 px-3 py-2 text-sm outline-none focus:border-black"
       />
       {hint ? <p className="mt-2 text-xs text-gray-500">{hint}</p> : null}
     </div>
@@ -4511,17 +4513,16 @@ function RetailCompExpenseCalculator({
     <section className="mt-10 space-y-6">
       <div className="rounded-3xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-          <div className="max-w-3xl">
+          <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.22em] text-emerald-700">
               Admin Calculator
             </p>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
               Retail Comp & Expense Calculator
             </h2>
-            <p className="mt-3 text-sm leading-7 text-slate-600">
-              This takes your spreadsheet logic and puts it into a usable calculator here in the
-              admin section. Edit the assumptions, review the outputs, and save when you want to
-              keep the changes.
+            <p className="mt-3 text-sm leading-6 text-slate-600">
+              Update your assumptions, check the numbers that matter most, and save your changes
+              without digging through a giant spreadsheet.
             </p>
           </div>
 
@@ -4547,94 +4548,132 @@ function RetailCompExpenseCalculator({
         <StatCard label="Business savings" value={currency(model.totals.savings)} tone={model.totals.savings >= 0 ? "positive" : "negative"} subtext={`Interest estimate: ${currency(model.totals.interest)}`} />
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-2">
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <h3 className="text-xl font-semibold text-slate-950">Revenue Assumptions</h3>
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            {QUARTER_LABELS.map((label, index) => (
-              <Field
-                key={`pnc-${label}`}
-                label={`P&C Written ${label}`}
-                value={data.revenue.pnc[index]}
-                onChange={(value) => updateValue(["revenue", "pnc", index], value)}
-              />
-            ))}
-            {QUARTER_LABELS.map((label, index) => (
-              <Field
-                key={`life-${label}`}
-                label={`Life Written ${label}`}
-                value={data.revenue.life[index]}
-                onChange={(value) => updateValue(["revenue", "life", index], value)}
-              />
-            ))}
-            {QUARTER_LABELS.map((label, index) => (
-              <Field
-                key={`commercial-${label}`}
-                label={`Commercial Written ${label}`}
-                value={data.revenue.commercial[index]}
-                onChange={(value) => updateValue(["revenue", "commercial", index], value)}
-              />
-            ))}
+      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200" open>
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Revenue Assumptions</h3>
+            <p className="mt-1 text-sm text-slate-500">Quarterly production and commission rates.</p>
+          </div>
+          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
+          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+        </summary>
+        <div className="mt-5 space-y-5">
+          <div className="grid gap-4 xl:grid-cols-3">
+            <div className="rounded-2xl border border-slate-200 p-4">
+              <h4 className="text-sm font-semibold text-slate-900">P&C Written</h4>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {QUARTER_LABELS.map((label, index) => (
+                  <Field
+                    key={`pnc-${label}`}
+                    label={label}
+                    value={data.revenue.pnc[index]}
+                    onChange={(value) => updateValue(["revenue", "pnc", index], value)}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 p-4">
+              <h4 className="text-sm font-semibold text-slate-900">Life Written</h4>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {QUARTER_LABELS.map((label, index) => (
+                  <Field
+                    key={`life-${label}`}
+                    label={label}
+                    value={data.revenue.life[index]}
+                    onChange={(value) => updateValue(["revenue", "life", index], value)}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="rounded-2xl border border-slate-200 p-4">
+              <h4 className="text-sm font-semibold text-slate-900">Commercial Written</h4>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                {QUARTER_LABELS.map((label, index) => (
+                  <Field
+                    key={`commercial-${label}`}
+                    label={label}
+                    value={data.revenue.commercial[index]}
+                    onChange={(value) => updateValue(["revenue", "commercial", index], value)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             <Field
-              label="P&C Commission Rate"
+              label="P&C Rate"
               value={data.revenue.pncRate}
               onChange={(value) => updateValue(["revenue", "pncRate"], value)}
             />
             <Field
-              label="Life Commission Rate"
+              label="Life Rate"
               value={data.revenue.lifeRate}
               onChange={(value) => updateValue(["revenue", "lifeRate"], value)}
             />
             <Field
-              label="Commercial Commission Rate"
+              label="Commercial Rate"
               value={data.revenue.commercialRate}
               onChange={(value) => updateValue(["revenue", "commercialRate"], value)}
             />
             <Field
-              label="Sub Producer Base Pay Monthly"
+              label="Sub Producer Base Pay"
               value={data.revenue.subBasePayMonthly}
               onChange={(value) => updateValue(["revenue", "subBasePayMonthly"], value)}
-              hint="Workbook default was 3000 monthly, which becomes 9000 each quarter."
+              hint="Monthly amount."
             />
           </div>
         </div>
+      </details>
 
-        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-          <h3 className="text-xl font-semibold text-slate-950">Expenses & Settings</h3>
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            <Field label="Rent Monthly" value={data.expenses.rentMonthly} onChange={(value) => updateValue(["expenses", "rentMonthly"], value)} />
-            <Field label="Rent Quarterly" value={data.expenses.rentQuarterly} onChange={(value) => updateValue(["expenses", "rentQuarterly"], value)} />
-            <Field label="Rent Annual" value={data.expenses.rentAnnual} onChange={(value) => updateValue(["expenses", "rentAnnual"], value)} />
-            <Field label="E&O Insurance Monthly" value={data.expenses.eoMonthly} onChange={(value) => updateValue(["expenses", "eoMonthly"], value)} />
-            <Field label="Leads Monthly" value={data.expenses.leadsMonthly} onChange={(value) => updateValue(["expenses", "leadsMonthly"], value)} />
-            <Field label="Technology Monthly" value={data.expenses.technologyMonthly} onChange={(value) => updateValue(["expenses", "technologyMonthly"], value)} />
-            <Field label="Office Supplies Monthly" value={data.expenses.officeMonthly} onChange={(value) => updateValue(["expenses", "officeMonthly"], value)} />
-            <Field label="Other Insurance Monthly" value={data.expenses.otherInsuranceMonthly} onChange={(value) => updateValue(["expenses", "otherInsuranceMonthly"], value)} />
-            <Field label="MVR Monthly" value={data.expenses.mvrMonthly} onChange={(value) => updateValue(["expenses", "mvrMonthly"], value)} />
-            <Field label="Business Manager Monthly" value={data.expenses.managerMonthly} onChange={(value) => updateValue(["expenses", "managerMonthly"], value)} />
-            <Field label="Tax Rate" value={data.expenses.taxRate} onChange={(value) => updateValue(["expenses", "taxRate"], value)} />
-            <Field label="Expense Buffer Rate" value={data.expenses.bufferRate} onChange={(value) => updateValue(["expenses", "bufferRate"], value)} />
-            <Field label="APR" value={data.expenses.apr} onChange={(value) => updateValue(["expenses", "apr"], value)} />
-            <Field label="Monthly Take Home" value={data.expenses.takeHomeMonthly} onChange={(value) => updateValue(["expenses", "takeHomeMonthly"], value)} />
-            {QUARTER_LABELS.map((label, index) => (
-              <Field
-                key={`one-time-${label}`}
-                label={`One-Time Expenses ${label}`}
-                value={data.expenses.oneTime[index]}
-                onChange={(value) => updateValue(["expenses", "oneTime", index], value)}
-              />
-            ))}
+      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Expenses & Settings</h3>
+            <p className="mt-1 text-sm text-slate-500">Recurring costs, tax settings, and one-time expenses.</p>
           </div>
+          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
+          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+        </summary>
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <Field label="Rent Monthly" value={data.expenses.rentMonthly} onChange={(value) => updateValue(["expenses", "rentMonthly"], value)} />
+          <Field label="Rent Quarterly" value={data.expenses.rentQuarterly} onChange={(value) => updateValue(["expenses", "rentQuarterly"], value)} />
+          <Field label="Rent Annual" value={data.expenses.rentAnnual} onChange={(value) => updateValue(["expenses", "rentAnnual"], value)} />
+          <Field label="E&O Monthly" value={data.expenses.eoMonthly} onChange={(value) => updateValue(["expenses", "eoMonthly"], value)} />
+          <Field label="Leads Monthly" value={data.expenses.leadsMonthly} onChange={(value) => updateValue(["expenses", "leadsMonthly"], value)} />
+          <Field label="Technology Monthly" value={data.expenses.technologyMonthly} onChange={(value) => updateValue(["expenses", "technologyMonthly"], value)} />
+          <Field label="Office Monthly" value={data.expenses.officeMonthly} onChange={(value) => updateValue(["expenses", "officeMonthly"], value)} />
+          <Field label="Other Insurance" value={data.expenses.otherInsuranceMonthly} onChange={(value) => updateValue(["expenses", "otherInsuranceMonthly"], value)} />
+          <Field label="MVR Monthly" value={data.expenses.mvrMonthly} onChange={(value) => updateValue(["expenses", "mvrMonthly"], value)} />
+          <Field label="Manager Monthly" value={data.expenses.managerMonthly} onChange={(value) => updateValue(["expenses", "managerMonthly"], value)} />
+          <Field label="Tax Rate" value={data.expenses.taxRate} onChange={(value) => updateValue(["expenses", "taxRate"], value)} />
+          <Field label="Buffer Rate" value={data.expenses.bufferRate} onChange={(value) => updateValue(["expenses", "bufferRate"], value)} />
+          <Field label="APR" value={data.expenses.apr} onChange={(value) => updateValue(["expenses", "apr"], value)} />
+          <Field label="Monthly Take Home" value={data.expenses.takeHomeMonthly} onChange={(value) => updateValue(["expenses", "takeHomeMonthly"], value)} />
+          {QUARTER_LABELS.map((label, index) => (
+            <Field
+              key={`one-time-${label}`}
+              label={`One-Time ${label}`}
+              value={data.expenses.oneTime[index]}
+              onChange={(value) => updateValue(["expenses", "oneTime", index], value)}
+            />
+          ))}
         </div>
-      </div>
+      </details>
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h3 className="text-xl font-semibold text-slate-950">Bonus Inputs</h3>
-        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Bonus Inputs</h3>
+            <p className="mt-1 text-sm text-slate-500">Quarter-specific signing and graduation bonuses.</p>
+          </div>
+          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
+          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+        </summary>
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
           {QUARTER_LABELS.map((label, index) => (
             <Field
               key={`signing-${label}`}
-              label={`Signing Bonus ${label}`}
+              label={`Signing ${label}`}
               value={data.bonuses.signing[index]}
               onChange={(value) => updateValue(["bonuses", "signing", index], value)}
             />
@@ -4642,27 +4681,31 @@ function RetailCompExpenseCalculator({
           {QUARTER_LABELS.map((label, index) => (
             <Field
               key={`grad-${label}`}
-              label={`Grad Bonus ${label}`}
+              label={`Grad ${label}`}
               value={data.bonuses.grad[index]}
               onChange={(value) => updateValue(["bonuses", "grad", index], value)}
             />
           ))}
         </div>
-      </div>
+      </details>
 
       <div className="space-y-4">
         {data.producers.map((producer, index) => (
-          <div key={producer.name} className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-            <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+          <details key={producer.name} className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
               <div>
                 <h3 className="text-xl font-semibold text-slate-950">{producer.name}</h3>
-                <p className="text-sm text-slate-600">
-                  NB total: {currency(model.producerSummaries[index].nbTotal)} | Commission monthly: {currency(model.producerSummaries[index].commissionMonthly)} | Bonus monthly: {currency(model.producerSummaries[index].bonusMonthly)}
+                <p className="mt-1 text-sm text-slate-600">
+                  NB total {currency(model.producerSummaries[index].nbTotal)} | Commission{" "}
+                  {currency(model.producerSummaries[index].commissionMonthly)} | Bonus{" "}
+                  {currency(model.producerSummaries[index].bonusMonthly)}
                 </p>
               </div>
-            </div>
+              <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Edit</span>
+              <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+            </summary>
 
-            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
               <Field label="Base Monthly" value={producer.baseMonthly} onChange={(value) => updateValue(["producers", index, "baseMonthly"], value)} />
               <Field label="NB Life" value={producer.nbLife} onChange={(value) => updateValue(["producers", index, "nbLife"], value)} />
               <Field label="NB Commercial" value={producer.nbCommercial} onChange={(value) => updateValue(["producers", index, "nbCommercial"], value)} />
@@ -4670,7 +4713,7 @@ function RetailCompExpenseCalculator({
               <Field label="Life Rate" value={producer.rateLife} onChange={(value) => updateValue(["producers", index, "rateLife"], value)} />
               <Field label="Commercial Rate" value={producer.rateCommercial} onChange={(value) => updateValue(["producers", index, "rateCommercial"], value)} />
               <Field label="Personal Rate" value={producer.ratePersonal} onChange={(value) => updateValue(["producers", index, "ratePersonal"], value)} />
-              <Field label="Bonus Below Tier" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
+              <Field label="Bonus Low" value={producer.bonusLow} onChange={(value) => updateValue(["producers", index, "bonusLow"], value)} />
               <Field label="Bonus Tier 1" value={producer.bonusMid} onChange={(value) => updateValue(["producers", index, "bonusMid"], value)} />
               <Field label="Bonus Tier 2" value={producer.bonusHigh} onChange={(value) => updateValue(["producers", index, "bonusHigh"], value)} />
               <Field label="Bonus Tier 3" value={producer.bonusTop} onChange={(value) => updateValue(["producers", index, "bonusTop"], value)} />
@@ -4678,12 +4721,19 @@ function RetailCompExpenseCalculator({
               <Field label="Threshold 2" value={producer.thresholdHigh} onChange={(value) => updateValue(["producers", index, "thresholdHigh"], value)} />
               <Field label="Threshold 3" value={producer.thresholdTop} onChange={(value) => updateValue(["producers", index, "thresholdTop"], value)} />
             </div>
-          </div>
+          </details>
         ))}
       </div>
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
+      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200" open>
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Quarterly Summary</h3>
+            <p className="mt-1 text-sm text-slate-500">The fast view for revenue, bonuses, expenses, taxes, and net.</p>
+          </div>
+          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
+          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+        </summary>
         <div className="mt-5 overflow-x-auto">
           <table className="min-w-full text-sm">
             <thead>
@@ -4717,11 +4767,18 @@ function RetailCompExpenseCalculator({
             </tbody>
           </table>
         </div>
-      </div>
+      </details>
 
-      <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
-        <h3 className="text-xl font-semibold text-slate-950">Monthly Breakdown</h3>
-        <div className="mt-4 grid gap-2">
+      <details className="group rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-200">
+        <summary className="flex cursor-pointer list-none items-center justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold text-slate-950">Monthly Breakdown</h3>
+            <p className="mt-1 text-sm text-slate-500">Open when you want the month-by-month view.</p>
+          </div>
+          <span className="text-sm font-semibold text-emerald-700 group-open:hidden">Open</span>
+          <span className="hidden text-sm font-semibold text-emerald-700 group-open:inline">Close</span>
+        </summary>
+        <div className="mt-4 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
           {model.monthlyBreakdown.map((month) => (
             <div key={month.month} className="rounded-2xl border border-slate-100 px-4 py-3">
               <BreakdownRow label={`${month.month} approx.`} value={currency(month.approx)} />
@@ -4731,7 +4788,7 @@ function RetailCompExpenseCalculator({
             </div>
           ))}
         </div>
-      </div>
+      </details>
     </section>
   );
 }
