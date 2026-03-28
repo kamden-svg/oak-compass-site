@@ -1,6 +1,8 @@
 import { kv } from "@vercel/kv";
+import { Resend } from "resend";
 
 const LEADS_KEY = "oak-compass-leads";
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 function isAuthorized(req) {
   const password = req.headers["x-admin-password"];
@@ -9,6 +11,89 @@ function isAuthorized(req) {
 
 function parseLead(item) {
   return typeof item === "string" ? JSON.parse(item) : item;
+}
+
+function formatInquiryType(value) {
+  if (value === "quote") return "Quote";
+  if (value === "referral") return "Referral";
+  if (value === "job") return "Job Application";
+  if (value === "collectibles") return "Collectibles";
+  return value || "Lead";
+}
+
+function buildLeadEmailHtml(lead) {
+  const referralSource =
+    lead.referralSourceType === "employee"
+      ? "Employee Referral"
+      : lead.referralSourceType || "";
+
+  const rows = [
+    ["Inquiry Type", formatInquiryType(lead.inquiryType)],
+    ["First Name", lead.firstName],
+    ["Last Name", lead.lastName],
+    ["Phone", lead.phone],
+    ["Email", lead.email],
+    ["Needs Spanish", lead.needsSpanish],
+    ["Insurance Type", lead.insuranceType],
+    ["ZIP Code", lead.zipCode],
+    ["Desired Role", lead.desiredRole],
+    ["Years of Experience", lead.yearsExperience],
+    ["Availability", lead.availability],
+    ["Resume Link", lead.resumeLink],
+    ["Collectible Type", lead.collectibleType],
+    ["Collection Value", lead.collectionValue],
+    ["Estimated Items", lead.estimatedItems],
+    ["Storage Method", lead.storageMethod],
+    ["Condition", lead.collectibleCondition],
+    ["Referral Source", referralSource],
+    ["Referred By", lead.referralSourceName],
+    ["Referrer Email", lead.referralSourceEmail],
+    ["Referrer Phone", lead.referralSourcePhone],
+    ["Notes", lead.notes],
+    ["Submitted", lead.submittedAt],
+  ].filter(([, value]) => value);
+
+  return `
+    <div style="font-family: Arial, sans-serif; color: #0f172a;">
+      <h1 style="margin-bottom: 16px;">New Oak & Compass Lead</h1>
+      <table style="border-collapse: collapse; width: 100%; max-width: 720px;">
+        <tbody>
+          ${rows
+            .map(
+              ([label, value]) => `
+                <tr>
+                  <td style="padding: 10px 12px; border: 1px solid #e2e8f0; font-weight: 700; width: 220px; vertical-align: top;">${label}</td>
+                  <td style="padding: 10px 12px; border: 1px solid #e2e8f0; white-space: pre-wrap;">${String(value)}</td>
+                </tr>
+              `
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+async function sendLeadNotification(lead) {
+  const to = process.env.LEAD_NOTIFICATION_TO;
+  const from = process.env.LEAD_NOTIFICATION_FROM;
+
+  if (!resend || !to || !from) {
+    return;
+  }
+
+  const subjectParts = [
+    "New Lead",
+    formatInquiryType(lead.inquiryType),
+    [lead.firstName, lead.lastName].filter(Boolean).join(" "),
+  ].filter(Boolean);
+
+  await resend.emails.send({
+    from,
+    to: Array.isArray(to) ? to : [to],
+    subject: subjectParts.join(" | "),
+    html: buildLeadEmailHtml(lead),
+  });
 }
 
 export default async function handler(req, res) {
@@ -24,6 +109,7 @@ export default async function handler(req, res) {
       };
 
       await kv.lpush(LEADS_KEY, JSON.stringify(newLead));
+      await sendLeadNotification(newLead);
 
       return res.status(200).json({ success: true });
     }
