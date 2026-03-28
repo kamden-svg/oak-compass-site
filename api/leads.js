@@ -79,7 +79,7 @@ async function sendLeadNotification(lead) {
   const from = process.env.LEAD_NOTIFICATION_FROM;
 
   if (!resend || !to || !from) {
-    return;
+    return { sent: false, reason: "missing_email_configuration" };
   }
 
   const subjectParts = [
@@ -88,12 +88,19 @@ async function sendLeadNotification(lead) {
     [lead.firstName, lead.lastName].filter(Boolean).join(" "),
   ].filter(Boolean);
 
-  await resend.emails.send({
+  const recipients = String(to)
+    .split(",")
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  const result = await resend.emails.send({
     from,
-    to: Array.isArray(to) ? to : [to],
+    to: recipients,
     subject: subjectParts.join(" | "),
     html: buildLeadEmailHtml(lead),
   });
+
+  return { sent: true, result };
 }
 
 export default async function handler(req, res) {
@@ -109,9 +116,19 @@ export default async function handler(req, res) {
       };
 
       await kv.lpush(LEADS_KEY, JSON.stringify(newLead));
-      await sendLeadNotification(newLead);
 
-      return res.status(200).json({ success: true });
+      let emailNotification = { sent: false };
+      try {
+        emailNotification = await sendLeadNotification(newLead);
+      } catch (emailError) {
+        console.error("Lead email notification error:", emailError);
+        emailNotification = {
+          sent: false,
+          reason: emailError?.message || "email_send_failed",
+        };
+      }
+
+      return res.status(200).json({ success: true, emailNotification });
     }
 
     if (req.method === "GET") {
