@@ -2803,7 +2803,6 @@ function AgentQuotePage({
   agentRole,
   agentImageSrc,
   agentImageAlt,
-  agentHighlights,
   formTitlePrefix,
   form,
   onChange,
@@ -2858,8 +2857,8 @@ function AgentQuotePage({
                 {subheadline}
               </p>
 
-              <div className="mt-8 grid gap-4 sm:grid-cols-[240px,1fr] sm:items-center">
-                <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl ring-1 ring-slate-200">
+              <div className="mt-8 grid gap-4 sm:grid-cols-[160px,1fr] sm:items-center">
+                <div className="mx-auto w-full max-w-[160px] overflow-hidden rounded-[1.5rem] bg-white shadow-xl ring-1 ring-slate-200">
                   <img
                     src={agentImageSrc}
                     alt={agentImageAlt}
@@ -2881,16 +2880,6 @@ function AgentQuotePage({
                   <p className="mt-3 text-sm leading-7 text-slate-600">
                     {intro}
                   </p>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {agentHighlights.map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
             </div>
@@ -5800,11 +5789,6 @@ export default function OakCompassLandingPage() {
         agentImageSrc={activePage === PAGE_MATT_QUOTE ? "/Matt.png" : "/IMG_2087.JPEG"}
         agentImageAlt={
           activePage === PAGE_MATT_QUOTE ? "Matt McReavy portrait" : "Kamden Young portrait"
-        }
-        agentHighlights={
-          activePage === PAGE_MATT_QUOTE
-            ? ["Motorcycles", "Cars", "Guitar", "Snowboarding", "Boating", "Fishing", "Camping"]
-            : ["Magic the Gathering", "Running", "Camping", "Art", "Hiking", "Traveling", "Climbing"]
         }
         formTitlePrefix={activePage === PAGE_MATT_QUOTE ? "matt" : "kamden"}
         form={form}
