@@ -1224,7 +1224,7 @@ const TEAM_MEMBERS = {
       role: "Account Manager",
       quotePage: PAGE_KILEE_QUOTE,
       quoteButtonLabel: "Get a Quote from Kilee",
-      images: ["/K (1).jpeg", "/K (2).jpeg"],
+      images: ["/K (1).jpeg", "/K (2).jpeg", "/K (4).jpeg"],
       highlights: [
         "Snowboarding",
         "Rock Climbing",
@@ -1316,7 +1316,7 @@ const TEAM_MEMBERS = {
       role: "Account Manager",
       quotePage: PAGE_KILEE_QUOTE,
       quoteButtonLabel: "Obtener cotizacion con Kilee",
-      images: ["/K (1).jpeg", "/K (2).jpeg"],
+      images: ["/K (1).jpeg", "/K (2).jpeg", "/K (4).jpeg"],
       highlights: [
         "Snowboarding",
         "Rock Climbing",
