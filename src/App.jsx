@@ -2766,6 +2766,308 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
   );
 }
 
+function MattQuotePage({
+  language,
+  text,
+  form,
+  onChange,
+  onSubmit,
+  isSubmitting,
+  isSubmitted,
+  onNavigate,
+  onLanguageChange,
+  easterMode,
+  onToggleEaster,
+  insuranceOptions,
+}) {
+  return (
+    <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
+      <section className="relative overflow-hidden">
+        <div
+          className={
+            easterMode
+              ? "absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(253,224,71,0.42),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(244,114,182,0.34),_transparent_26%),radial-gradient(circle_at_bottom_left,_rgba(96,165,250,0.24),_transparent_30%),linear-gradient(180deg,_#fff7ed_0%,_#fff1f2_34%,_#f5f3ff_62%,_#ecfeff_100%)]"
+              : "absolute inset-0 bg-gradient-to-br from-emerald-50 via-white to-amber-50"
+          }
+        />
+        {easterMode ? <EasterDecor /> : null}
+        <ForestLandscapeBackground variant="default" />
+
+        <SiteHeader
+          language={language}
+          activePage={PAGE_HOME}
+          onNavigate={onNavigate}
+          onLanguageChange={onLanguageChange}
+          easterMode={easterMode}
+          onToggleEaster={onToggleEaster}
+        />
+
+        <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
+          <div className="grid gap-10 md:grid-cols-[1.05fr,0.95fr] md:items-center">
+            <div>
+              <div
+                className={getEasterPillClassName(
+                  easterMode,
+                  "inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-sm font-medium text-emerald-700 shadow-sm"
+                )}
+              >
+                <span>{text.badge}</span>
+              </div>
+
+              <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
+                {text.mattQuoteHeadline}
+              </h1>
+
+              <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
+                {text.mattQuoteSubheadline}
+              </p>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-[240px,1fr] sm:items-center">
+                <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl ring-1 ring-slate-200">
+                  <img
+                    src="/Matt.png"
+                    alt="Matt McReavy portrait"
+                    className="aspect-[4/5] h-full w-full object-cover"
+                  />
+                </div>
+                <div
+                  className={getEasterPanelClassName(
+                    easterMode,
+                    "rounded-[2rem] border border-white/70 bg-white/90 p-6 shadow-[0_24px_60px_-32px_rgba(15,23,42,0.4)]"
+                  )}
+                >
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                    Matt McReavy
+                  </p>
+                  <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900">
+                    Account Manager
+                  </h2>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">
+                    {text.mattQuoteIntro}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {["Motorcycles", "Cars", "Guitar", "Snowboarding", "Boating", "Fishing", "Camping"].map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className={`rounded-3xl p-6 md:p-8 ${getEasterPanelClassName(
+                easterMode,
+                "bg-white shadow-xl ring-1 ring-slate-200"
+              )}`}
+            >
+              <h2 className="text-2xl font-semibold">{text.mattQuoteTitle}</h2>
+              <p className="mt-2 text-sm text-slate-500">{text.mattQuoteIntro}</p>
+
+              <form className="mt-6 space-y-4" onSubmit={onSubmit}>
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+                  {language === "es"
+                    ? "Tu solicitud de cotizacion sera enviada a Matt McReavy."
+                    : "Your quote request will be sent to Matt McReavy."}
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="matt-firstName" className="mb-2 block text-sm font-medium">
+                      {text.firstName}
+                    </label>
+                    <input
+                      id="matt-firstName"
+                      name="firstName"
+                      type="text"
+                      value={form.firstName}
+                      onChange={onChange}
+                      placeholder={text.firstName}
+                      className={getEasterInputClassName(
+                        easterMode,
+                        "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      )}
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="matt-lastName" className="mb-2 block text-sm font-medium">
+                      {text.lastName}
+                    </label>
+                    <input
+                      id="matt-lastName"
+                      name="lastName"
+                      type="text"
+                      value={form.lastName}
+                      onChange={onChange}
+                      placeholder={text.lastName}
+                      className={getEasterInputClassName(
+                        easterMode,
+                        "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label htmlFor="matt-phone" className="mb-2 block text-sm font-medium">
+                      {text.phone}
+                    </label>
+                    <input
+                      id="matt-phone"
+                      name="phone"
+                      type="tel"
+                      value={form.phone}
+                      onChange={onChange}
+                      placeholder={text.phone}
+                      className={getEasterInputClassName(
+                        easterMode,
+                        "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      )}
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="matt-email" className="mb-2 block text-sm font-medium">
+                      {text.email}
+                    </label>
+                    <input
+                      id="matt-email"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={onChange}
+                      placeholder={text.email}
+                      className={getEasterInputClassName(
+                        easterMode,
+                        "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                      )}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="matt-needsSpanish" className="mb-2 block text-sm font-medium">
+                    {text.spanishPreference}
+                  </label>
+                  <select
+                    id="matt-needsSpanish"
+                    name="needsSpanish"
+                    value={form.needsSpanish}
+                    onChange={onChange}
+                    className={getEasterInputClassName(
+                      easterMode,
+                      "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    )}
+                  >
+                    <option value="no">{text.no}</option>
+                    <option value="yes">{text.yes}</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="matt-insuranceType" className="mb-2 block text-sm font-medium">
+                    {text.insuranceTypeQuote}
+                  </label>
+                  <select
+                    id="matt-insuranceType"
+                    name="insuranceType"
+                    value={form.insuranceType}
+                    onChange={onChange}
+                    className={getEasterInputClassName(
+                      easterMode,
+                      "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    )}
+                  >
+                    <option value="">{text.selectOne}</option>
+                    {insuranceOptions.map((option, index) => (
+                      <option key={`matt-${language}-${index}`} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="matt-zipCode" className="mb-2 block text-sm font-medium">
+                    {text.zipCode}
+                  </label>
+                  <input
+                    id="matt-zipCode"
+                    name="zipCode"
+                    type="text"
+                    value={form.zipCode}
+                    onChange={onChange}
+                    placeholder={text.zipCode}
+                    className={getEasterInputClassName(
+                      easterMode,
+                      "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    )}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="matt-notes" className="mb-2 block text-sm font-medium">
+                    {text.notesQuote}
+                  </label>
+                  <textarea
+                    id="matt-notes"
+                    name="notes"
+                    rows={4}
+                    value={form.notes}
+                    onChange={onChange}
+                    placeholder={text.optional}
+                    className={getEasterInputClassName(
+                      easterMode,
+                      "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+                    )}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={getEasterPrimaryButtonClassName(
+                    easterMode,
+                    "w-full rounded-2xl bg-emerald-700 px-5 py-3 text-base font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                  )}
+                >
+                  {isSubmitting
+                    ? language === "es"
+                      ? "Enviando..."
+                      : "Submitting..."
+                    : language === "es"
+                      ? "Obtener cotizaciÃ³n con Matt"
+                      : "Get a Quote from Matt"}
+                </button>
+
+                <p className="text-center text-xs text-slate-500">{text.consent}</p>
+              </form>
+
+              {isSubmitted ? (
+                <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+                  <p className="font-semibold">{text.submittedQuote}</p>
+                  <p className="mt-1 text-emerald-700">
+                    {language === "es"
+                      ? "Matt recibira esta solicitud para dar seguimiento."
+                      : "Matt will receive this request for follow-up."}
+                  </p>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      </section>
+      <Analytics />
+    </div>
+  );
+}
+
 function CollectiblesPage({
   language,
   form,
@@ -5102,7 +5404,6 @@ export default function OakCompassLandingPage() {
   };
 
   const isReferral = form.inquiryType === "referral";
-  const isMattQuotePage = activePage === PAGE_MATT_QUOTE;
   const submittedIsReferral = submittedInquiryType === "referral";
   const submittedIsJobApplication = submittedInquiryType === "job";
   const homeBackgroundVariant = getHomeInsuranceBackgroundVariant(form.insuranceType);
@@ -5445,6 +5746,25 @@ export default function OakCompassLandingPage() {
     );
   }
 
+  if (activePage === PAGE_MATT_QUOTE) {
+    return (
+      <MattQuotePage
+        language={language}
+        text={text}
+        form={form}
+        onChange={handleChange}
+        onSubmit={handleSubmit}
+        isSubmitting={isSubmitting}
+        isSubmitted={isSubmitted && submittedInquiryType === "quote"}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        onToggleEaster={() => setEasterMode((current) => !current)}
+        insuranceOptions={insuranceOptions}
+      />
+    );
+  }
+
   return (
     <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
       <section className="relative overflow-hidden">
@@ -5471,11 +5791,11 @@ export default function OakCompassLandingPage() {
               </div>
 
               <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-                {isMattQuotePage ? text.mattQuoteHeadline : text.headline}
+                {text.headline}
               </h1>
 
               <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
-                {isMattQuotePage ? text.mattQuoteSubheadline : text.subheadline}
+                {text.subheadline}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-600">
@@ -5494,43 +5814,31 @@ export default function OakCompassLandingPage() {
 
             <div className={`rounded-3xl p-6 md:p-8 ${getEasterPanelClassName(easterMode, "bg-white shadow-xl ring-1 ring-slate-200")}`}>
               <h2 className="text-2xl font-semibold">
-                {isMattQuotePage
-                  ? text.mattQuoteTitle
-                  : isReferral
-                    ? text.referTitle
-                    : text.quoteTitle}
+                {isReferral ? text.referTitle : text.quoteTitle}
               </h2>
               <p className="mt-2 text-sm text-slate-500">
-                {isMattQuotePage ? text.mattQuoteIntro : text.intro}
+                {text.intro}
               </p>
 
               <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-                {isMattQuotePage ? (
-                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-                    {language === "es"
-                      ? "Tu solicitud de cotizacion sera enviada a Matt McReavy."
-                      : "Your quote request will be sent to Matt McReavy."}
-                  </div>
-                ) : (
-                  <div>
-                    <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
-                      {text.inquiryLabel}
-                    </label>
-                    <select
-                      id="inquiryType"
-                      name="inquiryType"
-                      value={form.inquiryType}
-                      onChange={handleChange}
-                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
-                    >
-                      {inquiryOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                <div>
+                  <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
+                    {text.inquiryLabel}
+                  </label>
+                  <select
+                    id="inquiryType"
+                    name="inquiryType"
+                    value={form.inquiryType}
+                    onChange={handleChange}
+                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                  >
+                    {inquiryOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
