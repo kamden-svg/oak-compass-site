@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 const INITIAL_FORM = {
   needsSpanish: "no",
   inquiryType: "quote",
+  assignedAgent: "",
   firstName: "",
   lastName: "",
   phone: "",
@@ -100,6 +101,12 @@ const COPY = {
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
+    mattQuoteHeadline: "Get a quote from Matt",
+    mattQuoteSubheadline:
+      "Reach out through Matt's quote page and we will make sure your request gets routed his way for follow-up.",
+    mattQuoteTitle: "Get a quote from Matt",
+    mattQuoteIntro: "Fill this out and Matt will follow up with you about your insurance options.",
+    mattQuoteButton: "Get a Quote from Matt",
     referTitle: "Refer someone",
     quoteTitle: "Request a quote",
     jobTitle: "Apply for a job opportunity",
@@ -208,6 +215,12 @@ const COPY = {
     fastResponse: "Respuesta rápida",
     simpleProcess: "Proceso simple",
     localGuidance: "Atención local",
+    mattQuoteHeadline: "ObtÃ©n una cotizaciÃ³n con Matt",
+    mattQuoteSubheadline:
+      "Envia tu solicitud desde la pagina de Matt y nos aseguraremos de que le llegue para el seguimiento.",
+    mattQuoteTitle: "ObtÃ©n una cotizaciÃ³n con Matt",
+    mattQuoteIntro: "Completa este formulario y Matt dara seguimiento a tus opciones de seguro.",
+    mattQuoteButton: "Obtener cotizaciÃ³n con Matt",
     referTitle: "Referir a alguien",
     jobTitle: "Solicitar una oportunidad de trabajo",
     quoteTitle: "Solicitar una cotización",
@@ -318,6 +331,7 @@ const PAGE_RESOURCES = "resources";
 const PAGE_EMPLOYEE_REFERRALS = "employee-referrals";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
+const PAGE_MATT_QUOTE = "matt-quote";
 
 const EMPLOYEE_REFERRAL_PAGE_COPY = {
   en: {
@@ -1202,6 +1216,21 @@ const TEAM_MEMBERS = {
       bio: "Clear answers, honest help, and consistent follow-through are not extras to us. They are the standard for how a good team should work.",
       highlights: ["Clear communication", "Dependable", "Low-pressure"],
     },
+    {
+      name: "Matt McReavy",
+      role: "Account Manager",
+      quotePage: PAGE_MATT_QUOTE,
+      images: ["/Matt.png", "/Matt  (1).jpeg", "/Matt  (2).jpeg"],
+      highlights: [
+        "Motorcycles",
+        "Cars",
+        "Guitar",
+        "Snowboarding",
+        "Boating",
+        "Fishing",
+        "Camping",
+      ],
+    },
   ],
   es: [
     {
@@ -1221,6 +1250,21 @@ const TEAM_MEMBERS = {
       role: "Como queremos que se sienta la gente",
       bio: "Respuestas claras, ayuda honesta y seguimiento constante no son extras para nosotros. Son la base de como debe trabajar un buen equipo.",
       highlights: ["Comunicacion clara", "Confiables", "Sin presion"],
+    },
+    {
+      name: "Matt McReavy",
+      role: "Account Manager",
+      quotePage: PAGE_MATT_QUOTE,
+      images: ["/Matt.png", "/Matt  (1).jpeg", "/Matt  (2).jpeg"],
+      highlights: [
+        "Motorcycles",
+        "Cars",
+        "Guitar",
+        "Snowboarding",
+        "Boating",
+        "Fishing",
+        "Camping",
+      ],
     },
   ],
 };
@@ -1471,6 +1515,7 @@ function getPageFromHash(hash) {
   if (value === PAGE_EMPLOYEE_REFERRALS) return PAGE_EMPLOYEE_REFERRALS;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
+  if (value === PAGE_MATT_QUOTE) return PAGE_MATT_QUOTE;
   return PAGE_HOME;
 }
 
@@ -2667,13 +2712,33 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
               key={member.name}
               className="rounded-[2rem] bg-white p-6 shadow-sm ring-1 ring-slate-200"
             >
+              {member.images?.length ? (
+                <div className="mb-5 grid grid-cols-3 gap-3">
+                  {member.images.map((imageSrc, index) => (
+                    <div
+                      key={`${member.name}-${imageSrc}`}
+                      className={`overflow-hidden rounded-[1.25rem] bg-slate-100 ${
+                        index === 0 ? "col-span-3 aspect-[16/10]" : "aspect-square"
+                      }`}
+                    >
+                      <img
+                        src={imageSrc}
+                        alt={`${member.name} team photo ${index + 1}`}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : null}
               <div>
                 <h3 className="text-xl font-semibold text-slate-900">{member.name}</h3>
                 <p className="mt-1 text-sm text-emerald-700">{member.role}</p>
               </div>
-              <p className="mt-4 text-sm leading-6 text-slate-600">{member.bio}</p>
+              {member.bio ? (
+                <p className="mt-4 text-sm leading-6 text-slate-600">{member.bio}</p>
+              ) : null}
 
-              <div className="mt-5 flex flex-wrap gap-2">
+              <div className={`${member.bio ? "mt-5" : "mt-4"} flex flex-wrap gap-2`}>
                 {member.highlights.map((highlight) => (
                   <span
                     key={highlight}
@@ -2683,6 +2748,15 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                   </span>
                 ))}
               </div>
+              {member.quotePage ? (
+                <button
+                  type="button"
+                  onClick={() => onNavigate(member.quotePage)}
+                  className="mt-5 rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
+                >
+                  {language === "es" ? "Obtener cotizaciÃ³n con Matt" : "Get a Quote from Matt"}
+                </button>
+              ) : null}
             </article>
           ))}
         </div>
@@ -4828,6 +4902,8 @@ export default function OakCompassLandingPage() {
     document.title =
       activePage === PAGE_TEAM
         ? "Meet the Team | Oak & Compass Insurance"
+        : activePage === PAGE_MATT_QUOTE
+          ? "Get a Quote from Matt | Oak & Compass Insurance"
         : activePage === PAGE_JOBS
           ? "Apply Now | Oak & Compass Insurance"
         : activePage === PAGE_COLLECTIBLES
@@ -4896,7 +4972,27 @@ export default function OakCompassLandingPage() {
         collectibleType: current.collectibleType || COLLECTIBLE_THEMES[0].key,
       }));
     }
-  }, [activePage, form.inquiryType]);
+
+    if (
+      activePage === PAGE_MATT_QUOTE &&
+      (form.inquiryType !== "quote" || form.assignedAgent !== "Matt McReavy")
+    ) {
+      setForm((current) => ({
+        ...current,
+        inquiryType: "quote",
+        assignedAgent: "Matt McReavy",
+        desiredRole: "",
+        yearsExperience: "",
+        availability: "",
+        resumeLink: "",
+        collectibleType: "",
+        collectionValue: "",
+        estimatedItems: "",
+        storageMethod: "",
+        collectibleCondition: "",
+      }));
+    }
+  }, [activePage, form.inquiryType, form.assignedAgent]);
 
   useEffect(() => {
     if (activePage !== PAGE_CANOPY) return undefined;
@@ -4946,13 +5042,14 @@ export default function OakCompassLandingPage() {
     }
 
     if (
-      page === PAGE_HOME &&
-      (activePage !== PAGE_HOME ||
+      (page === PAGE_HOME || page === PAGE_MATT_QUOTE) &&
+      (activePage !== page ||
         (form.inquiryType !== "quote" && form.inquiryType !== "referral"))
     ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
+        assignedAgent: page === PAGE_MATT_QUOTE ? "Matt McReavy" : "",
         desiredRole: "",
         yearsExperience: "",
         availability: "",
@@ -4993,6 +5090,7 @@ export default function OakCompassLandingPage() {
 
     if (
       page === PAGE_HOME ||
+      page === PAGE_MATT_QUOTE ||
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
@@ -5004,6 +5102,7 @@ export default function OakCompassLandingPage() {
   };
 
   const isReferral = form.inquiryType === "referral";
+  const isMattQuotePage = activePage === PAGE_MATT_QUOTE;
   const submittedIsReferral = submittedInquiryType === "referral";
   const submittedIsJobApplication = submittedInquiryType === "job";
   const homeBackgroundVariant = getHomeInsuranceBackgroundVariant(form.insuranceType);
@@ -5095,7 +5194,11 @@ export default function OakCompassLandingPage() {
 
       setSubmittedInquiryType(form.inquiryType);
       setIsSubmitted(true);
-      setForm(INITIAL_FORM);
+      setForm(
+        activePage === PAGE_MATT_QUOTE
+          ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Matt McReavy" }
+          : INITIAL_FORM
+      );
     } catch (error) {
       window.alert(error.message || "Something went wrong. Please try again.");
     } finally {
@@ -5368,11 +5471,11 @@ export default function OakCompassLandingPage() {
               </div>
 
               <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-                {text.headline}
+                {isMattQuotePage ? text.mattQuoteHeadline : text.headline}
               </h1>
 
               <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
-                {text.subheadline}
+                {isMattQuotePage ? text.mattQuoteSubheadline : text.subheadline}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-600">
@@ -5391,29 +5494,43 @@ export default function OakCompassLandingPage() {
 
             <div className={`rounded-3xl p-6 md:p-8 ${getEasterPanelClassName(easterMode, "bg-white shadow-xl ring-1 ring-slate-200")}`}>
               <h2 className="text-2xl font-semibold">
-                {isReferral ? text.referTitle : text.quoteTitle}
+                {isMattQuotePage
+                  ? text.mattQuoteTitle
+                  : isReferral
+                    ? text.referTitle
+                    : text.quoteTitle}
               </h2>
-              <p className="mt-2 text-sm text-slate-500">{text.intro}</p>
+              <p className="mt-2 text-sm text-slate-500">
+                {isMattQuotePage ? text.mattQuoteIntro : text.intro}
+              </p>
 
               <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
-                <div>
-                  <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
-                    {text.inquiryLabel}
-                  </label>
-                  <select
-                    id="inquiryType"
-                    name="inquiryType"
-                    value={form.inquiryType}
-                    onChange={handleChange}
-                    className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
-                  >
-                    {inquiryOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {isMattQuotePage ? (
+                  <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+                    {language === "es"
+                      ? "Tu solicitud de cotizacion sera enviada a Matt McReavy."
+                      : "Your quote request will be sent to Matt McReavy."}
+                  </div>
+                ) : (
+                  <div>
+                    <label htmlFor="inquiryType" className="mb-2 block text-sm font-medium">
+                      {text.inquiryLabel}
+                    </label>
+                    <select
+                      id="inquiryType"
+                      name="inquiryType"
+                      value={form.inquiryType}
+                      onChange={handleChange}
+                      className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                    >
+                      {inquiryOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
