@@ -101,6 +101,12 @@ const COPY = {
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
+    kamdenQuoteHeadline: "Get a quote from Kamden",
+    kamdenQuoteSubheadline:
+      "Reach out through Kamden's quote page and we will make sure your request gets routed his way for follow-up.",
+    kamdenQuoteTitle: "Get a quote from Kamden",
+    kamdenQuoteIntro: "Fill this out and Kamden will follow up with you about your insurance options.",
+    kamdenQuoteButton: "Get a Quote from Kamden",
     mattQuoteHeadline: "Get a quote from Matt",
     mattQuoteSubheadline:
       "Reach out through Matt's quote page and we will make sure your request gets routed his way for follow-up.",
@@ -215,6 +221,12 @@ const COPY = {
     fastResponse: "Respuesta rápida",
     simpleProcess: "Proceso simple",
     localGuidance: "Atención local",
+    kamdenQuoteHeadline: "Obten una cotizacion con Kamden",
+    kamdenQuoteSubheadline:
+      "Envia tu solicitud desde la pagina de Kamden y nos aseguraremos de que le llegue para el seguimiento.",
+    kamdenQuoteTitle: "Obten una cotizacion con Kamden",
+    kamdenQuoteIntro: "Completa este formulario y Kamden dara seguimiento a tus opciones de seguro.",
+    kamdenQuoteButton: "Obtener cotizacion con Kamden",
     mattQuoteHeadline: "ObtÃ©n una cotizaciÃ³n con Matt",
     mattQuoteSubheadline:
       "Envia tu solicitud desde la pagina de Matt y nos aseguraremos de que le llegue para el seguimiento.",
@@ -331,6 +343,7 @@ const PAGE_RESOURCES = "resources";
 const PAGE_EMPLOYEE_REFERRALS = "employee-referrals";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
+const PAGE_KAMDEN_QUOTE = "kamden-quote";
 const PAGE_MATT_QUOTE = "matt-quote";
 
 const EMPLOYEE_REFERRAL_PAGE_COPY = {
@@ -1219,6 +1232,8 @@ const TEAM_MEMBERS = {
     {
       name: "Kamden Young",
       role: "Owner",
+      quotePage: PAGE_KAMDEN_QUOTE,
+      quoteButtonLabel: "Get a Quote from Kamden",
       images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
       highlights: [
         "Magic the Gathering",
@@ -1231,9 +1246,22 @@ const TEAM_MEMBERS = {
       ],
     },
     {
+      name: "Liz Cerenzie",
+      role: "Business Manager",
+      images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
+      highlights: [
+        "Rock Climbing",
+        "Plants",
+        "Gym",
+        "Hiking",
+        "Reading",
+      ],
+    },
+    {
       name: "Matt McReavy",
       role: "Account Manager",
       quotePage: PAGE_MATT_QUOTE,
+      quoteButtonLabel: "Get a Quote from Matt",
       images: ["/Matt.png", "/Matt  (1).jpeg", "/Matt  (2).jpeg"],
       highlights: [
         "Motorcycles",
@@ -1268,6 +1296,8 @@ const TEAM_MEMBERS = {
     {
       name: "Kamden Young",
       role: "Owner",
+      quotePage: PAGE_KAMDEN_QUOTE,
+      quoteButtonLabel: "Obtener cotizacion con Kamden",
       images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
       highlights: [
         "Magic the Gathering",
@@ -1280,9 +1310,22 @@ const TEAM_MEMBERS = {
       ],
     },
     {
+      name: "Liz Cerenzie",
+      role: "Business Manager",
+      images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
+      highlights: [
+        "Rock Climbing",
+        "Plants",
+        "Gym",
+        "Hiking",
+        "Reading",
+      ],
+    },
+    {
       name: "Matt McReavy",
       role: "Account Manager",
       quotePage: PAGE_MATT_QUOTE,
+      quoteButtonLabel: "Obtener cotizacion con Matt",
       images: ["/Matt.png", "/Matt  (1).jpeg", "/Matt  (2).jpeg"],
       highlights: [
         "Motorcycles",
@@ -1543,6 +1586,7 @@ function getPageFromHash(hash) {
   if (value === PAGE_EMPLOYEE_REFERRALS) return PAGE_EMPLOYEE_REFERRALS;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
+  if (value === PAGE_KAMDEN_QUOTE) return PAGE_KAMDEN_QUOTE;
   if (value === PAGE_MATT_QUOTE) return PAGE_MATT_QUOTE;
   return PAGE_HOME;
 }
@@ -2782,7 +2826,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                   onClick={() => onNavigate(member.quotePage)}
                   className="mt-5 rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                 >
-                  {language === "es" ? "Obtener cotizacion con Matt" : "Get a Quote from Matt"}
+                  {member.quoteButtonLabel || (language === "es" ? "Obtener cotizacion" : "Get a Quote")}
                 </button>
               ) : null}
             </article>
@@ -2794,9 +2838,21 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
   );
 }
 
-function MattQuotePage({
+function AgentQuotePage({
   language,
   text,
+  badge,
+  headline,
+  subheadline,
+  title,
+  intro,
+  buttonLabel,
+  agentName,
+  agentRole,
+  agentImageSrc,
+  agentImageAlt,
+  agentHighlights,
+  formTitlePrefix,
   form,
   onChange,
   onSubmit,
@@ -2839,22 +2895,22 @@ function MattQuotePage({
                   "inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-sm font-medium text-emerald-700 shadow-sm"
                 )}
               >
-                <span>{text.badge}</span>
+                <span>{badge}</span>
               </div>
 
               <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-                {text.mattQuoteHeadline}
+                {headline}
               </h1>
 
               <p className="mt-5 max-w-xl text-lg leading-8 text-slate-600">
-                {text.mattQuoteSubheadline}
+                {subheadline}
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-[240px,1fr] sm:items-center">
                 <div className="overflow-hidden rounded-[2rem] bg-white shadow-xl ring-1 ring-slate-200">
                   <img
-                    src="/Matt.png"
-                    alt="Matt McReavy portrait"
+                    src={agentImageSrc}
+                    alt={agentImageAlt}
                     className="aspect-[4/5] h-full w-full object-cover"
                   />
                 </div>
@@ -2865,16 +2921,16 @@ function MattQuotePage({
                   )}
                 >
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
-                    Matt McReavy
+                    {agentName}
                   </p>
                   <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900">
-                    Account Manager
+                    {agentRole}
                   </h2>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {text.mattQuoteIntro}
+                    {intro}
                   </p>
                   <div className="mt-5 flex flex-wrap gap-2">
-                    {["Motorcycles", "Cars", "Guitar", "Snowboarding", "Boating", "Fishing", "Camping"].map((item) => (
+                    {agentHighlights.map((item) => (
                       <span
                         key={item}
                         className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
@@ -2893,23 +2949,23 @@ function MattQuotePage({
                 "bg-white shadow-xl ring-1 ring-slate-200"
               )}`}
             >
-              <h2 className="text-2xl font-semibold">{text.mattQuoteTitle}</h2>
-              <p className="mt-2 text-sm text-slate-500">{text.mattQuoteIntro}</p>
+              <h2 className="text-2xl font-semibold">{title}</h2>
+              <p className="mt-2 text-sm text-slate-500">{intro}</p>
 
               <form className="mt-6 space-y-4" onSubmit={onSubmit}>
                 <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
                   {language === "es"
-                    ? "Tu solicitud de cotizacion sera enviada a Matt McReavy."
-                    : "Your quote request will be sent to Matt McReavy."}
+                    ? `Tu solicitud de cotizacion sera enviada a ${agentName}.`
+                    : `Your quote request will be sent to ${agentName}.`}
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="matt-firstName" className="mb-2 block text-sm font-medium">
+                    <label htmlFor={`${formTitlePrefix}-firstName`} className="mb-2 block text-sm font-medium">
                       {text.firstName}
                     </label>
                     <input
-                      id="matt-firstName"
+                      id={`${formTitlePrefix}-firstName`}
                       name="firstName"
                       type="text"
                       value={form.firstName}
@@ -2923,11 +2979,11 @@ function MattQuotePage({
                   </div>
 
                   <div>
-                    <label htmlFor="matt-lastName" className="mb-2 block text-sm font-medium">
+                    <label htmlFor={`${formTitlePrefix}-lastName`} className="mb-2 block text-sm font-medium">
                       {text.lastName}
                     </label>
                     <input
-                      id="matt-lastName"
+                      id={`${formTitlePrefix}-lastName`}
                       name="lastName"
                       type="text"
                       value={form.lastName}
@@ -2943,11 +2999,11 @@ function MattQuotePage({
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="matt-phone" className="mb-2 block text-sm font-medium">
+                    <label htmlFor={`${formTitlePrefix}-phone`} className="mb-2 block text-sm font-medium">
                       {text.phone}
                     </label>
                     <input
-                      id="matt-phone"
+                      id={`${formTitlePrefix}-phone`}
                       name="phone"
                       type="tel"
                       value={form.phone}
@@ -2961,11 +3017,11 @@ function MattQuotePage({
                   </div>
 
                   <div>
-                    <label htmlFor="matt-email" className="mb-2 block text-sm font-medium">
+                    <label htmlFor={`${formTitlePrefix}-email`} className="mb-2 block text-sm font-medium">
                       {text.email}
                     </label>
                     <input
-                      id="matt-email"
+                      id={`${formTitlePrefix}-email`}
                       name="email"
                       type="email"
                       value={form.email}
@@ -2980,11 +3036,11 @@ function MattQuotePage({
                 </div>
 
                 <div>
-                  <label htmlFor="matt-needsSpanish" className="mb-2 block text-sm font-medium">
+                  <label htmlFor={`${formTitlePrefix}-needsSpanish`} className="mb-2 block text-sm font-medium">
                     {text.spanishPreference}
                   </label>
                   <select
-                    id="matt-needsSpanish"
+                    id={`${formTitlePrefix}-needsSpanish`}
                     name="needsSpanish"
                     value={form.needsSpanish}
                     onChange={onChange}
@@ -2999,11 +3055,11 @@ function MattQuotePage({
                 </div>
 
                 <div>
-                  <label htmlFor="matt-insuranceType" className="mb-2 block text-sm font-medium">
+                  <label htmlFor={`${formTitlePrefix}-insuranceType`} className="mb-2 block text-sm font-medium">
                     {text.insuranceTypeQuote}
                   </label>
                   <select
-                    id="matt-insuranceType"
+                    id={`${formTitlePrefix}-insuranceType`}
                     name="insuranceType"
                     value={form.insuranceType}
                     onChange={onChange}
@@ -3014,7 +3070,7 @@ function MattQuotePage({
                   >
                     <option value="">{text.selectOne}</option>
                     {insuranceOptions.map((option, index) => (
-                      <option key={`matt-${language}-${index}`} value={option}>
+                      <option key={`${formTitlePrefix}-${language}-${index}`} value={option}>
                         {option}
                       </option>
                     ))}
@@ -3022,11 +3078,11 @@ function MattQuotePage({
                 </div>
 
                 <div>
-                  <label htmlFor="matt-zipCode" className="mb-2 block text-sm font-medium">
+                  <label htmlFor={`${formTitlePrefix}-zipCode`} className="mb-2 block text-sm font-medium">
                     {text.zipCode}
                   </label>
                   <input
-                    id="matt-zipCode"
+                    id={`${formTitlePrefix}-zipCode`}
                     name="zipCode"
                     type="text"
                     value={form.zipCode}
@@ -3040,11 +3096,11 @@ function MattQuotePage({
                 </div>
 
                 <div>
-                  <label htmlFor="matt-notes" className="mb-2 block text-sm font-medium">
+                  <label htmlFor={`${formTitlePrefix}-notes`} className="mb-2 block text-sm font-medium">
                     {text.notesQuote}
                   </label>
                   <textarea
-                    id="matt-notes"
+                    id={`${formTitlePrefix}-notes`}
                     name="notes"
                     rows={4}
                     value={form.notes}
@@ -3069,9 +3125,7 @@ function MattQuotePage({
                     ? language === "es"
                       ? "Enviando..."
                       : "Submitting..."
-                    : language === "es"
-                      ? "Obtener cotizaciÃ³n con Matt"
-                      : "Get a Quote from Matt"}
+                    : buttonLabel}
                 </button>
 
                 <p className="text-center text-xs text-slate-500">{text.consent}</p>
@@ -3082,8 +3136,8 @@ function MattQuotePage({
                   <p className="font-semibold">{text.submittedQuote}</p>
                   <p className="mt-1 text-emerald-700">
                     {language === "es"
-                      ? "Matt recibira esta solicitud para dar seguimiento."
-                      : "Matt will receive this request for follow-up."}
+                      ? `${agentName} recibira esta solicitud para dar seguimiento.`
+                      : `${agentName} will receive this request for follow-up.`}
                   </p>
                 </div>
               ) : null}
@@ -5232,6 +5286,8 @@ export default function OakCompassLandingPage() {
     document.title =
       activePage === PAGE_TEAM
         ? "Meet the Team | Oak & Compass Insurance"
+        : activePage === PAGE_KAMDEN_QUOTE
+          ? "Get a Quote from Kamden | Oak & Compass Insurance"
         : activePage === PAGE_MATT_QUOTE
           ? "Get a Quote from Matt | Oak & Compass Insurance"
         : activePage === PAGE_JOBS
@@ -5304,13 +5360,16 @@ export default function OakCompassLandingPage() {
     }
 
     if (
-      activePage === PAGE_MATT_QUOTE &&
-      (form.inquiryType !== "quote" || form.assignedAgent !== "Matt McReavy")
+      (activePage === PAGE_MATT_QUOTE || activePage === PAGE_KAMDEN_QUOTE) &&
+      (
+        form.inquiryType !== "quote" ||
+        form.assignedAgent !== (activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young")
+      )
     ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
-        assignedAgent: "Matt McReavy",
+        assignedAgent: activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young",
         desiredRole: "",
         yearsExperience: "",
         availability: "",
@@ -5372,14 +5431,19 @@ export default function OakCompassLandingPage() {
     }
 
     if (
-      (page === PAGE_HOME || page === PAGE_MATT_QUOTE) &&
+      (page === PAGE_HOME || page === PAGE_MATT_QUOTE || page === PAGE_KAMDEN_QUOTE) &&
       (activePage !== page ||
         (form.inquiryType !== "quote" && form.inquiryType !== "referral"))
     ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
-        assignedAgent: page === PAGE_MATT_QUOTE ? "Matt McReavy" : "",
+        assignedAgent:
+          page === PAGE_MATT_QUOTE
+            ? "Matt McReavy"
+            : page === PAGE_KAMDEN_QUOTE
+              ? "Kamden Young"
+              : "",
         desiredRole: "",
         yearsExperience: "",
         availability: "",
@@ -5421,6 +5485,7 @@ export default function OakCompassLandingPage() {
     if (
       page === PAGE_HOME ||
       page === PAGE_MATT_QUOTE ||
+      page === PAGE_KAMDEN_QUOTE ||
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
@@ -5526,7 +5591,9 @@ export default function OakCompassLandingPage() {
       setForm(
         activePage === PAGE_MATT_QUOTE
           ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Matt McReavy" }
-          : INITIAL_FORM
+          : activePage === PAGE_KAMDEN_QUOTE
+            ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Kamden Young" }
+            : INITIAL_FORM
       );
     } catch (error) {
       window.alert(error.message || "Something went wrong. Please try again.");
@@ -5774,11 +5841,35 @@ export default function OakCompassLandingPage() {
     );
   }
 
-  if (activePage === PAGE_MATT_QUOTE) {
+  if (activePage === PAGE_MATT_QUOTE || activePage === PAGE_KAMDEN_QUOTE) {
     return (
-      <MattQuotePage
+      <AgentQuotePage
         language={language}
         text={text}
+        badge={text.badge}
+        headline={
+          activePage === PAGE_MATT_QUOTE ? text.mattQuoteHeadline : text.kamdenQuoteHeadline
+        }
+        subheadline={
+          activePage === PAGE_MATT_QUOTE ? text.mattQuoteSubheadline : text.kamdenQuoteSubheadline
+        }
+        title={activePage === PAGE_MATT_QUOTE ? text.mattQuoteTitle : text.kamdenQuoteTitle}
+        intro={activePage === PAGE_MATT_QUOTE ? text.mattQuoteIntro : text.kamdenQuoteIntro}
+        buttonLabel={
+          activePage === PAGE_MATT_QUOTE ? text.mattQuoteButton : text.kamdenQuoteButton
+        }
+        agentName={activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young"}
+        agentRole={activePage === PAGE_MATT_QUOTE ? "Account Manager" : "Owner"}
+        agentImageSrc={activePage === PAGE_MATT_QUOTE ? "/Matt.png" : "/IMG_2087.JPEG"}
+        agentImageAlt={
+          activePage === PAGE_MATT_QUOTE ? "Matt McReavy portrait" : "Kamden Young portrait"
+        }
+        agentHighlights={
+          activePage === PAGE_MATT_QUOTE
+            ? ["Motorcycles", "Cars", "Guitar", "Snowboarding", "Boating", "Fishing", "Camping"]
+            : ["Magic the Gathering", "Running", "Camping", "Art", "Hiking", "Traveling", "Climbing"]
+        }
+        formTitlePrefix={activePage === PAGE_MATT_QUOTE ? "matt" : "kamden"}
         form={form}
         onChange={handleChange}
         onSubmit={handleSubmit}
