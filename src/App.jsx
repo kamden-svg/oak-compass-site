@@ -1204,24 +1204,6 @@ const TEAM_PAGE_COPY = {
 const TEAM_MEMBERS = {
   en: [
     {
-      name: "A people-first team",
-      role: "Relationships matter here",
-      bio: "We are building Oak & Compass around the idea that good service starts with genuinely caring about the person on the other side of the conversation.",
-      highlights: ["Supportive", "Respectful", "Client-centered"],
-    },
-    {
-      name: "A grounded culture",
-      role: "Real lives shape our work",
-      bio: "Family, community, the outdoors, discipline, and everyday responsibilities all shape how we show up: steady, practical, and aware that protection is personal.",
-      highlights: ["Family-minded", "Grounded", "Thoughtful"],
-    },
-    {
-      name: "A steady client experience",
-      role: "How we want people to feel",
-      bio: "Clear answers, honest help, and consistent follow-through are not extras to us. They are the standard for how a good team should work.",
-      highlights: ["Clear communication", "Dependable", "Low-pressure"],
-    },
-    {
       name: "Kamden Young",
       role: "Owner",
       quotePage: PAGE_KAMDEN_QUOTE,
@@ -1235,32 +1217,6 @@ const TEAM_MEMBERS = {
         "Hiking",
         "Traveling",
         "Climbing",
-      ],
-    },
-    {
-      name: "Liz Cerenzie",
-      role: "Business Manager",
-      images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
-      imageClassNames: ["object-top", "object-center", "object-center"],
-      highlights: [
-        "Rock Climbing",
-        "Plants",
-        "Gym",
-        "Hiking",
-        "Reading",
-      ],
-    },
-    {
-      name: "Kamree Young",
-      role: "Service Manager",
-      images: ["/Kam (1).jpeg", "/Kam (1).png", "/Kam (2).png"],
-      highlights: [
-        "Reading",
-        "Art",
-        "Gym",
-        "Climbing",
-        "Pool",
-        "Hiking",
       ],
     },
     {
@@ -1292,42 +1248,6 @@ const TEAM_MEMBERS = {
         "Camping",
       ],
     },
-  ],
-  es: [
-    {
-      name: "Un equipo centrado en las personas",
-      role: "Las relaciones importan aqui",
-      bio: "Estamos formando Oak & Compass sobre la idea de que un buen servicio empieza al preocuparse de verdad por la persona que esta del otro lado de la conversacion.",
-      highlights: ["Atentos", "Respetuosos", "Enfocados en el cliente"],
-    },
-    {
-      name: "Una cultura con los pies en la tierra",
-      role: "La vida real influye en nuestro trabajo",
-      bio: "La familia, la comunidad, el aire libre, la disciplina y las responsabilidades diarias influyen en nuestra manera de responder: con calma, sentido practico y entendiendo que la proteccion es algo personal.",
-      highlights: ["Familia", "Firmeza", "Buena atencion"],
-    },
-    {
-      name: "Una experiencia estable para el cliente",
-      role: "Como queremos que se sienta la gente",
-      bio: "Respuestas claras, ayuda honesta y seguimiento constante no son extras para nosotros. Son la base de como debe trabajar un buen equipo.",
-      highlights: ["Comunicacion clara", "Confiables", "Sin presion"],
-    },
-    {
-      name: "Kamden Young",
-      role: "Owner",
-      quotePage: PAGE_KAMDEN_QUOTE,
-      quoteButtonLabel: "Obtener cotizacion con Kamden",
-      images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
-      highlights: [
-        "Magic the Gathering",
-        "Running",
-        "Camping",
-        "Art",
-        "Hiking",
-        "Traveling",
-        "Climbing",
-      ],
-    },
     {
       name: "Liz Cerenzie",
       role: "Business Manager",
@@ -1345,6 +1265,7 @@ const TEAM_MEMBERS = {
       name: "Kamree Young",
       role: "Service Manager",
       images: ["/Kam (1).jpeg", "/Kam (1).png", "/Kam (2).png"],
+      imageClassNames: ["object-top", "object-center", "object-center"],
       highlights: [
         "Reading",
         "Art",
@@ -1352,6 +1273,42 @@ const TEAM_MEMBERS = {
         "Climbing",
         "Pool",
         "Hiking",
+      ],
+    },
+    {
+      name: "A people-first team",
+      role: "Relationships matter here",
+      bio: "We are building Oak & Compass around the idea that good service starts with genuinely caring about the person on the other side of the conversation.",
+      highlights: ["Supportive", "Respectful", "Client-centered"],
+    },
+    {
+      name: "A grounded culture",
+      role: "Real lives shape our work",
+      bio: "Family, community, the outdoors, discipline, and everyday responsibilities all shape how we show up: steady, practical, and aware that protection is personal.",
+      highlights: ["Family-minded", "Grounded", "Thoughtful"],
+    },
+    {
+      name: "A steady client experience",
+      role: "How we want people to feel",
+      bio: "Clear answers, honest help, and consistent follow-through are not extras to us. They are the standard for how a good team should work.",
+      highlights: ["Clear communication", "Dependable", "Low-pressure"],
+    },
+  ],
+  es: [
+    {
+      name: "Kamden Young",
+      role: "Owner",
+      quotePage: PAGE_KAMDEN_QUOTE,
+      quoteButtonLabel: "Obtener cotizacion con Kamden",
+      images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
+      highlights: [
+        "Magic the Gathering",
+        "Running",
+        "Camping",
+        "Art",
+        "Hiking",
+        "Traveling",
+        "Climbing",
       ],
     },
     {
@@ -1382,6 +1339,51 @@ const TEAM_MEMBERS = {
         "Fishing",
         "Camping",
       ],
+    },
+    {
+      name: "Liz Cerenzie",
+      role: "Business Manager",
+      images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
+      imageClassNames: ["object-top", "object-center", "object-center"],
+      highlights: [
+        "Rock Climbing",
+        "Plants",
+        "Gym",
+        "Hiking",
+        "Reading",
+      ],
+    },
+    {
+      name: "Kamree Young",
+      role: "Service Manager",
+      images: ["/Kam (1).jpeg", "/Kam (1).png", "/Kam (2).png"],
+      imageClassNames: ["object-top", "object-center", "object-center"],
+      highlights: [
+        "Reading",
+        "Art",
+        "Gym",
+        "Climbing",
+        "Pool",
+        "Hiking",
+      ],
+    },
+    {
+      name: "Un equipo centrado en las personas",
+      role: "Las relaciones importan aqui",
+      bio: "Estamos formando Oak & Compass sobre la idea de que un buen servicio empieza al preocuparse de verdad por la persona que esta del otro lado de la conversacion.",
+      highlights: ["Atentos", "Respetuosos", "Enfocados en el cliente"],
+    },
+    {
+      name: "Una cultura con los pies en la tierra",
+      role: "La vida real influye en nuestro trabajo",
+      bio: "La familia, la comunidad, el aire libre, la disciplina y las responsabilidades diarias influyen en nuestra manera de responder: con calma, sentido practico y entendiendo que la proteccion es algo personal.",
+      highlights: ["Familia", "Firmeza", "Buena atencion"],
+    },
+    {
+      name: "Una experiencia estable para el cliente",
+      role: "Como queremos que se sienta la gente",
+      bio: "Respuestas claras, ayuda honesta y seguimiento constante no son extras para nosotros. Son la base de como debe trabajar un buen equipo.",
+      highlights: ["Comunicacion clara", "Confiables", "Sin presion"],
     },
   ],
 };
@@ -1790,7 +1792,6 @@ function SiteHeader({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   const nav = NAV_COPY[language];
   const facts = INSURANCE_FACTS[language] || INSURANCE_FACTS.en;
@@ -1996,24 +1997,6 @@ function SiteHeader({
           </button>
         </nav>
       </header>
-
-      <button
-        type="button"
-        onClick={onToggleEaster}
-        className={`fixed bottom-24 right-4 z-30 flex h-16 w-12 items-center justify-center rounded-[55%_55%_50%_50%/62%_62%_42%_42%] border shadow-[0_18px_40px_-20px_rgba(15,23,42,0.45)] transition hover:-translate-y-1 hover:rotate-3 md:bottom-6 md:right-6 ${
-          easterMode
-            ? "border-pink-100 bg-[linear-gradient(180deg,#fef3c7_0%,#f9a8d4_45%,#c4b5fd_100%)] text-pink-700"
-            : "border-amber-100 bg-[linear-gradient(180deg,#fffef7_0%,#fde68a_100%)] text-amber-700"
-        }`}
-        aria-label="Toggle Easter theme"
-        title="A little spring surprise"
-      >
-        <span className="pointer-events-none relative block h-10 w-7 rounded-[55%_55%_50%_50%/62%_62%_42%_42%] bg-white/30">
-          <span className="absolute left-1.5 top-2 h-1.5 w-1.5 rounded-full bg-pink-300/80" />
-          <span className="absolute right-1.5 top-4 h-1.5 w-1.5 rounded-full bg-sky-300/80" />
-          <span className="absolute bottom-2 left-2 h-1.5 w-1.5 rounded-full bg-emerald-300/80" />
-        </span>
-      </button>
 
       {isBrandModalOpen ? (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/55 px-4 py-6">
@@ -2645,7 +2628,7 @@ function CollectibleThemeTileArt({ themeId }) {
 }
 
 
-function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggleEaster }) {
+function TeamPage({ language, onNavigate, onLanguageChange, easterMode }) {
   const teamText = TEAM_PAGE_COPY[language];
   const teamMembers = TEAM_MEMBERS[language] || TEAM_MEMBERS.en;
 
@@ -2664,7 +2647,6 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
@@ -2878,7 +2860,6 @@ function AgentQuotePage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
   insuranceOptions,
 }) {
   return (
@@ -2900,7 +2881,6 @@ function AgentQuotePage({
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
@@ -3168,7 +3148,6 @@ function CollectiblesPage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   const pageText = COLLECTIBLES_PAGE_COPY[language] || COLLECTIBLES_PAGE_COPY.en;
   const activeTheme =
@@ -3199,7 +3178,6 @@ function CollectiblesPage({
             onNavigate={onNavigate}
             onLanguageChange={onLanguageChange}
             easterMode={easterMode}
-            onToggleEaster={onToggleEaster}
           />
 
           <div className="mx-auto max-w-6xl px-6 pb-8 pt-12 md:pt-20">
@@ -3560,7 +3538,6 @@ function JobApplicationPage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   return (
     <div className={getPageShellClassName(easterMode, "text-slate-900")} lang={language}>
@@ -3577,7 +3554,6 @@ function JobApplicationPage({
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
@@ -3824,7 +3800,6 @@ function InsuranceConnectPage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   const text = COPY[language];
 
@@ -3843,7 +3818,6 @@ function InsuranceConnectPage({
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
@@ -3889,7 +3863,6 @@ function EmployeeReferralPage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   const pageText = EMPLOYEE_REFERRAL_PAGE_COPY[language] || EMPLOYEE_REFERRAL_PAGE_COPY.en;
   const sharedText = COPY[language] || COPY.en;
@@ -3992,7 +3965,6 @@ function EmployeeReferralPage({
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
@@ -4233,7 +4205,6 @@ function ClientResourcesPage({
   onNavigate,
   onLanguageChange,
   easterMode,
-  onToggleEaster,
 }) {
   const pageText = CLIENT_RESOURCES_PAGE_COPY[language] || CLIENT_RESOURCES_PAGE_COPY.en;
   const sharedText = COPY[language] || COPY.en;
@@ -4428,7 +4399,6 @@ function ClientResourcesPage({
           onNavigate={onNavigate}
           onLanguageChange={onLanguageChange}
           easterMode={easterMode}
-          onToggleEaster={onToggleEaster}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-8 pt-14 md:pt-20">
@@ -5256,10 +5226,7 @@ export default function OakCompassLandingPage() {
     if (typeof window === "undefined") return "en";
     return window.localStorage.getItem("oak-compass-language") === "es" ? "es" : "en";
   });
-  const [easterMode, setEasterMode] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.localStorage.getItem("oak-compass-easter-mode") === "on";
-  });
+  const easterMode = false;
   const [leads, setLeads] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submittedInquiryType, setSubmittedInquiryType] = useState("");
@@ -5284,10 +5251,6 @@ export default function OakCompassLandingPage() {
   useEffect(() => {
     window.localStorage.setItem("oak-compass-language", siteLanguage);
   }, [siteLanguage]);
-
-  useEffect(() => {
-    window.localStorage.setItem("oak-compass-easter-mode", easterMode ? "on" : "off");
-  }, [easterMode]);
 
   useEffect(() => {
     document.title =
@@ -5794,7 +5757,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -5813,7 +5775,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -5831,7 +5792,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -5843,7 +5803,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -5855,7 +5814,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
       />
     );
   }
@@ -5946,7 +5904,6 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
         insuranceOptions={insuranceOptions}
       />
     );
@@ -5967,7 +5924,6 @@ export default function OakCompassLandingPage() {
           onNavigate={navigateToPage}
           onLanguageChange={setSiteLanguage}
           easterMode={easterMode}
-          onToggleEaster={() => setEasterMode((current) => !current)}
         />
 
         <div className="relative mx-auto max-w-6xl px-6 pb-16 pt-14 md:pb-24 md:pt-20">
