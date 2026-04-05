@@ -1094,15 +1094,15 @@ const TEAM_PAGE_COPY = {
     membersTitle: "Built around good people, shared values, and the way we want to serve",
     membersBody:
       "Oak & Compass was never meant to feel like one person at the center of everything. It is about building a team of good people who care about others, enjoy working together, and believe the best service comes from showing up with consistency, humility, and real heart.",
-    hobbiesTitle: "The people behind Oak & Compass",
+    hobbiesTitle: "What our team is built on",
     hobbies: [
-      "Family life",
-      "Time outdoors",
-      "Hiking and camping",
-      "Running and discipline",
-      "Games and shared interests",
-      "Reading and curiosity",
-      "Life with Deigo",
+      "Clear communication",
+      "Real follow-through",
+      "Steady guidance",
+      "Low-pressure support",
+      "Relationship-first service",
+      "Local perspective",
+      "People who care",
     ],
     expectationsTitle: "What it feels like to work together",
     expectations: [
@@ -1154,15 +1154,15 @@ const TEAM_PAGE_COPY = {
     membersTitle: "Construido alrededor de buenas personas, valores compartidos y la forma en que queremos servir",
     membersBody:
       "Oak & Compass nunca fue pensado para sentirse como una sola persona en el centro de todo. Se trata de formar un equipo de buenas personas que de verdad se preocupan por los demas, disfrutan trabajar juntas y creen que el mejor servicio nace de responder con constancia, humildad y corazon.",
-    hobbiesTitle: "Las personas detras de Oak & Compass",
+    hobbiesTitle: "Lo que sostiene a nuestro equipo",
     hobbies: [
-      "Vida en familia",
-      "Tiempo al aire libre",
-      "Caminatas y campamento",
-      "Correr y disciplina",
-      "Juegos e intereses compartidos",
-      "Lectura y curiosidad",
-      "Tiempo con Deigo",
+      "Comunicacion clara",
+      "Seguimiento real",
+      "Orientacion constante",
+      "Apoyo sin presion",
+      "Servicio centrado en relaciones",
+      "Perspectiva local",
+      "Personas que si se preocupan",
     ],
     expectationsTitle: "Como se siente trabajar juntos",
     expectations: [
@@ -1178,19 +1178,19 @@ const TEAM_PAGE_COPY = {
 const TEAM_GALLERY = [
   {
     src: "/IMG_2087.JPEG",
-    alt: "Owner outdoors in a candid portrait",
+    alt: "Kamden Young outdoors",
     className: "lg:col-span-2 lg:row-span-2",
     imageClassName: "object-center",
   },
   {
-    src: "/20220429_083453.jpg",
-    alt: "Owner with family by the water",
+    src: "/Matt.png",
+    alt: "Matt McReavy portrait",
     className: "lg:col-span-1 lg:row-span-1",
     imageClassName: "object-center",
   },
   {
-    src: "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg",
-    alt: "Deigo running on a snowy trail",
+    src: "/Matt  (1).jpeg",
+    alt: "Matt McReavy outdoors",
     className: "lg:col-span-1 lg:row-span-1",
     imageClassName: "object-center",
   },
@@ -1215,6 +1215,20 @@ const TEAM_MEMBERS = {
       role: "How we want people to feel",
       bio: "Clear answers, honest help, and consistent follow-through are not extras to us. They are the standard for how a good team should work.",
       highlights: ["Clear communication", "Dependable", "Low-pressure"],
+    },
+    {
+      name: "Kamden Young",
+      role: "Owner",
+      images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
+      highlights: [
+        "Magic the Gathering",
+        "Running",
+        "Camping",
+        "Art",
+        "Hiking",
+        "Traveling",
+        "Climbing",
+      ],
     },
     {
       name: "Matt McReavy",
@@ -1250,6 +1264,20 @@ const TEAM_MEMBERS = {
       role: "Como queremos que se sienta la gente",
       bio: "Respuestas claras, ayuda honesta y seguimiento constante no son extras para nosotros. Son la base de como debe trabajar un buen equipo.",
       highlights: ["Comunicacion clara", "Confiables", "Sin presion"],
+    },
+    {
+      name: "Kamden Young",
+      role: "Owner",
+      images: ["/IMG_2087.JPEG", "/20220429_083453.jpg", "/22D369D7-7A6F-4D17-811A-2392AF24C1B0.jpg"],
+      highlights: [
+        "Magic the Gathering",
+        "Running",
+        "Camping",
+        "Art",
+        "Hiking",
+        "Traveling",
+        "Climbing",
+      ],
     },
     {
       name: "Matt McReavy",
@@ -2754,7 +2782,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                   onClick={() => onNavigate(member.quotePage)}
                   className="mt-5 rounded-full bg-emerald-700 px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                 >
-                  {language === "es" ? "Obtener cotizaciÃ³n con Matt" : "Get a Quote from Matt"}
+                  {language === "es" ? "Obtener cotizacion con Matt" : "Get a Quote from Matt"}
                 </button>
               ) : null}
             </article>
