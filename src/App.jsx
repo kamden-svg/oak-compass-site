@@ -1251,6 +1251,19 @@ const TEAM_MEMBERS = {
       ],
     },
     {
+      name: "Kamree Young",
+      role: "Service Manager",
+      images: ["/Kam (1).jpeg", "/Kam (1).png", "/Kam (2).png"],
+      highlights: [
+        "Reading",
+        "Art",
+        "Gym",
+        "Climbing",
+        "Pool",
+        "Hiking",
+      ],
+    },
+    {
       name: "Kilee Garcia",
       role: "Account Manager",
       quotePage: PAGE_KILEE_QUOTE,
@@ -1326,6 +1339,19 @@ const TEAM_MEMBERS = {
         "Gym",
         "Hiking",
         "Reading",
+      ],
+    },
+    {
+      name: "Kamree Young",
+      role: "Service Manager",
+      images: ["/Kam (1).jpeg", "/Kam (1).png", "/Kam (2).png"],
+      highlights: [
+        "Reading",
+        "Art",
+        "Gym",
+        "Climbing",
+        "Pool",
+        "Hiking",
       ],
     },
     {
