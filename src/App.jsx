@@ -1188,27 +1188,6 @@ const TEAM_PAGE_COPY = {
   },
 };
 
-const TEAM_GALLERY = [
-  {
-    src: "/IMG_2087.JPEG",
-    alt: "Kamden Young outdoors",
-    className: "lg:col-span-2 lg:row-span-2",
-    imageClassName: "object-center",
-  },
-  {
-    src: "/Matt.png",
-    alt: "Matt McReavy portrait",
-    className: "lg:col-span-1 lg:row-span-1",
-    imageClassName: "object-center",
-  },
-  {
-    src: "/Matt  (1).jpeg",
-    alt: "Matt McReavy outdoors",
-    className: "lg:col-span-1 lg:row-span-1",
-    imageClassName: "object-center",
-  },
-];
-
 const TEAM_MEMBERS = {
   en: [
     {
@@ -1249,6 +1228,7 @@ const TEAM_MEMBERS = {
       name: "Liz Cerenzie",
       role: "Business Manager",
       images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
+      imageClassNames: ["object-top", "object-center", "object-center"],
       highlights: [
         "Rock Climbing",
         "Plants",
@@ -1313,6 +1293,7 @@ const TEAM_MEMBERS = {
       name: "Liz Cerenzie",
       role: "Business Manager",
       images: ["/LIZ (1).jpeg", "/LIZ (2).jpeg", "/LIZ (3).jpeg"],
+      imageClassNames: ["object-top", "object-center", "object-center"],
       highlights: [
         "Rock Climbing",
         "Plants",
@@ -1583,7 +1564,6 @@ function getPageFromHash(hash) {
   if (value === PAGE_JOBS) return PAGE_JOBS;
   if (value === PAGE_COLLECTIBLES) return PAGE_COLLECTIBLES;
   if (value === PAGE_RESOURCES) return PAGE_RESOURCES;
-  if (value === PAGE_EMPLOYEE_REFERRALS) return PAGE_EMPLOYEE_REFERRALS;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
   if (value === PAGE_KAMDEN_QUOTE) return PAGE_KAMDEN_QUOTE;
@@ -2737,36 +2717,6 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-6">
-        <div className="rounded-[2rem] border border-slate-200 bg-white/90 p-6 shadow-sm backdrop-blur md:p-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
-              {teamText.galleryLabel}
-            </p>
-            <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900">
-              {teamText.galleryTitle}
-            </h2>
-            <p className="mt-3 text-sm leading-7 text-slate-600">{teamText.galleryBody}</p>
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:auto-rows-[220px] lg:grid-cols-3">
-            {TEAM_GALLERY.map((photo) => (
-              <figure
-                key={photo.src}
-                className={`group relative overflow-hidden rounded-[1.75rem] bg-slate-200 shadow-sm ring-1 ring-slate-200 ${photo.className}`}
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className={`h-full w-full object-cover transition duration-500 group-hover:scale-[1.03] ${photo.imageClassName || "object-center"}`}
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/55 via-slate-900/10 to-transparent" />
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-6 py-10">
         <div className="flex max-w-3xl flex-col gap-3">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
@@ -2796,7 +2746,9 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode, onToggle
                       <img
                         src={imageSrc}
                         alt={`${member.name} team photo ${index + 1}`}
-                        className="h-full w-full object-cover"
+                        className={`h-full w-full object-cover ${
+                          member.imageClassNames?.[index] || "object-center"
+                        }`}
                       />
                     </div>
                   ))}
@@ -5296,8 +5248,6 @@ export default function OakCompassLandingPage() {
           ? "Collectibles Insurance | Oak & Compass Insurance"
         : activePage === PAGE_RESOURCES
           ? "Client Resources | Oak & Compass Insurance"
-        : activePage === PAGE_EMPLOYEE_REFERRALS
-          ? "Employee Referrals | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
@@ -5489,7 +5439,6 @@ export default function OakCompassLandingPage() {
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
-      page === PAGE_EMPLOYEE_REFERRALS ||
       page === PAGE_CANOPY
     ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -5808,18 +5757,6 @@ export default function OakCompassLandingPage() {
   if (activePage === PAGE_RESOURCES) {
     return (
       <ClientResourcesPage
-        language={language}
-        onNavigate={navigateToPage}
-        onLanguageChange={setSiteLanguage}
-        easterMode={easterMode}
-        onToggleEaster={() => setEasterMode((current) => !current)}
-      />
-    );
-  }
-
-  if (activePage === PAGE_EMPLOYEE_REFERRALS) {
-    return (
-      <EmployeeReferralPage
         language={language}
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
@@ -6299,7 +6236,7 @@ export function __oakCompassLandingPageChecks() {
     hasCollectiblesPage: true,
     hasSingleLeadDelete: true,
     hasPortalNotes: true,
-    hasEmployeeReferralPage: true,
+    hasEmployeeReferralPage: false,
     postsToApi: true,
     canopyAlias: "waddoups-insurance-agency-llc-kamden-young",
   };
