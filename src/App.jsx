@@ -101,6 +101,12 @@ const COPY = {
     fastResponse: "Fast response",
     simpleProcess: "Simple process",
     localGuidance: "Local guidance",
+    kileeQuoteHeadline: "Get a quote from Kilee",
+    kileeQuoteSubheadline:
+      "Reach out through Kilee's quote page and we will make sure your request gets routed her way for follow-up.",
+    kileeQuoteTitle: "Get a quote from Kilee",
+    kileeQuoteIntro: "Fill this out and Kilee will follow up with you about your insurance options.",
+    kileeQuoteButton: "Get a Quote from Kilee",
     kamdenQuoteHeadline: "Get a quote from Kamden",
     kamdenQuoteSubheadline:
       "Reach out through Kamden's quote page and we will make sure your request gets routed his way for follow-up.",
@@ -221,6 +227,12 @@ const COPY = {
     fastResponse: "Respuesta rápida",
     simpleProcess: "Proceso simple",
     localGuidance: "Atención local",
+    kileeQuoteHeadline: "Obten una cotizacion con Kilee",
+    kileeQuoteSubheadline:
+      "Envia tu solicitud desde la pagina de Kilee y nos aseguraremos de que le llegue para el seguimiento.",
+    kileeQuoteTitle: "Obten una cotizacion con Kilee",
+    kileeQuoteIntro: "Completa este formulario y Kilee dara seguimiento a tus opciones de seguro.",
+    kileeQuoteButton: "Obtener cotizacion con Kilee",
     kamdenQuoteHeadline: "Obten una cotizacion con Kamden",
     kamdenQuoteSubheadline:
       "Envia tu solicitud desde la pagina de Kamden y nos aseguraremos de que le llegue para el seguimiento.",
@@ -343,6 +355,7 @@ const PAGE_RESOURCES = "resources";
 const PAGE_EMPLOYEE_REFERRALS = "employee-referrals";
 const PAGE_CANOPY = "canopy";
 const PAGE_PORTAL = "portal";
+const PAGE_KILEE_QUOTE = "kilee-quote";
 const PAGE_KAMDEN_QUOTE = "kamden-quote";
 const PAGE_MATT_QUOTE = "matt-quote";
 
@@ -1238,6 +1251,19 @@ const TEAM_MEMBERS = {
       ],
     },
     {
+      name: "Kilee Garcia",
+      role: "Account Manager",
+      quotePage: PAGE_KILEE_QUOTE,
+      quoteButtonLabel: "Get a Quote from Kilee",
+      images: ["/K (1).jpeg", "/K (2).jpeg"],
+      highlights: [
+        "Snowboarding",
+        "Rock Climbing",
+        "Guitar",
+        "Outdoors",
+      ],
+    },
+    {
       name: "Matt McReavy",
       role: "Account Manager",
       quotePage: PAGE_MATT_QUOTE,
@@ -1300,6 +1326,19 @@ const TEAM_MEMBERS = {
         "Gym",
         "Hiking",
         "Reading",
+      ],
+    },
+    {
+      name: "Kilee Garcia",
+      role: "Account Manager",
+      quotePage: PAGE_KILEE_QUOTE,
+      quoteButtonLabel: "Obtener cotizacion con Kilee",
+      images: ["/K (1).jpeg", "/K (2).jpeg"],
+      highlights: [
+        "Snowboarding",
+        "Rock Climbing",
+        "Guitar",
+        "Outdoors",
       ],
     },
     {
@@ -1566,6 +1605,7 @@ function getPageFromHash(hash) {
   if (value === PAGE_RESOURCES) return PAGE_RESOURCES;
   if (value === PAGE_CANOPY) return PAGE_CANOPY;
   if (value === PAGE_PORTAL) return PAGE_PORTAL;
+  if (value === PAGE_KILEE_QUOTE) return PAGE_KILEE_QUOTE;
   if (value === PAGE_KAMDEN_QUOTE) return PAGE_KAMDEN_QUOTE;
   if (value === PAGE_MATT_QUOTE) return PAGE_MATT_QUOTE;
   return PAGE_HOME;
@@ -5227,6 +5267,8 @@ export default function OakCompassLandingPage() {
     document.title =
       activePage === PAGE_TEAM
         ? "Meet the Team | Oak & Compass Insurance"
+        : activePage === PAGE_KILEE_QUOTE
+          ? "Get a Quote from Kilee | Oak & Compass Insurance"
         : activePage === PAGE_KAMDEN_QUOTE
           ? "Get a Quote from Kamden | Oak & Compass Insurance"
         : activePage === PAGE_MATT_QUOTE
@@ -5299,16 +5341,31 @@ export default function OakCompassLandingPage() {
     }
 
     if (
-      (activePage === PAGE_MATT_QUOTE || activePage === PAGE_KAMDEN_QUOTE) &&
+      (
+        activePage === PAGE_MATT_QUOTE ||
+        activePage === PAGE_KAMDEN_QUOTE ||
+        activePage === PAGE_KILEE_QUOTE
+      ) &&
       (
         form.inquiryType !== "quote" ||
-        form.assignedAgent !== (activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young")
+        form.assignedAgent !== (
+          activePage === PAGE_MATT_QUOTE
+            ? "Matt McReavy"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "Kamden Young"
+              : "Kilee Garcia"
+        )
       )
     ) {
       setForm((current) => ({
         ...current,
         inquiryType: "quote",
-        assignedAgent: activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young",
+        assignedAgent:
+          activePage === PAGE_MATT_QUOTE
+            ? "Matt McReavy"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "Kamden Young"
+              : "Kilee Garcia",
         desiredRole: "",
         yearsExperience: "",
         availability: "",
@@ -5370,7 +5427,12 @@ export default function OakCompassLandingPage() {
     }
 
     if (
-      (page === PAGE_HOME || page === PAGE_MATT_QUOTE || page === PAGE_KAMDEN_QUOTE) &&
+      (
+        page === PAGE_HOME ||
+        page === PAGE_MATT_QUOTE ||
+        page === PAGE_KAMDEN_QUOTE ||
+        page === PAGE_KILEE_QUOTE
+      ) &&
       (activePage !== page ||
         (form.inquiryType !== "quote" && form.inquiryType !== "referral"))
     ) {
@@ -5382,6 +5444,8 @@ export default function OakCompassLandingPage() {
             ? "Matt McReavy"
             : page === PAGE_KAMDEN_QUOTE
               ? "Kamden Young"
+              : page === PAGE_KILEE_QUOTE
+                ? "Kilee Garcia"
               : "",
         desiredRole: "",
         yearsExperience: "",
@@ -5425,6 +5489,7 @@ export default function OakCompassLandingPage() {
       page === PAGE_HOME ||
       page === PAGE_MATT_QUOTE ||
       page === PAGE_KAMDEN_QUOTE ||
+      page === PAGE_KILEE_QUOTE ||
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
@@ -5531,6 +5596,8 @@ export default function OakCompassLandingPage() {
           ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Matt McReavy" }
           : activePage === PAGE_KAMDEN_QUOTE
             ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Kamden Young" }
+            : activePage === PAGE_KILEE_QUOTE
+              ? { ...INITIAL_FORM, inquiryType: "quote", assignedAgent: "Kilee Garcia" }
             : INITIAL_FORM
       );
     } catch (error) {
@@ -5767,30 +5834,84 @@ export default function OakCompassLandingPage() {
     );
   }
 
-  if (activePage === PAGE_MATT_QUOTE || activePage === PAGE_KAMDEN_QUOTE) {
+  if (
+    activePage === PAGE_MATT_QUOTE ||
+    activePage === PAGE_KAMDEN_QUOTE ||
+    activePage === PAGE_KILEE_QUOTE
+  ) {
     return (
       <AgentQuotePage
         language={language}
         text={text}
         badge={text.badge}
         headline={
-          activePage === PAGE_MATT_QUOTE ? text.mattQuoteHeadline : text.kamdenQuoteHeadline
+          activePage === PAGE_MATT_QUOTE
+            ? text.mattQuoteHeadline
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? text.kamdenQuoteHeadline
+              : text.kileeQuoteHeadline
         }
         subheadline={
-          activePage === PAGE_MATT_QUOTE ? text.mattQuoteSubheadline : text.kamdenQuoteSubheadline
+          activePage === PAGE_MATT_QUOTE
+            ? text.mattQuoteSubheadline
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? text.kamdenQuoteSubheadline
+              : text.kileeQuoteSubheadline
         }
-        title={activePage === PAGE_MATT_QUOTE ? text.mattQuoteTitle : text.kamdenQuoteTitle}
-        intro={activePage === PAGE_MATT_QUOTE ? text.mattQuoteIntro : text.kamdenQuoteIntro}
+        title={
+          activePage === PAGE_MATT_QUOTE
+            ? text.mattQuoteTitle
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? text.kamdenQuoteTitle
+              : text.kileeQuoteTitle
+        }
+        intro={
+          activePage === PAGE_MATT_QUOTE
+            ? text.mattQuoteIntro
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? text.kamdenQuoteIntro
+              : text.kileeQuoteIntro
+        }
         buttonLabel={
-          activePage === PAGE_MATT_QUOTE ? text.mattQuoteButton : text.kamdenQuoteButton
+          activePage === PAGE_MATT_QUOTE
+            ? text.mattQuoteButton
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? text.kamdenQuoteButton
+              : text.kileeQuoteButton
         }
-        agentName={activePage === PAGE_MATT_QUOTE ? "Matt McReavy" : "Kamden Young"}
-        agentRole={activePage === PAGE_MATT_QUOTE ? "Account Manager" : "Owner"}
-        agentImageSrc={activePage === PAGE_MATT_QUOTE ? "/Matt.png" : "/IMG_2087.JPEG"}
+        agentName={
+          activePage === PAGE_MATT_QUOTE
+            ? "Matt McReavy"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "Kamden Young"
+              : "Kilee Garcia"
+        }
+        agentRole={
+          activePage === PAGE_MATT_QUOTE || activePage === PAGE_KILEE_QUOTE
+            ? "Account Manager"
+            : "Owner"
+        }
+        agentImageSrc={
+          activePage === PAGE_MATT_QUOTE
+            ? "/Matt.png"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "/IMG_2087.JPEG"
+              : "/K (1).jpeg"
+        }
         agentImageAlt={
-          activePage === PAGE_MATT_QUOTE ? "Matt McReavy portrait" : "Kamden Young portrait"
+          activePage === PAGE_MATT_QUOTE
+            ? "Matt McReavy portrait"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "Kamden Young portrait"
+              : "Kilee Garcia portrait"
         }
-        formTitlePrefix={activePage === PAGE_MATT_QUOTE ? "matt" : "kamden"}
+        formTitlePrefix={
+          activePage === PAGE_MATT_QUOTE
+            ? "matt"
+            : activePage === PAGE_KAMDEN_QUOTE
+              ? "kamden"
+              : "kilee"
+        }
         form={form}
         onChange={handleChange}
         onSubmit={handleSubmit}
