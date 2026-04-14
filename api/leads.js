@@ -32,6 +32,7 @@ function buildLeadEmailHtml(lead) {
     ["First Name", lead.firstName],
     ["Last Name", lead.lastName],
     ["Phone", lead.phone],
+    ["SMS Consent", lead.smsConsent ? "Yes" : ""],
     ["Email", lead.email],
     ["Needs Spanish", lead.needsSpanish],
     ["Insurance Type", lead.insuranceType],
@@ -49,6 +50,7 @@ function buildLeadEmailHtml(lead) {
     ["Referred By", lead.referralSourceName],
     ["Referrer Email", lead.referralSourceEmail],
     ["Referrer Phone", lead.referralSourcePhone],
+    ["Referrer SMS Consent", lead.referralSourceSmsConsent ? "Yes" : ""],
     ["Notes", lead.notes],
     ["Submitted", lead.submittedAt],
   ].filter(([, value]) => value);

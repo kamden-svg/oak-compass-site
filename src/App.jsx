@@ -8,6 +8,7 @@ const INITIAL_FORM = {
   firstName: "",
   lastName: "",
   phone: "",
+  smsConsent: false,
   email: "",
   insuranceType: "",
   zipCode: "",
@@ -62,6 +63,7 @@ const INSURANCE_OPTIONS = {
 };
 
 const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61577039841358";
+const BRAND_NAME = "Oak & Compass Insurance";
 
 const INSURANCE_FACTS = {
   en: [
@@ -218,6 +220,16 @@ const COPY = {
     referrerEmailLabel: "Referrer Email",
     referrerPhoneLabel: "Referrer Phone",
     employeeReferralSource: "Employee Referral",
+    privacyPolicy: "Privacy Policy",
+    termsConditions: "Terms & Conditions",
+    smsConsentLabel:
+      "I agree to receive customer care text messages from Oak & Compass Insurance at the number provided.",
+    smsConsentBody:
+      "By checking this box and submitting this form, you consent to receive text messages from Oak & Compass Insurance at the number provided, including automated messages related to customer care. Consent is not a condition of purchase. Message and data rates may apply. Message frequency varies. Reply STOP to unsubscribe. Reply HELP for help.",
+    privacySharing:
+      "Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes. This excludes text messaging opt-in data and consent, which will not be shared with any third parties.",
+    legalFooter:
+      "Customer care messages only. Message frequency varies. Reply STOP to opt out and HELP for help.",
   },
   es: {
     badge: "Oak & Compass Insurance",
@@ -344,6 +356,16 @@ const COPY = {
     referrerEmailLabel: "Correo del empleado",
     referrerPhoneLabel: "Telefono del empleado",
     employeeReferralSource: "Referencia de empleado",
+    privacyPolicy: "Politica de Privacidad",
+    termsConditions: "Terminos y Condiciones",
+    smsConsentLabel:
+      "Acepto recibir mensajes de texto de atencion al cliente de Oak & Compass Insurance al numero proporcionado.",
+    smsConsentBody:
+      "Al marcar esta casilla y enviar este formulario, aceptas recibir mensajes de texto de Oak & Compass Insurance al numero proporcionado, incluidos mensajes automatizados relacionados con atencion al cliente. El consentimiento no es una condicion de compra. Pueden aplicarse tarifas de mensajes y datos. La frecuencia de mensajes varia. Responde STOP para cancelar. Responde HELP para ayuda.",
+    privacySharing:
+      "La informacion movil no se compartira con terceros ni afiliados con fines de marketing o promocionales. Esto excluye los datos de suscripcion y consentimiento para mensajes de texto, que no se compartiran con ningun tercero.",
+    legalFooter:
+      "Solo mensajes de atencion al cliente. La frecuencia de mensajes varia. Responde STOP para cancelar y HELP para ayuda.",
   },
 };
 
@@ -358,6 +380,8 @@ const PAGE_PORTAL = "portal";
 const PAGE_KILEE_QUOTE = "kilee-quote";
 const PAGE_KAMDEN_QUOTE = "kamden-quote";
 const PAGE_MATT_QUOTE = "matt-quote";
+const PAGE_PRIVACY = "privacy";
+const PAGE_TERMS = "terms";
 
 const EMPLOYEE_REFERRAL_PAGE_COPY = {
   en: {
@@ -1636,6 +1660,8 @@ function getPageFromHash(hash) {
   if (value === PAGE_KILEE_QUOTE) return PAGE_KILEE_QUOTE;
   if (value === PAGE_KAMDEN_QUOTE) return PAGE_KAMDEN_QUOTE;
   if (value === PAGE_MATT_QUOTE) return PAGE_MATT_QUOTE;
+  if (value === PAGE_PRIVACY) return PAGE_PRIVACY;
+  if (value === PAGE_TERMS) return PAGE_TERMS;
   return PAGE_HOME;
 }
 
@@ -2055,6 +2081,182 @@ function SiteHeader({
         </div>
       ) : null}
     </>
+  );
+}
+
+function InlineLegalLinks({ language, onNavigate, dark = false }) {
+  const text = COPY[language] || COPY.en;
+  const linkClassName = dark
+    ? "font-semibold text-cyan-200 underline underline-offset-2 transition hover:text-white"
+    : "font-semibold text-emerald-700 underline underline-offset-2 transition hover:text-emerald-800";
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => onNavigate(PAGE_PRIVACY)}
+        className={linkClassName}
+      >
+        {text.privacyPolicy}
+      </button>
+      {" "}
+      &amp;
+      {" "}
+      <button
+        type="button"
+        onClick={() => onNavigate(PAGE_TERMS)}
+        className={linkClassName}
+      >
+        {text.termsConditions}
+      </button>
+    </>
+  );
+}
+
+function SmsConsentField({
+  language,
+  checked,
+  onChange,
+  onNavigate,
+  checkboxId,
+  checkboxName = "smsConsent",
+  required = false,
+  dark = false,
+}) {
+  const text = COPY[language] || COPY.en;
+  const wrapperClassName = dark
+    ? "rounded-2xl border border-white/15 bg-black/20 p-4 text-sm text-white/85"
+    : "rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700";
+  const labelClassName = dark ? "text-white" : "text-slate-900";
+
+  return (
+    <div className={wrapperClassName}>
+      <label htmlFor={checkboxId} className={`flex items-start gap-3 ${labelClassName}`}>
+        <input
+          id={checkboxId}
+          name={checkboxName}
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          required={required}
+          className="mt-1 h-4 w-4 rounded border-slate-300 text-emerald-700 focus:ring-emerald-500"
+        />
+        <span className="font-medium">{text.smsConsentLabel}</span>
+      </label>
+      <p className="mt-3 leading-6">
+        {text.smsConsentBody} <InlineLegalLinks language={language} onNavigate={onNavigate} dark={dark} />
+      </p>
+    </div>
+  );
+}
+
+function SiteLegalFooter({ language, onNavigate }) {
+  const text = COPY[language] || COPY.en;
+
+  return (
+    <footer className="border-t border-slate-200 bg-white/85">
+      <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="font-semibold text-slate-900">{BRAND_NAME}</p>
+          <p className="mt-1">{text.legalFooter}</p>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_PRIVACY)}
+            className="font-semibold text-emerald-700 transition hover:text-emerald-800"
+          >
+            {text.privacyPolicy}
+          </button>
+          <button
+            type="button"
+            onClick={() => onNavigate(PAGE_TERMS)}
+            className="font-semibold text-emerald-700 transition hover:text-emerald-800"
+          >
+            {text.termsConditions}
+          </button>
+          <a
+            href={FACEBOOK_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="font-semibold text-emerald-700 transition hover:text-emerald-800"
+          >
+            Facebook
+          </a>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function LegalPage({ language, onNavigate, onLanguageChange, easterMode, page }) {
+  const text = COPY[language] || COPY.en;
+  const isPrivacy = page === PAGE_PRIVACY;
+  const title = isPrivacy ? text.privacyPolicy : text.termsConditions;
+  const privacySections =
+    language === "es"
+      ? [
+          "Oak & Compass Insurance recopila la informacion que envias mediante nuestros formularios, incluyendo nombre, numero de telefono, correo electronico, tipo de seguro, codigo postal y cualquier detalle que compartas para ayudarte con cotizaciones, referencias, solicitudes de trabajo o preguntas de servicio.",
+          "Usamos esa informacion para responder a tu solicitud, dar seguimiento, proporcionar atencion al cliente y mantener registros internos razonables de las conversaciones y solicitudes enviadas a traves del sitio.",
+          text.privacySharing,
+          "Tomamos medidas razonables para mantener segura la informacion que nos compartes y limitar el acceso a las personas y servicios que la necesitan para atender tu solicitud.",
+        ]
+      : [
+          "Oak & Compass Insurance collects the information you submit through our forms, including your name, phone number, email address, insurance interests, ZIP code, and any details you share so we can help with quotes, referrals, job applications, or service requests.",
+          "We use that information to respond to your request, follow up with you, provide customer care, and maintain reasonable internal records of conversations and requests submitted through the site.",
+          text.privacySharing,
+          "We take reasonable steps to protect the information you share with us and limit access to the people and services that need it to respond to your request.",
+        ];
+  const termsSections =
+    language === "es"
+      ? [
+          `Aceptas recibir mensajes informativos y de atencion al cliente de ${BRAND_NAME}. La frecuencia de mensajes varia. Pueden aplicarse tarifas de mensajes y datos.`,
+          "Responder HELP te brinda ayuda. Responder STOP cancela futuros mensajes de texto.",
+          `Los mensajes estan pensados para seguimiento de cotizaciones, referencias, coordinacion de servicio, actualizaciones relacionadas con la cuenta y otras comunicaciones directas de atencion al cliente de ${BRAND_NAME}.`,
+          "El consentimiento para recibir mensajes de texto no es una condicion de compra.",
+        ]
+      : [
+          `You agree to receive informational and customer care text messages from ${BRAND_NAME}. Message frequency varies. Message and data rates may apply.`,
+          "Reply HELP for help. Reply STOP to cancel future text messages.",
+          `Messages are intended for quote follow-up, referrals, service coordination, account-related updates, and other direct customer care communications from ${BRAND_NAME}.`,
+          "Consent to receive text messages is not a condition of purchase.",
+        ];
+  const sections = isPrivacy ? privacySections : termsSections;
+
+  return (
+    <div className={getPageShellClassName(easterMode, "bg-slate-50 text-slate-900")} lang={language}>
+      <section className="relative overflow-hidden pb-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(16,185,129,0.12),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.12),_transparent_26%),linear-gradient(180deg,_#f8fafc_0%,_#ffffff_50%,_#f0fdf4_100%)]" />
+        {easterMode ? <EasterDecor /> : null}
+        <ForestLandscapeBackground />
+
+        <div className="relative">
+          <SiteHeader
+            language={language}
+            activePage={PAGE_HOME}
+            onNavigate={onNavigate}
+            onLanguageChange={onLanguageChange}
+            easterMode={easterMode}
+          />
+
+          <div className="mx-auto max-w-4xl px-6 pb-8 pt-14 md:pt-20">
+            <div className="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-xl md:p-8">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                {BRAND_NAME}
+              </p>
+              <h1 className="mt-4 text-4xl font-bold tracking-tight">{title}</h1>
+              <div className="mt-6 space-y-4 text-base leading-8 text-slate-700">
+                {sections.map((section) => (
+                  <p key={section}>{section}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
+      <Analytics />
+    </div>
   );
 }
 
@@ -2833,6 +3035,7 @@ function TeamPage({ language, onNavigate, onLanguageChange, easterMode }) {
           ))}
         </div>
       </section>
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -3018,9 +3221,18 @@ function AgentQuotePage({
                         easterMode,
                         "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
                       )}
-                    />
+                      />
                   </div>
                 </div>
+
+                <SmsConsentField
+                  language={language}
+                  checked={form.smsConsent}
+                  onChange={onChange}
+                  onNavigate={onNavigate}
+                  checkboxId={`${formTitlePrefix}-smsConsent`}
+                  required={Boolean(form.phone)}
+                />
 
                 <div>
                   <label htmlFor={`${formTitlePrefix}-needsSpanish`} className="mb-2 block text-sm font-medium">
@@ -3132,6 +3344,7 @@ function AgentQuotePage({
           </div>
         </div>
       </section>
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -3379,6 +3592,16 @@ function CollectiblesPage({
                     </div>
                   </div>
 
+                  <SmsConsentField
+                    language={language}
+                    checked={form.smsConsent}
+                    onChange={onChange}
+                    onNavigate={onNavigate}
+                    checkboxId="collectibles-smsConsent"
+                    required={Boolean(form.phone)}
+                    dark
+                  />
+
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <label htmlFor="collectibleType" className="mb-2 block text-sm font-medium text-white/85">
@@ -3520,7 +3743,7 @@ function CollectiblesPage({
           </div>
         </div>
       </section>
-
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -3654,6 +3877,15 @@ function JobApplicationPage({
                     />
                   </div>
                 </div>
+
+                <SmsConsentField
+                  language={language}
+                  checked={form.smsConsent}
+                  onChange={onChange}
+                  onNavigate={onNavigate}
+                  checkboxId="job-smsConsent"
+                  required={Boolean(form.phone)}
+                />
 
                 <div>
                   <label htmlFor="needsSpanish" className="mb-2 block text-sm font-medium">
@@ -3789,7 +4021,7 @@ function JobApplicationPage({
           </div>
         </div>
       </section>
-
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -3852,7 +4084,7 @@ function InsuranceConnectPage({
           </div>
         </div>
       </section>
-
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -3873,9 +4105,11 @@ function EmployeeReferralPage({
     employeeName: "",
     employeeEmail: "",
     employeePhone: "",
+    employeeSmsConsent: false,
     clientFirstName: "",
     clientLastName: "",
     clientPhone: "",
+    clientSmsConsent: false,
     clientEmail: "",
     insuranceType: "",
     zipCode: "",
@@ -3884,11 +4118,11 @@ function EmployeeReferralPage({
   });
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, type, value, checked } = event.target;
     if (isSubmitted) {
       setIsSubmitted(false);
     }
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }));
   };
 
   const handleSubmit = async (event) => {
@@ -3908,9 +4142,11 @@ function EmployeeReferralPage({
           referralSourceName: form.employeeName,
           referralSourceEmail: form.employeeEmail,
           referralSourcePhone: form.employeePhone,
+          referralSourceSmsConsent: form.employeeSmsConsent,
           firstName: form.clientFirstName,
           lastName: form.clientLastName,
           phone: form.clientPhone,
+          smsConsent: form.clientSmsConsent,
           email: form.clientEmail,
           insuranceType: form.insuranceType,
           zipCode: form.zipCode,
@@ -3936,9 +4172,11 @@ function EmployeeReferralPage({
         employeeName: "",
         employeeEmail: "",
         employeePhone: "",
+        employeeSmsConsent: false,
         clientFirstName: "",
         clientLastName: "",
         clientPhone: "",
+        clientSmsConsent: false,
         clientEmail: "",
         insuranceType: "",
         zipCode: "",
@@ -4052,6 +4290,15 @@ function EmployeeReferralPage({
                       />
                     </div>
                   </div>
+                  <SmsConsentField
+                    language={language}
+                    checked={form.employeeSmsConsent}
+                    onChange={handleChange}
+                    onNavigate={onNavigate}
+                    checkboxId="employee-smsConsent"
+                    checkboxName="employeeSmsConsent"
+                    required={Boolean(form.employeePhone)}
+                  />
                 </div>
 
                 <div>
@@ -4110,6 +4357,17 @@ function EmployeeReferralPage({
                         value={form.clientEmail}
                         onChange={handleChange}
                         className={getEasterInputClassName(easterMode, "w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500")}
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <SmsConsentField
+                        language={language}
+                        checked={form.clientSmsConsent}
+                        onChange={handleChange}
+                        onNavigate={onNavigate}
+                        checkboxId="client-smsConsent"
+                        checkboxName="clientSmsConsent"
+                        required
                       />
                     </div>
                     <div>
@@ -4250,6 +4508,7 @@ function ClientResourcesPage({
     firstName: "",
     lastName: "",
     phone: "",
+    smsConsent: false,
     email: "",
     notes: "",
   });
@@ -4278,10 +4537,10 @@ function ClientResourcesPage({
   }, [introductionOptions]);
 
   const handleIntroChange = (event) => {
-    const { name, value } = event.target;
+    const { name, type, value, checked } = event.target;
     setIntroForm((current) => ({
       ...current,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -4304,6 +4563,7 @@ function ClientResourcesPage({
           firstName: introForm.firstName,
           lastName: introForm.lastName,
           phone: introForm.phone,
+          smsConsent: introForm.smsConsent,
           email: introForm.email,
           insuranceType: `Introduction request: ${selectedIntroductionProfessional.name}`,
           zipCode: "",
@@ -4337,6 +4597,7 @@ function ClientResourcesPage({
         firstName: "",
         lastName: "",
         phone: "",
+        smsConsent: false,
         email: "",
         notes: "",
       });
@@ -4806,6 +5067,16 @@ function ClientResourcesPage({
                     </div>
                   </div>
 
+                  <SmsConsentField
+                    language={language}
+                    checked={introForm.smsConsent}
+                    onChange={handleIntroChange}
+                    onNavigate={onNavigate}
+                    checkboxId="intro-smsConsent"
+                    required
+                    dark
+                  />
+
                   <div>
                     <label className="mb-2 block text-sm font-medium text-white" htmlFor="introNotes">
                       {pageText.introNotesLabel}
@@ -4848,7 +5119,7 @@ function ClientResourcesPage({
           </div>
         </div>
       </section>
-
+      <SiteLegalFooter language={language} onNavigate={onNavigate} />
       <Analytics />
     </div>
   );
@@ -5270,6 +5541,10 @@ export default function OakCompassLandingPage() {
           ? "Client Resources | Oak & Compass Insurance"
         : activePage === PAGE_CANOPY
           ? "Connect Your Insurance | Oak & Compass Insurance"
+        : activePage === PAGE_PRIVACY
+          ? "Privacy Policy | Oak & Compass Insurance"
+        : activePage === PAGE_TERMS
+          ? "Terms & Conditions | Oak & Compass Insurance"
           : "Oak & Compass Insurance";
   }, [activePage]);
 
@@ -5390,12 +5665,12 @@ export default function OakCompassLandingPage() {
   }, [activePage]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, type, value, checked } = event.target;
     if (isSubmitted) {
       setIsSubmitted(false);
       setSubmittedInquiryType("");
     }
-    setForm((current) => ({ ...current, [name]: value }));
+    setForm((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }));
   };
 
   const navigateToPage = (page) => {
@@ -5482,7 +5757,9 @@ export default function OakCompassLandingPage() {
       page === PAGE_TEAM ||
       page === PAGE_JOBS ||
       page === PAGE_COLLECTIBLES ||
-      page === PAGE_CANOPY
+      page === PAGE_CANOPY ||
+      page === PAGE_PRIVACY ||
+      page === PAGE_TERMS
     ) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -5745,6 +6022,7 @@ export default function OakCompassLandingPage() {
             loadError={loadError}
           />
         </div>
+        <SiteLegalFooter language={language} onNavigate={navigateToPage} />
         <Analytics />
       </div>
     );
@@ -5814,6 +6092,18 @@ export default function OakCompassLandingPage() {
         onNavigate={navigateToPage}
         onLanguageChange={setSiteLanguage}
         easterMode={easterMode}
+      />
+    );
+  }
+
+  if (activePage === PAGE_PRIVACY || activePage === PAGE_TERMS) {
+    return (
+      <LegalPage
+        language={language}
+        onNavigate={navigateToPage}
+        onLanguageChange={setSiteLanguage}
+        easterMode={easterMode}
+        page={activePage}
       />
     );
   }
@@ -6046,6 +6336,15 @@ export default function OakCompassLandingPage() {
                     />
                   </div>
                 </div>
+
+                <SmsConsentField
+                  language={language}
+                  checked={form.smsConsent}
+                  onChange={handleChange}
+                  onNavigate={navigateToPage}
+                  checkboxId="home-smsConsent"
+                  required={Boolean(form.phone)}
+                />
 
                 <div>
                   <label htmlFor="needsSpanish" className="mb-2 block text-sm font-medium">
@@ -6289,7 +6588,7 @@ export default function OakCompassLandingPage() {
           </button>
         </div>
       </section>
-
+      <SiteLegalFooter language={language} onNavigate={navigateToPage} />
       <Analytics />
     </div>
   );
